@@ -1,0 +1,16 @@
+class CreateMaterials < ActiveRecord::Migration
+  def change
+    create_table :materials do |t|
+      t.integer  :category_id
+      t.string   :wx_appid
+      t.string   :slug
+      t.string   :wx_appid
+      t.string   :wx_tlimg
+      t.string   :wx_url
+      t.string   :wx_title
+
+
+      t.timestamps
+    end
+  end
+end

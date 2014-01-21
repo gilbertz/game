@@ -1,0 +1,54 @@
+<style>ul.token-input-list-facebook {position: relative; top: -29px;}</style>
+<%= form_for [:admin,@category], html: {class: 'form-horizontal' } do |f| %> 
+  <div class="control-group">
+    <label class="control-label">名称</label>
+    <div class="controls">
+      <%= f.text_field :name, required: true %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Meta</label>
+    <div class="controls">
+      <%= f.text_area :meta, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Javascript</label>
+    <div class="controls">
+      <%= f.text_area :js, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Css</label>
+    <div class="controls">
+      <%= f.text_area :css, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Html</label>
+    <div class="controls">
+      <%= f.text_area :html, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">ReturnJavascript</label>
+    <div class="controls">
+      <%= f.text_area :re_js, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">ReturnCss</label>
+    <div class="controls">
+      <%= f.text_area :re_css, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">ReturnHtml</label>
+    <div class="controls">
+      <%= f.text_area :re_html, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="form-actions" style="margin-bottom:0px">
+    <%= f.submit '提交', class: 'btn btn-primary' %>
+  </div>
+<% end %>

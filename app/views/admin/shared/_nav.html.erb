@@ -1,0 +1,21 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <%= link_to 'ShuWei游戏后台', '#', class: "brand" %>
+      <div class="nav-collapse collapse">
+        <ul class="nav navbar-nav pull-right">
+          <li><a href="#">Admin</a></li>
+          <li><%= link_to '退出', '#' %></li>
+        </ul>
+        <ul class="nav">
+          <li class="<%= controller_name.in?(['categories']) ? 'active' : '' %>"> 
+            <%= link_to '分类管理', [:admin, :categories] %> 
+          </li>
+          <li class="<%= controller_name.in?(['materials']) ? 'active' : '' %>"> 
+            <%= link_to '素材管理', '#' %> 
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
