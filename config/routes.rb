@@ -2,6 +2,7 @@ Game::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  resources :materials, only: :show
   namespace :admin do
     root "home#index"
     resources :categories do
@@ -9,6 +10,15 @@ Game::Application.routes.draw do
         get :clone
       end
     end
+    resources :materials do
+      resources :images, only: :new
+      resources :answers, only: :new
+      member do
+        get :clone
+      end
+    end
+    resources :images, except: :new
+    resources :answers, except: :new
   end
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

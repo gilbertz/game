@@ -9,10 +9,10 @@
         </ul>
         <ul class="nav">
           <li class="<%= controller_name.in?(['categories']) ? 'active' : '' %>"> 
-            <%= link_to '分类管理', [:admin, :categories] %> 
+            <%= link_to '分类管理', [:admin,:categories] %> 
           </li>
           <li class="<%= controller_name.in?(['materials']) ? 'active' : '' %>"> 
-            <%= link_to '素材管理', '#' %> 
+            <%= link_to '素材管理', [:admin,:materials] %> 
           </li>
         </ul>
       </div><!--/.nav-collapse -->

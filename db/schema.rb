@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140121024611) do
+ActiveRecord::Schema.define(version: 20140121093321) do
+
+  create_table "answers", force: true do |t|
+    t.string   "title"
+    t.string   "img"
+    t.integer  "material_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "answers", ["material_id"], name: "index_answers_on_material_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.integer  "parent_id"
@@ -26,5 +36,32 @@ ActiveRecord::Schema.define(version: 20140121024611) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "images", force: true do |t|
+    t.string   "title"
+    t.integer  "material_id"
+    t.integer  "state"
+    t.string   "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "images", ["material_id"], name: "index_images_on_material_id", using: :btree
+
+  create_table "materials", force: true do |t|
+    t.integer  "category_id"
+    t.string   "wx_appid"
+    t.string   "title"
+    t.string   "slug"
+    t.text     "content"
+    t.string   "wx_tlimg"
+    t.string   "wx_url"
+    t.string   "wx_title"
+    t.string   "wx_desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "materials", ["category_id"], name: "index_materials_on_category_id", using: :btree
 
 end

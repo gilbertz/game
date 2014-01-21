@@ -1,0 +1,102 @@
+<style> 
+  ul.token-input-list-facebook {position: relative; top: -29px;} 
+  div#cboxLoadedContent {margin-bottom:0px;}
+</style>
+<%= form_for [:admin,@material], html: {class: 'form-horizontal' } do |f| %> 
+  <div class="control-group">
+    <label class="control-label">标题</label>
+    <div class="controls">
+      <%= f.text_field :title, required: true %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">类别选择</label>
+    <div class="controls">
+      <%= f.select :category_id, Category.all.to_a.collect {|p| [ p.name, p.id ] } %>
+    </div>
+  </div>
+  <% if action_name == 'edit' %>
+    <% answers = @material.answers %>
+    <div class="control-group">
+      <label class="control-label">答案</label>
+      <div class="controls" style="padding-top:6px">
+        <% answers.each do |asw| %>
+          <%= link_to [:edit,:admin,asw], class: :edit_obj do %>
+            <span class="label label-important"><%= asw.title %></span>
+          <% end %>
+          <%= link_to [:admin,asw], method: :delete,  
+            class: :ajaxDel, confirm: "Are you sure?" ,remote: true  do %>
+            x&nbsp;
+          <% end %>
+        <% end %>
+        <%= link_to '添加', [:new,:admin,@material,:answer], id: :add_obj, class: "btn btn-mini btn-success", remote: true %>
+      </div>
+    </div>
+  <% end %>
+  <% if action_name == 'edit' %>
+    <% images = @material.images %>
+    <div class="control-group">
+      <label class="control-label">图片</label>
+      <div class="controls" style="padding-top:4px">
+        <% images.each do |img| %>
+          <%= link_to [:edit,:admin,img], class: :edit_obj do %>
+            <span class="label label-important"><%= 'xx' %></span>
+          <% end %>
+          <%= link_to [:admin,img], method: :delete,  
+            class: :ajaxDel, confirm: "Are you sure?" ,remote: true  do %>
+            x&nbsp;
+          <% end %>
+        <% end %>
+        <%= link_to '添加', [:new,:admin,@material,:image], id: :add_obj, class: "btn btn-mini btn-success", remote: true %>
+      </div>
+    </div>
+  <% end %>
+  <h4 style="margin-left:100px">微信</h4>
+  <hr/ style="margin-top:0px">
+  <div class="control-group">
+    <label class="control-label">appID</label>
+    <div class="controls">
+      <%= f.text_field :wx_appid, required: true, class: "input-xxlarge" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">图片</label>
+    <div class="controls">
+      <%= f.text_field :wx_tlimg, required: true, class: "input-xxlarge" %>
+      <span class="help-block"><a href="<%= @material.wx_tlimg %>">图片预览</a> &nbsp;
+        size: <span id="material_size"></span>
+      </span>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">标题</label>
+    <div class="controls">
+      <%= f.text_field :wx_title, required: true, class: "input-xxlarge" %>
+    </div>
+  </div>
+  <% if action_name == "edit" %>
+    <div class="control-group">
+      <label class="control-label">链接</label>
+      <div class="controls">
+        <%= f.text_field :wx_url, value: material_url(@material).gsub("\:3000", ""), class: "input-xxlarge" %>
+      </div>
+    </div>
+  <% end %>
+  <div class="control-group">
+    <label class="control-label">描述</label>
+    <div class="controls">
+      <%= f.text_field :wx_desc, required: true, class: "input-xxlarge" %>
+    </div>
+  </div>
+  <div class="form-actions" style="margin-bottom:0px">
+    <%= f.submit '提交', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+<script type="text/javascript">
+  var theImage = new Image();
+  theImage.src = "<%= @material.wx_tlimg %>";
+  var imageWidth = theImage.width;
+  var imageHeight = theImage.height;
+  var content = imageWidth + "x" + imageHeight;
+  $("span#material_size").text(content);
+</script>

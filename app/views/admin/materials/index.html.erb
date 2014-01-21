@@ -1,0 +1,23 @@
+  <table class="table table-bordered">  
+    <thead>
+      <tr class="well">
+        <th>名称</th>
+        <th width="17%">创建时间</th>
+        <th width="13%">操作</th>
+      </tr>
+    </thead>
+    <body>
+      <% @materials.each do |c| %>
+        <tr>
+          <td><%= c.title %></td>
+          <td><%= c.created_at.to_local %></td>
+          <td> 
+            <%= link_to '编辑', [:edit,:admin,c] %> |
+            <%= link_to '克隆', [:clone,:admin,c], data: {confirm: "Are you clone one !"} %> |
+            <%= link_to '删除', [:admin,c], method: :delete, class: "delMaterial", 
+            remote: true, data: {confirm: "Are you sure?"} %>
+          </td>
+        </tr>
+      <% end %>
+    </body>
+  </table>
