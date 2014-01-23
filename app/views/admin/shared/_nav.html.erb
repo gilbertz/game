@@ -1,13 +1,16 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-      <%= link_to 'ShuWei游戏后台', '#', class: "brand" %>
+      <%= link_to 'ShuWei游戏后台', [:admin,:root], class: "brand" %>
       <div class="nav-collapse collapse">
         <ul class="nav navbar-nav pull-right">
-          <li><a href="#">Admin</a></li>
-          <li><%= link_to '退出', '#' %></li>
+          <li><a href="#"><%= current_user.name %></a></li>
+          <li><%= link_to '退出', admin_session_path(current_user), method: :delete %></li>
         </ul>
         <ul class="nav">
+          <li class="<%= controller_name.in?(['users']) ? 'active' : '' %>"> 
+            <%= link_to '用户管理', [:admin,:users] %> 
+          </li>
           <li class="<%= controller_name.in?(['categories']) ? 'active' : '' %>"> 
             <%= link_to '分类管理', [:admin,:categories] %> 
           </li>

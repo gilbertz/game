@@ -7,18 +7,22 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-     <%= render 'admin/shared/nav' %>
-     <% if controller_name != "home" %>
-       <div class="container-fluid">
-         <div class="row-fluid">
-           <div class="span2"> 
-             <%= render 'menu' %>
-           </div>
-           <div class="span10">
-             <%= yield %>
-           </div>
-         </div>
-       </div>
-     <% end %>
+    <% if controller_name.in?(["session"]) %>
+      <%= yield %>
+    <% else %>
+      <%= render 'admin/shared/nav' %>
+      <% if controller_name != "home" %>
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span2"> 
+              <%= render 'menu' %>
+            </div>
+            <div class="span10">
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </body>
 </html>

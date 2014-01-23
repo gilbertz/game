@@ -1,0 +1,28 @@
+<%= form_for [:admin,@user], html: {class: 'form-horizontal' } do |f| %> 
+  <fieldset>
+    <legend>添加用户</legend>
+    <div class="control-group">
+      <label class="control-label" for="inputEmail">名称</label>
+      <div class="controls">
+        <%= f.text_field :name, required: true, placeholder: "名称" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputPassword">密码</label>
+      <div class="controls">
+        <%= f.password_field :password %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputPassword">密码确认</label>
+      <div class="controls">
+        <%= f.password_field :password_confirmation %>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit '提交', class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </fieldset>
+<% end %>

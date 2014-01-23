@@ -2,9 +2,22 @@ Game::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  resources :materials, only: :show
+  root 'home#index'
+  resources :materials, only: :show do
+    collection do
+      get :egg
+      get :test
+    end
+    member do
+      get :return
+    end
+  end
+
   namespace :admin do
+    get '/login' => 'session#new', as: :login
     root "home#index"
+    resources :users
+    resources :session
     resources :categories do
       member do
         get :clone

@@ -1,0 +1,115 @@
+ul.wpinstagram, ul.wpinstagram li, ul.wpinstagram li a {
+	margin: 0 !important;
+	padding: 0 !important;
+	border: 0 !important;
+}
+ul.wpinstagram {
+	overflow: hidden;
+	display: block;
+	list-style-type: none;
+}
+ul.wpinstagram li {
+	float: left;
+	position: relative;
+}
+
+ul.wpinstagram.centered {
+	margin: 0 auto !important;
+}
+
+ul.wpinstagram li a {
+	line-height: 0px;
+	font-size: 0px;
+}
+
+#fancybox-img {
+	cursor: pointer;
+}
+
+#fancybox-left, #fancybox-right {
+	width: 15% !important;
+}
+
+.wpinstagram-slideshow {
+	overflow: hidden;
+}
+
+.wpinstagram-slideshow li {
+	display: none;
+}
+
+.wpinstagram-slideshow li:first-child {
+	display: block;
+}
+
+.wpinstagram li .social {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	display: none;
+}
+
+.wpinstagram li:hover .social {
+	display: block;
+}
+
+.wpinstagram li .social a.facebook {
+	background: url('img/facebook-large.png') no-repeat center center;
+	width: 16px;
+	height: 16px;	
+	float: right;
+	display: block;
+	opacity: 0.6;	
+}
+
+.wpinstagram li .social a.twitter {
+	background: url('img/twitter-large.png') no-repeat center center;
+	width: 16px;
+	height: 16px;	
+	float: right;
+	display: block;
+	position: relative;
+	left: -5px;
+	opacity: 0.6;	
+}
+
+.wpinstagram li .social a:hover {
+	opacity: 1;
+}
+
+.wpinstagram li.paged {
+	display: none;
+}
+
+.wpinstagram li.paged.visible {
+	display: block;
+}
+
+.wppages {
+	margin-top: 5px;
+	float: left;
+	border-right: 1px solid #666;
+	margin-bottom: 10px;
+}
+
+.wppages .page {
+	padding: 2px 5px;
+	float: left;
+	border: 1px solid #666;
+	border-right: 0px none;
+}
+
+.wppages .page:hover {
+	background: #666;
+	color: #FFF;
+	text-decoration: none;
+}
+
+.wppages .page.first {
+	font-weight: bold;
+}
+
+.wppages .page.first:hover {
+	background: transparent;
+	color: #333;
+}

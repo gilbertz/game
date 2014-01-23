@@ -25,7 +25,7 @@
             <span class="label label-important"><%= asw.title %></span>
           <% end %>
           <%= link_to [:admin,asw], method: :delete,  
-            class: :ajaxDel, confirm: "Are you sure?" ,remote: true  do %>
+            class: :ajaxDel, data: {confirm: "Are you sure?"} ,remote: true  do %>
             x&nbsp;
           <% end %>
         <% end %>
@@ -40,10 +40,10 @@
       <div class="controls" style="padding-top:4px">
         <% images.each do |img| %>
           <%= link_to [:edit,:admin,img], class: :edit_obj do %>
-            <span class="label label-important"><%= 'xx' %></span>
+            <span class="label label-important"><%= img.title %></span>
           <% end %>
           <%= link_to [:admin,img], method: :delete,  
-            class: :ajaxDel, confirm: "Are you sure?" ,remote: true  do %>
+            class: :ajaxDel, data: {confirm: "Are you sure?"} ,remote: true  do %>
             x&nbsp;
           <% end %>
         <% end %>

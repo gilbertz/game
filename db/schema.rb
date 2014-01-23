@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140121093321) do
+ActiveRecord::Schema.define(version: 20140122085617) do
 
   create_table "answers", force: true do |t|
     t.string   "title"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20140121093321) do
   end
 
   create_table "images", force: true do |t|
+    t.string   "define"
     t.string   "title"
     t.integer  "material_id"
     t.integer  "state"
@@ -63,5 +64,14 @@ ActiveRecord::Schema.define(version: 20140121093321) do
   end
 
   add_index "materials", ["category_id"], name: "index_materials_on_category_id", using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "encrypt_pwd"
+    t.string   "salt"
+    t.string   "rememberme_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

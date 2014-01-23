@@ -13,6 +13,12 @@ class Admin::CategoriesController < Admin::BaseController
     redirect_to [:admin, :categories]
   end
 
+  def clone
+    category = ::Category.find params[:id] 
+    ::Category.create category.attributes.except!("created_at", "id")
+    redirect_to [:admin,:categories]
+  end
+
   def edit
     @category = Category.find params[:id]
   end

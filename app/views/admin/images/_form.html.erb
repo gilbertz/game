@@ -19,14 +19,15 @@
   <div class="control-group">
     <label class="control-label" style="width:100px"><strong>title:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">
-      <%= f.text_field :title %>
+      <%= f.text_field :title, required: true %>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" style="width:100px"><strong>图片链接:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">
       <%= f.text_field :body, style: "width:320px", required: true %> 
-      <span class="help-block"><a href="<%= @image.body %>">图片预览</a> &nbsp;
+      <span class="help-block"> 
+        <%= link_to '图片预览', @image.body %> &nbsp;
         size: <span id="size"></span>
       </span>
     </div>
