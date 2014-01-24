@@ -5,7 +5,7 @@ require 'bundler/capistrano'
 
 #set :bundle_dir, ""
 set :stages, %w(staging production)
-set :default_stage, "production"
+set :default_stage, "staging"
 set :rvm_ruby_string, 'ruby-2.0.0-p247@game'
 #set :rvm_type, :system
 #set :rvm_bin_path, "/usr/local/rvm/bin"

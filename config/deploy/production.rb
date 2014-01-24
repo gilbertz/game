@@ -19,8 +19,8 @@ namespace :deploy do
 
   desc "Restart Application"
   task :restart, :roles => :app do
-    #run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
-    #run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
-    #run "touch #{current_path}/tmp/restart.txt"
+    run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
+    run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
+    run "touch #{current_path}/tmp/restart.txt"
   end
 end

@@ -3,10 +3,14 @@ Game::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   root 'home#index'
-  resources :materials, only: :show do
+  resources :home, only: [] do
+    get :search
+  end
+  resources :materials, only: [:index,:show] do
     collection do
       get :egg
       get :test
+      get :result
     end
     member do
       get :return

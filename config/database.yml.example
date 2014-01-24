@@ -1,0 +1,8 @@
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: game
+  pool: 5
+  username: root
+  password: wan123
+  socket: /var/run/mysqld/mysqld.sock
