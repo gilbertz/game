@@ -1,19 +1,19 @@
 <div id="content" class="container_12 grid_10 push_5">
   <% @materials.each_with_index do |material, index| %>
     <div class="grid_4 alpha1 omega<%= index+1 %>">
-      <div class="home blog paged paged-2 cat-links asides">
+      <div class="home blog paged paged-2 cat-links asides" style="height:48px;overflow:hidden;">
         <%= link_to material.title, '#', title: 'asides' %>
       </div>
       <div id="post-11945" class="post-11945 post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides">
         <div class="">
           <%= link_to '#' do %>
-            <%= image_tag material.wx_tlimg, width: "100%" %>
+            <%= image_tag material.wx_tlimg, style: "width:238px; height:285px;" %>
           <% end %>
         </div>
         <div class="posthometext">
-          <h2 class="entry-title"> 
+          <!--<h2 class="entry-title"> 
             <a href="#" title="Link to Third post" rel="bookmark">Third post</a> 
-          </h2>
+          </h2> --!>
           <div class="entry-content-home">
             <%= material.wx_desc %>
           </div>
@@ -23,11 +23,11 @@
   <% end %>
   <div class="clear"></div>				
   <div class="center">
-    <div class="navigation mobileoff"> 
+    <!-- <div class="navigation mobileoff"> 
       <p><a href="#" >&laquo; Previous Page</a></p> 
     </div>
     <div class="navigation_mobile"> 
       <p><a href="#" >&laquo; Previous Page</a> </p> 
-    </div> 
+    </div> --!>
   </div>
 </div>
