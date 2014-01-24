@@ -1,8 +1,7 @@
 class MaterialsController < ApplicationController
 
   def index 
-    @q = Material.ransack params[:q]
-    @materials = @q.result.order('id desc').to_a
+    @materials = Material.includes(:images)
   end
 
   def show
@@ -15,6 +14,8 @@ class MaterialsController < ApplicationController
     if request.xhr?
       ERB.new(@material.category.try(:re_js)).result(binding)
       render json: @json
+    else
+      render layout: false
     end
   end
 

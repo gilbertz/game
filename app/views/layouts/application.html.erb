@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head profile="http://gmpg.org/xfn/11">
-    <title>ShuWei Game</title>
+  <head>
+    <title>玩会儿</title>
+    <link rel="shortcut icon" href="/assets/shangjieba-icon.png" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name='robots' content='noindex,nofollow' />
@@ -15,16 +16,16 @@
   </head>
   <body class="home blog paged paged-2 asides"> 
     <%= render 'shared/nav' %>
-    <div id="wrapperheader" class="container_15">
+    <!--<div id="wrapperheader" class="container_15">
       <div id="header">
         <div class="headertop">
           <div id="blog-title" class="blogtitle"> 
-            <%= link_to '玩会儿', '/' %>
+            <%#= link_to '玩会儿', '/' %>
           </div>
           <div class="description">Just another WordPress site </div>
         </div>
       </div>
-    </div>
+    </div> --!>
     <div class="clear"></div>
     <div id="wrapper" class="container_15">	
       <div class="clear"></div>		
@@ -35,15 +36,14 @@
         <ul class="">
           <li id="search-3" class="widget widget_search"><div class="widgetblock">
             <div class="widgettitleb"><h3 class="widgettitle">游戏搜索</h3></div>
-            <%= search_form_for @q, role: 'search', html: {class: 'search-form'} do |f| %>
+            <form role="search" action="/" class="search-form" >
               <label>
                 <span class="screen-reader-text">Search for:</span>
-                <%= f.search_field :title_matches, class: 'search-field', placeholder: "搜索 ..." %>
+                <input type="search" name="q" class="search-field", placeholder="搜索 ..."/>
               </label>
-              <%= f.submit '搜索', class: 'search-submit' %>
-            <% end %>
-          </div> 
-        </li>
+              <input type="submit" class="search-submit", value="搜索"/>
+            </form>
+          </li>
           <div class="widgetblock"> 
             <div class="widgettitleb"> 
               <h3 class="widgettitle">
@@ -52,26 +52,26 @@
             </div>
             <ul class="wpinstagram wpinstagram-slideshow live" style="width: 300px; height: 300px;">
               <li style="width: 300px; height: 300px; margin-bottom: 5px !important;">
-              <%= link_to "javascript:;" do %>
-                <%= image_tag "http://distilleryimage8.s3.amazonaws.com/7d4c8348806e11e3852c0e82256d50e4_6.jpg", style:"width: 300px; height: 300px; margin-bottom: 5px;" %>
+                <%= link_to "javascript:;" do %>
+                  <%= image_tag "layout.jpg", style:"width:300px; height:300px; margin-bottom:5px;" %>
                 <% end %>
               </li>
             </ul>
             <div style="clear: both; padding-bottom: 10px;"></div>
-            </div> 
-          <li id="recent-posts-2" class="widget widget_recent_entries"> 
-          <div class="widgetblock">		
-            <div class="widgettitleb"> 
-              <h3 class="widgettitle">最新公告</h3> 
-            </div>
-            <ul>
-              <li>
-                <%= link_to '#' do %>
-                  最新游戏《马上……》火爆登场, 诸位请锁定昨天早上1点 !
-                <% end %>
-              </li>
-            </ul>
           </div> 
+          <li id="recent-posts-2" class="widget widget_recent_entries"> 
+            <div class="widgetblock">		
+              <div class="widgettitleb"> 
+                <h3 class="widgettitle">最新公告</h3> 
+              </div>
+              <ul>
+                <li>
+                  <%= link_to '#' do %>
+                    最新游戏《马上……》火爆登场, 诸位请锁定昨天早上1点 !
+                  <% end %>
+                </li>
+              </ul>
+            </div> 
           </li>
         </ul>
       </div>

@@ -2,24 +2,13 @@
 <html>
   <head>
     <title><%= @material.title %></title>
-    <meta charset="UTF-8">
-    <%= javascript_include_tag "jquery" %>
     <%= ERB.new(@material.category.meta).result(binding).html_safe %>
-    <script type="text/javascript">
-      var dataForWeixin = {
-       appId: "wx78f81724e6590b1d",
-       TLImg: "<%= @material.wx_tlimg %>",
-       url:   document.location.href,
-       title: "<%= @material.wx_title %>",
-       desc:  "<%= @material.wx_desc %>"
-      };
-    </script>
     <script type="text/javascript">
       <%= ERB.new(@material.category.js).result(binding).html_safe %>
     </script>
-    <style type="text/css">
+    <style type="text/css"> 
       <%= ERB.new(@material.category.css).result(binding).html_safe %>
     </style>
   </head>
-  <%= ERB.new(@material.category.try(:html)).result(binding).html_safe %>
+<%= ERB.new(@material.category.html).result(binding).html_safe %>
 </html>

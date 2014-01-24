@@ -2,7 +2,7 @@ class Admin::ImagesController < Admin::BaseController
 
   def new
     material = Material.find params[:material_id]
-    @image = material.images.build
+    @image = material.images.build(state: params[:state])
     render partial: 'form'
   end
 

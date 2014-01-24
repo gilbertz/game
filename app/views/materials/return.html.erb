@@ -2,23 +2,15 @@
 <html>
   <head>
     <title><%= @material.title %></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
     <%= javascript_include_tag "jquery" %>
     <script type="text/javascript">
-      var dataForWeixin = {
-        appId: "wx78f81724e6590b1d",
-        TLImg: "<%= @wx_tlimg %>",
-        url:   "<%= @wx_url %>",
-        title: "<%= @wx_title %>",
-        desc:  "<%= @wx_desc %>"
-      };
+      <%= ERB.new(@material.category.re_js).result(binding).html_safe %>
     </script>
-    <script type="text/javascript">
-      <%= ERB.new(@category.js).result(binding).html_safe %>
-    </script>
-    <%= javascript_include_tag "rewx_share" %>
     <style type="text/css">
-      <%= ERB.new(@category.css).result(binding).html_safe %>
+      <%= ERB.new(@material.category.re_css).result(binding).html_safe %>
     </style>
   </head>
-  <%= ERB.new(@category.html).result(binding).html_safe %>
+  <%= ERB.new(@material.category.re_html).result(binding).html_safe %>
 </html>

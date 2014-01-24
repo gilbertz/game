@@ -4,23 +4,15 @@ class Material < ActiveRecord::Base
   has_many :answers, dependent: :destroy
   has_many :images, dependent: :destroy
 
-  after_find :generate_other_methods
-
-  def generate_other_methods
-    self.images.each do |img|
-      self.class_eval do
-        define_method img.title do
-          img.body
-        end
-      end
-    end
-  end
-
   class_attribute :clone 
   before_update :clone_self, if: Proc.new{|mate| mate.clone == true}
   def cloning(param)
     self.update_attribute(:clone,param)
   end
+
+  def html_img(index); images.select{|img| img.state == 1 }[index-1].try(:body) end
+  def css_img(index); images.select{|img| img.state == 2 }[index-1].try(:body) end
+  def js_img(index); images.select{|img| img.state == 3 }[index-1].try(:body) end
 
   private
   def clone_self
