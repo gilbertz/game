@@ -6,8 +6,8 @@
       <title><%= @material.name %></title>
       <% @answers = @material.answers %>
       <meta charset="utf-8">
+      <%= javascript_include_tag "jquery" %>
       <%= ERB.new(@category.meta).result(binding).html_safe %>
-      <%#= javascript_include_tag "jquery" %>
       <script type="text/javascript">
         <% @wx_appid = @material.wx_appid %>
         <% @wx_url   = @material.wx_url %>
@@ -31,5 +31,6 @@
     <% @html_image_2 = @material.images.select{|i| i.state == 13}[0].try(:body) %>
     <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
     <%= ERB.new(@category.html).result(binding).html_safe %>
+    <script src="http://s5.cnzz.com/stat.php?id=2814783&web_id=2814783" language="JavaScript"></script>
   <%# end  %>
 </html>

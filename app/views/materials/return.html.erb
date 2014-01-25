@@ -24,4 +24,5 @@
   <% @re_btn    = @material.images.select{|i| i.state == 7}[0].try(:body) %>
   <% @share_btn = @material.images.select{|i| i.state == 8}[0].try(:body) %>
   <%= ERB.new(@category.re_html).result(binding).html_safe %>
+  <script src="http://s5.cnzz.com/stat.php?id=2814783&web_id=2814783" language="JavaScript"></script>
 </html>

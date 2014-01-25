@@ -2,11 +2,11 @@
 <html>
   <head>
     <title>玩会儿</title>
-    <link rel="shortcut icon" href="/assets/shangjieba-icon.png" />
+    <%= favicon_link_tag 'shangjieba-icon.png' %>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name='robots' content='noindex,nofollow' />
-    <%= stylesheet_link_tag    "application", media: "all" %>
+    <%= stylesheet_link_tag "application", media: "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <style type="text/css">
@@ -16,16 +16,16 @@
   </head>
   <body class="home blog paged paged-2 asides"> 
     <%= render 'shared/nav' %>
-    <!--<div id="wrapperheader" class="container_15">
+    <div id="wrapperheader" class="container_15">
       <div id="header">
         <div class="headertop">
           <div id="blog-title" class="blogtitle"> 
-            <%#= link_to '玩会儿', '/' %>
+            <%= link_to '玩会儿', '/' %>
           </div>
           <div class="description">Just another WordPress site </div>
         </div>
       </div>
-    </div> --!>
+    </div>
     <div class="clear"></div>
     <div id="wrapper" class="container_15">	
       <div class="clear"></div>		

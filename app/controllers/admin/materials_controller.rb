@@ -1,6 +1,6 @@
 class Admin::MaterialsController < Admin::BaseController
   def index
-    @materials = Material.order('id desc')
+    @materials = Material.includes(:category).order('id desc')
   end
 
   def new
