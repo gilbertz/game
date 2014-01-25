@@ -1,4 +1,5 @@
 class Admin::MaterialsController < Admin::BaseController
+  before_filter :clear_rubbish, only: [:update,:destroy]
   def index
     @materials = Material.includes(:category).order('id desc')
   end
@@ -18,8 +19,7 @@ class Admin::MaterialsController < Admin::BaseController
   end
 
   def update
-    material = Material.find params[:id]
-    material.update_attributes material_params
+    @material.update_attributes material_params
     redirect_to [:admin,:materials]
   end
 
@@ -30,11 +30,16 @@ class Admin::MaterialsController < Admin::BaseController
   end
 
   def destroy
-    Material.find(params[:id]).destroy
+    @material.destroy
     render nothing: true
   end
   private
   def material_params
-    params.require(:material).permit(:title,:category_id,:wx_appid,:wxdesc,:wx_tlimg,:wx_url,:wx_title)
+    params.require(:material).permit(:name,:category_id,:wx_appid,:wxdesc,:wx_tlimg,:wx_url,:wx_title)
+  end
+
+  def clear_rubbish
+    @material = Material.find params[:id]
+    expire_fragment(@material)
   end
 end

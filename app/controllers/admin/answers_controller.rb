@@ -9,6 +9,7 @@ class Admin::AnswersController < Admin::BaseController
   def create
     answer = Answer.new answer_params
     answer.save
+    expire_fragment(answer.viewable)
     redirect_to [:edit,:admin,answer.viewable]
   end
 
@@ -18,17 +19,21 @@ class Admin::AnswersController < Admin::BaseController
   end
 
   def update
-    @answer = Answer.find params[:id]
-    @answer.update_attributes answer_params
-    redirect_to [:edit,:admin,@answer.viewable]
+    answer = Answer.find params[:id]
+    answer.update_attributes answer_params
+    expire_fragment(answer.viewable)
+    redirect_to [:edit,:admin,answer.viewable]
   end
 
   def destroy
-    Answer.find(params[:id]).destroy
+    answer = Answer.find(params[:id]) 
+    expire_fragment(answer.viewable)
+    answer.destroy
     render nothing: true
   end
+
   private
   def answer_params
-    params.require(:answer).permit(:title,:material_id,:img)
+    params.require(:answer).permit(:title,:viewable_id,:viewable_type,:img)
   end
 end
