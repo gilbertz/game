@@ -15,20 +15,19 @@
       </div>
     </div>
   <% end %>
-  <%= f.hidden_field :material_id %>
-  <%= f.hidden_field :state %>
+  <%= f.hidden_field :viewable_id %>
+  <%= f.hidden_field :viewable_type %>
   <div class="control-group">
-    <label class="control-label" style="width:100px"><strong>title:</strong></label>
+    <label class="control-label" style="width:100px"><strong>类型:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">
-      <%= f.text_field :title, required: true %>
+      <%= f.select :state, ::Image::STATE.invert.to_a, required: true %> 
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" style="width:100px"><strong>图片链接:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">
       <%= f.text_field :body, style: "width:320px", required: true %> 
-      <span class="help-block"> 
-        <%= link_to '图片预览', @image.body %> &nbsp;
+      <span class="help-block"><a href="<%= @image.body %>">图片预览</a> &nbsp;
         size: <span id="size"></span>
       </span>
     </div>

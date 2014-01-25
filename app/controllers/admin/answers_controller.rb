@@ -9,7 +9,7 @@ class Admin::AnswersController < Admin::BaseController
   def create
     answer = Answer.new answer_params
     answer.save
-    redirect_to [:edit,:admin,answer.material]
+    redirect_to [:edit,:admin,answer.viewable]
   end
 
   def edit
@@ -20,7 +20,7 @@ class Admin::AnswersController < Admin::BaseController
   def update
     @answer = Answer.find params[:id]
     @answer.update_attributes answer_params
-    redirect_to [:edit,:admin,@answer.material]
+    redirect_to [:edit,:admin,@answer.viewable]
   end
 
   def destroy

@@ -9,7 +9,7 @@
     <body>
       <% @materials.each do |c| %>
         <tr>
-          <td><%= c.title %></td>
+          <td><%= c.name %></td>
           <td><%= c.created_at.to_local %></td>
           <td> 
             <%= link_to '编辑', [:edit,:admin,c] %> |

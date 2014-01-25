@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <head>
+    <title><%= @material.title %></title>
+    <%= ERB.new(@material.category.meta).result(binding).html_safe %>
+    <script type="text/javascript">
+      <%= ERB.new(@material.category.js).result(binding).html_safe %>
+    </script>
+    <style type="text/css"> 
+      <%= ERB.new(@material.category.css).result(binding).html_safe %>
+    </style>
+  </head>
+<%= ERB.new(@material.category.html).result(binding).html_safe %>
+</html>

@@ -19,7 +19,7 @@ class MaterialsController < ApplicationController
     end
   end
 
-  def ex_share
+  def wx_share
     #if params[:f]
       #key = "wx_share_#{params[:f]}"
       #@count = $redis.incr(key)
@@ -27,12 +27,10 @@ class MaterialsController < ApplicationController
     render nothing: true
   end
 
-  def result
-  end
-
   def egg
     render layout: false
   end
+
   def test
     render layout: false
   end

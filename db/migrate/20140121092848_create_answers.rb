@@ -3,11 +3,11 @@ class CreateAnswers < ActiveRecord::Migration
     create_table :answers do |t|
       t.string   :title
       t.string   :img
-      t.integer  :material_id
-
+      t.integer  :viewable_id
+      t.string   :viewable_type
 
       t.timestamps
     end
-    add_index :answers, [:material_id]
+    add_index :answers, [:viewable_id, :viewable_type]
   end
 end

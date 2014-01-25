@@ -1,18 +1,14 @@
 class Material < ActiveRecord::Base
 
   belongs_to :category
-  has_many :answers, dependent: :destroy
-  has_many :images, dependent: :destroy
+  has_many :images, as: :viewable, class_name: "Image", dependent: :destroy 
+  has_many :answers, as: :viewable, class_name: "Answer",  dependent: :destroy 
 
   class_attribute :clone 
   before_update :clone_self, if: Proc.new{|mate| mate.clone == true}
   def cloning(param)
     self.update_attribute(:clone,param)
   end
-
-  def html_img(index); images.select{|img| img.state == 1 }[index-1].try(:body) end
-  def css_img(index); images.select{|img| img.state == 2 }[index-1].try(:body) end
-  def js_img(index); images.select{|img| img.state == 3 }[index-1].try(:body) end
 
   private
   def clone_self

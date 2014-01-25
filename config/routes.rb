@@ -6,11 +6,11 @@ Game::Application.routes.draw do
   resources :home, only: [] do
     get :search
   end
+
+  get '/materials/wx_share' => 'materials#wx_share'
   resources :materials, only: [:index,:show] do
     collection do
       get :egg
-      get :test
-      get :result
     end
     member do
       get :return

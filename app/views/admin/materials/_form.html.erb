@@ -4,22 +4,21 @@
 </style>
 <%= form_for [:admin,@material], html: {class: 'form-horizontal' } do |f| %> 
   <div class="control-group">
-    <label class="control-label">标题</label>
+    <label class="control-label">游戏名</label>
     <div class="controls">
-      <%= f.text_field :title, required: true %>
+      <%= f.text_field :name, required: true, class: "input-xxlarge" %>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label">类别选择</label>
     <div class="controls">
-      <%= f.select :category_id, Category.all.to_a.collect {|p| [ p.name, p.id ] } %>
+      <%= f.select :category_id, ::Category.all.collect {|p| [ p.name, p.id ] } %>
     </div>
   </div>
   <% if action_name == 'edit' %>
-    <h4 style="margin-left:100px">答案</h4>
-    <hr/ style="margin-top:0px">
     <% answers = @material.answers %>
     <div class="control-group">
+      <label class="control-label">答案</label>
       <div class="controls" style="padding-top:6px">
         <% answers.each do |asw| %>
           <%= link_to [:edit,:admin,asw], class: :edit_obj do %>
@@ -35,58 +34,20 @@
     </div>
   <% end %>
   <% if action_name == 'edit' %>
-    <h4 style="margin-left:100px">图片</h4>
-    <hr/ style="margin-top:0px">
     <% images = @material.images %>
     <div class="control-group">
-      <label class="control-label">Html</label>
+      <label class="control-label">图片</label>
       <div class="controls" style="padding-top:4px">
-        <% imgs = images.select{ |img| img.state == 1 } %>
-        <% imgs.each do |img| %>
+        <% images.each do |img| %>
           <%= link_to [:edit,:admin,img], class: :edit_obj do %>
-            <span class="label label-important"><%= img.title %></span>
+            <span class="label label-important"><%= img.cn_state %></span>
           <% end %>
           <%= link_to [:admin,img], method: :delete,  
             class: :ajaxDel, data: {confirm: "Are you sure?"} ,remote: true  do %>
             x&nbsp;
           <% end %>
         <% end %>
-        <%= link_to '添加', new_admin_material_image_path(@material, state:1), id: :add_obj,  
-          class: "btn btn-mini btn-success", remote: true %>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">Css</label>
-      <div class="controls" style="padding-top:4px">
-        <% imgs = images.select{ |img| img.state == 2 } %>
-        <% imgs.each do |img| %>
-          <%= link_to [:edit,:admin,img], class: :edit_obj do %>
-            <span class="label label-important"><%= img.title %></span>
-          <% end %>
-          <%= link_to [:admin,img], method: :delete,  
-            class: :ajaxDel, data: {confirm: "Are you sure?"} ,remote: true  do %>
-            x&nbsp;
-          <% end %>
-        <% end %>
-        <%= link_to '添加', new_admin_material_image_path(@material, state:2), id: :add_obj,
-          class: "btn btn-mini btn-success", remote: true %>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">Js</label>
-      <div class="controls" style="padding-top:4px">
-        <% imgs = images.select{ |img| img.state == 3 } %>
-        <% imgs.each do |img| %>
-          <%= link_to [:edit,:admin,img], class: :edit_obj do %>
-            <span class="label label-important"><%= img.title %></span>
-          <% end %>
-          <%= link_to [:admin,img], method: :delete,  
-            class: :ajaxDel, data: {confirm: "Are you sure?"} ,remote: true  do %>
-            x&nbsp;
-          <% end %>
-        <% end %>
-        <%= link_to '添加', new_admin_material_image_path(@material, state:3), id: :add_obj,
-          class: "btn btn-mini btn-success", remote: true %>
+        <%= link_to '添加', [:new,:admin,@material,:image], id: :add_obj, class: "btn btn-mini btn-success", remote: true %>
       </div>
     </div>
   <% end %>
@@ -124,7 +85,7 @@
   <div class="control-group">
     <label class="control-label">描述</label>
     <div class="controls">
-      <%= f.text_field :wx_desc, required: true, class: "input-xxlarge" %>
+      <%= f.text_field :wxdesc, required: true, class: "input-xxlarge" %>
     </div>
   </div>
   <div class="form-actions" style="margin-bottom:0px">

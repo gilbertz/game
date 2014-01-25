@@ -20,7 +20,7 @@ class Admin::ImagesController < Admin::BaseController
   def update
     image = ::Image.find params[:id]
     image.update_attributes image_params
-    redirect_to [:edit,:admin,image.material]
+    redirect_to [:edit,:admin,image.viewable]
   end
 
   def destroy

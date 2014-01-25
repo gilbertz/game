@@ -1,7 +1,7 @@
-<% asw = @answer %>
-<%= form_for [:admin, asw], html: {class: "form-horizontal", style: "margin-bottom:0px"} do |f| %>
+<% asw = @image %>
+<%= form_for [:admin, asw], html: {class: "form-horizontal", style: "margin-bottom:0px;"} do |f| %>
   <h3 style="margin-top:0px"> 
-    <%= action_name.in?(['new', 'create']) ? "添加" : "编辑" %>答案 
+    <%= action_name.in?(['new', 'create']) ? "添加" : "编辑" %> Image
   </h3>
   <hr style="margin-top:0px"/>
   <% unless asw.errors.blank? %>
@@ -18,30 +18,33 @@
   <%= f.hidden_field :viewable_id %>
   <%= f.hidden_field :viewable_type %>
   <div class="control-group">
-    <label class="control-label" style="width:100px"><strong>标题:</strong></label>
+    <label class="control-label" style="width:100px"><strong>title:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">
-      <%= f.text_field :title, style: "width:200px", required: true %> 
+      <%= f.text_field :title, required: true %>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" style="width:100px"><strong>图片链接:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">
-      <%= f.text_field :img, style: "width:320px" %> 
-      <span class="help-block"><a href="<%= @answer.img %>">图片预览</a> &nbsp;
+      <%= f.text_field :body, style: "width:320px", required: true %> 
+      <span class="help-block"> 
+        <%= link_to '图片预览', @image.body %> &nbsp;
         size: <span id="size"></span>
       </span>
     </div>
   </div>
-  <div class="form-actions" style="margin-bottom:0px;margin-left:-28px">
-    <button type="submit" class="btn btn-primary">提交</button>
+  <div class="control-group">
+    <div class="controls" style="margin:0 30px 0 110px">
+      <button type="submit" class="btn btn-primary">提交</button>
+    </div>
   </div>
 <% end %>
 <script type="text/javascript">
-  var screenImage = $("<img src='<%= asw.img %>'/>");
+  var screenImage = $("<img src='<%= @image.body %>'>");
   var theImage = new Image();
   theImage.src = screenImage.attr("src");
   var imageWidth = theImage.width;
   var imageHeight = theImage.height;
   var content = imageWidth + "x" + imageHeight;
-  $("span#size").text(content);
+  $("span#size").delay(1).text(content);
 </script>
