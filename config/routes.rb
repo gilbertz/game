@@ -14,6 +14,7 @@ Game::Application.routes.draw do
     end
     member do
       get :return
+      get :jiu_gong
     end
   end
 
@@ -32,6 +33,7 @@ Game::Application.routes.draw do
       resources :answers, only: :new
       member do
         get :clone
+        get :update_state
       end
     end
     resources :images, except: :new

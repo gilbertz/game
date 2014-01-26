@@ -31,9 +31,11 @@
       <% @html_image_2 = @material.images.select{|i| i.state == 13}[0].try(:body) %>
       <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
       <%= ERB.new(@category.html).result(binding).html_safe %>
-      <div style="display:none;">
-        <script src="http://s5.cnzz.com/stat.php?id=2814783&web_id=2814783" language="JavaScript"> 
-        </script>
+      <div style="display: none;">
+        <script src="http://s5.cnzz.com/stat.php?id=2814783&web_id=2814783" language="JavaScript"></script>
       </div>
+       <script type="text/javascript"> 
+         $('a').last().hide();
+      </script>
     <% end %>
   </html>

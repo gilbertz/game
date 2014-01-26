@@ -19,6 +19,10 @@ class MaterialsController < ApplicationController
     end
   end
 
+  def jiu_gong
+    render layout: false
+  end
+
   def wx_share
     #if params[:f]
       #key = "wx_share_#{params[:f]}"
