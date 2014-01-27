@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-  <% unless params[:text] %>
    <% cache @material, skip_digest: true do %>
     <head>
       <%= favicon_link_tag 'shangjieba-icon.png' %> 
@@ -40,5 +39,4 @@
       $('a').last().hide();
     </script>
   <% end %>
- <% end %>
 </html>

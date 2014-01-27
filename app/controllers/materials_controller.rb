@@ -6,7 +6,11 @@ class MaterialsController < ApplicationController
 
   def show
     @material = Material.find params[:id]
-    render layout: false
+    unless params[:text]
+      render layout: false
+    else
+      render 'show_ncache', layout: false
+    end
   end
 
   def return
