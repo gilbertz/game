@@ -23,6 +23,12 @@ class Admin::MaterialsController < Admin::BaseController
     redirect_to [:admin,:materials]
   end
 
+  def update_state
+    material = Material.find params[:id]
+    material.invert_state 
+    render json: {msg: 'ok', val: material.reload.cn_state}
+  end
+
   def clone
     material = Material.find params[:id]
     material.cloning(true)
@@ -35,7 +41,7 @@ class Admin::MaterialsController < Admin::BaseController
   end
   private
   def material_params
-    params.require(:material).permit(:name,:category_id,:wx_appid,:wxdesc,:wx_tlimg,:wx_url,:wx_title)
+    params.require(:material).permit(:name,:description,:category_id,:wx_appid,:wxdesc,:wx_tlimg,:wx_url,:wx_title)
   end
 
   def clear_rubbish

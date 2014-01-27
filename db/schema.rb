@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122010144) do
+ActiveRecord::Schema.define(version: 20140126051542) do
 
   create_table "answers", force: true do |t|
     t.string   "title"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20140122010144) do
   add_index "images", ["viewable_id", "viewable_type"], name: "index_game_images_on_viewable_id_and_viewable_type", using: :btree
 
   create_table "materials", force: true do |t|
+    t.integer  "state",       default: 0
+    t.text     "description"
     t.integer  "category_id"
     t.text     "html"
     t.string   "name"
@@ -61,9 +63,11 @@ ActiveRecord::Schema.define(version: 20140122010144) do
     t.string   "wx_url"
     t.string   "wx_title"
     t.string   "wxdesc"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
+
+  add_index "materials", ["state"], name: "index_materials_on_state", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

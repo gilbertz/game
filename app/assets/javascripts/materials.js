@@ -6,6 +6,11 @@ $(document).ready(function(){
      return false;
    });
 
+   $(this).on('ajax:success', 'td > a.ajax', function(evt, data, status, xhr){
+     $(this).find('span').text(data.val);
+     return false;
+   });
+
    $(this).on("ajax:success", "a.delMaterial", function(evt, data, status, xhr){ 
      $(this).parents("tr").remove();
      return false;

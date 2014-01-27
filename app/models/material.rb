@@ -10,6 +10,13 @@ class Material < ActiveRecord::Base
     self.update_attribute(:clone,param)
   end
 
+  def invert_state
+    val = state.eql?(0) ? 1 : 0
+    self.update_attributes(state: val)
+  end
+
+  def cn_state; { 0 => '下线', 1 => '上线', nil => '下线' }[state] end
+
   private
   def clone_self
     material = Material.new self.attributes.except!("created_at","id")

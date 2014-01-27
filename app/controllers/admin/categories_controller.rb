@@ -25,6 +25,9 @@ class Admin::CategoriesController < Admin::BaseController
 
   def update
     @category = Category.find params[:id]
+    @category.materials.each do |mate|
+      expire_fragment(mate)
+    end
     @category.update_attributes category_params
     redirect_to [:edit,:admin,@category]
   end
