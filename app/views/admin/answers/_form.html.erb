@@ -24,6 +24,13 @@
     </div>
   </div>
   <div class="control-group">
+    <label class="control-label" style="width:100px"><strong>分组:</strong></label>
+    <div class="controls" style="margin:0 30px 0 110px">
+      <%= f.number_field :group, min: 0, style: "width:200px" %> 
+      <span class="help-block">说明: 1为男，0为女的.</span>
+    </div>
+  </div>
+  <div class="control-group">
     <label class="control-label" style="width:100px"><strong>图片链接:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">
       <%= f.text_field :img, style: "width:320px" %> 

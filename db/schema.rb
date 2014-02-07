@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140126051542) do
+ActiveRecord::Schema.define(version: 20140207064751) do
 
   create_table "answers", force: true do |t|
     t.string   "title"
+    t.integer  "group"
     t.string   "img"
     t.integer  "viewable_id"
     t.string   "viewable_type"
