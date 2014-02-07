@@ -1,22 +1,23 @@
-  <table class="table table-bordered">  
-    <thead>
-      <tr class="well">
-        <th>名称</th>
-        <th width="17%">创建时间</th>
-        <th width="13%">操作</th>
+<table class="table table-bordered">  
+  <thead>
+    <tr class="well">
+      <th>名称</th>
+      <th width="17%">创建时间</th>
+      <th width="13%">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |c| %>
+      <tr>
+        <td><%= c.name %></td>
+        <td><%= c.created_at.to_local %></td>
+        <td> 
+          <%= link_to '编辑', [:edit,:admin,c] %> |
+          <%= link_to '克隆', [:clone,:admin,c] %> |
+          <%= link_to '删除', [:admin,c], method: :delete %> 
+        </td>
       </tr>
-    </thead>
-    <body>
-      <% @categories.each do |c| %>
-        <tr>
-          <td><%= c.name %></td>
-          <td><%= c.created_at.to_local %></td>
-          <td> 
-            <%= link_to '编辑', [:edit,:admin,c] %> |
-            <%= link_to '克隆', [:clone,:admin,c] %> |
-            <%= link_to '删除', [:admin,c], method: :delete %> 
-          </td>
-        </tr>
-      <% end %>
-    </body>
-  </table>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @categories %>

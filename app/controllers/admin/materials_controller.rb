@@ -1,7 +1,7 @@
 class Admin::MaterialsController < Admin::BaseController
   before_filter :clear_rubbish, only: [:update,:destroy]
   def index
-    @materials = Material.includes(:category).order('id desc')
+    @materials = Material.includes(:category).order('id desc').page(params[:page])
   end
 
   def new
