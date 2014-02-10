@@ -131,7 +131,7 @@ div#secondary{clear:right}
 .page-link a{background-color:#FFF;background-color: rgba(255, 255, 255, 0.5);color:#444}
 .page-link a:active, 
 .page-link a:hover{background:#f3f3f3; color:#0299FF; text-decoration:none; outline:0}
-.posthome{height:350px;background-color:#FFF;-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.3);-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.3);overflow: hidden;}
+.posthome{height:auto;background-color:#FFF;-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.3);-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.3);overflow: hidden;}
 .posthometext{margin:0 10px}
 .postsingletext{margin:0 10px !important;overflow: hidden;}
 .postsingletext ul li{margin:0 1em !important}
@@ -204,7 +204,7 @@ div.formcontainer{width:100%}
 /*widget*/
 .widget {}
 .widgetblock{background:transparent;font-size:1.2em;margin:0 0 0.5em 0;padding:0.5em 0 0 0;color:#444}
-.widgetblock img{max-width: 300px;height:auto}
+.widgetblock img{max-width: 350px;height:auto}
 .widgettitleb{margin: 0 0 0.5em 0; padding:0.5em 0 0.5em 0;color:#444;border-bottom:2px solid #f1f2f4;}
 .screen-reader-text{display:none}
 .widgetpartenaire{background:#FFF;padding:10px 0 0 0;color:#444;}
@@ -331,6 +331,7 @@ dd{margin-bottom:18px}
 	margin-left: 1%;
 	margin-right: 1%;
 }
+
 
 /* Grid >> Children (Alpha ~ First, Omega ~ Last)
 ----------------------------------------------------------------------------------------------------*/
@@ -983,7 +984,7 @@ PERSONNALISATION
 	left:0%;
 }
 .postsingle{margin : 0 -10px 0 0 !important;}
-.sidebar{margin:10px 0 0 0}
+.sidebar{margin:10px 0 0 0;}
 #access{display:none;}
 .mobileonfooter{display:block}    
 
@@ -1045,7 +1046,7 @@ PERSONNALISATION
 	margin-right: 1%;
 }
 .postsingle{margin : 0 -10px 0 0 !important;}
-.sidebar{margin:10px 0 0 0}
+.sidebar{margin:10px 0 0 0;}
 #access{display:none;}
 .mobileonfooter{display:block}    
 

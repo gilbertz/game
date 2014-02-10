@@ -12,3 +12,5 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.infinitescroll
+//= require jquery.masonry.min
