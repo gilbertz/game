@@ -1,3 +1,5 @@
+set :user, "wanhuir"
+set :password, "wan123"
 set :deploy_to, "/var/www/apps/weixin_game"
 
 role :app, "222.73.85.232"
