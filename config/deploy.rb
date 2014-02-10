@@ -16,8 +16,6 @@ set :application, "weixin_game"
 # server details
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
-set :user, "wanhuir"
-set :password, "wan123"
 set :use_sudo, false
 
 

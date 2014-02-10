@@ -1,8 +1,10 @@
+set :user, "ubuntu"
+set :password, "Gv0NDlO2Cw29N9"
 set :deploy_to, "/var/www/apps/weixin_game"
 
-role :app, "222.73.85.232"
-role :web, "222.73.85.232"
-role :db,  "222.73.85.232", primary: true
+role :app, "10.221.84.136"
+role :web, "10.221.84.136"
+role :db,  "10.221.84.136", primary: true
 # tasks
 namespace :deploy do
   task :start, :roles => :app do
@@ -19,6 +21,7 @@ namespace :deploy do
 
   desc "Restart Application"
   task :restart, :roles => :app do
+    run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
     #run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
     #run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
     #run "touch #{current_path}/tmp/restart.txt"
