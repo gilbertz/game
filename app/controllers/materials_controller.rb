@@ -1,7 +1,7 @@
 class MaterialsController < ApplicationController
 
   def index 
-    @materials = Material.includes(:images)
+    @materials = Material.includes(:images).where(state: 1).order('id desc').page(params[:page]).per(9)
   end
 
   def show

@@ -1,12 +1,6 @@
 class HomeController < ApplicationController
 
   def index
-    @q = Material.includes(:images).where(state: 1).ransack params[:q]
-    @materials = @q.result.order('id desc')
-  end
-
-  def search
-    @q = Material.ransack params[:q]
-    @materials = @q.result.order('id desc')
+    @materials = Material.includes(:images).where(state: 1).order('id desc').page(params[:page]).per(9)
   end
 end

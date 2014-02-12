@@ -164,7 +164,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   kaminari
-  mysql2 (~> 0.3.15)
+  mysql2 (~> 0.3.14)
   quiet_assets
   rails (= 4.0.0)
   ransack!
