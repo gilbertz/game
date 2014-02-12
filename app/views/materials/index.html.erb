@@ -14,7 +14,7 @@
     </div>
   <% end %>
   <div class="clear"></div>				
-  <% unless @materials.size <= 9 %>
+  <% unless @materials.size < 9 %>
     <div style="background: #444;">
       <div style="margin: 0 auto 0 auto; width:63px; padding: 6px; text-align: center;">
         <%= link_to "点击加载", materials_url(page: params[:page].to_i + 1), style: "color: white;" %>
