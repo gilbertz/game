@@ -1,7 +1,7 @@
 class MaterialsController < ApplicationController
 
   def index 
-    @materials = Material.includes(:images).where(state: 1).order('id desc').page(params[:page]).per(9)
+    @materials = Material.includes(:images).where(state: 1).order('id desc').page(params[:page]).per(12)
     render json: {content: @materials, href: "/materials?page=#{params[:page].to_i + 1}"}
   end
 

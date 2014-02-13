@@ -24,7 +24,7 @@ $(document).ready(function(){
          content += "</div>";
      });
      $('div.grid_4').last().after($(content));
-     if($(content).length < 9) {
+     if($(content).length < 12) {
        $(this).hide();
      } else {
        $(this).attr("href", data.href);
