@@ -4,7 +4,7 @@ $(document).ready(function(){
      return false;
    });
    $(this).on("ajax:success", "a#load_materials", function(evt, data, status, xhr){ 
-     $(this).find("div").text("点击加载");
+     $(this).find("div").text("点击加载更多游戏");
      var content =  "";
      $.each(data.content, function(index, value){
          content += "<div class='grid_4 alpha1'>";
