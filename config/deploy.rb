@@ -22,7 +22,7 @@ set :use_sudo, false
 
 # repository
 set :scm,         :git
-set :repository,  "git@wanhuir.com:weixin_game.git"
+set :repository,  "git@222.73.85.232:weixin_game.git"
 set :branch,      'master'
 set :keep_releases, 15
 set :deploy_via, :remote_cache
