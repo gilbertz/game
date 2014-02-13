@@ -1,8 +1,9 @@
 <div id="content" class="container_12 grid_10 push_5">
   <% @materials.each do |material| %>
     <div class="grid_4 alpha1">
-      <div class="home blog paged paged-2 cat-links asides" style="height:48px;overflow:hidden;">
-        <%= link_to material.name, '#', title: 'asides' %>
+      <div class="home blog paged paged-2 cat-links asides" style=" height:42px; ">
+        <!--<%= link_to material.name, '#', title: 'asides', style:'width:50%; line-height:20px;' %>-->
+        <%= material.name %>
       </div>
       <div id="post-11945" class="post-11945 post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides">
         <div class="">
