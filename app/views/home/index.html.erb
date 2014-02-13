@@ -1,6 +1,6 @@
 <div id="content" class="container_12 grid_10 push_5">
-  <% @materials.each_with_index do |material, index| %>
-    <div class="grid_4 alpha1 omega<%= index+1 %>">
+  <% @materials.each do |material| %>
+    <div class="grid_4 alpha1">
       <div class="home blog paged paged-2 cat-links asides" style="height:48px;overflow:hidden;">
         <%= link_to material.name, '#', title: 'asides' %>
       </div>
@@ -14,11 +14,16 @@
     </div>
   <% end %>
   <div class="clear"></div>				
+  <div>
+    <%#= social_share_button_tag("测试", url:"http://www.wanhuir.com/materials/1", image: "http://mashang.qiniudn.com/tc.jpg") %>
+  </div>
   <% if @materials.size < @materials.total_count %>
     <div style="background: #444;">
-      <div style="margin: 0 auto 0 auto; width:63px; padding: 6px; text-align: center;">
-        <%= link_to "点击加载", materials_url(length: 9), style: "color: white;" %>
-      </div>
+      <%= link_to  materials_url(page: 2), remote: true, id: "load_materials" do %>
+        <div style="margin: 0 auto 0 auto; width:94px; padding:15px; text-align:center; color:white;">
+          点击加载
+        </div>
+      <% end %>
     </div>
   <% end %>
 </div>

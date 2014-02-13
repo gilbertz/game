@@ -49,11 +49,12 @@ models.svg
 .yardopts                
 coverage                 
                          
-                         
+public/assets/iqtest/
 # Public Uploads         
 public/system/*
 #public/system/*     
 public/assets/           
+
 public/sitemap/          
                          
 # Public Cache           

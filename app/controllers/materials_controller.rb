@@ -1,7 +1,8 @@
 class MaterialsController < ApplicationController
 
   def index 
-    @materials = Material.includes(:images).where(state: 1).order('id desc').page(1).per(params[:length].to_i)
+    @materials = Material.includes(:images).where(state: 1).order('id desc').page(params[:page]).per(9)
+    render json: {content: @materials, href: "/materials?page=#{params[:page].to_i + 1}"}
   end
 
   def show
@@ -21,6 +22,10 @@ class MaterialsController < ApplicationController
     else
       render layout: false
     end
+  end
+
+  def iqtest
+    render layout: false
   end
 
   def jiu_gong
