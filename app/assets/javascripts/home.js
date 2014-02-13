@@ -14,7 +14,7 @@ $(document).ready(function(){
          content += "</div>";
          content += "<div id='post-11945' class='post-11945 post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides'>"
          content += "<div class=''>";
-         content += "<a href='/materials/5'>";
+         content += "<a href=\"/materials/" + value.id + "\">";
          content += "<img alt='Cover' src=";
          content += value.wx_tlimg;
          content += " style=\"width:100%;margin-bottom:0px;\">";
@@ -24,7 +24,7 @@ $(document).ready(function(){
          content += "</div>";
      });
      $('div.grid_4').last().after($(content));
-     if($(content).length < 9) {
+     if($(content).length < 12) {
        $(this).hide();
      } else {
        $(this).attr("href", data.href);
