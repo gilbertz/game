@@ -17,7 +17,7 @@ $(document).ready(function(){
          content += "<a href='/materials/5'>";
          content += "<img alt='Cover' src=";
          content += value.wx_tlimg;
-         content += " style=\"width:100%;height:265px;margin-bottom:0px;\">";
+         content += " style=\"width:100%;margin-bottom:0px;\">";
          content += "</a>";   
          content += "</div>";
          content += "</div>";
