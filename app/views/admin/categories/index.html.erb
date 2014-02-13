@@ -2,6 +2,7 @@
   <thead>
     <tr class="well">
       <th>名称</th>
+      <th width="5%">游戏</th>
       <th width="17%">创建时间</th>
       <th width="13%">操作</th>
     </tr>
@@ -10,14 +11,20 @@
     <% @categories.each do |c| %>
       <tr>
         <td><%= c.name %></td>
+        <td style="text-align:center;"> 
+          <span class="badge badge-info"> 
+            <%= c.materials.length %> 
+          </span> 
+        </td>
         <td><%= c.created_at.to_local %></td>
         <td> 
           <%= link_to '编辑', [:edit,:admin,c] %> |
           <%= link_to '克隆', [:clone,:admin,c] %> |
-          <%= link_to '删除', [:admin,c], method: :delete %> 
+          <%= link_to '删除', [:admin,c], method: :delete, class: "delCategory", remote: true, data: {confirm: "Are you sure?"} %> 
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<p style="color:red;">注：游戏小于0者才可删除。</p>
 <%= paginate @categories %>

@@ -1,6 +1,6 @@
 class Admin::CategoriesController < Admin::BaseController
   def index
-    @categories = Category.order("id desc").page(params[:page])
+    @categories = Category.includes(:materials).order("id desc").page(params[:page])
   end
 
   def new
@@ -34,7 +34,8 @@ class Admin::CategoriesController < Admin::BaseController
 
   def destroy
     @category = Category.find params[:id]
-    render nothing: true
+    arg = @category.destroy ? 'ok' : 'err'
+    render json: {msg: arg}
   end
 
   private

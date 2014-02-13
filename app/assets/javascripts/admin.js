@@ -15,4 +15,5 @@
 //= require bootstrap
 //= require jquery.colorbox
 //= require materials
+//= require categories
 //  require turbolinks
