@@ -3,7 +3,7 @@
     <tr class="well">
       <th>名称</th>
       <th width="5%">状态</th>
-      <th width="9%">分类</th>
+      <th width="15%">分类</th>
       <th width="17%">创建时间</th>
       <th width="13%">操作</th>
     </tr>
@@ -22,7 +22,7 @@
             <span class="label"><%= c.cn_state %></span> 
           <% end %>
         </td>
-        <td><%= c.category.try(:name) %></td>
+        <td><%= link_to c.category.try(:name), [:edit,:admin,c.category] %></td>
         <td><%= c.created_at.to_local %></td>
         <td> 
           <%= link_to '编辑', [:edit,:admin,c] %> |
