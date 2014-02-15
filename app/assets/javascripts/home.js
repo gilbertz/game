@@ -9,8 +9,8 @@ $(document).ready(function(){
      $.each(data.content, function(index, value){
          content += "<div class='grid_4 alpha1'>";
          content += "<div class='home blog paged paged-2 cat-links asides' style='height:48px;overflow:hidden;'>";
-         content += "<a href='#' title='asides'>";
-         content += value.name + "</a>";
+         //content += "<a href='#' title='asides'>";
+         content += value.name;// + "</a>";
          content += "</div>";
          content += "<div id='post-11945' class='post-11945 post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides'>"
          content += "<div class=''>";
