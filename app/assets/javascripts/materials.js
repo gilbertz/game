@@ -1,4 +1,8 @@
 $(document).ready(function(){
+   $("#tixing").click(function(){
+     alert("是否提交?");
+   });
+
    $("a#add_obj, a.edit_obj").colorbox({closeButton: false});
    $(this).on("ajax:success", "a.ajaxDel", function(evt, data, status, xhr){ 
      $(this).prev().remove();
