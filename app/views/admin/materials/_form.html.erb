@@ -84,7 +84,9 @@
     <div class="control-group">
       <label class="control-label">链接</label>
       <div class="controls">
-        <%= f.text_field :wx_url, value: @material.wx_url.blank? @material.wx_url : material_url(@material).gsub("\:3000", ""), class: "input-xxlarge" %>
+        <% wx_url = @material.wx_url %>
+        <% wx_url = material_url(@material).gsub("\:3000", "") if wx_url.blank? %>
+        <%= f.text_field :wx_url, value: wx_url, class: "input-xxlarge" %>
       </div>
     </div>
   <% end %>
