@@ -2,12 +2,12 @@
 <html>
    <% cache @material, skip_digest: true do %>
     <head>
-      <%= favicon_link_tag 'shangjieba-icon.png' %> 
+      <link href="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/wanhuir-icon.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
       <% @category = @material.category %>
       <title><%= @material.name %></title>
       <% @answers = @material.answers %>
       <meta charset="utf-8">
-      <%= javascript_include_tag "jquery" %>
+      <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.js"></script>
       <%= ERB.new(@category.meta).result(binding).html_safe %>
       <% @wx_appid = @material.wx_appid %>
       <% @wx_url   = @material.wx_url %>
