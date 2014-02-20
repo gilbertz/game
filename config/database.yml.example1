@@ -2,7 +2,9 @@ production:
   adapter: mysql2
   encoding: utf8
   database: game
+  host: "10.66.31.210"
+  port: 1025
   pool: 5
   username: root
-  password: long
+  password: wanhuir123
   #socket: /var/run/mysqld/mysqld.sock
