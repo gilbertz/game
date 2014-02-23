@@ -56,9 +56,12 @@ class MaterialsController < ApplicationController
   
 
   def get_topn
-    key = "score_48_top"
-    @topn = $redis.zrange(key, 0, 9)
-    p @topn
+    begin
+      key = "score_48_top"
+      @topn = $redis.zrange(key, 0, 9)
+    rescue =>e
+      p e.to_s
+    end
   end
 
   def egg
