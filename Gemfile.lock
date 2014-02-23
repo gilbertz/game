@@ -115,6 +115,9 @@ GEM
     rake (10.1.1)
     rdoc (4.1.1)
       json (~> 1.4)
+    redis (3.0.7)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rvm-capistrano (1.5.1)
       capistrano (~> 2.15.4)
     sass (3.2.13)
@@ -168,6 +171,8 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.0.0)
   ransack!
+  redis
+  rest-client
   rvm-capistrano
   sass-rails (~> 4.0.0)
   sdoc

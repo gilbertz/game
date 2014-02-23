@@ -48,6 +48,10 @@ end
 
 gem 'bcrypt-ruby', require: 'bcrypt'
 
+gem "redis"
+
+gem 'rest-client'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

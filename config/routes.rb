@@ -8,6 +8,8 @@ Game::Application.routes.draw do
   end
 
   get '/materials/wx_share' => 'materials#wx_share'
+  get '/materials/report' => 'materials#report',  :as=>"report"
+
   resources :materials, only: [:index,:show] do
     collection do
       get :egg

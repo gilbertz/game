@@ -6,6 +6,8 @@ class MaterialsController < ApplicationController
   end
 
   def show
+    get_topn
+
     @material = Material.find params[:id]
     unless params[:text]
       render layout: false
@@ -38,6 +40,25 @@ class MaterialsController < ApplicationController
       #@count = $redis.incr(key)
     #end
     render nothing: true
+  end
+
+  def report
+    if params[:game_id] and params[:score]
+      key = "score_#{params[:game_id]}_top"
+      $redis.zadd(key, params[:score].to_i * -1, params[:score])
+       
+      if $redis.zcard(key) > 10
+        $redis.zremrangebyrank(key, -1, -1)
+      end
+    end
+    render nothing: true
+  end
+  
+
+  def get_topn
+    key = "score_48_top"
+    @topn = $redis.zrange(key, 0, 9)
+    p @topn
   end
 
   def egg
