@@ -15,4 +15,3 @@
 //= require jquery.infinitescroll
 //= require jquery.masonry.min
 //= require home
-//= require_tree ./games
