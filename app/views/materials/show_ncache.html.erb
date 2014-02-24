@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <%= favicon_link_tag 'shangjieba-icon.png' %> 
+      <link href="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/wanhuir-icon.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
       <% @category = @material.category %>
       <title><%= @material.name %></title>
       <% @answers = @material.answers %>
       <meta charset="utf-8">
-      <%= javascript_include_tag "jquery" %>
+      <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.js"></script>
       <%= ERB.new(@category.meta).result(binding).html_safe %>
+      <% @wx_appid = @material.wx_appid %>
+      <% @wx_url   = @material.wx_url %>
+      <% @wx_title = @material.wx_title %>
+      <% @wx_desc  = @material.wxdesc %>
+      <% @wx_tlimg = @material.wx_tlimg %>
+      <% @wx_ln    = @material.wx_ln %>
       <script type="text/javascript">
-        <% @wx_appid = @material.wx_appid %>
-        <% @wx_url   = @material.wx_url %>
-        <% @wx_title = @material.wx_title %>
-        <% @wx_desc  = @material.wxdesc %>
-        <% @wx_tlimg = @material.wx_tlimg %>
         <%= ERB.new(@category.js).result(binding).html_safe %>
+      </script>
+      <script type="text/javascript">
+        <%= ERB.new(@category.wx_js || "").result(binding).html_safe %>
       </script>
       <style type="text/css">
         <% @css_image   = @material.images.select{|i| i.state == 1 }[0].try(:body) %>
