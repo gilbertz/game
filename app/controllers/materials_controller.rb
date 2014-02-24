@@ -45,9 +45,13 @@ class MaterialsController < ApplicationController
   def report
     if params[:game_id] and params[:score]
       key = "score_#{params[:game_id]}_top"
-      $redis.zadd(key, params[:score].to_i * -1, params[:score])
-       
-      if $redis.zcard(key) > 10
+      
+      if params[:score].length < 10
+         $redis.zadd(key, params[:score].to_i * -1, params[:score])
+      end
+      $redis.zrem(key, "783272881145583")
+      $redis.zrem(key, "4255367378012730")  
+      if $redis.zcard(key) > 20
         $redis.zremrangebyrank(key, -1, -1)
       end
     end
