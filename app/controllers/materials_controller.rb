@@ -45,14 +45,20 @@ class MaterialsController < ApplicationController
   def report
     if params[:game_id] and params[:score]
       key = "score_#{params[:game_id]}_top"
-      
-      if params[:score].length < 10
+      key1 = "score_#{params[:game_id]}_recent"     
+ 
+      if params[:score].length < 10 and params[:score].to_i < 100000
          $redis.zadd(key, params[:score].to_i * -1, params[:score])
+         $redis.lpush(key1, params[:score])
       end
       $redis.zrem(key, "783272881145583")
-      $redis.zrem(key, "4255367378012730")  
+      $redis.zrem(key, "4255367378012730") 
+      $redis.zrem(key, "999999") 
       if $redis.zcard(key) > 20
         $redis.zremrangebyrank(key, -1, -1)
+      end
+      if $redis.zcard(key1) > 20
+        $redis.rpop(key1)
       end
     end
     render nothing: true
@@ -62,7 +68,9 @@ class MaterialsController < ApplicationController
   def get_topn
     begin
       key = "score_48_top"
+      key1 = "score_48_recent"
       @topn = $redis.zrange(key, 0, 9)
+      @recentn = $redis.lrange(key1, 0, 9)
     rescue =>e
       p e.to_s
     end
