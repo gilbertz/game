@@ -1,6 +1,6 @@
 set :user, "ubuntu"
 set :password, "Gv0NDlO2Cw29N9"
-set :deploy_to, "/data/www/apps/weixin_game"
+set :deploy_to, "/data/www/apps/game_4002"
 
 role :app, "203.195.186.54"
 role :web, "203.195.186.54"
@@ -23,6 +23,6 @@ namespace :deploy do
   task :restart, :roles => :app do
     run "mv #{current_path}/config/database.yml.example1 #{current_path}/config/database.yml"
     run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
-    run "touch #{current_path}/tmp/restart.txt"
+    run "cd #{current_path} && passenger stop -p 4002 && passenger start --daemonize -p 4002"
   end
 end
