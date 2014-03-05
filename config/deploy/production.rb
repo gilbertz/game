@@ -1,10 +1,10 @@
-set :user, "wanhuir"
-set :password, "wan123"
-set :deploy_to, "/var/www/apps/weixin_game"
+set :user, "ubuntu"
+set :password, "JScY5w2K3Kd"
+set :deploy_to, "/data/long/apps/game"
 
-role :app, "222.73.85.232"
-role :web, "222.73.85.232"
-role :db,  "222.73.85.232", primary: true
+role :app, "203.195.191.203"
+role :web, "203.195.191.203"
+role :db,  "203.195.191.203", primary: true
 # tasks
 namespace :deploy do
   task :start, :roles => :app do

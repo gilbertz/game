@@ -11,7 +11,7 @@ set :rvm_ruby_string, 'ruby-2.0.0-p247@game'
 #set :rvm_bin_path, "/usr/local/rvm/bin"
 
 # main details
-set :application, "weixin_game"
+set :application, "game"
 
 # server details
 default_run_options[:pty] = true
