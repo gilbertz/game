@@ -10,6 +10,8 @@ class Admin::QuestionAnswersController < Admin::BaseController
   def create
     question_answer = QuestionAnswer.new(question_answer_params)
     question_answer.save
+
+    expire_fragment(question_answer.question.material)
     redirect_to [:edit,:admin,question_answer.question.material]
   end
 
@@ -17,6 +19,7 @@ class Admin::QuestionAnswersController < Admin::BaseController
     question_answer = QuestionAnswer.find(params[:id])
     question_answer.destroy
 
+    expire_fragment(question_answer.question.material)
     redirect_to [:edit,:admin,question_answer.question.material]
   end
 
@@ -24,6 +27,7 @@ class Admin::QuestionAnswersController < Admin::BaseController
     @question_answer = QuestionAnswer.find(params[:id])
     @question = @question_answer.question
 
+    expire_fragment(question_answer.question.material)
     render :partial => "form"
   end
 
@@ -31,6 +35,7 @@ class Admin::QuestionAnswersController < Admin::BaseController
     question_answer = QuestionAnswer.find params[:id]
     question_answer.update_attributes question_answer_params
 
+    expire_fragment(question_answer.question.material)
     redirect_to [:edit,:admin,question_answer.question.material]
   end
 

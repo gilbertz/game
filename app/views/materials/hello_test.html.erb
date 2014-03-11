@@ -86,9 +86,8 @@
                   }else if(result > 10 && result < 20){
                       result_message = message[1];
                   }else{
-                      result_message = message[3];
+                      result_message = message[2];
                   }
-
                   $(".aside").append(result_message);
                   $(".result").show();
               }
@@ -97,12 +96,7 @@
           $(".prev a").click(function(){
               var node = $(this).parent().parent();
               var prev_node = $(node).prev();
-
-              console.log(node);
-              console.log(prev_node);
-
               if(prev_node.hasClass("question")){
-                  console.log("====asd-sada");
                   $(node).hide();
                   $(prev_node).show();
               }
@@ -115,7 +109,6 @@
 
 <body>
 <% questions = @material.questions %>
-
 <% unless questions.blank? %>
  <% questions.each do |question| %>
     <div class="question">

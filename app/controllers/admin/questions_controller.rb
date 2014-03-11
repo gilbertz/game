@@ -14,7 +14,6 @@ class Admin::QuestionsController < Admin::BaseController
     redirect_to [:edit,:admin,question.material]
   end
 
-
   private
   def question_params
     params.require(:question).permit(:question_title, :material_id)
