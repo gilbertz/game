@@ -3,6 +3,11 @@ class Category < ActiveRecord::Base
   has_many :materials, class_name: "Material" 
 
   before_destroy :check_its_materials
+  def pv
+    key = "stat_pv_#{self.id}"
+    $redis.get(key)
+  end
+  
   private 
   def check_its_materials
     false if self.materials.length > 0

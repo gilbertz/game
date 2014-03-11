@@ -2,6 +2,7 @@
   <thead>
     <tr class="well">
       <th>名称</th>
+      <th>pv</th> 
       <th width="5%">游戏</th>
       <th width="17%">创建时间</th>
       <th width="13%">操作</th>
@@ -11,6 +12,7 @@
     <% @categories.each do |c| %>
       <tr>
         <td><%= c.name %></td>
+        <td><%= c.pv %></td>
         <td style="text-align:center;"> 
           <span class="badge badge-info"> 
             <%= c.materials.length %> 

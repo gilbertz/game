@@ -63,7 +63,15 @@ class MaterialsController < ApplicationController
     end
     render nothing: true
   end
-  
+
+  def stat
+    if params[:type] and params[:cid]
+       key = "stat_#{params[:type]}_#{params[:cid]}"
+       $redis.incr(key) 
+    end
+    render :nothing => true
+  end
+   
 
   def get_topn
     begin
