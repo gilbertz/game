@@ -4,6 +4,9 @@ class Material < ActiveRecord::Base
   has_many :images, as: :viewable, class_name: "Image", dependent: :destroy 
   has_many :answers, as: :viewable, class_name: "Answer",  dependent: :destroy 
 
+  has_many :questions
+
+
   class_attribute :clone 
   before_update :clone_self, if: Proc.new{|mate| mate.clone == true}
   def cloning(param)

@@ -54,6 +54,14 @@
       <%= f.text_area :re_html, style:"width:800px;height:100px" %>
     </div>
   </div>
+
+    <div class="control-group">
+      <label class="control-label">是否多题目类型</label>
+      <div class="controls">
+        <%= f.select :material_type, [["是", 1], ["不是", 0]],style:"width:800px;height:100px" %>
+      </div>
+    </div>
+
   <div class="form-actions" style="margin-bottom:0px">
     <%= f.submit '提交', class: 'btn btn-primary', id: "tixing" %>
   </div>

@@ -5,6 +5,10 @@ class MaterialsController < ApplicationController
     render json: {content: @materials, href: "/materials?page=#{params[:page].to_i + 1}"}
   end
 
+  def hello_test
+    render :layout => false
+  end
+
   def show
     get_topn
 
