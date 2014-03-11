@@ -1,6 +1,7 @@
 <table class="table table-bordered">  
   <thead>
     <tr class="well">
+      <th>id</th>
       <th>名称</th>
       <th>人气(PV)</th>
       <th>当前游戏</th>
@@ -12,6 +13,7 @@
   <tbody>
     <% @categories.each do |c| %>
       <tr>
+        <td><%= c.id %></td> 
         <td><a href="/admin/materials?cid=<%= c.id %>"><%= c.name %></a></td>
         <td><%= c.pv %></td>
         <td>
