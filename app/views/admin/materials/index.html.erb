@@ -2,6 +2,7 @@
   <thead>
     <tr class="well">
       <th>名称</th>
+      <th>人气</th> 
       <th width="5%">状态</th>
       <th width="15%">分类</th>
       <th width="17%">创建时间</th>
@@ -16,6 +17,7 @@
             <%= c.name %>
           <% end %>
         </td>
+        <td><%= c.pv %></td>
         <td> 
           <%= link_to [:update_state,:admin,c], remote: true, class: 'ajax',  
             data: {confirm: 'are you sure?'} do %>

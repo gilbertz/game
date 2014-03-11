@@ -2,7 +2,8 @@
   <thead>
     <tr class="well">
       <th>名称</th>
-      <th>pv</th> 
+      <th>人气(PV)</th>
+      <th>当前游戏</th>
       <th width="5%">游戏</th>
       <th width="17%">创建时间</th>
       <th width="13%">操作</th>
@@ -11,8 +12,13 @@
   <tbody>
     <% @categories.each do |c| %>
       <tr>
-        <td><%= c.name %></td>
+        <td><a href="/admin/materials?cid=<%= c.id %>"><%= c.name %></a></td>
         <td><%= c.pv %></td>
+        <td>
+          <%= link_to c.current_game do %>                                                      
+            <%= c.current_game_name %>                                                          
+          <% end %> 
+        </td> 
         <td style="text-align:center;"> 
           <span class="badge badge-info"> 
             <%= c.materials.length %> 

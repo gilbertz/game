@@ -10,6 +10,11 @@ class Material < ActiveRecord::Base
     self.update_attribute(:clone,param)
   end
 
+  def pv                                                                           
+    key = "gstat_pv_#{self.id}"                                                     
+    $redis.get(key)                                                                
+  end
+
   def invert_state
     val = state.eql?(0) ? 1 : 0
     self.update_attributes(state: val)
