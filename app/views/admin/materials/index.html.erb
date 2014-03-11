@@ -25,7 +25,7 @@
         <td> 
           <%= link_to [:update_state,:admin,c], remote: true, class: 'ajax',  
             data: {confirm: 'are you sure?'} do %>
-            <span class="label"><%= c.cn_state %></span> 
+            <span class="label <%= "label-success" if c.state == 1 %>"><%= c.cn_state %></span>
           <% end %>
         </td>
         <td><%= link_to c.category.try(:name), "/admin/materials?cid=#{c.category.id}" %></td>

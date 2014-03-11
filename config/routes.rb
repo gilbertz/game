@@ -11,6 +11,8 @@ Game::Application.routes.draw do
   get '/materials/report' => 'materials#report',  :as=>"report"
   get '/materials/stat' => 'materials#stat',  :as=>"stat"
 
+  get '/materials/hello_test' => 'materials#hello_test'
+
   resources :materials, only: [:index,:show] do
     collection do
       get :egg
@@ -34,6 +36,7 @@ Game::Application.routes.draw do
     resources :materials do
       resources :images, only: :new
       resources :answers, only: :new
+      resources :questions, only: :new
       member do
         get :clone
         get :update_state
@@ -41,6 +44,11 @@ Game::Application.routes.draw do
     end
     resources :images, except: :new
     resources :answers, except: :new
+    resources :questions, except: :new do
+      resources :question_answers, only: :new
+    end
+
+    resources :question_answers, except: :new
   end
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
