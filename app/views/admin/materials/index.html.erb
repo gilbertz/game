@@ -1,33 +1,38 @@
 <table class="table table-bordered">  
   <thead>
     <tr class="well">
+      <th>序号</th>
       <th>名称</th>
-      <th>人气</th> 
+      <th>人气</th>
+      <th>微信链接</th>
       <th width="5%">状态</th>
       <th width="15%">分类</th>
       <th width="17%">创建时间</th>
-      <th width="13%">操作</th>
+      <th width="18%">操作</th>
     </tr>
   </thead>
   <tbody>
     <% @materials.each do |c| %>
       <tr>
+        <td><%= c.id %></td> 
         <td> 
           <%= link_to c do %>
             <%= c.name %>
           <% end %>
         </td>
         <td><%= c.pv %></td>
+        <td><%= c.wx_url %></td>
         <td> 
           <%= link_to [:update_state,:admin,c], remote: true, class: 'ajax',  
             data: {confirm: 'are you sure?'} do %>
             <span class="label"><%= c.cn_state %></span> 
           <% end %>
         </td>
-        <td><%= link_to c.category.try(:name), [:edit,:admin,c.category] %></td>
+        <td><%= link_to c.category.try(:name), "/admin/materials?cid=#{c.category.id}" %></td>
         <td><%= c.created_at.to_local %></td>
         <td> 
           <%= link_to '编辑', [:edit,:admin,c] %> |
+          <%= link_to '编辑模版', [:edit,:admin,c.category]  %> |
           <%= link_to '克隆', [:clone,:admin,c], data: {confirm: "Are you clone one !"} %> |
           <%= link_to '删除', [:admin,c], method: :delete, class: "delMaterial", remote: true, data: {confirm: "Are you sure?"} %>
         </td>
