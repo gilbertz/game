@@ -1,2 +1,2 @@
 bundle check
-cap staging deploy
+cap production deploy

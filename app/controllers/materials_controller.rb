@@ -1,8 +1,14 @@
 class MaterialsController < ApplicationController
 
-  def index 
-    @materials = Material.includes(:images).where(state: 1).order('id desc').page(params[:page]).per(12)
+  def index
+    cond = "1=1"
+    cond = "category_id = #{params[cid]}" if params[:cid]
+    @materials = Material.includes(:images).where(cond).where(state: 1).order('id desc').page(params[:page]).per(12)
     render json: {content: @materials, href: "/materials?page=#{params[:page].to_i + 1}"}
+  end
+
+  def hello_test
+    render :layout => false
   end
 
   def show
@@ -63,7 +69,19 @@ class MaterialsController < ApplicationController
     end
     render nothing: true
   end
-  
+
+  def stat
+    if params[:type] and params[:cid]
+        key = "stat_#{params[:type]}_#{params[:cid]}"
+        $redis.incr(key) 
+    end
+    if params[:type] and params[:gid]                                              
+        key = "gstat_#{params[:type]}_#{params[:gid]}"                               
+       $redis.incr(key)                                                            
+    end
+    render :nothing => true
+  end
+   
 
   def get_topn
     begin

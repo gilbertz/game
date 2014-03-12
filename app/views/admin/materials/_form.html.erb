@@ -21,6 +21,37 @@
       <%= f.select :category_id, ::Category.all.collect {|p| [ p.name, p.id ] } %>
     </div>
   </div>
+
+  <% if action_name == "edit" && @material.category.material_type == 1 %>
+
+        <% questions = @material.questions %>
+        <div class="control-group">
+          <label class="control-label">问题 <%= link_to '添加问题', [:new,:admin,@material,:question], id: :add_obj, class: "btn btn-mini btn-success", remote: true %></label>
+
+          <% questions.each do |q| %>
+          <div class="controls well" style="padding-top:6px">
+            <%= q.question_title %>
+            <hr style="margin: 0">
+            <% qas = q.question_answers %>
+            <% unless qas.blank? %>
+                <ul>
+                  <% qas.each do |qa| %>
+                      <li>
+                        <%= qa.answer %> | <%= qa.answer_score %> | <%= link_to '编辑问题答案', [:edit,:admin,qa], id: :add_obj, class: "btn btn-mini btn-success", remote: true %>
+                        | <%= link_to '删除', [:admin,qa], method: :delete, class: "btn btn-mini btn-success", confirm: "Are you sure to delete this?" %>
+                      </li>
+                  <% end %>
+                </ul>
+            <% end %>
+
+            <%= link_to '添加问题答案', [:new,:admin,q,:question_answer], id: :add_obj, class: "btn btn-mini btn-success", remote: true %>
+          </div>
+          <% end %>
+        </div>
+
+
+  <% end %>
+
   <% if action_name == 'edit' %>
     <% answers = @material.answers %>
     <div class="control-group">
@@ -107,6 +138,12 @@
     <div class="controls">
       <%= f.text_area :advertisement, style: "width:800px; height:100px;" %>
     </div>
+  </div>
+  <div class="control-group">                                                      
+    <label class="control-label">广告_1</label>                                      
+    <div class="controls">                                                         
+      <%= f.text_area :advertisement_1, style: "width:800px; height:100px;" %>       
+    </div>                                                                         
   </div>
   <div class="form-actions" style="margin-bottom:0px">
     <%= f.submit '提交', class: 'btn btn-primary', id: "tixing" %>

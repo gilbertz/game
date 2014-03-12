@@ -1,0 +1,30 @@
+<%= form_for [:admin, @question], html: {class: "form-horizontal", style: "margin-bottom:0px"} do |f| %>
+    <legend>
+      <%= action_name.in?(['new', 'create']) ? "添加" : "编辑" %>问题
+    </legend>
+
+    <% unless @question.errors.blank? %>
+        <div class="control-group text-error">
+          <div class="controls" style="margin-left:110px">
+            <ul>
+              <% @question.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+    <%= f.hidden_field :material_id %>
+    <div class="control-group">
+      <label class="control-label" style="width:100px">
+        <strong>问题标题:</strong>
+      </label>
+      <div class="controls" style="margin:0 30px 0 110px">
+        <%= f.text_area :question_title, style: "width:400px", required: true %>
+      </div>
+    </div>
+
+    <div class="form-actions" style="margin-bottom:0px;margin-left:-28px">
+      <button type="submit" class="btn btn-primary">提交</button>
+    </div>
+<% end %>

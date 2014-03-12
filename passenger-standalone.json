@@ -1,0 +1,6 @@
+{
+   "port": 4002,
+   "environment": "production",
+   "max_pool_size": 60,
+   "min_instances": 10
+}
