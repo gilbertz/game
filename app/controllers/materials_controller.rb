@@ -7,6 +7,11 @@ class MaterialsController < ApplicationController
     render json: {content: @materials, href: "/materials?page=#{params[:page].to_i + 1}"}
   end
 
+  def gabrielecirulli
+
+    render :layout => false
+  end
+
   def hello_test
     render :layout => false
   end
@@ -59,7 +64,7 @@ class MaterialsController < ApplicationController
       end
       $redis.zrem(key, "783272881145583")
       $redis.zrem(key, "4255367378012730") 
-      $redis.zrem(key, "999999") 
+      $redis.zrem(key, "999999")
       if $redis.zcard(key) > 20
         $redis.zremrangebyrank(key, -1, -1)
       end
@@ -84,9 +89,10 @@ class MaterialsController < ApplicationController
    
 
   def get_topn
+    id = params[:category_id]
     begin
-      key = "score_48_top"
-      key1 = "score_48_recent"
+      key = "score_#{id}_top"
+      key1 = "score_#{id}_recent"
       @topn = $redis.zrange(key, 0, 9)
       @recentn = $redis.lrange(key1, 0, 9)
     rescue =>e

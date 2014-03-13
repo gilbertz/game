@@ -7,6 +7,7 @@ Game::Application.routes.draw do
     get :search
   end
 
+  get '/materials/gabrielecirulli' => 'materials#gabrielecirulli'
   get '/materials/wx_share' => 'materials#wx_share'
   get '/materials/report' => 'materials#report',  :as=>"report"
   get '/materials/stat' => 'materials#stat',  :as=>"stat"

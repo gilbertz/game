@@ -23,6 +23,18 @@
       <%= f.text_area :title, style: "width:200px", required: true %> 
     </div>
   </div>
+
+    <div class="control-group">
+      <label class="control-label" style="width:100px"><strong>分数范围:</strong></label>
+      <div class="controls" style="margin:0 30px 0 110px">
+        <%= f.text_field :big_than, style: "width:50px" %>
+        》＝
+        答案
+        《＝
+        <%= f.text_field :small_than, style: "width:50px" %>
+      </div>
+    </div>
+
   <div class="control-group">
     <label class="control-label" style="width:100px"><strong>分组:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">

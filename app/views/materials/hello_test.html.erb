@@ -61,7 +61,6 @@
 
   <script type="text/javascript">
       $(document).ready(function(){
-          var message = ["ssssssssssss", "2222222222222222", "3333333333333"];
           var result=0;
           var result_message;
 
@@ -81,13 +80,23 @@
                       result = result + parseInt($(value).attr("data-score"));
                   });
 
-                  if(result > 0 && result < 10){
-                      result_message = message[0];
-                  }else if(result > 10 && result < 20){
-                      result_message = message[1];
-                  }else{
-                      result_message = message[2];
+
+                  <% if @material.category.material_type == 1 %>
+
+                  <% unless @material.answers.blank? %>
+
+                  <% @material.answers.each do |answ| %>
+
+                  if(result >= <%= answ.big_than %> && result <= <%= answ.small_than %>){
+                      result_message = "<%= answ.title %>";
                   }
+
+                  <% end %>
+
+                  <% end %>
+
+                  <% end %>
+
                   $(".aside").append(result_message);
                   $(".result").show();
               }
