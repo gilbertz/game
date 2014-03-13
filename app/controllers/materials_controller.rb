@@ -17,9 +17,10 @@ class MaterialsController < ApplicationController
   end
 
   def show
-    get_topn
-
     @material = Material.find params[:id]
+
+    get_topn(@material.id)
+
     unless params[:text]
       render layout: false
     else
@@ -56,8 +57,10 @@ class MaterialsController < ApplicationController
   def report
     if params[:game_id] and params[:score]
       key = "score_#{params[:game_id]}_top"
-      key1 = "score_#{params[:game_id]}_recent"     
- 
+      key1 = "score_#{params[:game_id]}_recent"
+
+      puts key1.inspect
+
       if params[:score].length < 10 and params[:score].to_i < 100000
          $redis.zadd(key, params[:score].to_i * -1, params[:score])
          $redis.lpush(key1, params[:score])
@@ -68,7 +71,7 @@ class MaterialsController < ApplicationController
       if $redis.zcard(key) > 20
         $redis.zremrangebyrank(key, -1, -1)
       end
-      if $redis.zcard(key1) > 20
+      if $redis.llen(key1) > 20
         $redis.rpop(key1)
       end
     end
@@ -88,8 +91,7 @@ class MaterialsController < ApplicationController
   end
    
 
-  def get_topn
-    id = params[:category_id]
+  def get_topn(id)
     begin
       key = "score_#{id}_top"
       key1 = "score_#{id}_recent"

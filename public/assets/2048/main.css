@@ -322,7 +322,8 @@ hr {
     color: #f9f6f2;
     background: #edcf72;
     box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381), inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
-    font-size: 45px; }
+    font-size: 45px;
+  }
     @media screen and (max-width: 480px) {
       .tile.tile-128 {
         font-size: 25px; } }
