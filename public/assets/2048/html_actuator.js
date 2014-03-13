@@ -113,8 +113,11 @@ HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
   var message = won ? "You win!" : "Game over!";
 
-  console.log("---------------------");
-  console.log(this.score);
+    $.ajax({
+        type: "GET",
+        url:"/materials/report",
+        data: {game_id: 199, score: this.score}
+    });
 
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;
