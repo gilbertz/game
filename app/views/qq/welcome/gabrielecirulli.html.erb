@@ -64,8 +64,9 @@
     </div>
   </div>
 
-  <div>
-    <a id="invite_friends" href="javascript:void(0)">邀请好友</a>
+  <div class="game-explanation">
+    <a id="invite_friends" href="javascript:void(0)">邀请小伙伴们来一起挑战！</a>
+    <span><%= @qq_user.to_s unless @qq_user.blank? %></span>
   </div>
 
   <p class="game-explanation">
@@ -95,7 +96,7 @@
 
               msg  : "邀请你来玩~",
 
-              img : "http://qzonestyle.gtimg.cn/qzonestyle/act/qzone_app_img/app353_353_75.png",
+              img : "",
 
               source : "",
 
