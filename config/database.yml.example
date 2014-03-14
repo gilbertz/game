@@ -7,3 +7,12 @@ production:
   pool: 5
   username: root
   password: wanhuir123
+  #socket: /var/run/mysqld/mysqld.sock
+
+flash_buy:
+   database: flash_buy
+   adapter: mysql2
+   encoding: utf8
+   username: root
+   password: wan123
+   host: "sg.wanhuir.com"
