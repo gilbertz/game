@@ -12,9 +12,8 @@ class MaterialsController < ApplicationController
   end
 
   def show
-    get_topn
-
     @material = Material.find params[:id]
+    get_topn(@material.category_id)
     unless params[:text]
       render layout: false
     else
@@ -83,10 +82,13 @@ class MaterialsController < ApplicationController
   end
    
 
-  def get_topn
+  def get_topn(cid)
     begin
-      key = "score_48_top"
-      key1 = "score_48_recent"
+      if cid == 66
+        cid = 48
+      end
+      key = "score_#{cid}_top"
+      key1 = "score_#{cid}_recent"
       @topn = $redis.zrange(key, 0, 9)
       @recentn = $redis.lrange(key1, 0, 9)
     rescue =>e
