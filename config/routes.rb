@@ -13,6 +13,9 @@ Game::Application.routes.draw do
     get :search
   end
 
+
+  post "/notify/alipay" => "notify#alipay"
+
   get '/materials/gabrielecirulli' => 'materials#gabrielecirulli'
   get '/materials/wx_share' => 'materials#wx_share'
   get '/materials/report' => 'materials#report',  :as=>"report"
