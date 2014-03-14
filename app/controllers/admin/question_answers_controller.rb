@@ -27,7 +27,7 @@ class Admin::QuestionAnswersController < Admin::BaseController
     @question_answer = QuestionAnswer.find(params[:id])
     @question = @question_answer.question
 
-    expire_fragment(question_answer.question.material)
+    expire_fragment(@question.material)
     render :partial => "form"
   end
 

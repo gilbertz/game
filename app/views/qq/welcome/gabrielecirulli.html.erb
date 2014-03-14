@@ -64,12 +64,24 @@
     </div>
   </div>
 
+  <div class="game-explanation">
+    <a id="invite_friends" href="javascript:void(0)">邀请小伙伴们来一起挑战！</a>
+    <span><%= @qq_user.to_s unless @qq_user.blank? %></span>
+  </div>
+
   <p class="game-explanation">
     <strong class="important">玩法:</strong> 按上下左右方向键来控制方格移动，相同的方格可以合并。
   </p>
   <hr>
 </div>
 
+
+<div class="footer">
+  版权所有: <a href="http://www.wanhuir.com">上海疏微网络技术公司</a> 客服QQ：2218408443
+</div>
+
+
+<script type="text/javascript" charset="utf-8" src="http://fusion.qq.com/fusion_loader?appid=1101255082&platform=<%= @pf %>"></script>
 <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <script type="text/javascript" src="/assets/2048/animframe_polyfill.js"></script>
 <script type="text/javascript" src="/assets/2048/keyboard_input_manager.js"></script>
@@ -80,5 +92,32 @@
 <script type="text/javascript" src="/assets/2048/game_manager.js"></script>
 <script type="text/javascript" src="/assets/2048/application.js"></script>
 
+<script type="text/javascript">
+  $(function(){
+
+      $("#invite_friends").click(function(){
+          fusion2.dialog.invite
+          ({
+              receiver : "",
+
+              msg  : "邀请你来玩~",
+
+              img : "",
+
+              source : "",
+
+              context : "invite",
+
+              onSuccess : function (opt) {  alert("邀请成功"); },
+
+              onCancel : function (opt) { alert("邀请取消"); },
+
+              onClose : function (opt) {  alert("邀请关闭"); }
+          });
+      });
+
+  })
+
+</script>
 </body>
 </html>
