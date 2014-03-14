@@ -48,6 +48,7 @@ class MaterialsController < ApplicationController
   end
 
   def report
+    params[:game_id] = params[:category_id] if params[:category_id]
     if params[:game_id] and params[:score]
       key = "score_#{params[:game_id]}_top"
       key1 = "score_#{params[:game_id]}_recent"
@@ -62,7 +63,7 @@ class MaterialsController < ApplicationController
       if $redis.zcard(key) > 20
         $redis.zremrangebyrank(key, -1, -1)
       end
-      if $redis.zcard(key1) > 20
+      if $redis.llen(key1) > 20
         $redis.rpop(key1)
       end
     end
