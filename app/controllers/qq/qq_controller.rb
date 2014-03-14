@@ -33,7 +33,7 @@ class Qq::QqController < ActionController::Base
       uri = "/v3/user/get_info"
 
       encoded_uri = CGI.escape(uri)
-      query_p = p.to_query
+      query_p = CGI.escape(p.to_query)
       request_method = "GET"
 
       str = "#{request_method}&#{query_p}&#{encoded_uri}"
