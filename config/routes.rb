@@ -2,6 +2,12 @@ Game::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  namespace :qq do
+
+    root to: "welcome#index"
+
+  end
+
   root 'home#index'
   resources :home, only: [] do
     get :search

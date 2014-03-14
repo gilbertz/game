@@ -1,7 +1,7 @@
 class Admin::BaseController < ActionController::Base
   layout 'admin'
 
-  before_filter :login_authenticate, :check_cookie 
+  before_filter :login_authenticate, :check_cookie
   helper_method :current_user
 
   def current_user

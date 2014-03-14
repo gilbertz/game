@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>2048</title>
-  <%= stylesheet_link_tag "2048/main" %>
+
+  <link rel="stylesheet" type="text/css" href="/assets/2048/main.css"/>
 
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
@@ -11,6 +12,7 @@
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+
 </head>
 <body>
 <div class="container">
@@ -24,27 +26,6 @@
   <div class="game-container">
     <div class="game-message">
       <p></p>
-      <div class="game-score-tongji">
-        <ul>
-          <li>最高前10分数</li>
-          <% num = 0 %>
-          <% @topn.each do |score| %>
-              <% num += 1%>
-              <% break if  num >10 %>
-              <li><%= score %></li>
-          <% end %>
-        </ul>
-
-        <ul>
-          <li>最新分数</li>
-          <% num = 0 %>
-          <% @recentn.each do |score| %>
-              <% num += 1%>
-              <% break if  num >10 %>
-              <li> &nbsp; &nbsp;<%= score %></li>
-          <% end %>
-        </ul>
-      </div>
       <hr style="clear: both">
       <div class="lower">
         <a class="retry-button">再来一次！</a>
@@ -84,11 +65,20 @@
   </div>
 
   <p class="game-explanation">
-    <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
+    <strong class="important">玩法:</strong> 按上下左右方向键来控制方格移动，相同的方格可以合并。
   </p>
   <hr>
 </div>
 
-<%= javascript_include_tag "2048/2048" %>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script type="text/javascript" src="/assets/2048/animframe_polyfill.js"></script>
+<script type="text/javascript" src="/assets/2048/keyboard_input_manager.js"></script>
+<script type="text/javascript" src="/assets/2048/html_actuator.js"></script>
+<script type="text/javascript" src="/assets/2048/grid.js"></script>
+<script type="text/javascript" src="/assets/2048/tile.js"></script>
+<script type="text/javascript" src="/assets/2048/local_score_manager.js"></script>
+<script type="text/javascript" src="/assets/2048/game_manager.js"></script>
+<script type="text/javascript" src="/assets/2048/application.js"></script>
+
 </body>
 </html>
