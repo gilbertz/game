@@ -64,6 +64,10 @@
     </div>
   </div>
 
+  <div>
+    <a id="invite_friends" href="javascript:void(0)">邀请好友</a>
+  </div>
+
   <p class="game-explanation">
     <strong class="important">玩法:</strong> 按上下左右方向键来控制方格移动，相同的方格可以合并。
   </p>
@@ -83,24 +87,28 @@
 
 <script type="text/javascript">
   $(function(){
-      fusion2.dialog.invite
-      ({
-          receiver : "",
 
-          msg  : "邀请你来玩~",
+      $("#invite_friends").click(function(){
+          fusion2.dialog.invite
+          ({
+              receiver : "",
 
-          img : "http://qzonestyle.gtimg.cn/qzonestyle/act/qzone_app_img/app353_353_75.png",
+              msg  : "邀请你来玩~",
 
-          source : "",
+              img : "http://qzonestyle.gtimg.cn/qzonestyle/act/qzone_app_img/app353_353_75.png",
 
-          context : "invite",
+              source : "",
 
-          onSuccess : function (opt) {  alert("邀请成功"); },
+              context : "invite",
 
-          onCancel : function (opt) { alert("邀请取消"); },
+              onSuccess : function (opt) {  alert("邀请成功"); },
 
-          onClose : function (opt) {  alert("邀请关闭"); }
+              onCancel : function (opt) { alert("邀请取消"); },
+
+              onClose : function (opt) {  alert("邀请关闭"); }
+          });
       });
+
   })
 
 </script>
