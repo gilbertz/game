@@ -1,4 +1,5 @@
 class NotifyController < ApiController
+  skip_before_filter :verify_authenticity_token
 
   def alipay
     notify_params = params.except(*request.path_parameters.keys)
