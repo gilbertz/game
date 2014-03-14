@@ -18,6 +18,7 @@ class Payment < Buy
   end
 
   def set_out_strade_no_amount_coin_rate
+    $coin_exchange_rate = 100
     num = self.order.number + sprintf("%04d", 1)
     self.out_trade_no = num
     self.coin_rate = $coin_exchange_rate
