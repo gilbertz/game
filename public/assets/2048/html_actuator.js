@@ -116,7 +116,7 @@ HTMLActuator.prototype.message = function (won) {
     $.ajax({
         type: "GET",
         url:"/materials/report",
-        data: {game_id: 199, score: this.score}
+        data: {category_id: 100, score: this.score}
     });
 
   this.messageContainer.classList.add(type);
