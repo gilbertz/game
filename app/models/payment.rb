@@ -1,5 +1,7 @@
 class Payment < Buy
 
+  belongs_to :order
+
   before_update :update_order_state, if: Proc.new{|p| p.state.eql?(3)}
   before_create :set_out_strade_no_amount_coin_rate
 

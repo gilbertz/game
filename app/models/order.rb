@@ -1,4 +1,4 @@
-class Order < ActiveRecord::Base
+class Order < Buy
 
   STATUS = {
       :waiting    => 11,
