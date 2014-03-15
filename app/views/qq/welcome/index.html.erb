@@ -1,1 +1,381 @@
-<h1>Hello world!</h1>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/wanhuir-icon.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+  <title>智商测试001</title>
+  <meta charset="utf-8">
+  <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.js"></script>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width,minimum-scale=0.5,maximum-scale=1,initial-scale=0.8" />
+  <script type="text/javascript">
+      $(document).ready(function(){
+          var result=0;
+          var result_message;
+
+          $(".options ul li").click(function(){
+              var  node = $(this).parent().parent().parent();
+              var next_node = $(node).next();
+
+              $(this).parent().find("li").removeClass("selected");
+              $(this).addClass("selected");
+
+              if(next_node.hasClass("question")){
+                  $(node).hide();
+                  $(next_node).show();
+              }else{
+                  $(node).hide();
+                  $.each($("li.selected"), function(index, value){
+                      result = result + parseInt($(value).attr("data-score"));
+                  });
+
+
+                  if(result >= 0 && result <= 10){
+                      result_message = "qwewqe";
+                  }
+
+
+                  if(result >= 11 && result <= 20){
+                      result_message = "wewqqqq";
+                  }
+
+
+                  if(result >= 1 && result <= 2){
+                      result_message = "sadsad asdasdas asda";
+                  }
+
+
+                  if(result >= 1 && result <= 2){
+                      result_message = "weqweqw qweqwewq qweqwdsads是试试 !！";
+                  }
+
+
+
+                  $(".aside").append(result_message);
+                  $(".header-title").hide();
+                  $(".result").show();
+              }
+          });
+
+          $(".prev a").click(function(){
+              var node = $(this).parent().parent();
+              var prev_node = $(node).prev();
+
+              if(prev_node.hasClass("question")){
+                  $(node).hide();
+                  $(prev_node).show();
+              }
+          });
+      });
+  </script>
+  <script type="text/javascript">
+
+  </script>
+  <style type="text/css">
+      body{
+
+          background: #000;
+
+          background: url("http://1251008728.cdn.myqcloud.com/1251008728/2014/manyanswers/bg.png") no-repeat;
+          background-size: cover;
+          margin: 0 auto;
+          padding: 20px 10px;
+          height: 100%;
+          min-height: 500px;
+      }
+
+      .title{
+          margin: 0 auto;
+          width: 80%;
+      }
+
+      .title h2{
+        background: #90ab8b;
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        font-size: 20px;
+        font-weight: normal;
+          margin-bottom: 0;
+      }
+
+      .title-sub{
+          padding: 10px 20px;
+          color: #fff;
+          text-align: center;
+          /*border: 1px solid #b374b1;*/
+          border-top: 0;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          margin: 0 auto;
+          background: rgba(231, 231, 231, 0.2) none repeat scroll 0 0 !important;
+          background: #e7e7e7;
+          filter:Alpha(opacity=20);
+      }
+
+      .question{
+          width: 80%;
+          margin: 0 auto;
+          margin-top: 50px;
+          display: none;
+      }
+
+      .question-title{
+          text-align: center;
+          color: #fff;
+      }
+
+      .question:first-child, .question.current{
+          display: block;
+      }
+      .result{
+          display:none;
+      }
+
+      .options ul{
+          padding: 0;
+      }
+      .options li{
+          margin: 20px 0;
+          padding: 5px 15px;
+          list-style-type: none;
+      }
+
+      .options li div{
+          padding-left: 20px;
+      }
+      .options.button li{
+          border: 1px solid #8760a3;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          width: 100%;
+          color: white;
+          background:rgba(142, 99, 167, 0.6) none repeat scroll 0 0 !important;
+
+          background:#8e63a7;
+          filter:Alpha(opacity=60);
+      }
+
+      .options.button li{
+          padding: 5px 0;
+      }
+
+      .options li.selected{
+          background: #cf6271 !important;
+      }
+      .prev{
+          margin-top: 30px;
+          font-weight: 300;
+          font-size: 12px;
+          float: right;
+          padding-bottom: 50px;
+      }
+      .prev a:link{
+          color: #fff;
+      }
+
+      .tools-button{
+          padding: 10px 0;
+          color: #fff;
+          text-align: center;
+          margin: 0 auto;
+          width: 80%;
+          background:rgba(159, 66, 61, 0.3) none repeat scroll 0 0;
+          background: #9f423d;
+          filter:Alpha(opacity=30);
+
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+
+          margin-top: 30px;
+
+      }
+
+      .share{
+          background:rgba(49, 126, 172, 0.6) none repeat scroll 0 0;
+          background: #317eac;
+          filter:Alpha(opacity=60);
+      }
+  </style>
+</head>
+<body>
+<div class="bg-div">
+
+
+<div class="title header-title">
+  <h2>
+    测测你有多皮昂两
+  </h2>
+  <div class="title-sub">
+
+    1.测测你有多皮昂两
+  </div>
+</div>
+
+
+
+  <% questions = @material.questions %>
+  <% unless questions.blank? %>
+      <% questions.each do |question| %>
+          <div class="question  ">
+            <div class="title">
+              <h2>
+                <%= question.question_title %>
+              </h2>
+            </div>
+            <div class="options button">
+              <ul>
+                <% question_answers = question.question_answers %>
+
+                <% unless question_answers.blank? %>
+                    <% question_answers.each do |qa| %>
+                        <li data-score="<%= qa.answer_score %>"><%= qa.answer %></li>
+                    <% end %>
+                <% end %>
+              </ul>
+            </div>
+
+            <div class="prev">
+              <a href="javascript:void(0)">返回上一题</a>
+            </div>
+          </div>
+      <% end %>
+  <% end %>
+
+
+
+<div class="question current">
+  <div class="question-title">
+
+    1.测测你有多皮昂两
+  </div>
+  <div class="options button">
+    <ul>
+
+      <li data-score="4">
+
+
+        <div>
+          232134214321asdas
+          asdas
+          sadas
+        </div>
+
+
+
+      </li>
+
+      <li data-score="2">
+        <div>
+          2222222222222
+        </div>
+
+      </li>
+
+      <li data-score="0">
+        <div>
+          qwwwwadsadsa
+          asdasda
+        </div>
+
+      </li>
+
+
+    </ul>
+  </div>
+
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
+</div>
+
+
+<div class="question">
+  <div class="question-title">
+
+    2.测测qwewqeqw
+  </div>
+  <div class="options button">
+    <ul>
+
+      <li data-score="4">
+
+
+        <div>
+          qweqwewqewq
+        </div>
+
+
+
+      </li>
+
+      <li data-score="2">
+        <div>
+          22222wqeqwesadasd
+        </div>
+
+      </li>
+
+      <li data-score="0">
+        <div>
+          qwsdfdsfsdf
+        </div>
+
+      </li>
+
+
+    </ul>
+  </div>
+
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
+</div>
+
+
+<div style="clear: both"></div>
+
+<div class="result">
+    <div class="title">
+      <h2>
+        结果
+      </h2>
+      <div class="title-sub aside">
+
+        1.测测你有多皮昂两
+      </div>
+    </div>
+
+    <div class="follow-us tools-button">
+      关注上街吧
+    </div>
+
+    <div class="share tools-button">
+      分享
+    </div>
+</div>
+</div>
+
+</body>
+
+<div style="display: none;">
+  <script src="http://s5.cnzz.com/stat.php?id=2814783&web_id=2814783" language="JavaScript"></script>
+  <script type="text/javascript">
+      var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+      document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F78fe6144eeab73287677ab1cec2e325b' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+</div>
+
+<script>
+    var url="/materials/stat?type=pv&cid=37&gid=61"
+    var img = new Image();
+    img.src = url;
+</script>
+
+</html>

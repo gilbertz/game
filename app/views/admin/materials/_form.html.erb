@@ -44,7 +44,8 @@
                 </ul>
             <% end %>
 
-            <%= link_to '添加问题答案', [:new,:admin,q,:question_answer], id: :add_obj, class: "btn btn-mini btn-success", remote: true %>
+            <%= link_to '添加问题答案', [:new,:admin,q,:question_answer], id: :add_obj, class: "btn btn-mini btn-success", remote: true %> |
+            <%= link_to "Delete", admin_question_path(q), method: :delete, class: "btn btn-mini btn-success" %>
           </div>
           <% end %>
         </div>

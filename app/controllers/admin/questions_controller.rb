@@ -14,6 +14,16 @@ class Admin::QuestionsController < Admin::BaseController
     redirect_to [:edit,:admin,question.material]
   end
 
+  def destroy
+    question = Question.find(params[:id])
+    material = question.material
+    question.destroy
+    question.save
+
+    redirect_to edit_admin_material_path(material)
+
+  end
+
   private
   def question_params
     params.require(:question).permit(:question_title, :material_id)
