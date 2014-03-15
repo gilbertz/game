@@ -16,7 +16,7 @@ class Payment < Buy
 
   private
   def update_order_state
-    self.order.pend && OrderLog.log(order, "支付宝通知：买家完成支付")
+    #self.order.pend && OrderLog.log(order, "支付宝通知：买家完成支付")
   end
 
   def set_out_strade_no_amount_coin_rate

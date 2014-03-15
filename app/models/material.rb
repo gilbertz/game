@@ -2,10 +2,10 @@ class Material < ActiveRecord::Base
 
   belongs_to :category
   has_many :images, as: :viewable, class_name: "Image", dependent: :destroy 
-  has_many :answers, as: :viewable, class_name: "Answer",  dependent: :destroy 
+  has_many :answers, as: :viewable, class_name: "Answer",  dependent: :destroy
+
 
   has_many :questions
-
 
   class_attribute :clone 
   before_update :clone_self, if: Proc.new{|mate| mate.clone == true}
@@ -31,6 +31,13 @@ class Material < ActiveRecord::Base
     material.state = 0
     material.images  = self.images.map {|img| Image.new img.attributes.except!("id") }
     material.answers = self.answers.map{|asw| Answer.new asw.attributes.except!("id")}
+    #material.questions = self.questions.map{|que| newQ = Question.new que.attributes.except!("id") }
+
+    self.questions.each do |que|
+      newQ = material.questions.new que.attributes.except!("id")
+      newQ.question_answers = que.question_answers.map{|qa| QuestionAnswer.new qa.attributes.except!("id") }
+    end
+
     material.save
   end
 end
