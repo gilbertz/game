@@ -2,6 +2,8 @@ class Qq::QqController < ActionController::Base
 
   protect_from_forgery with: :exception
 
+  #require "#{Rails.root}/lib/qzone/command/client.rb"
+
   before_action :set_header_for_qq
   layout "qq/layouts/qq_game"
 
@@ -9,7 +11,7 @@ class Qq::QqController < ActionController::Base
   before_action :get_user_info
 
   CONFIG = {
-      qq: {
+      qzone: {
           'appid' => '1101255082',
           'appkey' => 'rwgnIjHffqSXS4D3',
           'host' => '119.147.19.43'
@@ -32,7 +34,7 @@ class Qq::QqController < ActionController::Base
   def get_user_info
 
     unless params[:openid].blank?
-      @user_info = Qq::Command::Client.new(path: '/v3/user/get_info', params: {openid: params[:openid], openkey: params[:openkey], pf: params[:pf]}).fetch
+      #@user_info = Qzone::Command::Client.new(path: '/v3/user/get_info', params: {openid: params[:openid], openkey: params[:openkey], pf: params[:pf]}).fetch
     end
 
     #unless params[:openid].blank?

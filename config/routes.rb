@@ -3,9 +3,7 @@ Game::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   namespace :qq do
-
     root to: "welcome#index"
-
   end
 
   root 'home#index'
