@@ -60,6 +60,7 @@ class MaterialsController < ApplicationController
       $redis.zrem(key, "783272881145583")
       $redis.zrem(key, "4255367378012730") 
       $redis.zrem(key, "999999")
+      $redis.zrem(key, "99999")
       if $redis.zcard(key) > 20
         $redis.zremrangebyrank(key, -1, -1)
       end
