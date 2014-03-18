@@ -21,7 +21,18 @@ class Admin::QuestionsController < Admin::BaseController
     question.save
 
     redirect_to edit_admin_material_path(material)
+  end
 
+  def edit
+    @question = Question.find(params[:id])
+    render :partial => "form"
+  end
+
+  def update
+    question = Question.find(params[:id])
+    question.update_attributes(question_params)
+    question.save
+    redirect_to :back
   end
 
   private
