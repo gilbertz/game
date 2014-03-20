@@ -22,6 +22,11 @@
 <body>
 <div class="container">
   <div class="heading">
+    <span class="game-explanation" style="display: inline-block; margin-top: 30px">
+      <a id="invite_friends" href="javascript:void(0)">邀请小伙伴们来一起挑战！</a>
+      <span><%= @qq_user.to_s unless @qq_user.blank? %></span>
+    </span>
+
     <div class="scores-container">
       <div class="score-container">0</div>
       <div class="best-container">0</div>
@@ -69,18 +74,13 @@
     </div>
   </div>
 
-  <div class="game-explanation">
-    <a id="invite_friends" href="javascript:void(0)">邀请小伙伴们来一起挑战！</a>
-    <span><%= @qq_user.to_s unless @qq_user.blank? %></span>
-  </div>
-
   <p class="game-explanation">
     <strong class="important">玩法:</strong> 按上下左右方向键来控制方格移动，相同的方格可以合并。
   </p>
-  <hr>
+  <hr style="margin-bottom: 0">
 
   <div class="footer">
-    版权所有: <a href="http://www.wanhuir.com">上海疏微网络技术公司</a> 客服QQ：2218408443
+    声明：此应用由 <a href="http://www.wanhuir.com">上海疏微网络技术公司</a> 提供，若在游戏过程中遇到问题，可以联系QQ：2218408443 <a target=blank href=tencent://message/?uin=2218408443&Site=玩会儿&Menu=yes><img border="0" SRC=http://wpa.qq.com/pa?p=1:2218408443:1 alt="QQ联系"></a>
   </div>
 </div>
 
