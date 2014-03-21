@@ -55,7 +55,7 @@ KeyboardInputManager.prototype.listen = function () {
 
   var retry = document.getElementsByClassName("retry-button")[0];
   retry.addEventListener("click", this.restart.bind(this));
-  //retry.addEventListener("touchend", this.restart.bind(this));
+  retry.addEventListener("touchend", this.restart.bind(this));
 
   // Listen to swipe events
   var touchStartClientX, touchStartClientY;
@@ -90,6 +90,8 @@ KeyboardInputManager.prototype.listen = function () {
 };
 
 KeyboardInputManager.prototype.restart = function (event) {
-  event.preventDefault();
-  this.emit("restart");
+    $(".game-message").removeClass("game-won");
+    $(".game-message").removeClass("game-over");
+    event.preventDefault();
+    this.emit("restart");
 };
