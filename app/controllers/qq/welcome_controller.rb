@@ -20,7 +20,7 @@ class Qq::WelcomeController < Qq::QqController
     puts "============="
 
     p.merge!(sig: sig)
-    @res = RestClient.get(Api_url + "v3/user/get_info", p)
+    #@res = RestClient.get(Api_url + "v3/user/get_info", p)
 
     render :template => "qq/welcome/gabrielecirulli", :layout => false
   end

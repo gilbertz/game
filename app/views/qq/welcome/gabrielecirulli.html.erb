@@ -39,6 +39,8 @@
       <hr style="clear: both">
       <div class="lower">
         <a class="retry-button">再来一次！</a>
+
+        <a id="share-button">炫耀一下！</a>
       </div>
     </div>
 
@@ -88,7 +90,7 @@
 <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/animframe_polyfill.js"></script>
 <script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/keyboard_input_manager.js"></script>
-<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/html_actuator.js"></script>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/qqzone/html_actuator.js"></script>
 <script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/grid.js"></script>
 <script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/tile.js"></script>
 <script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/local_score_manager.js"></script>
@@ -106,13 +108,40 @@
           fusion2.dialog.invite
           ({
               receiver : "",
-              msg  : "<%= @res["nickname"] %>邀请你来玩~",
+              msg  : "你的好友邀请你来一起玩~",
               img : "",
               source : "",
               context : "invite",
               onSuccess : function (opt) {  alert("邀请成功"); },
               onCancel : function (opt) { alert("邀请取消"); },
               onClose : function (opt) {  alert("邀请关闭"); }
+          });
+      });
+
+      $("#shre-button").click(function(){
+
+          var score = $("#share-button").attr("data-score");
+
+          fusion2.dialog.sendStory
+          ({
+              title :"玩会儿，挑战2048，根本停不下来",
+
+              img:"http://i.gtimg.cn/open/app_icon/01/25/50/82//1101255082_100.png",
+
+              summary :"2014年度最新、最火爆的休闲小游戏，根本听不下来，全球几亿人都在玩。",
+
+              msg:"我的分数："+score+" 分，你敢来挑战吗？",
+
+              button :"向好友们炫耀一下！",
+
+              source :"ref=story&act=default",
+
+              context:"send-story-12345",
+
+              onSuccess : function ()
+              {
+                  alert("分享成功！");
+              }
           });
       });
 
