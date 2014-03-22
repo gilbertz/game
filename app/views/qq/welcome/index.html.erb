@@ -3,367 +3,331 @@
 <html>
 <head>
   <link href="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/wanhuir-icon.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
-  <title>智商测试001</title>
+  <title>2048 明星</title>
   <meta charset="utf-8">
   <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.js"></script>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width,minimum-scale=0.5,maximum-scale=1,initial-scale=0.8" />
+  <link rel="stylesheet" type="text/css" href="/assets/2048/main.css"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <script type="text/javascript">
-      $(document).ready(function(){
-          var result=0;
-          var result_message;
-
-          $(".options ul li").click(function(){
-              var  node = $(this).parent().parent().parent();
-              var next_node = $(node).next();
-
-              $(this).parent().find("li").removeClass("selected");
-              $(this).addClass("selected");
-
-              if(next_node.hasClass("question")){
-                  $(node).hide();
-                  $(next_node).show();
-              }else{
-                  $(node).hide();
-                  $.each($("li.selected"), function(index, value){
-                      result = result + parseInt($(value).attr("data-score"));
-                  });
-
-
-                  if(result >= 0 && result <= 10){
-                      result_message = "qwewqe";
-                  }
-
-
-                  if(result >= 11 && result <= 20){
-                      result_message = "wewqqqq";
-                  }
-
-
-                  if(result >= 1 && result <= 2){
-                      result_message = "sadsad asdasdas asda";
-                  }
-
-
-                  if(result >= 1 && result <= 2){
-                      result_message = "weqweqw qweqwewq qweqwdsads是试试 !！";
-                  }
-
-
-
-                  $(".aside").append(result_message);
-                  $(".header-title").hide();
-                  $(".result").show();
-              }
-          });
-
-          $(".prev a").click(function(){
-              var node = $(this).parent().parent();
-              var prev_node = $(node).prev();
-
-              if(prev_node.hasClass("question")){
-                  $(node).hide();
-                  $(prev_node).show();
-              }
-          });
-      });
+      $("html").click(function(){$(".top-users").hide()});
+      $(".retry-button").click(function(){$(".game-message").hide(); return false;});
   </script>
   <script type="text/javascript">
 
+      var is_weixin = function () {
+          var ua = navigator.userAgent.toLowerCase();
+          if(ua.match(/MicroMessenger/i) == "micromessenger") {
+              if(ua.match(/iphone/i) == "iphone") {
+                  return 'ios';
+              }
+              return 'android';
+          }
+          return false;
+      }
+
+      var foo = function (o) {
+          if (o.value == o.defaultValue) {
+              o.value = '';
+              o.style.color = '#000';
+          }
+      }
+
+      var bar = function (o) {
+          if (o.value == '') {
+              o.value = o.defaultValue;
+              o.style.color = '#9a9a9a';
+          } else {
+              o.style.color = '#000';
+          }
+      }
+
+      var mask = function () {
+          if (document.getElementById('mask').style.display == 'inline') {
+              document.getElementById('mask').style.display = 'none';
+              document.getElementById('tip').style.display = 'none';
+          } else {
+              document.getElementById('mask').style.display = 'inline';
+              document.getElementById('tip').style.display = 'inline';
+          }
+      }
+
+      var share = function () {
+          mask();
+      }
+
+      var share_callback_hy = function () {
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', '/materials/wx_share?f=wx&ref=' + window.location.href, true);
+          ajax.send(null);
+      }
+
+      var share_callback_pyq = function () {
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', '/materials/wx_share?f=wx&ref=' + window.location.href, true);
+          ajax.send(null);
+      }
+
+
+      var dataForWeixin = {
+          appId: '111',
+          TLImg: "11",
+          url: "",
+          title: "11",
+          desc: "11"
+      };
+
+      var name = "";
+
+      var onBridgeReady = function(){
+          WeixinJSBridge.on('menu:share:appmessage', function(argv){
+              WeixinJSBridge.invoke('sendAppMessage', {
+                  "appid": dataForWeixin.appId,
+                  "img_url": dataForWeixin.TLImg,
+                  "img_width": "120",
+                  "img_height": "120",
+                  "link": dataForWeixin.url,
+                  "title": name + dataForWeixin.title,
+                  "desc": dataForWeixin.desc
+              });
+              //share_callback_hy();
+              setTimeout(function () {location.href = "1";}, 1500);
+          });
+          WeixinJSBridge.on('menu:share:timeline', function(argv){
+              WeixinJSBridge.invoke('shareTimeline', {
+                  "appid": dataForWeixin.appId,
+                  "img_url":dataForWeixin.TLImg,
+                  "img_width": "120",
+                  "img_height": "120",
+                  "link": dataForWeixin.url,
+                  "title": name + dataForWeixin.title,
+                  "desc": name + dataForWeixin.desc
+              });
+              //share_callback_pyq();
+              setTimeout(function () {location.href = "1";}, 1500);
+          });
+      };
+      if(document.addEventListener){
+          document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+      }else if(document.attachEvent){
+          document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+          document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+      }
   </script>
   <style type="text/css">
-      body{
-
-          background: #000;
-
-          background: url("http://1251008728.cdn.myqcloud.com/1251008728/2014/manyanswers/bg.png") no-repeat;
-          background-size: cover;
-          margin: 0 auto;
-          padding: 20px 10px;
-          height: 100%;
-          min-height: 500px;
+      .game-score-tongji{
+          vertical-align: top;
       }
-
-      .title{
-          margin: 0 auto;
-          width: 80%;
-      }
-
-      .title h2{
-        background: #90ab8b;
-        color: #fff;
-        padding: 10px 0;
-        text-align: center;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        font-size: 20px;
-        font-weight: normal;
-          margin-bottom: 0;
-      }
-
-      .title-sub{
-          padding: 10px 20px;
-          color: #fff;
-          text-align: center;
-          /*border: 1px solid #b374b1;*/
-          border-top: 0;
-          border-bottom-left-radius: 10px;
-          border-bottom-right-radius: 10px;
-          margin: 0 auto;
-          background: rgba(231, 231, 231, 0.2) none repeat scroll 0 0 !important;
-          background: #e7e7e7;
-          filter:Alpha(opacity=20);
-      }
-
-      .question{
-          width: 80%;
-          margin: 0 auto;
-          margin-top: 50px;
-          display: none;
-      }
-
-      .question-title{
-          text-align: center;
-          color: #fff;
-      }
-
-      .question:first-child, .question.current{
-          display: block;
-      }
-      .result{
-          display:none;
-      }
-
-      .options ul{
+      .game-score-tongji ul{
+          width: 49%;
+          display: inline-block;
+          margin: 0;
           padding: 0;
+          float: left;
       }
-      .options li{
-          margin: 20px 0;
-          padding: 5px 15px;
+      .game-score-tongji ul li{
           list-style-type: none;
-      }
-
-      .options li div{
-          padding-left: 20px;
-      }
-      .options.button li{
-          border: 1px solid #8760a3;
-          border-bottom-left-radius: 10px;
-          border-bottom-right-radius: 10px;
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-          width: 100%;
-          color: white;
-          background:rgba(142, 99, 167, 0.6) none repeat scroll 0 0 !important;
-
-          background:#8e63a7;
-          filter:Alpha(opacity=60);
-      }
-
-      .options.button li{
-          padding: 5px 0;
-      }
-
-      .options li.selected{
-          background: #cf6271 !important;
-      }
-      .prev{
-          margin-top: 30px;
-          font-weight: 300;
-          font-size: 12px;
-          float: right;
-          padding-bottom: 50px;
-      }
-      .prev a:link{
-          color: #fff;
-      }
-
-      .tools-button{
-          padding: 10px 0;
-          color: #fff;
           text-align: center;
-          margin: 0 auto;
-          width: 80%;
-          background:rgba(159, 66, 61, 0.3) none repeat scroll 0 0;
-          background: #9f423d;
-          filter:Alpha(opacity=30);
-
-          border-bottom-left-radius: 10px;
-          border-bottom-right-radius: 10px;
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
-
-          margin-top: 30px;
-
       }
 
-      .share{
-          background:rgba(49, 126, 172, 0.6) none repeat scroll 0 0;
-          background: #317eac;
-          filter:Alpha(opacity=60);
+      .top-users{
+          position: fixed;
+          top: 50px;
+          z-index: 99999;
+          background: #fff;
+          padding: 20px 20px;
+          margin: 0 auto;
+          width: 300px;
+      }
+
+      .top-users ul li{
+          height: 22px;
+          overflow: hidden;
+      }
+      .begin_game{
+          text-align: center;
+      }
+      .begin_game a{
+          display: inline-block;
+          background: #8f7a66;
+          border-radius: 3px;
+          padding: 0 20px;
+          text-decoration: none;
+          color: #f9f6f2;
+          height: 40px;
+          line-height: 42px;
+          margin-left: 9px;
+      }
+      .game-container .game-message p{
+          margin-top: 10px;
+      }
+
+      .tile{
+          font-size: 0!important;
+          line-height: 0!important;
+
+      }
+      .tile-2{
+          background: url(/assets/2048/image/2.png) no-repeat center !important;
+          background-size: contain;
+      }
+      .tile-4{
+          background: url(/assets/2048/image/4.png) no-repeat center !important;
+          background-size: contain;
+      }
+      .tile-8{
+          background: url(/assets/2048/image/8.png) no-repeat center !important;
+          background-size: contain;
+      }
+      .tile-16{
+          background: url(/assets/2048/image/16.png) no-repeat center !important;
+      }
+      .tile-32{
+          background: url(/assets/2048/image/32.png) no-repeat center !important;
+      }
+      .tile-64{
+          background: url(/assets/2048/image/64.png) no-repeat center !important;
+      }
+      .tile-128{
+          background: url(/assets/2048/image/128.png) no-repeat center !important;
+      }
+      .tile-256{
+          background: url(/assets/2048/image/256.png) no-repeat center !important;
+      }
+      .tile-512{
+          background: url(/assets/2048/image/512.png) no-repeat center !important;
+      }
+      .tile-1024{
+          background: url(/assets/2048/image/1024.png) no-repeat center !important;
+      }
+      .tile-2048{
+          background: url(/assets/2048/image/2048.png) no-repeat center !important;
+      }
+      .tile-4096{
+          background: url(/assets/2048/image/8192.jpg) no-repeat center !important;
       }
   </style>
+  <script type="text/javascript">
+
+
+  </script>
 </head>
 <body>
-<div class="bg-div">
 
-
-<div class="title header-title">
-  <h2>
-    测测你有多皮昂两
-  </h2>
-  <div class="title-sub">
-
-    1.测测你有多皮昂两
-  </div>
+<div id="ad"   style="margin:0px auto;text-align:center; margin-top:5px;" >
+  <a href="http://www.shangjieba.com/weixin/app?fr=g256"  >
+    <img style="width:320px;" src="http://1251008728.cdn.myqcloud.com/1251008728/ad/sjb.jpg" />
+  </a>
 </div>
 
+<div class="container">
 
-
-  <% questions = @material.questions %>
-  <% unless questions.blank? %>
-      <% questions.each do |question| %>
-          <div class="question  ">
-            <div class="title">
-              <h2>
-                <%= question.question_title %>
-              </h2>
-            </div>
-            <div class="options button">
-              <ul>
-                <% question_answers = question.question_answers %>
-
-                <% unless question_answers.blank? %>
-                    <% question_answers.each do |qa| %>
-                        <li data-score="<%= qa.answer_score %>"><%= qa.answer %></li>
-                    <% end %>
-                <% end %>
-              </ul>
-            </div>
-
-            <div class="prev">
-              <a href="javascript:void(0)">返回上一题</a>
-            </div>
-          </div>
-      <% end %>
-  <% end %>
-
-
-
-<div class="question current">
-  <div class="question-title">
-
-    1.测测你有多皮昂两
-  </div>
-  <div class="options button">
-    <ul>
-
-      <li data-score="4">
-
-
-        <div>
-          232134214321asdas
-          asdas
-          sadas
-        </div>
-
-
-
-      </li>
-
-      <li data-score="2">
-        <div>
-          2222222222222
-        </div>
-
-      </li>
-
-      <li data-score="0">
-        <div>
-          qwwwwadsadsa
-          asdasda
-        </div>
-
-      </li>
-
-
-    </ul>
+  <div class="heading">
+    <span style="display: inline-block; margin-top: 20px" id="how-play"><a href="javascript:void(0)">玩法</a></span>
+    <div class="scores-container">
+      <div class="score-container">0</div>
+      <div class="best-container">0</div>
+    </div>
   </div>
 
-  <div class="prev">
-    <a href="javascript:void(0)">返回上一题</a>
-  </div>
-</div>
-
-
-<div class="question">
-  <div class="question-title">
-
-    2.测测qwewqeqw
-  </div>
-  <div class="options button">
-    <ul>
-
-      <li data-score="4">
-
-
-        <div>
-          qweqwewqewq
-        </div>
-
-
-
-      </li>
-
-      <li data-score="2">
-        <div>
-          22222wqeqwesadasd
-        </div>
-
-      </li>
-
-      <li data-score="0">
-        <div>
-          qwsdfdsfsdf
-        </div>
-
-      </li>
-
-
-    </ul>
+  <div class="game-explanation">
+    <strong>史上最停不下来的游戏，小三（Three）的励志传奇，滑动控制方格移动，合并相同数字，挑战2048！</strong>
   </div>
 
-  <div class="prev">
-    <a href="javascript:void(0)">返回上一题</a>
-  </div>
-</div>
+  <div class="game-container">
+    <div class="game-message">
+      <p></p>
+      <div class="game-score-tongji">
+        <ul>
+          <li>世界前10分数</li>
 
 
-<div style="clear: both"></div>
+        </ul>
 
-<div class="result">
-    <div class="title">
-      <h2>
-        结果
-      </h2>
-      <div class="title-sub aside">
+        <ul>
+          <li>朋友圈最新分数</li>
 
-        1.测测你有多皮昂两
+
+        </ul>
+      </div>
+      <hr style="clear: both">
+      <div class="lower">
+        <a class="retry-button">再来一次！</a>
       </div>
     </div>
 
-    <div class="follow-us tools-button">
-      关注上街吧
+    <div class="grid-container">
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+      </div>
     </div>
 
-    <div class="share tools-button">
-      分享
+    <div class="tile-container">
+
     </div>
-</div>
+  </div>
+
+  <div class="top-users game-score-tongji">
+    <ul>
+      <li>世界前10分数</li>
+    </ul>
+
+    <ul>
+      <li>朋友圈最新分数</li>
+
+    </ul>
+    <div style="clear:both"></div>
+    <div class="begin_game">
+      <a href="javascript:void(0)">开始游戏</a>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+
+
+  </script>
+
+  <br>
+  <div>
+    <script type="text/javascript">/*自定义标签云，创建于2014-3-7*/var cpro_id = "u1483031";</script><script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+  </div>
+
+  <hr>
 </div>
 
+<script type="text/javascript" src="/assets/2048/animframe_polyfill.js"></script>
+<script type="text/javascript" src="/assets/2048/keyboard_input_manager.js"></script>
+<script type="text/javascript" src="/assets/2048/html_actuator.js"></script>
+<script type="text/javascript" src="/assets/2048/grid.js"></script>
+<script type="text/javascript" src="/assets/2048/tile.js"></script>
+<script type="text/javascript" src="/assets/2048/local_score_manager.js"></script>
+<script type="text/javascript" src="/assets/2048/game_manager.js"></script>
+<script type="text/javascript" src="/assets/2048/application.js"></script>
 </body>
-
 <div style="display: none;">
   <script src="http://s5.cnzz.com/stat.php?id=2814783&web_id=2814783" language="JavaScript"></script>
   <script type="text/javascript">
@@ -373,7 +337,7 @@
 </div>
 
 <script>
-    var url="/materials/stat?type=pv&cid=37&gid=61"
+    var url="/materials/stat?type=pv&cid=114&gid=256"
     var img = new Image();
     img.src = url;
 </script>

@@ -86,14 +86,14 @@
 
 <script type="text/javascript" charset="utf-8" src="http://fusion.qq.com/fusion_loader?appid=1101255082&platform=<%= @pf %>"></script>
 <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-<script type="text/javascript" src="/assets/2048/animframe_polyfill.js"></script>
-<script type="text/javascript" src="/assets/2048/keyboard_input_manager.js"></script>
-<script type="text/javascript" src="/assets/2048/html_actuator.js"></script>
-<script type="text/javascript" src="/assets/2048/grid.js"></script>
-<script type="text/javascript" src="/assets/2048/tile.js"></script>
-<script type="text/javascript" src="/assets/2048/local_score_manager.js"></script>
-<script type="text/javascript" src="/assets/2048/game_manager.js"></script>
-<script type="text/javascript" src="/assets/2048/application.js"></script>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/animframe_polyfill.js"></script>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/keyboard_input_manager.js"></script>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/html_actuator.js"></script>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/grid.js"></script>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/tile.js"></script>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/local_score_manager.js"></script>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/game_manager.js"></script>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2048/application.js"></script>
 
 <script type="text/javascript">
   $(function(){
@@ -106,7 +106,7 @@
           fusion2.dialog.invite
           ({
               receiver : "",
-              msg  : "邀请你来玩~",
+              msg  : "<%= @res["nickname"] %>邀请你来玩~",
               img : "",
               source : "",
               context : "invite",
