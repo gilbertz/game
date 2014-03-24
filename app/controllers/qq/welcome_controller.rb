@@ -21,11 +21,14 @@ class Qq::WelcomeController < Qq::QqController
       render :template => "qq/welcome/gabrielecirulli", :layout => false
     end
 
-
     #p = pre_format_p
     #sig = sign(p, App_key)
     #p.merge!(sig: sig)
     #@res = RestClient.get(Api_url + "v3/user/get_info", p)
+  end
+
+  def load
+    render :layout => false
   end
 
   private
