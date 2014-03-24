@@ -4,6 +4,7 @@ Game::Application.routes.draw do
 
   namespace :qq do
     root to: "welcome#index"
+    get "welcome/load" => "welcome#load"
   end
 
   root 'home#index'
