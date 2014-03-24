@@ -6,6 +6,13 @@ class Admin::MaterialsController < Admin::BaseController
     @materials = Material.includes(:category).where(cond).order('id desc').page(params[:page])
   end
 
+  def recommend_to_qq
+    material = Material.find(params[:id])
+    material.is_qq = 1
+    material.save
+    redirect_to :back
+  end
+
   def new
     @material = Material.new
   end

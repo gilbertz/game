@@ -13,16 +13,19 @@ class Qq::WelcomeController < Qq::QqController
       return
     end
 
-    p = pre_format_p
-    sig = sign(p, App_key)
+    unless params[:material_id].blank?
+      @material = Material.find params[:material_id]
 
-    puts sig
-    puts "============="
+      render :template => "qq/welcome/show_ajax"
+    else
+      render :template => "qq/welcome/gabrielecirulli", :layout => false
+    end
 
-    p.merge!(sig: sig)
+
+    #p = pre_format_p
+    #sig = sign(p, App_key)
+    #p.merge!(sig: sig)
     #@res = RestClient.get(Api_url + "v3/user/get_info", p)
-
-    render :template => "qq/welcome/gabrielecirulli", :layout => false
   end
 
   private

@@ -48,6 +48,7 @@ Game::Application.routes.draw do
       member do
         get :clone
         get :update_state
+        get :recommend_to_qq
       end
     end
     resources :images, except: :new

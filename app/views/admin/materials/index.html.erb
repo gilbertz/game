@@ -35,6 +35,11 @@
           <%= link_to '编辑模版', [:edit,:admin,c.category]  %> |
           <%= link_to '克隆', [:clone,:admin,c], data: {confirm: "Are you clone one !"} %> |
           <%= link_to '删除', [:admin,c], method: :delete, class: "delMaterial", remote: true, data: {confirm: "Are you sure?"} %>
+          <% if c.is_qq == 1 %>
+          <%= link_to "已推荐到QQ平台", "#" %>
+          <% else %>
+          <%= link_to "推荐到QQ平台", [:recommend_to_qq, :admin, c], data: {confirm: "Are you sure?"} %>
+          <% end %>
         </td>
       </tr>
     <% end %>
