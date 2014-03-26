@@ -9,6 +9,7 @@
       <th width="15%">分类</th>
       <th width="17%">创建时间</th>
       <th width="18%">操作</th>
+      <th width="10%">QQ空间</th>
     </tr>
   </thead>
   <tbody>
@@ -35,10 +36,18 @@
           <%= link_to '编辑模版', [:edit,:admin,c.category]  %> |
           <%= link_to '克隆', [:clone,:admin,c], data: {confirm: "Are you clone one !"} %> |
           <%= link_to '删除', [:admin,c], method: :delete, class: "delMaterial", remote: true, data: {confirm: "Are you sure?"} %>
+        </td>
+        <td>
           <% if c.is_qq == 1 %>
-          <%= link_to "已推荐到QQ平台", "#" %>
+              <%= link_to "已推送", "#" %>
           <% else %>
-          <%= link_to "推荐到QQ平台", [:recommend_to_qq, :admin, c], data: {confirm: "Are you sure?"} %>
+              <%= link_to "推送到QQ平台", [:recommend_to_qq, :admin, c], data: {confirm: "Are you sure?"} %>
+          <% end %>
+          |
+          <% if c.is_recommend_to_qq == 1 %>
+              <%= link_to "已推荐", "#" %>
+          <% else %>
+              <%= link_to "设置为QQ平台推荐游戏", [:recommend_game, :admin, c], data: {confirm: "Are you sure?"} %>
           <% end %>
         </td>
       </tr>

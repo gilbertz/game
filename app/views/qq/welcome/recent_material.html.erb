@@ -1,0 +1,28 @@
+<% unless @recent_materials.blank? %>
+    <ul class="wanhur_recent_material">
+      <% @recent_materials.each do |m| %>
+          <li>
+            <%= link_to "/qq?material_id=#{m.id}", :class => "wanhuir_remote_load" do %>
+                <img src="<%= m.wx_tlimg %>" alt=""/>
+            <% end %>
+            <div class="wanhuir_game_title">
+              <%= m.wx_title %>
+            </div>
+          </li>
+      <% end %>
+    </ul>
+<% end %>
+
+<script type="text/javascript">
+    $(function(){
+        $(".wanhuir_remote_load").click(function(){
+            var href = $(this).attr("href");
+            var iframe = $("#wanhuir_main_iframe");
+            var new_iframe = iframe.clone;
+            new_iframe.attr("src", href);
+            $(".wanhuir_main").html("");
+            $(".wanhuir_main").append(new_iframe);
+            return false;
+        })
+    })
+</script>

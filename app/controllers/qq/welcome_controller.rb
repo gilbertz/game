@@ -8,17 +8,20 @@ class Qq::WelcomeController < Qq::QqController
   App_key = "rwgnIjHffqSXS4D3"
 
   def index
+    @material_id = params[:material_id] || "44"
+
+    @material = Material.find @material_id
+
     if params[:index].to_i == 10
-      render :template => "qq/welcome/index", :layout => false
+      render :template => "qq/welcome/load", :layout => 'qq/layouts/qq_game'
       return
     end
 
-    unless params[:material_id].blank?
-      @material = Material.find params[:material_id]
-
-      render :template => "qq/welcome/show_ajax"
+    if params[:layouts] == "0"
+      #render :template => "qq/welcome/load", layout: false
+      render :template => "materials/show", layout: false
     else
-      render :template => "qq/welcome/gabrielecirulli", :layout => false
+      render :template => "qq/welcome/load", layout: "qq/layouts/qq_game"
     end
 
     #p = pre_format_p
@@ -28,6 +31,16 @@ class Qq::WelcomeController < Qq::QqController
   end
 
   def load
+    render :layout => false
+  end
+
+  def recent_material
+    @recent_materials = Material.where(:is_qq => 1).order("id desc").limit(5)
+    render :layout => false
+  end
+
+  def hot_material
+    @hot_materials = Material.where(:is_recommend_to_qq => 1).order("id desc").limit(5)
     render :layout => false
   end
 

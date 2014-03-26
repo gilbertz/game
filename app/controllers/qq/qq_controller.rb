@@ -20,7 +20,7 @@ class Qq::QqController < ActionController::Base
 
   private
   def set_header_for_qq
-    response.headers["X-Frame-Options"] = "Allow-From http://rc.qzone.qq.com"
+    #response.headers["X-Frame-Options"] = "Allow-From http://rc.qzone.qq.com"
   end
 
   def get_platform_info

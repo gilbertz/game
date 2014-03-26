@@ -2,11 +2,237 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>玩会儿</title>
+
+  <%= javascript_include_tag "qq/qq" %>
+  <style type="text/css">
+    body{
+        padding: 0 !important;
+        margin: 0 auto;
+    }
+    #wanhuir_container{
+        width: 800px;
+        margin: 0 auto;
+    }
+    .today_game{
+        color: #de550b;
+    }
+    .today_game h2{
+        margin: 0 auto;
+        margin-top: 10px;
+    }
+    .wanhuir_game_button{
+        display: inline-block;
+        width: 275px;
+        height: 50px;
+        background: #de550b;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 50px;
+        color: #fff;
+        font-weight: 400;
+        cursor: pointer;
+        margin: 10px 0;
+    }
+    .wanhuir_game_button span{
+        display: inline-block;
+        padding-left: 40px;
+    }
+    .wanhuir_game_button:hover{
+        background: #ca4d0a;
+    }
+    .wanhuir_right{
+        width: 625px;
+        float: right;
+    }
+    .wanhuir_left{
+        width: 174px;
+        border-right: 1px solid #c9c9c9;
+        float: right;
+        background: #f2f2f2;
+
+    }
+    .wanhuir_left ul li{
+        list-style-type: none;
+    }
+    .wanhuir_hot{
+        text-align: center;
+        padding-top: 5px;
+        border-top: 1px solid #c9c9c9;
+    }
+    .wanhuir_hot ul{
+        display: inline-block;
+        margin: 0 auto;
+        padding: 0;
+    }
+    .wanhuir_hot ul li{
+        list-style-type: none;
+        float: left;
+        margin: 0 5px;
+    }
+    .wanhuir_hot ul li img{
+        width: 128px;
+        height: 100px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    .wanhur_recent_material{
+        padding: 0;
+    }
+    .wanhuir_main{
+        margin: 0 auto;
+        padding: 0;
+    }
+    .wanhur_recent_material li{
+        text-align: center;
+        margin-bottom: 10px;
+        padding: 0;
+    }
+    .wanhur_recent_material li img{
+        width: 128px;
+        height: 100px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    .wanhuir_game_title{
+        padding: 0;
+        margin: 0 auto;
+        height: 20px;
+        width: 128px;
+        overflow: hidden;
+        line-height: 20px;
+    }
+    #wanhuir_header{
+        text-align: center;
+    }
+    #wanhuir_main_iframe{
+        width: 625px;
+        margin: 10px 0;
+    }
+
+    i.icon{
+        width: 38px;
+        height: 50px;
+        display: inline-table;
+    }
+
+    #invite_friends span{
+        background: url(http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/style/2.png) no-repeat;
+        background-position-y: 12px;
+    }
+    #share_with_friends span{
+        background: url(http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/style/1.png) no-repeat;
+        background-position-y: 12px;
+    }
+  </style>
+  <script type="text/javascript">
+      var wanhuir_page_title = "";
+      var wanhuir_page_url = "";
+      var wanhuir_page_result = "";
+      var wanhuir_page_desc = "";
+      var wanhuir_page_image = "";
+
+      $(function(){
+          if(navigator.userAgent.indexOf("MSIE")>0) {
+              alert("为了更好的游戏体验，请使用谷歌或者火狐浏览器！");
+          }
+
+          $.get("/qq/welcome/recent_material", function(data){
+            $(".wanhuir_left").html(data);
+          });
+
+          $.get("/qq/welcome/hot_material", function(data){
+              $(".wanhuir_hot").html(data);
+          });
+      })
+
+      var invite_friends = function(){
+          get_wanhuir_share_info();
+          console.log(wanhuir_page_desc);
+          fusion2.dialog.invite
+          ({
+              receiver : "",
+              msg  : "你的好友邀请你来一起玩~",
+              img : "",
+              source : "",
+              context : "invite"
+          });
+      }
+
+      var qq_share = function(){
+          get_wanhuir_share_info();
+          fusion2.dialog.sendStory
+          ({
+              title :"玩会儿，挑战2048，根本停不下来",
+              img:"http://i.gtimg.cn/open/app_icon/01/25/50/82//1101255082_100.png",
+              summary :"2014年度最新、最火爆的休闲小游戏，根本停不下来，全球几亿人都在玩。",
+              msg:"我的分数："+wanhuir_page_result+" 分，你敢来挑战吗？",
+              button :"向好友们炫耀一下！",
+              source :"ref=story&act=default",
+              context:"send-story-12345"
+          });
+      };
+
+      var get_wanhuir_share_info = function(){
+          wanhuir_page_title = $("#wanhuir_page_title").val();
+          wanhuir_page_url = $("#wanhuir_page_url").val();
+          wanhuir_page_result = $("#wanhuir_page_result").val();
+          wanhuir_page_desc = $("#wanhuir_page_desc").val();
+          wanhuir_page_image = $("#wanhuir_page_image").val();
+      }
+
+  </script>
+  <script type="text/javascript">
+      function heightSet(thisFrame){
+          if( navigator.userAgent.indexOf("Firefox") > 0 || navigator.userAgent.indexOf("MSIE") > 0){
+              bodyHeight =window.frames["wanhuir_main_iframe"].document.body.scrollHeight;
+          }else{
+              bodyHeight =thisFrame.contentWindow.document.documentElement.scrollHeight;
+          }
+          document.getElementById("wanhuir_main_iframe").height=bodyHeight;
+      }
+  </script>
 </head>
-<body>
+<body id="wanhuir_qq_game">
+<div id="wanhuir_container">
 
-<%= yield %>
+<div class="wanhuir_right">
 
+  <div id="wanhuir_header">
+
+    <div class="today_game">
+      <h2>今日推荐游戏</h2>
+      <hr style="border: 0; border-bottom: 1px solid #de550b">
+    </div>
+
+    <span class="game-explanation wanhuir_game_button invite_friends" id="invite_friends" onclick="invite_friends();">
+      <span>邀请小伙伴们来一起挑战！</span>
+    </span>
+
+    <span class="game-explanation wanhuir_game_button share_with_friends" id="share_with_friends" onclick="qq_share();">
+      <span>分享给我的小伙伴们！</span>
+    </span>
+  </div>
+
+  <div class="wanhuir_main">
+    <iframe src="/qq?layouts=0&material_id=<%= @material_id %>" name="wanhuir_main_iframe" frameborder="0" scrolling="no" id="wanhuir_main_iframe" onload="heightSet(this)"></iframe>
+  </div>
+
+  <div class="wanhuir_hot">
+
+  </div>
+
+</div>
+
+<div class="wanhuir_left">
+
+</div>
+<%= render "shared/analysis" %>
+<%= render :partial => "shared/data" %>
+</div>
 </body>
 </html>

@@ -38,5 +38,6 @@
     <%= ERB.new(@category.html).result(binding).html_safe %>
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
+    <%= render :partial => "shared/data" %>
   <% end %>
 </html>

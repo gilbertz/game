@@ -1,9 +1,29 @@
-<div class="helloworld">
+<% @category = @material.category %>
+<% @answers = @material.answers %>
+<% @wx_appid = @material.wx_appid %>
+<% @wx_url   = @material.wx_url %>
+<% @wx_title = @material.wx_title %>
+<% @wx_desc  = @material.wxdesc %>
+<% @wx_tlimg = @material.wx_tlimg %>
+<% @wx_ln    = @material.wx_ln %>
 
-</div>
+<% @prompt_image = @material.images.select{|i| i.state == 3 }[0].try(:body) %>
+<% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
+<% @close_btn    = @material.images.select{|i| i.state == 16}[0].try(:body) %>
+<% @html_image   = @material.images.select{|i| i.state == 2 }[0].try(:body) %>
+<% @html_image_2 = @material.images.select{|i| i.state == 13}[0].try(:body) %>
+<% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
+
+<%= ERB.new(@category.html).result(binding).html_safe %>
 
 <script type="text/javascript">
-  $(function(){
-      alert("-----");
-  })
+    <%= ERB.new(@category.js).result(binding).html_safe %>
 </script>
+
+<style type="text/css">
+    <% @css_image   = @material.images.select{|i| i.state == 1 }[0].try(:body) %>
+    <% @css_image_2 = @material.images.select{|i| i.state == 10}[0].try(:body) %>
+    <% @css_image_3 = @material.images.select{|i| i.state == 11}[0].try(:body) %>
+    <% @css_image_4 = @material.images.select{|i| i.state == 12}[0].try(:body) %>
+    <%= ERB.new(@category.css).result(binding).html_safe %>
+</style>

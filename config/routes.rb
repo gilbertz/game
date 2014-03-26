@@ -5,6 +5,8 @@ Game::Application.routes.draw do
   namespace :qq do
     root to: "welcome#index"
     get "welcome/load" => "welcome#load"
+    get "welcome/recent_material" => "welcome#recent_material"
+    get "welcome/hot_material" => "welcome#hot_material"
   end
 
   root 'home#index'
@@ -50,6 +52,7 @@ Game::Application.routes.draw do
         get :clone
         get :update_state
         get :recommend_to_qq
+        get :recommend_game
       end
     end
     resources :images, except: :new

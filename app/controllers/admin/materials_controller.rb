@@ -13,6 +13,13 @@ class Admin::MaterialsController < Admin::BaseController
     redirect_to :back
   end
 
+  def recommend_game
+    material = Material.find(params[:id])
+    material.is_recommend_to_qq = 1
+    material.save
+    redirect_to :back
+  end
+
   def new
     @material = Material.new
   end
