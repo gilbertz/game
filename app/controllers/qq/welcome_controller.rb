@@ -9,13 +9,7 @@ class Qq::WelcomeController < Qq::QqController
 
   def index
     @material_id = params[:material_id] || "44"
-
     @material = Material.find @material_id
-
-    if params[:index].to_i == 10
-      render :template => "qq/welcome/load", :layout => 'qq/layouts/qq_game'
-      return
-    end
 
     if params[:layouts] == "0"
       #render :template => "qq/welcome/load", layout: false
