@@ -8,7 +8,7 @@ class Qq::WelcomeController < Qq::QqController
   App_key = "rwgnIjHffqSXS4D3"
 
   def index
-    @material_id = params[:material_id] || "44"
+    @material_id = params[:material_id] || "256"
     @material = Material.find @material_id
 
     if params[:layouts] == "0"
