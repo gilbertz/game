@@ -8,8 +8,10 @@ class Qq::WelcomeController < Qq::QqController
   App_key = "rwgnIjHffqSXS4D3"
 
   def index
-    @material_id = params[:material_id] || "256"
+    @material_id = params[:material_id] || 311
     @material = Material.find @material_id
+
+    @from = "qq"
 
     if params[:layouts] == "0"
       #render :template => "qq/welcome/load", layout: false
