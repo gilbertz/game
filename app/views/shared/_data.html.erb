@@ -1,0 +1,28 @@
+<div id="shangjieba_share">
+  <input type="hidden" name="wanhuir_page_title" id="wanhuir_page_title" value="<%= @material.blank? ? "玩会儿 精彩小游戏" : @material.wx_title %>"/>
+  <input type="hidden" name="wanhuir_page_url" id="wanhuir_page_url" value="<%= @material.blank? ? "http://www.wanhuir.com" : @material.wx_url %>"/>
+  <input type="hidden" name="wanhuir_page_result" id="wanhuir_page_result" value=""/>
+  <input type="hidden" name="wanhuir_page_desc" id="wanhuir_page_desc" value="<%= @material.blank? ? "还有更多精彩内容" : @material.wxdesc %>"/>
+  <input type="hidden" name="wanhuir_page_image" id="wanhuir_page_image" value="<%= @material.blank? ? "http://wxcover.qiniudn.com/shijian.png" : @material.wx_tlimg %>"/>
+</div>
+
+<script type="text/javascript">
+    var get_wanhuir_share_info_for_app = function(){
+        var result;
+
+        var wanhuir_page_title = "";
+        var wanhuir_page_url = "";
+        var wanhuir_page_result = "";
+        var wanhuir_page_desc = "";
+        var wanhuir_page_image = "";
+
+        wanhuir_page_title = $("#wanhuir_page_title").val();
+        wanhuir_page_url = $("#wanhuir_page_url").val();
+        wanhuir_page_result = $("#wanhuir_page_result").val();
+        wanhuir_page_desc = $("#wanhuir_page_desc").val();
+        wanhuir_page_image = $("#wanhuir_page_image").val();
+
+        result = '{"wanhuir_page_title": "'+wanhuir_page_title+'","wanhuir_page_url": "'+wanhuir_page_url+'","wanhuir_page_result": "'+wanhuir_page_result+'","wanhuir_page_desc": "'+wanhuir_page_desc+'","wanhuir_page_image": "'+wanhuir_page_image+'"}';
+        return result;
+    }
+</script>
