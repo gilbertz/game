@@ -136,6 +136,7 @@
       var wanhuir_page_result = "";
       var wanhuir_page_desc = "";
       var wanhuir_page_image = "";
+      var wanhuir_material_id = "";
 
       $(function(){
           if(navigator.userAgent.indexOf("MSIE")>0) {
@@ -168,13 +169,13 @@
           get_wanhuir_share_info();
           fusion2.dialog.sendStory
           ({
-              title :"玩会儿，挑战2048，根本停不下来",
-              img:"http://i.gtimg.cn/open/app_icon/01/25/50/82//1101255082_100.png",
-              summary :"2014年度最新、最火爆的休闲小游戏，根本停不下来，全球几亿人都在玩。",
-              msg:"我的分数："+wanhuir_page_result+" 分，你敢来挑战吗？",
-              button :"向好友们炫耀一下！",
-              source :"ref=story&act=default",
-              context:"send-story-12345"
+              title : wanhuir_page_title,
+              img: wanhuir_page_image,
+              summary : wanhuir_page_desc,
+              msg: wanhuir_page_result +""+ wanhuir_page_title,
+              button :"分享一下！",
+              source :"material_id="+wanhuir_material_id,
+              context:"share_game"
           });
       };
 
@@ -184,6 +185,7 @@
           wanhuir_page_result = $("#wanhuir_page_result").val();
           wanhuir_page_desc = $("#wanhuir_page_desc").val();
           wanhuir_page_image = $("#wanhuir_page_image").val();
+          wanhuir_material_id = $("#wanhuir_material_id").val();
       }
 
   </script>
@@ -211,7 +213,7 @@
     </div>
 
     <span class="game-explanation wanhuir_game_button invite_friends" id="invite_friends" onclick="invite_friends();">
-      <span>邀请小伙伴们来一起挑战！</span>
+      <span>邀请小伙伴们来一起玩！</span>
     </span>
 
     <span class="game-explanation wanhuir_game_button share_with_friends" id="share_with_friends" onclick="qq_share();">
@@ -232,7 +234,6 @@
 <div class="wanhuir_left">
 
 </div>
-<%= render "shared/analysis" %>
 <%= render :partial => "shared/data" %>
 </div>
 </body>

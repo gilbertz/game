@@ -4,6 +4,7 @@
   <input type="hidden" name="wanhuir_page_result" id="wanhuir_page_result" value=""/>
   <input type="hidden" name="wanhuir_page_desc" id="wanhuir_page_desc" value="<%= @material.blank? ? "还有更多精彩内容" : @material.wxdesc %>"/>
   <input type="hidden" name="wanhuir_page_image" id="wanhuir_page_image" value="<%= @material.blank? ? "http://wxcover.qiniudn.com/shijian.png" : @material.wx_tlimg %>"/>
+  <input type="hidden" name="wanhuir_material_id" id="wanhuir_material_id" value="<%= @material.blank? ? "311" : @material.id %>"/>
 </div>
 
 <script type="text/javascript">
