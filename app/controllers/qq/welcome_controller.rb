@@ -8,7 +8,7 @@ class Qq::WelcomeController < Qq::QqController
   App_key = "rwgnIjHffqSXS4D3"
 
   def index
-    @material_id = params[:material_id] || 311
+    @material_id = params[:material_id] || 41
     @material = Material.find @material_id
 
     @from = "qq"
@@ -17,7 +17,7 @@ class Qq::WelcomeController < Qq::QqController
       #render :template => "qq/welcome/load", layout: false
       render :template => "materials/show", layout: false
     else
-      render :template => "qq/welcome/load", layout: "qq/layouts/qq_game"
+      render :template => "materials/show", layout: "qq/layouts/qq_game"
     end
 
     #p = pre_format_p
