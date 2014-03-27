@@ -167,6 +167,7 @@
 
       var qq_share = function(){
           get_wanhuir_share_info();
+
           fusion2.dialog.sendStory
           ({
               title : wanhuir_page_title,
@@ -178,15 +179,6 @@
               context:"share_game"
           });
       };
-
-      var get_wanhuir_share_info = function(){
-          wanhuir_page_title = $("#wanhuir_page_title").val();
-          wanhuir_page_url = $("#wanhuir_page_url").val();
-          wanhuir_page_result = $("#wanhuir_page_result").val();
-          wanhuir_page_desc = $("#wanhuir_page_desc").val();
-          wanhuir_page_image = $("#wanhuir_page_image").val();
-          wanhuir_material_id = $("#wanhuir_material_id").val();
-      }
 
   </script>
   <script type="text/javascript">
