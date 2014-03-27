@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Image < ActiveRecord::Base
   belongs_to :category, class_name: "Category", polymorphic: true 
   belongs_to :viewable, class_name: "Material", polymorphic: true  
