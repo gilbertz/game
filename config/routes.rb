@@ -7,15 +7,13 @@ Game::Application.routes.draw do
     get "welcome/load" => "welcome#load"
     get "welcome/recent_material" => "welcome#recent_material"
     get "welcome/hot_material" => "welcome#hot_material"
+    get "welcome/test" => "welcome#test"
   end
 
   root 'home#index'
   resources :home, only: [] do
     get :search
   end
-
-
-  post "/notify/alipay" => "notify#alipay"
 
   get '/materials/gabrielecirulli' => 'materials#gabrielecirulli'
   get '/materials/wx_share' => 'materials#wx_share'
