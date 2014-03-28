@@ -14,6 +14,10 @@ class Qq::WelcomeController < Qq::QqController
       @material_id = params[:app_custom].split("=").last
     end
 
+    unless params[:material_id].blank?
+      @material_id = params[:material_id]
+    end
+
     @material = Material.find @material_id
 
     if @material.blank?
