@@ -29,6 +29,7 @@
         <%= ERB.new(@category.css).result(binding).html_safe %>
       </style>
     </head>
+    <%= render "shared/ad" %>
     <% @prompt_image = @material.images.select{|i| i.state == 3 }[0].try(:body) %>
     <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
     <% @close_btn    = @material.images.select{|i| i.state == 16}[0].try(:body) %>

@@ -53,6 +53,7 @@ Game::Application.routes.draw do
         get :recommend_game
       end
     end
+    resources :ads
     resources :images, except: :new
     resources :answers, except: :new
     resources :questions, except: :new do
@@ -60,6 +61,9 @@ Game::Application.routes.draw do
     end
 
     resources :question_answers, except: :new
+
+    get '/show_stat' => 'ads#show_stat', as: :show_stat
+    get '/click_stat' => 'ads#click_stat', as: :click_stat
   end
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

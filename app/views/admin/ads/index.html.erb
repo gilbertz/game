@@ -1,0 +1,34 @@
+<table class="table table-bordered">  
+  <thead>
+    <tr class="well">
+      <th>id</th>
+      <th>名称</th>
+      <th>上线</th>
+      <th>广告图片</th>
+      <th>广告链接</th>
+      <th>show</th>
+      <th>click</th>
+      <th width="17%">创建时间</th>
+      <th width="13%">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @ads.each do |c| %>
+      <tr>
+        <td><%= c.id %></td> 
+        <td><%= c.title %></td>
+        <td><%= c.on %></td>
+        <td><img src="<%= c.img %>"/></td>
+        <td><a href="<%= c.click %>"> <%= c.click %> </a></td>
+        <td><%= c.get_show %></td>
+        <td><%= c.get_click %></td> 
+        <td><%= c.created_at.to_local %></td>
+        <td> 
+          <%= link_to '编辑', [:edit,:admin,c] %> |
+          <%= link_to '删除', [:admin,c], method: :delete, class: "delCategory", remote: true, data: {confirm: "Are you sure?"} %> 
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @ads %>

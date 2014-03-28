@@ -17,6 +17,9 @@
           <li class="<%= controller_name.in?(['materials']) ? 'active' : '' %>"> 
             <%= link_to '素材管理', [:admin,:materials] %> 
           </li>
+          <li class="<%= controller_name.in?(['ads']) ? 'active' : ''%>">
+            <%= link_to '广告管理', [:admin,:ads] %>
+          </li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>

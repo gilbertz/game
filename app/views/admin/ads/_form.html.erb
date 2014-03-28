@@ -1,0 +1,49 @@
+<style>ul.token-input-list-facebook {position: relative; top: -29px;}</style>
+<%= form_for [:admin,@ad], html: {class: 'form-horizontal' } do |f| %> 
+  <div class="control-group">
+    <label class="control-label">名称</label>
+    <div class="controls">
+      <%= f.text_field :title, required: true %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">描述</label>
+    <div class="controls">
+      <%= f.text_area :desc, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">图片</label>
+    <div class="controls">
+      <%= f.text_field :img, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">点击url</label>
+    <div class="controls">
+      <%= f.text_field :click, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">开始日期</label>
+    <div class="controls">
+      <%= f.date_field :start_date %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">结束日期</label>
+    <div class="controls">
+      <%= f.date_field :end_date%>
+    </div>
+  </div>
+   <div class="control-group">
+       <label class="control-label">上线</label>
+       <div class="controls">
+         <%= f.check_box :on%>
+       </div>
+  </div>
+
+  <div class="form-actions" style="margin-bottom:0px">
+    <%= f.submit '提交', class: 'btn btn-primary', id: "tixing" %>
+  </div>
+<% end %>

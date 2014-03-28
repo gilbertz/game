@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325085425) do
+ActiveRecord::Schema.define(version: 20140328142701) do
+
+  create_table "ads", force: true do |t|
+    t.string   "title"
+    t.text     "desc"
+    t.string   "img"
+    t.string   "click"
+    t.boolean  "on"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "show_count"
+    t.integer  "click_count"
+  end
 
   create_table "answers", force: true do |t|
     t.text     "title"
@@ -57,7 +71,7 @@ ActiveRecord::Schema.define(version: 20140325085425) do
   add_index "images", ["viewable_id", "viewable_type"], name: "index_game_images_on_viewable_id_and_viewable_type", using: :btree
 
   create_table "materials", force: true do |t|
-    t.integer  "state",           default: 0
+    t.integer  "state",              default: 0
     t.text     "description"
     t.integer  "category_id"
     t.text     "html"
@@ -70,12 +84,15 @@ ActiveRecord::Schema.define(version: 20140325085425) do
     t.string   "wxdesc"
     t.text     "advertisement"
     t.string   "wx_ln"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.text     "advertisement_1"
-    t.integer  "is_qq",           default: 0, null: false
+    t.integer  "is_qq",              default: 0, null: false
+    t.integer  "is_recommend_to_qq", default: 0, null: false
   end
 
+  add_index "materials", ["is_qq"], name: "index_materials_on_is_qq", using: :btree
+  add_index "materials", ["is_recommend_to_qq"], name: "index_materials_on_is_recommend_to_qq", using: :btree
   add_index "materials", ["state"], name: "index_materials_on_state", using: :btree
 
   create_table "question_answers", force: true do |t|
