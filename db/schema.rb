@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140312070628) do
+ActiveRecord::Schema.define(version: 20140325085425) do
 
   create_table "answers", force: true do |t|
-    t.string   "title"
+    t.text     "title"
     t.integer  "group"
     t.string   "img"
     t.integer  "viewable_id"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20140312070628) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.text     "advertisement_1"
+    t.integer  "is_qq",           default: 0, null: false
   end
 
   add_index "materials", ["state"], name: "index_materials_on_state", using: :btree
