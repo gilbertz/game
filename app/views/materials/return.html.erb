@@ -25,9 +25,7 @@
       <%= ERB.new(@category.re_css).result(binding).html_safe %>
     </style>
   </head>
+  <%= render "shared/ad" %>
   <%= ERB.new(@category.re_html).result(binding).html_safe %>
-  <div style="display:none;">
-    <script src="http://s5.cnzz.com/stat.php?id=2814783&web_id=2814783" language="JavaScript"> 
-    </script>
-  </div>
+  <%= render "shared/analysis" %>
 </html>
