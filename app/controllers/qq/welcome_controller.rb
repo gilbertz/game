@@ -8,8 +8,17 @@ class Qq::WelcomeController < Qq::QqController
   App_key = "rwgnIjHffqSXS4D3"
 
   def index
-    @material_id = params[:material_id] || 311
+    @material_id = 311
+
+    unless params[:app_custom].blank?
+      @material_id = params[:app_custom].split("=").last
+    end
+
     @material = Material.find @material_id
+
+    if @material.blank?
+      @material = Material.find(319)
+    end
 
     @from = "qq"
 
@@ -36,9 +45,16 @@ class Qq::WelcomeController < Qq::QqController
   end
 
   def hot_material
-    @hot_materials = Material.where(:is_recommend_to_qq => 1).order("id desc").limit(5)
+    @hot_materials = Material.where(:is_recommend_to_qq => 1).order("id desc").limit(4)
     render :layout => false
   end
+
+
+  def test
+
+    render :layout => false
+  end
+
 
   private
   def pre_format_p
