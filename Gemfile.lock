@@ -134,6 +134,7 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     redis (3.0.7)
+    request-log-analyzer (1.12.10)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rvm-capistrano (1.5.1)
@@ -195,6 +196,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   ransack!
   redis
+  request-log-analyzer
   rest-client
   rvm-capistrano
   sass-rails (~> 4.0.0)
