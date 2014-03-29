@@ -1,5 +1,5 @@
 set :user, "ubuntu"
-set :password, "JScY5w2K3Kd"
+set :password, "shangjieba8"
 set :deploy_to, "/data/long/apps/game"
 
 role :app, "203.195.191.203"
