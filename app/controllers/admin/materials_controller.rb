@@ -37,9 +37,7 @@ class Admin::MaterialsController < Admin::BaseController
   def update
     @material.update_attributes material_params
 
-    expire_page :controller => "materials", :action => %w( show ), :id => @material.id
-    expire_page "/materials/#{@material.id}/fr/ios"
-    expire_page "/materials/#{@material.id}/fr/andriod"
+    clear_page(@material)
 
     redirect_to [:admin,:materials]
   end
@@ -67,6 +65,12 @@ class Admin::MaterialsController < Admin::BaseController
 
   def clear_rubbish
     @material = Material.find params[:id]
-    expire_fragment(@material)
+    clear_page(@material)
+  end
+
+  def clear_page(material)
+    expire_page "/materials/#{material.id}"
+    expire_page "/materials/#{material.id}/fr/ios"
+    expire_page "/materials/#{material.id}/fr/andriod"
   end
 end

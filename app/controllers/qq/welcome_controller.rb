@@ -8,7 +8,7 @@ class Qq::WelcomeController < Qq::QqController
   App_key = "rwgnIjHffqSXS4D3"
 
   def index
-    @material_id = 311
+    @material_id = 41
 
     unless params[:app_custom].blank?
       @material_id = params[:app_custom].split("=").last
@@ -55,8 +55,7 @@ class Qq::WelcomeController < Qq::QqController
 
 
   def test
-
-    render :layout => false
+    render :template => "qq/welcome/test1", :layout => false
   end
 
 
