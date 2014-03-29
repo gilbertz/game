@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+   <% cache @material, skip_digest: true do %>
     <head>
       <link href="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/wanhuir-icon.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
       <% @category = @material.category %>
@@ -28,7 +29,6 @@
         <%= ERB.new(@category.css).result(binding).html_safe %>
       </style>
     </head>
-    <%= render "shared/ad" %>
     <% @prompt_image = @material.images.select{|i| i.state == 3 }[0].try(:body) %>
     <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
     <% @close_btn    = @material.images.select{|i| i.state == 16}[0].try(:body) %>
@@ -39,4 +39,5 @@
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
     <%= render :partial => "shared/data" %>
+  <% end %>
 </html>
