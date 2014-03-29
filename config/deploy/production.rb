@@ -1,5 +1,5 @@
 set :user, "ubuntu"
-set :password, "JScY5w2K3Kd"
+set :password, "shangjieba8"
 set :deploy_to, "/data/long/apps/game"
 
 role :app, "203.195.191.203"
@@ -21,6 +21,7 @@ namespace :deploy do
 
   desc "Restart Application"
   task :restart, :roles => :app do
+    run "bundle install"
     run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
     run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
     run "cd #{current_path} && passenger stop -p 4002 && passenger start --daemonize -p 4002"
