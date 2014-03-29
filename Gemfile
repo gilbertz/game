@@ -67,3 +67,5 @@ gem 'em-http-request'
 
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
+
+gem "request-log-analyzer"
