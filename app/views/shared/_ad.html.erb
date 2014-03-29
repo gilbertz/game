@@ -1,5 +1,5 @@
 <div class="flexslider"   style="margin:0px auto;text-align:center; width:90%;" >
-  <ul class="slides" style="list-style:none; width:90%;">
+  <ul class="slides" style="list-style:none; width:95%;">
     <script>
       function click_ad(idx){
         var url="/admin/click_stat?id=" + idx;
@@ -11,7 +11,7 @@
     
     <% @ads = Ad.where(:on => true) %>
     <% @ads.each do |ad|%>
-    <li style="float:left; margin-left:3px; width:30%;">
+    <li style="float:left; margin-left:2px; width:30%;">
       <a onclick="click_ad(<%= ad.id %>);" href="<%= ad.click %>" > <img style="width:100%;" src="<%= ad.img %>" /> </a>
       <script>
         var url="/admin/show_stat?id=<%= ad.id %>"
