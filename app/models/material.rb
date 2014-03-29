@@ -8,7 +8,8 @@ class Material < ActiveRecord::Base
 
   has_many :questions
 
-  class_attribute :clone 
+  class_attribute :clone
+
   before_update :clone_self, if: Proc.new{|mate| mate.clone == true}
   def cloning(param)
     self.update_attribute(:clone,param)

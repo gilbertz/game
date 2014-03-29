@@ -32,6 +32,10 @@ Game::Application.routes.draw do
     end
   end
 
+  get '/materials/:id/fr/:fr' => "materials#show"
+  get '/qq/layouts/:layouts/material_id/:material_id' => "qq/welcome#index"
+  get '/qq/material_id/:material_id' => "qq/welcome#index"
+
   namespace :admin do
     get '/login' => 'session#new', as: :login
     root "home#index"

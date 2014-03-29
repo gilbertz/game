@@ -36,6 +36,11 @@ class Admin::MaterialsController < Admin::BaseController
 
   def update
     @material.update_attributes material_params
+
+    expire_page :controller => "materials", :action => %w( show ), :id => @material.id
+    expire_page "/materials/#{@material.id}/fr/ios"
+    expire_page "/materials/#{@material.id}/fr/andriod"
+
     redirect_to [:admin,:materials]
   end
 

@@ -11,14 +11,12 @@ class MaterialsController < ApplicationController
     render :layout => false
   end
 
+  caches_page :show
   def show
     @material = Material.find params[:id]
     get_topn(@material.category_id)
-    unless params[:text]
-      render layout: false
-    else
-      render 'show_ncache', layout: false
-    end
+
+    render layout: false
   end
 
   def return
