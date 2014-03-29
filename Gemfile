@@ -36,6 +36,7 @@ group :development do
   gem 'rvm-capistrano'
   gem 'thin', '1.3.1'
   gem 'debugger'
+  gem 'sqlite3'
 end
 
 group :doc do
@@ -60,3 +61,9 @@ gem 'rest-client'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'faraday'
+gem 'em-http-request'
+
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
