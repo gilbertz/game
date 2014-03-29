@@ -1,5 +1,5 @@
 <div class="flexslider"   style="margin:0px auto;text-align:center; margin-top:5px;" >
-  <ul class="slides">
+  <ul class="slides" style="list-style:none;">
     <script>
       function click_ad(idx){
         var url="/admin/click_stat?id=" + idx;
@@ -11,8 +11,8 @@
     
     <% @ads = Ad.where(:on => true) %>
     <% @ads.each do |ad|%>
-    <li>
-      <a onclick="click_ad(<%= ad.id %>);" href="<%= ad.click %>" > <img src="<%= ad.img %>" /> </a>
+    <li style="float:left; margin-left:8px;">
+      <a onclick="click_ad(<%= ad.id %>);" href="<%= ad.click %>" > <img height="30" src="<%= ad.img %>" /> </a>
       <script>
         var url="/admin/show_stat?id=<%= ad.id %>"
         var img = new Image();
@@ -23,9 +23,9 @@
   </ul>
 </div>
 
- <link rel="stylesheet" href="http://1251008728.cdn.myqcloud.com/1251008728/assets/css/flexslider.css" type="text/css" media="screen" />
+ <!--<link rel="stylesheet" href="http://1251008728.cdn.myqcloud.com/1251008728/assets/css/flexslider.css" type="text/css" media="screen" />-->
   <!-- FlexSlider -->
-  <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.flexslider.js"></script>
+  <!--<script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.flexslider.js"></script>-->
   <script type="text/javascript">
     $(window).load(function(){
      $('.flexslider').flexslider({
