@@ -23,6 +23,7 @@ namespace :deploy do
   task :restart, :roles => :app do
     run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
     run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
+    run "cd #{current_path} && rm public/materials/* -rf"
     run "cd #{current_path} && passenger stop -p 4002 && passenger start --daemonize -p 4002"
   end
 end
