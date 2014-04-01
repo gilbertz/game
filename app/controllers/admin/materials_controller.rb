@@ -68,9 +68,4 @@ class Admin::MaterialsController < Admin::BaseController
     clear_page(@material)
   end
 
-  def clear_page(material)
-    expire_page "/materials/#{material.id}"
-    expire_page "/materials/#{material.id}/fr/ios"
-    expire_page "/materials/#{material.id}/fr/andriod"
-  end
 end

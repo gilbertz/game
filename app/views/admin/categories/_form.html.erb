@@ -56,6 +56,13 @@
   </div>
 
     <div class="control-group">
+      <label class="control-label">游戏类型</label>
+      <div class="controls">
+        <%= f.select :game_type_id, @game_types, style:"width:800px;height:100px" %>
+      </div>
+    </div>
+
+    <div class="control-group">
       <label class="control-label">是否多题目类型</label>
       <div class="controls">
         <%= f.select :material_type, [["是", 1], ["不是", 0]],style:"width:800px;height:100px" %>

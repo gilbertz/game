@@ -22,6 +22,17 @@
             </div>
           </div>
         </div>
+      <% else %>
+          <div class="container-fluid">
+            <div class="row-fluid">
+              <div class="span2">
+                <%#= render 'menu' %>
+              </div>
+              <div class="span10">
+                <%= yield %>
+              </div>
+            </div>
+          </div>
       <% end %>
     <% end %>
   </body>
