@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
     new_logger.info(request.url)
     new_logger.info(params.to_s)
     new_logger.info(exception.message)
-    new_logger.info(exception.backtrace)
     raise exception
   end
 
