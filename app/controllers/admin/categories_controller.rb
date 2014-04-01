@@ -1,4 +1,7 @@
 class Admin::CategoriesController < Admin::BaseController
+
+  before_action :get_game_types, :only => [:new, :edit]
+
   def index
     @categories = Category.includes(:materials).order("id desc").page(params[:page])
   end
@@ -43,7 +46,7 @@ class Admin::CategoriesController < Admin::BaseController
 
   private
   def category_params
-    params.require(:category).permit(:name,:meta,:js,:css,:html,:re_js,:re_css,:re_html, :wx_js, :material_type)
+    params.require(:category).permit(:name,:meta,:js,:css,:html,:re_js,:re_css,:re_html, :wx_js, :material_type, :game_type_id)
   end
 
   def expire_material(category)
@@ -51,6 +54,10 @@ class Admin::CategoriesController < Admin::BaseController
     materials.each do |m|
       clear_page(m)
     end
+  end
+
+  def get_game_types
+    @game_types = GameType.all.collect{|gt| [gt.game_type, gt.id] }
   end
 
 end

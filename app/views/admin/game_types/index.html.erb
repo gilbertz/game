@@ -1,0 +1,15 @@
+<table class="table">
+  <tr>
+    <th>ID</th>
+    <th>Game type</th>
+  </tr>
+
+  <% unless @game_types.blank? %>
+    <% @game_types.each do |game_type| %>
+      <tr>
+        <td><%= game_type.id %></td>
+        <td><%= game_type.game_type %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
