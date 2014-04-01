@@ -7,6 +7,7 @@
       <th>微信链接</th>
       <th width="5%">状态</th>
       <th width="15%">分类</th>
+      <th width="5%">类型</th>
       <th width="17%">创建时间</th>
       <th width="18%">操作</th>
       <th width="10%">QQ空间</th>
@@ -30,6 +31,7 @@
           <% end %>
         </td>
         <td><%= link_to c.category.try(:name), "/admin/materials?cid=#{c.category.id}" %></td>
+        <td><%= c.game_type %></td>
         <td><%= c.created_at.to_local %></td>
         <td> 
           <%= link_to '编辑', [:edit,:admin,c] %> |

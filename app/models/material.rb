@@ -27,6 +27,15 @@ class Material < ActiveRecord::Base
 
   def cn_state; { 0 => '下线', 1 => '上线', nil => '下线' }[state] end
 
+  def game_type
+    unless self.category.game_type.blank?
+      self.category.game_type.game_type
+    else
+      ""
+    end
+  end
+
+
   private
   def clone_self
     material = Material.new self.attributes.except!("created_at","id")
