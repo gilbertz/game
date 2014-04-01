@@ -9,7 +9,6 @@ class Admin::HomeController < Admin::BaseController
 
   # admin home clear all / admin materials clear_page 更换服务器需要修改两处请求地址
   def clear_all
-
     l_ip = Socket.ip_address_list.collect{|i| i.ip_address}
 
     cache_path = "#{Rails.root}/public/materials"

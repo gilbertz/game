@@ -70,6 +70,8 @@ class Admin::MaterialsController < Admin::BaseController
 
   def clear_page(material)
 
+    puts "-----begin---clear-----cache---"
+
     l_ip = Socket.ip_address_list.collect{|i| i.ip_address}
 
     cache_path = "#{Rails.root}/public/materials"
