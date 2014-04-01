@@ -25,9 +25,12 @@ class Admin::CategoriesController < Admin::BaseController
 
   def update
     @category = Category.find params[:id]
-    @category.materials.each do |mate|
-      expire_fragment(mate)
-    end
+    #@category.materials.each do |mate|
+    #  expire_fragment(mate)
+    #end
+
+    expire_material(@category)
+
     @category.update_attributes category_params
     redirect_to [:edit,:admin,@category]
   end
@@ -42,4 +45,12 @@ class Admin::CategoriesController < Admin::BaseController
   def category_params
     params.require(:category).permit(:name,:meta,:js,:css,:html,:re_js,:re_css,:re_html, :wx_js, :material_type)
   end
+
+  def expire_material(category)
+    materials = category.materials
+    materials.each do |m|
+      clear_page(m)
+    end
+  end
+
 end

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>2048</title>
+  <style type="text/css">
+      body{
+          background: url(http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/bg.jpg);
+      }
+      .question{
+          display: none;
+          text-align: center;
+      }
+      .question:first-child{
+          display: block;
+      }
+      .question h2{
+          background: url(http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/title.png) no-repeat;
+          text-align: center;
+          width: 216px;
+          height: 77px;
+          line-height: 67px;
+          color: #fff;
+          margin: 0 auto;
+          padding: 0;
+          font-size: 16px;
+      }
+      .question-img img{
+          border: 5px solid #c9b89b;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+      }
+      .question-input{
+          padding: 20px 0;
+      }
+      .question-input input{
+          height: 25px;
+          width: 200px;
+      }
+      .submit-button{
+          padding: 15px 10px;
+          width: 150px;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          background: #de550b;
+          border: 0;
+          color: #fff;
+          font-size: 14px;
+      }
+
+      .alert-bg{
+          background: rgba(0, 0, 0, 0.9);
+          width: 100%;
+          height: 100%;
+          padding: 0;
+          margin: 0 auto;
+          text-align: center;
+          display: none;
+          position: fixed;
+          top: 0;
+      }
+
+      .alert{
+          margin: 0 auto;
+          text-align: center;
+          width: 300px;
+          border: 2px solid #de550b;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          margin-top: 20px;
+          font-size: 14px;
+          color: #de550b;
+          padding: 0;
+          margin-top: 100px;
+
+          /*position:fixed;*/
+          /*top:50%;*/
+          /*left:50%;*/
+          /*margin-left:-100px;*/
+          /*margin-top:-100px;*/
+          /*position: absolute;*/
+          /*_left:expression(eval(document.documentElement.clientWidth/2 + document.documentElement.scrollLeft - this.offsetWidth/2 - parseInt(this.currentStyle.marginLeft,10) - parseInt(this.currentStyle.marginRight,10))) ;*/
+          /*_top:expression(eval(document.documentElement.clientHeight/2 + document.documentElement.scrollTop  - this.offsetHeight/2 - parseInt(this.currentStyle.marginTop,10) - parseInt(this.currentStyle.marginBottom,10)));*/
+
+      }
+      .alert h5{
+          margin: 5px;
+      }
+      .result{
+          display: none;
+          text-align: center;
+          margin-top: 30px;
+      }
+      .result-info{
+          margin: 0 auto;
+          text-align: center;
+          width: 200px;
+          border: 2px solid #de550b;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          margin-top: 20px;
+          font-size: 14px;
+          color: #de550b;
+          padding: 25px;
+          margin-bottom: 20px;
+      }
+      .result-share .submit-button{
+          padding-left: 40px;
+          padding-right: 40px;
+      }
+
+      .question-question{
+          display: none;
+          border: 2px solid #de550b;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          text-align: center;
+          font-size: 14px;
+          margin-top: 30px;
+      }
+
+      .next-question{
+          padding: 15px 10px;
+          width: 150px;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          background: #de550b;
+          border: 0;
+          color: #fff;
+          font-size: 14px;
+          margin-top: 30px;
+          margin-bottom: 30px;
+      }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="question question-1">
+    <h2>猜一个成语</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/1.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-1"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-2">
+    <h2>猜一个成语</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/2.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-2"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-3">
+    <h2>猜一内地男明星</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/3.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-3"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-4">
+    <h2>猜一成语</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/4.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-4"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-5">
+    <h2>猜一港台男明星</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/5.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-5"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-6">
+    <h2>猜一欧洲国家名</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/6.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-6"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-7">
+    <h2>猜一内地艺人名</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/7.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-7"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-8">
+    <h2>猜一流行歌曲</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/8.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-8"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-9">
+    <h2>猜一成语</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/9.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-9"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-10">
+    <h2>猜一卡通人物</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/10.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-10"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-11">
+    <h2>猜一香港男明星</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/11.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-11"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-12">
+    <h2>猜一热播剧</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/12.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-12"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-13">
+    <h2>猜一内地知名主持人名字</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/13.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-13"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-14">
+    <h2>猜一成语</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/14.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-14"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="question question-15">
+    <h2>猜一韩国女明星</h2>
+    <div class="question-img">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/20140327/15.jpg" alt=""/>
+    </div>
+    <div class="question-input">
+      <input type="text" name="question-15"/>
+    </div>
+
+    <div class="question-button">
+      <button class="submit-button">提交结果</button>
+    </div>
+  </div>
+
+  <div class="alert-bg">
+    <div class="alert">
+      <h5>答错了哦！</h5>
+      亲！仔细想想，你一定会猜出来的！
+      <hr>
+      发送XXX到上街吧公众账号查看答案
+    </div>
+  </div>
+
+  <div class="question-question">
+
+    <h2>
+      恭喜你！答对了
+    </h2>
+
+    <div class="question-content">
+
+      亲！我对你的仰慕，有如滔滔江水绵绵不绝！
+
+    </div>
+
+    <button class="next-question">继续下一题</button>
+
+  </div>
+
+  <div class="result">
+    <div class="result-info">
+      恭喜你，全都都答完了！
+    </div>
+    <div class="result-share">
+      <span class="submit-button" onclick="qq_share();">分享给好友</span>
+    </div>
+  </div>
+
+</div>
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+<script type="text/javascript">
+  $(function(){
+
+    var result = {"question-1": "sss", "question-2": "sss2", "question-3": "sss3"}
+
+    var tips = ["亲！难道世界上还有比你更聪明的人吗？我觉得没有！", "亲！你真是太棒了！这么样的绝世难题你都能答对！", "亲！你是我见过的世界上最聪明的人！", "亲！你真的好棒哦！", "亲！你真是天才啊！", "亲！我对你的仰慕，有如滔滔江水绵绵不绝！", "亲！为什么你是如此的聪明！我真是羡慕嫉妒恨啊！"]
+
+    $(".submit-button").click(function(){
+        var this_node = $(this).parent().parent();
+        var next_node = this_node.next();
+
+        if(next_node.hasClass("question")){
+
+            var input = $(this_node).find("input");
+            var answer = $(input).val();
+            var question_no = $(input).attr("name");
+            var this_answer = result[question_no];
+
+            if(this_answer == answer){
+                $(this_node).hide();
+                $(".alert-bg").hide();
+
+                var str = $(next_node).attr("class").split(" ")[1];
+                $(".question-question").attr("data-num", str);
+
+                var tip = "";
+
+                var num = Math.ceil(Math.random()*7) - 1;
+
+                tip = tips[num];
+
+                $(".question-content").text(tip);
+
+                $(".question-question").show();
+            }else{
+                $(".alert-bg").show();
+            }
+
+        }else{
+            //game over
+            $(this_node).hide();
+            $(".result").show();
+        }
+    })
+
+    $(".alert-bg").click(function(){
+        $(this).hide();
+    });
+
+    $(".question-question").click(function(){
+        var str = $(this).attr("data-num");
+        $(this).hide();
+        $("."+str).show();
+    });
+
+  })
+</script>
+
+
+<% if @from %>
+    <span class="share_button" onclick="parent.window.qq_share();">分享一下</span>
+<% else %>
+    <% if params[:fr] %>
+        <span class="share_button">点击右上角分享</span>
+    <% else %>
+        <span class="share_button" onclick="mask();">分享到朋友圈</span>
+    <% end %>
+<% end %>
+
+
+</body>
+</html>

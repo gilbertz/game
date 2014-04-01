@@ -41,9 +41,6 @@ Game::Application.routes.draw do
     root "home#index"
 
     get 'home/clear_single_cache/:id' => "home#clear_single_cache"
-    get 'home/clear_all_cache' => "home#clear_all_cache"
-    get 'home/clear_all' => "home#clear_all", as: :clear_all
-
 
     resources :users
     resources :session

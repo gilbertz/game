@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>2048</title>
+  <style type="text/css">
+    body{
+        padding: 0;
+        background: #fef5e3;
+    }
+    .container{
+        margin: 0 auto;
+        padding: 0;
+        width: 80%;
+        height: auto;
+    }
+    .start-button{
+        width: 100%;
+        text-align: center;
+        padding: 0;
+        padding-top: 670px;
+        cursor: pointer;
+        margin: 0 auto;
+        position: absolute;
+        top: 0;
+    }
+
+    .container-img{
+        width: 100%;
+        height: auto;
+    }
+    .question{
+        position: fixed;
+        top: 0;
+        display: none;
+        margin: 0 auto;
+        padding-top: 140px;
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+    .question ul{
+        padding: 0;
+        margin: 0 auto;
+    }
+    .question ul li{
+        list-style-type: none;
+        float: left;
+        margin: 10px 20px 0 0;
+        border: 6px solid #ffdce7;
+        border-radius: 5px;
+    }
+    .question ul li img{
+        width: auto;
+    }
+    .question ul li:hover{
+        border: 6px solid #da4f49;
+    }
+    .current{
+        display: block;
+    }
+    #answer table{
+        padding-top: 50px;
+    }
+    .share_button{
+        width: 200px;
+        height: 50px;
+        padding: 5px 30px;
+        background: #da4f49;
+        border-radius: 5px;
+        line-height: 50px;
+        color: #fff;
+        vertical-align: ;
+    }
+
+  </style>
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+  <script type="text/javascript">
+    $(function(){
+        $(".start-button").click(function(){
+            $(".container").removeClass("begin-container");
+            $(this).hide();
+            $(".question:first").addClass("current");
+            $(".container-img").attr("src", "http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/bg2.jpg");
+        });
+
+        $(".question ul li").click(function(){
+            var this_node = $(".current");
+            var next_node = $(this_node).next();
+
+            $(this_node).removeClass("current");
+            $(next_node).addClass("current");
+        });
+    })
+  </script>
+</head>
+<body>
+
+<table>
+  <tr>
+    <td>
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/xl/q1_1.jpg" style="height: auto; max-width: 100%" alt=""/>
+    </td>
+    <td>
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/xl/q1_1.jpg" style="height: auto; max-width: 100%" alt=""/>
+    </td>
+    <td>
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/xl/q1_1.jpg" style="height: auto; max-width: 100%" alt=""/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/xl/q1_1.jpg" style="height: auto; max-width: 100%" alt=""/>
+    </td>
+    <td>
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/xl/q1_1.jpg" style="height: auto; max-width: 100%" alt=""/>
+    </td>
+    <td>
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/xl/q1_1.jpg" style="height: auto; max-width: 100%" alt=""/>
+    </td>
+  </tr>
+</table>
+<div class="start-button">
+  <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/btn_start.gif" alt=""/>
+</div>
+<div class="container begin-container">
+
+  <div class="question question-1">
+
+    <div class="question-title">
+        1.第一题是是是说说
+    </div>
+    
+    <div class="question-content">
+      <ul>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+
+  <div class="question question-2">
+
+    <div class="question-title">
+      12222第一题是是是说说
+    </div>
+
+    <div class="question-content">
+
+
+
+      <ul>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+        <li>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/q1_1.jpg" alt=""/>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="question" id="answer">
+
+    <table>
+      <tr>
+        <td>
+          <img src="http://1251008728.cdn.myqcloud.com/1251008728/wanhuir/xinliceshi/pic.gif" alt=""/>
+        </td>
+        <td>
+          <div>
+            测试完成！点击查看结果~
+          </div>
+
+          <div class="result-content">
+            【心理年龄测试】刚刚做了个专业的心理年龄测试，哇！我的心理年龄是 42岁 啊，还不错嘛！你们的是多少？
+          </div>
+
+          <div class="share">
+            <% if @from %>
+                <span class="share_button" onclick="parent.window.qq_share();">分享一下</span>
+            <% else %>
+                <% if params[:fr] %>
+                    <span class="share_button">点击右上角分享</span>
+                <% else %>
+                    <span class="share_button" onclick="mask();">分享到朋友圈</span>
+                <% end %>
+            <% end %>
+          </div>
+
+        </td>
+      </tr>
+    </table>
+
+  </div>
+
+</div>
+
+
+</body>
+</html>
