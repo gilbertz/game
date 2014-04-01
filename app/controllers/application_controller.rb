@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   rescue_from StandardError do |exception|
     new_logger = Logger.new('log/exceptions.log')
     new_logger.info('THIS IS A NEW EXCEPTION!')
+    new_logger.info(request.url)
+    new_logger.info(params.to_s)
     new_logger.info(exception.message)
     new_logger.info(exception.backtrace)
     raise exception
