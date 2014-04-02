@@ -56,6 +56,6 @@ class Admin::AdsController < Admin::BaseController
 
   private
   def ad_params
-    params.require(:ad).permit(:title,:desc,:img,:click,:start_date,:end_date, :on)
+    params.require(:ad).permit(:title,:desc,:img,:click,:start_date,:end_date,:t,:code,:on)
   end
 end
