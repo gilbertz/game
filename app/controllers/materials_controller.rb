@@ -14,7 +14,7 @@ class MaterialsController < ApplicationController
   caches_page :show
   def show
     @material = Material.find params[:id]
-    get_topn(@material.category_id)
+    #get_topn(@material.category_id)
 
     render layout: false
   end
