@@ -14,7 +14,7 @@ class MaterialsController < ApplicationController
   caches_page :show
   def show
     @material = Material.find params[:id]
-    #get_topn(@material.category_id)
+    get_topn(@material.category_id)
 
     render layout: false
   end
@@ -84,6 +84,8 @@ class MaterialsController < ApplicationController
 
   def get_topn(cid)
     begin
+      @topn = []
+      @recentn = []
       if cid == 66
         cid = 48
       end
