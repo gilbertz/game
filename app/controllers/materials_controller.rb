@@ -84,6 +84,8 @@ class MaterialsController < ApplicationController
 
   def get_topn(cid)
     begin
+      @topn = []
+      @recentn = []
       if cid == 66
         cid = 48
       end

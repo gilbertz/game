@@ -1,0 +1,8 @@
+<div style="margin-top:20px;width:650px;margin:0 auto;text-align: center;" align="center">
+  <% @ads = Ad.where( :t=> 1 ) %>
+  <% @ads.each do |ad| %>
+    <div style="display: inline;float: left;">
+       <%= ad.code.html_safe %>
+    </div>
+  <% end %> 
+</div>  

@@ -36,6 +36,8 @@
     <% @html_image_2 = @material.images.select{|i| i.state == 13}[0].try(:body) %>
     <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
     <%= ERB.new(@category.html).result(binding).html_safe %>
+    <%= render "shared/ad_bottom" %>
+    
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
     <%= render :partial => "shared/data" %>
