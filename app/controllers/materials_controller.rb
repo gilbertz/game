@@ -38,10 +38,10 @@ class MaterialsController < ApplicationController
   end
 
   def wx_share
-    #if params[:f]
-      #key = "wx_share_#{params[:f]}"
-      #@count = $redis.incr(key)
-    #end
+    if params[:f]
+      key = "wx_share_#{params[:f]}"
+      @count = $redis.incr(key)
+    end
     render nothing: true
   end
 

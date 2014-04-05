@@ -20,6 +20,12 @@ class Material < ActiveRecord::Base
     $redis.get(key)                                                                
   end
 
+  def share_count(type)
+     key = "wx_share_#{type}_#{self.id}"
+     $redis.get(key) 
+  end
+
+
   def invert_state
     val = state.eql?(0) ? 1 : 0
     self.update_attributes(state: val)

@@ -10,18 +10,24 @@ class Category < ActiveRecord::Base
     $redis.get(key)
   end
 
+  def share_count(type)
+    key = "wx_cshare_#{type}_#{self.id}"
+    $redis.get(key)
+  end
+
+
   def current_game
     self.materials.last
   end
 
-   def current_game_name                                                                
+  def current_game_name                                                                
      last_game = self.materials.last
      if last_game
        last_game.name
      else
        "" 
      end   
-   end
+  end
 
   private 
   def check_its_materials
