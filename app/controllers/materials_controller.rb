@@ -78,6 +78,12 @@ class MaterialsController < ApplicationController
         key = "gstat_#{params[:type]}_#{params[:gid]}"                               
        $redis.incr(key)                                                            
     end
+
+    #include ad show stat
+    Ad.where(:on => true).each do |ad|
+      key = "ad_show_#{ad.id}"
+      $redis.incr(key)
+    end
     render :nothing => true
   end
    
