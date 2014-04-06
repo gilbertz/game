@@ -46,7 +46,8 @@ class MaterialsController < ApplicationController
       if game
         cid = game.category_id
         if cid
-          ckey = key.gsub(gid.to_s, cid.to_s)
+          ckey = "wx_cshare_#{params[:f]}"
+          ckey = ckey.gsub(gid.to_s, cid.to_s)
           $redis.incr(ckey)
         end
       end
