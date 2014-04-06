@@ -42,11 +42,13 @@ class MaterialsController < ApplicationController
       key = "wx_gshare_#{params[:f]}"
       $redis.incr(key)
       gid = params[:f].gsub(/(.*?)(\d+)/, '\2')
-      cid = Material.find(gid).category_id
-      if cid
-        ckey = key.gsub(gid.to_s, cid.to_s)
-        p key, ckey
-        $redis.incr(ckey)
+      game = Materials.find(gid)
+      if game
+        cid = game.category_id
+        if cid
+          ckey = key.gsub(gid.to_s, cid.to_s)
+          $redis.incr(ckey)
+        end
       end
     end
     render nothing: true
