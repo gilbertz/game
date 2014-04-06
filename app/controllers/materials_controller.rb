@@ -39,8 +39,15 @@ class MaterialsController < ApplicationController
 
   def wx_share
     if params[:f]
-      key = "wx_share_#{params[:f]}"
-      @count = $redis.incr(key)
+      key = "wx_gshare_#{params[:f]}"
+      $redis.incr(key)
+      gid = params[:f].gsub(/(.*?)(\d+)/, '\2')
+      cid = Material.find(gid).category_id
+      if cid
+        ckey = key.gsub(gid.to_s, cid.to_s)
+        p key, ckey
+        $redis.incr(ckey)
+      end
     end
     render nothing: true
   end

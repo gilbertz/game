@@ -4,6 +4,8 @@
       <th>id</th>
       <th>名称</th>
       <th>人气(PV)</th>
+      <th>微信好友分享</th>
+      <th>朋友圈分享</th>
       <th>当前游戏</th>
       <th width="5%">游戏</th>
       <th width="17%">创建时间</th>
@@ -16,6 +18,8 @@
         <td><%= c.id %></td> 
         <td><a href="/admin/materials?cid=<%= c.id %>"><%= c.name %></a></td>
         <td><%= c.pv %></td>
+        <td><%= c.share_count("hy") %></td>
+        <td><%= c.share_count("pyq") %></td>
         <td>
           <%= link_to c.current_game do %>                                                      
             <%= c.current_game_name %>                                                          
