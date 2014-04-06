@@ -27,7 +27,7 @@
         <td><%= c.pv %></td>
         <td><%= c.share_count("hy") %></td>
         <td><%= c.share_count("pyq") %></td>
-        <td><%= c.wx_url.gsub(/(.*?)(\d+)$/, '\2') unless c.wx_url.blank? %></td>
+        <td><%= c.wx_share_id unless c.wx_url.blank? %></td>
         <td> 
           <%= link_to [:update_state,:admin,c], remote: true, class: 'ajax',  
             data: {confirm: 'are you sure?'} do %>

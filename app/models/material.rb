@@ -41,6 +41,10 @@ class Material < ActiveRecord::Base
     end
   end
 
+  def wx_share_id
+    self.wx_url.gsub(/(.*?)(\d+)$/, '\2')
+  end
+
 
   private
   def clone_self
