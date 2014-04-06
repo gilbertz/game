@@ -42,7 +42,7 @@ class MaterialsController < ApplicationController
       key = "wx_gshare_#{params[:f]}"
       $redis.incr(key)
       gid = params[:f].gsub(/(.*?)(\d+)/, '\2')
-      game = Materials.find(gid)
+      game = Material.find(gid)
       if game
         cid = game.category_id
         if cid
