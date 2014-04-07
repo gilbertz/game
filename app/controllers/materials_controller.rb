@@ -38,10 +38,20 @@ class MaterialsController < ApplicationController
   end
 
   def wx_share
-    #if params[:f]
-      #key = "wx_share_#{params[:f]}"
-      #@count = $redis.incr(key)
-    #end
+    if params[:f]
+      key = "wx_gshare_#{params[:f]}"
+      $redis.incr(key)
+      gid = params[:f].gsub(/(.*?)(\d+)/, '\2')
+      game = Material.find(gid)
+      if game
+        cid = game.category_id
+        if cid
+          ckey = "wx_cshare_#{params[:f]}"
+          ckey = ckey.gsub(gid.to_s, cid.to_s)
+          $redis.incr(ckey)
+        end
+      end
+    end
     render nothing: true
   end
 
@@ -78,12 +88,20 @@ class MaterialsController < ApplicationController
         key = "gstat_#{params[:type]}_#{params[:gid]}"                               
        $redis.incr(key)                                                            
     end
+
+    #include ad show stat
+    Ad.where(:on => true).each do |ad|
+      key = "ad_show_#{ad.id}"
+      $redis.incr(key)
+    end
     render :nothing => true
   end
    
 
   def get_topn(cid)
     begin
+      @topn = []
+      @recentn = []
       if cid == 66
         cid = 48
       end

@@ -20,6 +20,12 @@ class Material < ActiveRecord::Base
     $redis.get(key)                                                                
   end
 
+  def share_count(type)
+     key = "wx_gshare_#{type}_#{self.id}"
+     $redis.get(key) 
+  end
+
+
   def invert_state
     val = state.eql?(0) ? 1 : 0
     self.update_attributes(state: val)
@@ -37,6 +43,10 @@ class Material < ActiveRecord::Base
     else
       ""
     end
+  end
+
+  def wx_share_id
+    self.wx_url.gsub(/(.*?)(\d+)$/, '\2')
   end
 
 

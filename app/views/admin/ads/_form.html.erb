@@ -12,6 +12,21 @@
       <%= f.text_area :desc, style:"width:800px;height:100px" %>
     </div>
   </div>
+
+  <div class="control-group">
+     <label class="control-label">广告类型</label>
+     <div class="controls">
+       <%= f.select :t, [["自定义", 0], ["第三方", 1]], style:"width:800px;height:100px" %>
+     </div>
+  </div>
+
+  <div class="control-group">
+     <label class="control-label">广告代码</label>
+     <div class="controls">
+       <%= f.text_area :code, style:"width:800px; height:100px" %>
+     </div>
+  </div>
+
   <div class="control-group">
     <label class="control-label">图片</label>
     <div class="controls">

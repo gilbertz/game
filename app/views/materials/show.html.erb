@@ -7,6 +7,15 @@
       <% @answers = @material.answers %>
       <meta charset="utf-8">
       <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.js"></script>
+      <script>  
+        function click_ad(idx){
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', "/admin/click_stat?id=" + idx, true);
+          ajax.send(null);
+          return false;
+        }
+      </script>
+      
       <%= ERB.new(@category.meta).result(binding).html_safe %>
       <% @wx_appid = @material.wx_appid %>
       <% @wx_url   = @material.wx_url %>
@@ -36,6 +45,8 @@
     <% @html_image_2 = @material.images.select{|i| i.state == 13}[0].try(:body) %>
     <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
     <%= ERB.new(@category.html).result(binding).html_safe %>
+    <%= render "shared/ad_bottom" %>
+    
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
     <%= render :partial => "shared/data" %>

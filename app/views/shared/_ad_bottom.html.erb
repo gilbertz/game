@@ -1,0 +1,10 @@
+<div class="holder" style="margin:0px auto;text-align:center; width:530px;">
+  <div class="holder" style="clear:both;"></div>
+  <% @ads = Ad.where(:on => true).where( :t=> 1 ) %>
+  <% @ads.each do |ad| %>
+    <span style="float:left; width:250px; text-align:left; margin-right:15px;">
+       <%= ad.code.html_safe %>
+    </span>
+  <% end %>
+  <div class="holder" style="clear:both;"></div> 
+</div>  
