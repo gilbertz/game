@@ -3,7 +3,13 @@ class Admin::CategoriesController < Admin::BaseController
   before_action :get_game_types, :only => [:new, :edit]
 
   def index
-    @categories = Category.includes(:materials).order("id desc").page(params[:page])
+    categories = Category.includes(:materials)
+
+    if params[:game_type_id] == "null"
+      categories = categories.where(:game_type_id => nil)
+    end
+
+    @categories = categories.order("id desc").page(params[:page])
   end
 
   def new
