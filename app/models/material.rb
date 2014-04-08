@@ -15,6 +15,11 @@ class Material < ActiveRecord::Base
     self.update_attribute(:clone,param)
   end
 
+
+  def wx_cloning(param)
+    self.cloning(param)
+  end
+
   def pv                                                                           
     key = "gstat_pv_#{self.id}"                                                     
     $redis.get(key)                                                                
