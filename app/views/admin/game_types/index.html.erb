@@ -2,6 +2,7 @@
   <tr>
     <th>ID</th>
     <th>Game type</th>
+    <th>Operate</th>
   </tr>
 
   <% unless @game_types.blank? %>
@@ -9,6 +10,7 @@
       <tr>
         <td><%= game_type.id %></td>
         <td><%= game_type.game_type %></td>
+        <td><%= link_to "update", edit_admin_game_type_path(game_type) %></td>
       </tr>
     <% end %>
   <% end %>
