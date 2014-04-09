@@ -28,7 +28,7 @@
     <span class="jump2" style="line-height:1.5em;"> </span>
 
       <span class="jump2">
-        在<%= @material.pv %>名测试者中，你的智力超过了<span style=" font-size: 1.8em; color: #F56644; "><%= @people %> </span>人
+        在<%= @material.pv.to_i + 12342 %>名测试者中，你的智力超过了<span style=" font-size: 1.8em; color: #F56644; "><%= @people.to_i + 12342 %> </span>人
       </span>
 
     <a href="<%= @referer %>"  id="testAgain"  class="jump">再测一次？</a>
