@@ -21,9 +21,9 @@ class MaterialsController < ApplicationController
       if r < 2
         @message = "动脑臣妾做不到啊"
       elsif r < 4
-        @message = "天然呆自然萌"
-      elsif r < 6
         @message = "很傻很天真"
+      elsif r < 6
+        @message = "天然呆自然萌"
       elsif r < 8
         @message = "聪明伶俐"
       elsif r < 10
