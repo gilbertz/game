@@ -54,6 +54,12 @@ class Admin::MaterialsController < Admin::BaseController
     redirect_to [:admin,:materials]
   end
 
+  def wx_clone
+    material = Material.find params[:id]
+    material.wx_cloning(true)
+    redirect_to [:admin,:materials]
+  end
+
   def destroy
     @material.destroy
     render nothing: true
