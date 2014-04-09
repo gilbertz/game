@@ -39,10 +39,6 @@ class Material < ActiveRecord::Base
   def cn_state; { 0 => '下线', 1 => '上线', nil => '下线' }[state] end
 
   def game_type
-
-    puts self.category.inspect
-    puts "============="
-
     unless self.category.game_type.blank?
       self.category.game_type.game_type
     else
