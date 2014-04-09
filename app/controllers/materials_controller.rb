@@ -1,5 +1,46 @@
 class MaterialsController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token, :only => [:result]
+
+  def result
+    unless params[:material_id].blank?
+
+      @material = Material.find(params[:material_id])
+
+      res = [201510, 197631, 197661, 199981, 201516, 200793, 197649, 197666, 197673, 200786]
+
+      user_res = []
+
+      user_res << params["81113"].to_i << params["80015"].to_i << params["80020"].to_i << params["80714"].to_i << params["81114"].to_i
+      user_res << params["80018"].to_i << params["80021"].to_i << params["80022"].to_i << params["80863"].to_i << params["80864"].to_i
+
+      result = user_res & res
+      r =result.size
+      @zhishang = 60 + (14*(r-1)) + rand(14)
+
+      if r < 2
+        @message = "动脑臣妾做不到啊"
+      elsif r < 4
+        @message = "很傻很天真"
+      elsif r < 6
+        @message = "天然呆自然萌"
+      elsif r < 8
+        @message = "聪明伶俐"
+      elsif r < 10
+        @message = "智力是极好的"
+      elsif r < 11
+        @message = "爱因斯坦级别的"
+      end
+
+      @people = ((@material.pv.to_i * 0.1 * r) + rand(@material.pv.to_i/100)).floor
+      @referer = request.referer
+
+      m = "material"
+      m << params[:material_id]
+      render :template => "materials/#{m}", :layout => false
+    end
+  end
+
   def index
     cond = "1=1"
     cond = "category_id = #{params[cid]}" if params[:cid]
