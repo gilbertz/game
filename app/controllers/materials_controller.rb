@@ -1,3 +1,4 @@
+# encoding: utf-8
 class MaterialsController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
