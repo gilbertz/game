@@ -31,4 +31,33 @@ $(document).ready(function(){
      }
      return false;
    });
+
+   $(".category-select").click(function(){
+
+    if(!$(".all-content").is(':hidden')){
+        $(".bg").hide();
+        $(".all-content").hide();
+    }
+
+    $(".bg").toggle();
+    $(".all-category").toggle();
+   });
+
+   $(".content-select").click(function(){
+
+    if(!$(".all-category").is(':hidden')){
+        $(".bg").hide();
+        $(".all-category").hide();
+    }
+
+    $(".bg").toggle();
+    $(".all-content").toggle();
+   });
+
+    $(".bg").click(function(){
+        $(".bg").hide();
+        $(".all-category").hide();
+        $(".all-content").hide();
+    });
+
 });

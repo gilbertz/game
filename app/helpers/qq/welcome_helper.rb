@@ -1,0 +1,2 @@
+module Qq::WelcomeHelper
+end

@@ -39,8 +39,8 @@ h3.widgettitle{color:#444; font-size:1.5em !important;}
 .description{color:#444;font-family: 'PT+Sans&subset=latin', Helvetica,Verdana,Arial,Sans-Serif;font-size:1.3em;margin:0.5em 0 0 0px;padding: 0px 10px;}
 
 /* header */
-div#header{margin:0px 0 0 0; padding:1em 1em 1em 0em; height:8em; background:transparent}
-.headertop{margin:10px 0 0px 0;}
+div#header{margin:0px 0 0 0;background:transparent}
+/*.headertop{margin:10px 0 0px 0;}*/
 #logo{margin:-3.5em 0 0 -1em; padding:0.3em 0.7em;}
 * html #logo{margin:-2.5em 0 0 -1em; padding:0.3em 0.7em;}
 #logo a{background-color:transparent}
@@ -65,7 +65,7 @@ div#header{margin:0px 0 0 0; padding:1em 1em 1em 0em; height:8em; background:tra
 #wrapperheader{max-width: 1280px;margin:0 auto; padding:0 0 0 0; position:relative; text-align:left;}
 #wrapper{max-width: 1280px;margin: 0 auto;position:relative; text-align:left;-moz-border-radius-bottomleft:6px;border-bottom-left-radius:6px;-moz-border-radius-bottomright:6px;border-bottom-right-radius:6px;}
 #wrappertop{margin:0 auto; padding:0 0 0 0; position:relative; text-align:left}
-#container{margin: 20px 0}
+#container{margin: 10px 0}
 #containerlarge{margin:0.8em 0 2em 2em; display:inline; clear:both;background-color:#fff;}
 * html #containerlarge{margin:2em 0 2em 2em; background-color:#fff;}
 #content{background-color:transparent; padding: 10px 0;overflow:hidden;}
@@ -100,7 +100,7 @@ div#secondary{clear:right}
 .clear{clear:both}
 
 /* Post area */
-.hentry{font-weight:normal; margin-bottom:2em}
+.hentry{font-weight:normal; margin-bottom:1em}
 .entry-content{font:1.3em/1.7em Helvetica,Arial,sans-serif; color:#444000; margin:auto}
 .entry-content-home{font:1.2em/1.7em Helvetica,Arial,sans-serif; color:#444000; margin:auto}
 .entry-content p{margin:0 0 0.5em 0}
@@ -269,7 +269,18 @@ iframe, object, embed{max-width: 100%;}
 input#searchsubmitbutton{right:10px;width:100px;}
 
 /*category color*/
-.cat-links {font-size:12px;font-family: 'Fjalla One', sans-serif;line-height:1.5em;color: #FFF;text-transform: uppercase;margin : -10px 0 0 0;background:#555152;-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.3);-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.3); padding-left:5px; padding-top:5px;}
+.cat-links {
+    font-size:12px;
+    font-family: 'Fjalla One', sans-serif;
+    line-height:20px;
+    text-transform: uppercase;
+    margin : -10px 0 0 0;
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    padding-left:5px;
+    padding-top:5px;
+    overflow: hidden;
+}
 .cat-links a {font-size:12px;font-family: 'Fjalla One', sans-serif;line-height:1.5em;color: #FFF;text-transform: uppercase;padding: 4px 6px 4px 6px;}
 .cat-links a:hover{color:#444; background:transparent}
 
@@ -1063,6 +1074,170 @@ PERSONNALISATION
 	#accessmobile ul li:hover > ul{display:block;}
 	#accessmobile ul li.current_page_item > a,#accessmobile ul li.current-menu-ancestor > a,#accessmobile ul li.current-menu-item > a,#accessmobile ul li.current-menu-parent > a,* html #accessmobile ul li.current_page_item a,* html #accessmobile ul li.current-menu-ancestor a,* html #accessmobile ul li.current-menu-item a,* html #accessmobile ul li.current-menu-parent a,* html #accessmobile ul li a:hover{background:#444;background:rgba(0,0,0,0.7);color:#fff;}
     
+}
+
+.headertop ul{
+    height: 3em;
+}
+
+.headertop ul li{
+    float: left;
+    width: 49%;
+    list-style-type: none;
+    text-align: center;
+    font-size: 14px;
+    line-height: 2em;
+}
+
+#header{
+    height: 35px;
+    border-bottom: 1px solid #bfbfbf;
+    margin: 0 auto;
+    padding: 0 !important;
+    background: #ffffff!important;
+}
+
+#header .border-li{
+    border-left: 1px solid #cccccc;
+    width: 1px !important;
+    margin: 5px 0 5px 0;
+    height: 25px!important;
+}
+
+#header .all-category{
+    position: absolute;
+    width: 100%;
+    z-index: 99999;
+    margin-top: 4px;
+    display: none;
+}
+
+.all-category ul{
+    background: #ffffff;
+    height: auto;
+    width: 90%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#header .all-category ul li{
+    float: none!important;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #cccccc;
+}
+
+#header .all-category ul li > div{
+    padding-left: 20px;
+}
+
+#header .headertop > ul > li{
+    line-height: 35px;
+}
+
+#header .all-category-arrow{
+    border-left: 9px solid rgba(0,0,0,0);
+    border-bottom: 10px solid #ffffff;
+    border-right: 9px solid rgba(0,0,0,0);
+    display: inline-block;
+    margin-left: 25%;
+    margin-bottom: -3px;
+}
+
+.alpha1{
+    background: #ffffff;
+    margin-bottom: 2em;
+}
+
+.show-count{
+    background: rgba(0,0,0, 0.4);
+    height: 20px;
+    width: 100%;
+    position: absolute;
+    margin-top: -20px;
+    line-height: 20px;
+    text-align: right;
+    color: #fff;
+}
+
+.show-count > div{
+    padding-right: 10px;
+}
+
+.icon-arrow{
+    border-left: 5px solid white;
+    border-top: 6px solid #666666;
+    border-right: 5px solid white;
+    display: inline-block;
+    position: absolute;
+    margin-top: 13px;
+    margin-left: 3px;
+}
+
+.bg{
+    display: none;
+    background: rgba(0,0,0, 0.3);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:35px;
+    z-index: 99998;
+    left: 0;
+}
+
+
+
+
+#header .all-content{
+    position: absolute;
+    width: 100%;
+    z-index: 99999;
+    margin-top: 4px;
+    display: none;
+}
+
+.all-content ul{
+    background: #ffffff;
+    height: auto;
+    width: 90%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#header .all-content ul li{
+    float: none!important;
+    height: 35px;
+    line-height: 35px;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #cccccc;
+}
+
+#header .all-content ul li > div{
+    padding-left: 20px;
+}
+
+#header .all-content-arrow{
+    border-left: 9px solid rgba(0,0,0,0);
+    border-bottom: 10px solid #ffffff;
+    border-right: 9px solid rgba(0,0,0,0);
+    display: inline-block;
+    margin-left: 75%;
+    margin-bottom: -3px;
+}
+
+.all-category ul li a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.all-content ul li a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 
 /*

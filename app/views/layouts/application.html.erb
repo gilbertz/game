@@ -16,17 +16,78 @@
       h1.blogtitle a,.description { color:#444; }
     </style>
   </head>
-  <body class="home blog paged paged-2 asides"> 
-    <%= render 'shared/nav' %>
-    <div id="wrapperheader" class="container_15">
-      <div id="header" style="height: 3em;">
+  <body class="home blog paged paged-2 asides">
+    <%#= render 'shared/nav' %>
+
+      <div id="header">
         <div class="headertop">
-          <div id="blog-title" class="blogtitle"> 
-            <%= link_to '玩会儿', '/' %>
-          </div>
+          <ul>
+            <li class="category-select">
+              <span class="selected-category">
+                <%= @current_game_type %>
+              </span>
+              <span class="icon-arrow">
+              </span>
+            </li>
+            <li class="border-li"></li>
+            <li class="content-select">
+              <span class="selected-content">
+                <%= @current_game_order %>
+              </span>
+              <span class="icon-arrow">
+              </span>
+            </li>
+            <div style="clear: both"></div>
+            <div class="all-category">
+              <div class="all-category-arrow">
+              </div>
+
+                <ul>
+                  <li>
+                    <div>
+                      <a href="/">全部分类</a>
+                    </div>
+                  </li>
+                  <% unless @game_types.blank? %>
+                    <% @game_types.each do |gt| %>
+                      <li>
+                        <div>
+                          <a href="/?game_type_id=<%= gt.id %>"><%= gt.game_type %></a>
+                        </div>
+                      </li>
+                    <% end %>
+                  <% end %>
+
+                </ul>
+            </div>
+
+            <div class="all-content">
+              <div class="all-content-arrow">
+              </div>
+
+              <ul>
+                <li>
+                  <div>
+                    <a href="/">最新内容</a>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <a href="/?order=recommend">热门推荐</a>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <a href="/?order=hot">人气最高</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </ul>
         </div>
       </div>
-    </div>
+
     <div class="clear"></div>
     <div id="wrapper" class="container_15">	
       <div class="clear"></div>		

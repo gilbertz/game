@@ -69,3 +69,5 @@ gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 
 gem "request-log-analyzer"
+
+gem "whenever"
