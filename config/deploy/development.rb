@@ -1,5 +1,5 @@
 set :user, "ubuntu"
-set :password, "JScY5w2K3Kd"
+set :password, "shangjieba8"
 set :deploy_to, "/data/long/apps/game_dev"
 
 role :app, "203.195.191.203"
@@ -23,6 +23,7 @@ namespace :deploy do
   task :restart, :roles => :app do
     run "mv #{current_path}/config/database.yml.example #{current_path}/config/database.yml"
     run "cd #{current_path} && RAILS_ENV=production bundle exec rake assets:precompile"
-    run "cd #{current_path} && passenger stop -p 5002 && passenger start --daemonize -p 5002"
+    run "cd #{current_path} && RAILS_ENV=production bundle exec rake db:migrate"
+    run "cd #{current_path} && passenger stop --port 3009 && passenger start --daemonize --port 3009"
   end
 end
