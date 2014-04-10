@@ -1,19 +1,17 @@
 <div id="content" class="container_12 grid_10 push_5">
   <% @materials.each do |material| %>
     <div class="grid_4 alpha1">
-      <div id="post-11945" class="post-11945 post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides">
+      <div class="post-<%= material.id %> post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides">
         <div class="">
           <%= link_to material do %>
             <%= image_tag material.wx_tlimg, style: "width:100%;  margin-bottom:-3px;" %>
           <% end %>
         </div>
-
         <div class="show-count">
           <div>
-            人气 <%= material.pv %>
+            人气 <%= material.fake_pv %>
           </div>
         </div>
-
       </div>
       <div class="home blog paged paged-2 cat-links asides" style=" height:40px; ">
         <%= material.name %>

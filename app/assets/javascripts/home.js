@@ -7,21 +7,40 @@ $(document).ready(function(){
      $(this).find("div").text("点击加载更多游戏");
      var content =  "";
      $.each(data.content, function(index, value){
+//         content += "<div class='grid_4 alpha1'>";
+//         content += "<div class='home blog paged paged-2 cat-links asides' style='height:48px;overflow:hidden;'>";
+//         content += value.name;// + "</a>";
+//         content += "</div>";
+//         content += "<div id='post-11945' class='post-11945 post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides'>"
+//         content += "<div class=''>";
+//         content += "<a href=\"/materials/" + value.id + "\">";
+//         content += "<img alt='Cover' src=";
+//         content += value.wx_tlimg;
+//         content += " style=\"width:100%;margin-bottom:0px;\">";
+//         content += "</a>";
+//         content += "</div>";
+//         content += "</div>";
+//         content += "</div>";
+
+         if(parseInt(value.pv) > 10000){
+             var fake_pv = parseInt(value.pv/100);
+         }else{
+             var fake_pv = parseInt(value.pv);
+         }
+
          content += "<div class='grid_4 alpha1'>";
-         content += "<div class='home blog paged paged-2 cat-links asides' style='height:48px;overflow:hidden;'>";
-         //content += "<a href='#' title='asides'>";
-         content += value.name;// + "</a>";
-         content += "</div>";
-         content += "<div id='post-11945' class='post-11945 post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides'>"
-         content += "<div class=''>";
-         content += "<a href=\"/materials/" + value.id + "\">";
-         content += "<img alt='Cover' src=";
-         content += value.wx_tlimg;
-         content += " style=\"width:100%;margin-bottom:0px;\">";
-         content += "</a>";   
-         content += "</div>";
-         content += "</div>";
-         content += "</div>";
+         content += "<div class='post-"+value.id+" post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides'>";
+         content += "<div>";
+         content += "<a href='/materials/"+value.id+"'>";
+         content += "<img src='"+value.wx_tlimg+"' style: 'width:100%; margin-bottom:0px!important;'/>";
+         content += "</a></div>";
+         content += "<div class='show-count'>";
+         content += "<div>";
+         content += "人气"+fake_pv;
+         content += "</div></div></div>";
+         content += "<div class='home blog paged paged-2 cat-links asides' style='height:40px;'>";
+         content += value.name+"</div></div>";
+
      });
      $('div.grid_4').last().after($(content));
      if($(content).length < 12) {

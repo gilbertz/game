@@ -24,6 +24,14 @@ class Material < ActiveRecord::Base
     $redis.get(key)
   end
 
+  def fake_pv
+    if self.pv > 10000
+      (self.pv / 100).to_i
+    else
+      self.pv
+    end
+  end
+
   def share_count(type)
      key = "wx_gshare_#{type}_#{self.id}"
      $redis.get(key) 
