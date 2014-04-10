@@ -45,7 +45,7 @@ class MaterialsController < ApplicationController
   def index
     cond = "1=1"
     cond = "category_id = #{params[cid]}" if params[:cid]
-    cond += "game_type_id = #{params[:game_type_id]}" unless params[:game_type_id].blank?
+    cond += "and game_type_id = #{params[:game_type_id]}" unless params[:game_type_id].blank?
     materials = Material.includes(:images).where(cond).where(state: 1)
 
     unless params[:order].blank?
