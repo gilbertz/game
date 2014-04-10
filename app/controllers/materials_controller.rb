@@ -56,7 +56,7 @@ class MaterialsController < ApplicationController
           materials = materials.order('redis_wx_share_pyq desc')
         end
     else
-      materials = materials.order('id desc')
+      materials = materials.order('materials.id desc')
     end
 
     @materials = materials.page(params[:page]).per(12)
