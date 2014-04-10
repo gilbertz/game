@@ -44,17 +44,16 @@ class MaterialsController < ApplicationController
 
   def index
     cond = "1=1"
-    cond = "category_id = #{params[cid]}" if params[:cid]
-    cond += "and game_type_id = #{params[:game_type_id]}" unless params[:game_type_id].blank?
-    materials = Material.includes(:images).where(cond).where(state: 1)
+    cond += "and category_id = #{params[cid]}" if params[:cid]
+    cond += "and categories.game_type_id = #{params[:game_type_id]}" unless params[:game_type_id].blank?
+
+    materials = Material.includes(:images).joins(:category).where(cond).where(state: 1)
 
     unless params[:order].blank?
         if params[:order] == "hot"
           materials = materials.order('redis_pv desc')
-          @current_game_order = "人气最高"
         elsif params[:order] == "recommend"
           materials = materials.order('redis_wx_share_pyq desc')
-          @current_game_order = "热门推荐"
         end
     else
       materials = materials.order('id desc')
