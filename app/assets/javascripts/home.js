@@ -24,10 +24,10 @@ $(document).ready(function(){
 
          var fake_pv = 0;
 
-         if(parseInt(value.pv) > 10000){
-             fake_pv = parseInt(parseInt(value.pv)/100);
+         if(parseInt(value.redis_pv) > 10000){
+             fake_pv = parseInt(parseInt(value.redis_pv)/100);
          }else{
-             fake_pv = parseInt(value.pv);
+             fake_pv = parseInt(value.redis_pv);
          }
 
          if(isNaN(fake_pv)){
