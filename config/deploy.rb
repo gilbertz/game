@@ -5,14 +5,14 @@ require 'bundler/capistrano'
 require "whenever/capistrano"
 
 #set :bundle_dir, ""
-set :stages, %w(staging production)
+set :stages, %w(staging production development)
 set :default_stage, "staging"
 set :rvm_ruby_string, 'ruby-2.0.0-p247@game'
 #set :rvm_type, :system
 #set :rvm_bin_path, "/usr/local/rvm/bin"
 
-
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_command, "bundle exec whenever"
+#set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 # main details
 set :application, "game"
