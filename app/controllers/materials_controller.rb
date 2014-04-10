@@ -44,8 +44,11 @@ class MaterialsController < ApplicationController
 
   def index
     cond = "1=1"
-    cond += "and `category_id` = #{params[cid]}" if params[:cid]
-    cond += "and `categories`.`game_type_id` = #{params[:game_type_id]}" unless params[:game_type_id].blank?
+    cond += " and `category_id` = #{params[cid]}" if params[:cid]
+    cond += " and `categories`.`game_type_id` = #{params["game_type_id"]}" unless params["game_type_id"].blank?
+
+    puts cond
+    puts "========"
 
     materials = Material.includes(:images).joins(:category).where(cond).where(state: 1)
 
@@ -60,7 +63,7 @@ class MaterialsController < ApplicationController
     end
 
     @materials = materials.page(params[:page]).per(12)
-    render json: {content: @materials, href: "/materials?page=#{params[:page].to_i + 1}&game_type_id=#{params[:game_type_id]}&order=#{params[:order]}"}
+    render json: {content: @materials, href: "/materials?page=#{params[:page].to_i + 1}&game_type_id=#{params["game_type_id"]}&order=#{params["order"]}"}
   end
 
   def hello_test
