@@ -49,7 +49,7 @@
     <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
     <%= ERB.new(@category.html).result(binding).html_safe %>
     
-    <% unless params[:fr] %>] 
+    <% unless params[:fr] %>
       <%= render "shared/ad_bottom" %>
     <% end %> 
     
