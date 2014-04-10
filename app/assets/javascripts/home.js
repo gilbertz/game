@@ -22,10 +22,16 @@ $(document).ready(function(){
 //         content += "</div>";
 //         content += "</div>";
 
+         var fake_pv = 0;
+
          if(parseInt(value.pv) > 10000){
-             var fake_pv = parseInt(value.pv/100);
+             fake_pv = parseInt(parseInt(value.pv)/100);
          }else{
-             var fake_pv = parseInt(value.pv);
+             fake_pv = parseInt(value.pv);
+         }
+
+         if(isNaN(fake_pv)){
+             fake_pv = 0;
          }
 
          content += "<div class='grid_4 alpha1'>";
