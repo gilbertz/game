@@ -25,7 +25,7 @@ class Material < ActiveRecord::Base
   end
 
   def fake_pv
-    if self.pv > 10000
+    if self.pv.to_i > 10000
       (self.pv / 100).to_i
     else
       self.pv
