@@ -40,10 +40,7 @@ $(document).ready(function(){
          content += "<a href='/materials/"+value.id+"'>";
          content += "<img src='"+value.wx_tlimg+"' style: 'width:100%; margin-bottom:0px!important;'/>";
          content += "</a></div>";
-         content += "<div class='show-count'>";
-         content += "<div>";
-         content += "人气"+fake_pv;
-         content += "</div></div></div>";
+         content += "</div>";
          content += "<div class='home blog paged paged-2 cat-links asides' style='height:40px;'>";
          content += value.name+"</div></div>";
 
