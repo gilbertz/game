@@ -22,18 +22,6 @@ $(document).ready(function(){
 //         content += "</div>";
 //         content += "</div>";
 
-         var fake_pv = 0;
-
-         if(parseInt(value.redis_pv) > 10000){
-             fake_pv = parseInt(parseInt(value.redis_pv)/100);
-         }else{
-             fake_pv = parseInt(value.redis_pv);
-         }
-
-         if(isNaN(fake_pv)){
-             fake_pv = 0;
-         }
-
          content += "<div class='grid_4 alpha1'>";
          content += "<div class='post-"+value.id+" post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides'>";
          content += "<div>";
