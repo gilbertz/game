@@ -34,4 +34,8 @@ class HomeController < ApplicationController
     @current_game_type = @game_type.game_type if @game_type
   end
 
+  def r
+    redirect_to params[:url]
+  end
+
 end

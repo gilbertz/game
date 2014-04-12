@@ -15,6 +15,8 @@ Game::Application.routes.draw do
     get :search
   end
 
+  get '/r' => 'home#r'
+
   get '/materials/:material_id/result' => "materials#result"
 
   get '/materials/gabrielecirulli' => 'materials#gabrielecirulli'
