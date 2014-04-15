@@ -4,15 +4,22 @@ class User < ActiveRecord::Base
   attr_accessor :password
   validates :name,                                                                                  
     :presence     => true,
-    :uniqueness   => true#,
+    :uniqueness   => true,
+    :on => :create
   #:format       => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i }
 
   validates :password,
   :presence     => true,                                                                   
-  :confirmation => true,                                                                   
-  :length       => {in: 6..18} 
+  :confirmation => true,
+  :length       => {in: 6..18},
+  :on => :create
 
   before_create :make_password
+
+  Role = {
+      :user => 0,
+      :admin => 1
+  }
 
   def self.auth(name, pwd)
     user = self.find_by_name(name.to_s)                                                         

@@ -10,12 +10,23 @@ class Admin::BaseController < ActionController::Base
   end
 
   def is_login?
-    session[:admin_user_id].present? 
+    session[:admin_user_id].present?
+  end
+
+  def is_admin?
+    current_user.role == 1
   end
 
   private
   def login_authenticate 
-    redirect_to [:admin,:login] unless is_login?
+    unless is_login?
+      redirect_to [:admin,:login]
+      return
+    end
+
+    unless is_admin?
+      redirect_to "/"
+    end
   end
 
   def check_cookie
@@ -32,9 +43,6 @@ class Admin::BaseController < ActionController::Base
   end
 
   def clear_page(material)
-
-    puts "-----begin---clear-----cache---"
-
     l_ip = Socket.ip_address_list.collect{|i| i.ip_address}
 
     cache_path = "#{Rails.root}/public/materials"
