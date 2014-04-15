@@ -1,0 +1,33 @@
+<table class="table table-bordered">
+  <thead>
+  <tr class="well">
+    <th>序号</th>
+    <th>名称</th>
+    <th>微信链接</th>
+    <th>分类</th>
+    <th>类型</th>
+    <th>创建时间</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @materials.each do |c| %>
+      <tr>
+        <td><%= c.id %></td>
+        <td>
+          <%= link_to c, target: true do %>
+              <%= c.name %>
+          <% end %>
+        </td>
+        <td><%= c.wx_share_id unless c.wx_url.blank? %></td>
+        <td><%= link_to c.category.try(:name), "/custom?cid=#{c.category.id}" %></td>
+        <td><%= c.game_type %></td>
+        <td><%= c.created_at.to_local %></td>
+        <td>
+          <%= link_to '定制', [:custom,:custom,c] %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= paginate @materials %>

@@ -1,0 +1,21 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <%= link_to '玩会儿游戏定制后台', [:custom,:root], class: "brand" %>
+      <div class="nav-collapse collapse">
+        <ul class="nav navbar-nav pull-right">
+          <li><a href="#"><%= current_user.name %></a></li>
+          <li><%= link_to '退出', admin_session_path(current_user), method: :delete %></li>
+        </ul>
+        <ul class="nav">
+          <li class="<%= controller_name.in?(['materials']) ? 'active' : '' %>"> 
+            <%= link_to '游戏管理', [:custom,:materials] %>
+          </li>
+          <li class="<%= controller_name.in?(['ads']) ? 'active' : ''%>">
+            <%= link_to '广告管理', [:admin,:ads] %>
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>

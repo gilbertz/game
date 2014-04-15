@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>玩会儿游戏定制后台</title>
+    <%= stylesheet_link_tag    "admin", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "admin", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <% if controller_name.in?(["session"]) %>
+      <%= yield %>
+    <% else %>
+      <%= render 'custom/shared/nav' %>
+      <% if controller_name != "home" %>
+        <div class="container-fluid">
+          <div class="row-fluid">
+            <div class="span2"> 
+              <%= render 'menu' %>
+            </div>
+            <div class="span10">
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+          <div class="container-fluid">
+            <div class="row-fluid">
+              <div class="span2">
+                <%#= render 'menu' %>
+              </div>
+              <div class="span10">
+                <%= yield %>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    <% end %>
+  </body>
+</html>
