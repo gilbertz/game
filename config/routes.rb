@@ -78,6 +78,22 @@ Game::Application.routes.draw do
     get '/show_stat' => 'ads#show_stat', as: :show_stat
     get '/click_stat' => 'ads#click_stat', as: :click_stat
   end
+
+  namespace :custom do
+
+    get '/login' => 'session#new', as: :login
+
+    root "welcome#index"
+    resources :materials
+
+    resources :session
+
+    resources :ads
+
+    get "welcome/:id/custom" => "welcome#custom", as: :custom_material
+
+  end
+
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
