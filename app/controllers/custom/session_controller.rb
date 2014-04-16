@@ -14,15 +14,15 @@ class Custom::SessionController < Custom::CustomController
           expires: 3.day.from_now.utc 
         }
       end
-      redirect_to [:admin,:root]
+      redirect_to [:custom,:root]
     else
-      redirect_to [:admin,:login]
+      redirect_to [:custom,:login]
     end
   end
 
   def destroy
     cookies.delete(:remember_me)
     session[:admin_user_id] = nil 
-    redirect_to [:admin,:login]
+    redirect_to [:custom,:login]
   end
 end
