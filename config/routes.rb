@@ -83,6 +83,8 @@ Game::Application.routes.draw do
 
   namespace :custom do
 
+    get '/login' => 'session#new', as: :login
+
     root "welcome#index"
     resources :materials
 
