@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   :confirmation => true,                                                                   
   :length       => {in: 6..18} 
 
+  has_many :materials
+
   before_create :make_password
 
   def self.auth(name, pwd)

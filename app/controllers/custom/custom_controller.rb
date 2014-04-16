@@ -35,4 +35,8 @@ class Custom::CustomController < ActionController::Base
     end
   end
 
+  def can?(target)
+    current_user.id == target.user_id
+  end
+
 end

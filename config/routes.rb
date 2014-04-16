@@ -79,14 +79,16 @@ Game::Application.routes.draw do
     get '/click_stat' => 'ads#click_stat', as: :click_stat
   end
 
-
-
   namespace :custom do
 
     get '/login' => 'session#new', as: :login
 
     root "welcome#index"
     resources :materials
+
+    resources :session
+
+    resources :ads
 
     get "welcome/:id/custom" => "welcome#custom", as: :custom_material
 
