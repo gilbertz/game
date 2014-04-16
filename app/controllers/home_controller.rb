@@ -11,7 +11,7 @@ class HomeController < ApplicationController
       materials = materials.where("categories.game_type_id=?", params[:game_type_id])
     end
 
-    materials = materials.where(state: 1)
+    materials = materials.where(state: 1).where(:user_id => 1)
 
     @current_game_order = "最新内容"
     unless params[:order].blank?

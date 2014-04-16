@@ -1,0 +1,38 @@
+<table class="table table-bordered">  
+  <thead>
+    <tr class="well">
+      <th>序号</th>
+      <th width="5%">名称</th>
+      <th>人气</th>
+      <th>微信好友分享</th>
+      <th>朋友圈分享</th>
+      <th>微信链接</th>
+      <th width="5%">类型</th>
+      <th width="17%">创建时间</th>
+      <th width="18%">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @materials.each do |c| %>
+      <tr>
+        <td><%= c.id %></td> 
+        <td> 
+          <%= link_to c, target: true do %>
+            <%= c.name %>
+          <% end %>
+        </td>
+        <td><%= c.pv %></td>
+        <td><%= c.share_count("hy") %></td>
+        <td><%= c.share_count("pyq") %></td>
+        <td><%= c.wx_share_id unless c.wx_url.blank? %></td>
+        <td><%= c.game_type %></td>
+        <td><%= c.created_at.to_local %></td>
+        <td> 
+          <%= link_to '编辑', [:edit,:custom,c] %>
+          <%= link_to '删除', [:custom,c], method: :delete, class: "delMaterial", remote: true, data: {confirm: "Are you sure?"} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @materials %>

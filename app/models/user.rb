@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   :length       => {in: 6..18},
   :on => :create
 
+  has_many :materials
+
   before_create :make_password
 
   Role = {

@@ -3,35 +3,49 @@
 <html>
 <head>
 <link href="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/wanhuir-icon.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
-<title>且行且珍惜，测出轨有多易？</title>
+<title>脑残鉴定，模拟测试</title>
 <meta charset="utf-8">
 <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.js"></script>
+<script>
+    function click_ad(idx){
+        ajax = new XMLHttpRequest();
+        ajax.open('GET', "/admin/click_stat?id=" + idx, true);
+        ajax.send(null);
+        return false;
+    }
+</script>
+
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width,minimum-scale=0.5,maximum-scale=1,initial-scale=0.8" />
-<!--<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">-->
+<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
 <script type="text/javascript">
     $(document).ready(function(){
         var result=0;
         var result_message;
-        var a = 0;
-        var b = 0;
-        var c = 0;
-        var d = 0;
-        var e = 0;
-        var res_arr = [];
 
         $(".options ul li").click(function(){
             var  node = $(this).parent().parent().parent();
             var next_node = $(node).next();
 
-            var dataScore = $(this).attr("data-score");
+            $(this).parent().find("li").removeClass("selected");
+            $(this).addClass("selected");
 
-            $(node).hide();
-
-            if(parseInt(dataScore) > 100){
-                $(".result-"+dataScore).show();
+            if(next_node.hasClass("question")){
+                $(node).hide();
+                $(next_node).show();
             }else{
-                $(".question-"+dataScore).show();
+                $(node).hide();
+                $.each($("li.selected"), function(index, value){
+                    result = result + parseInt($(value).attr("data-score"));
+                });
+
+
+
+
+
+
+                $(".aside").append(result_message);
+                $(".header-title").hide();
+                $(".result").show();
             }
         });
 
@@ -44,107 +58,66 @@
                 $(prev_node).show();
             }
         });
-
-        $(".start-button").click(function(){
-            $(".header-title").hide();
-            $(".question-1").show();
-        });
     });
 </script>
 <script type="text/javascript">
+    wx_ids = ['wxf37239efdb6106b8','wx333eb5e8a7d7a4b7','wx1fd508e23f093612','wx78f81724e6590b1d']
+    domains = ['http://203.195.191.203', 'http://203.195.186.54', 'http://weixinjie.net', 'http://leapcliff.com']
 
-    var is_weixin = function () {
-        var ua = navigator.userAgent.toLowerCase();
-        if(ua.match(/MicroMessenger/i) == "micromessenger") {
-            if(ua.match(/iphone/i) == "iphone") {
-                return 'ios';
-            }
-            return 'android';
-        }
-        return false;
+    function getRandom(arr){
+        var len = arr.length;
+        return arr[Math.floor(Math.random()*len)]
     }
-
-    var foo = function (o) {
-        if (o.value == o.defaultValue) {
-            o.value = '';
-            o.style.color = '#000';
-        }
-    }
-
-    var bar = function (o) {
-        if (o.value == '') {
-            o.value = o.defaultValue;
-            o.style.color = '#9a9a9a';
-        } else {
-            o.style.color = '#000';
-        }
-    }
-
-    var mask = function () {
-        if (document.getElementById('mask').style.display == 'inline') {
-            document.getElementById('mask').style.display = 'none';
-            document.getElementById('tip').style.display = 'none';
-        } else {
-            document.getElementById('mask').style.display = 'inline';
-            document.getElementById('tip').style.display = 'inline';
-        }
-    }
-
-    var share = function () {
-        mask();
-    }
-
-
 
     var share_callback_hy = function () {
         ajax = new XMLHttpRequest();
-        ajax.open('GET', '/materials/wx_share?f=wx_hy&ref=' + window.location.href, true);
+        ajax.open('GET', '/materials/wx_share?f=hy_447', true);
         ajax.send(null);
     }
 
     var share_callback_pyq = function () {
         ajax = new XMLHttpRequest();
-        ajax.open('GET', '/materials/wx_share?f=wx_pyq&ref=' + window.location.href, true);
+        ajax.open('GET', '/materials/wx_share?f=pyq_447', true);
         ajax.send(null);
     }
 
-
     var dataForWeixin = {
-        appId: "wx78f81724e6590b1d",
-        TLImg: "http://1251008728.cdn.myqcloud.com/1251008728/chugui/cg3.jpg",
-        url: "http://wanhuir.com/materials/384",
-        title: "且行且珍惜，测出轨有多易？",
-        desc: "在爱情里，你能抵制住诱惑吗？有些人（文章）看似专一，心里却藏着其他心思；有些人（我，加班的苦逼程序员）表面对谁都吊儿郎当，却只会对一个人付出真心。真正的专一不是一辈子只爱一个人，而是，爱着的时候，只爱一个。来测测你会不会出轨吧。"
+        appId: getRandom(wx_ids),
+        TLImg: "http://1251008728.cdn.myqcloud.com/1251008728/shenjia/9.jpg",
+        url: "http://203.195.191.203/materials/447",
+        title: "脑残鉴定，模拟测试",
+        desc: "赶快来测试一下吧！"
     };
-
-
 
     var onBridgeReady = function(){
         WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            var info = $("#info").text();
+
             WeixinJSBridge.invoke('sendAppMessage', {
                 "appid": dataForWeixin.appId,
                 "img_url": dataForWeixin.TLImg,
                 "img_width": "120",
                 "img_height": "120",
                 "link": dataForWeixin.url + '?f=wx_hy_bb',
-                "title":  dataForWeixin.title,
+                "title": info + dataForWeixin.title,
                 "desc": dataForWeixin.desc
             });
             share_callback_hy();
-            setTimeout(function () {location.href = "http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=201548107&idx=2&sn=9d1302aea624db06eeafac9f066654ff#rd";}, 1500);
+            setTimeout(function () {location.href = "http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=201548107&idx=2&sn=9d1302aea624db06eeafac9f066654ff#rd ";}, 1500);
         });
         WeixinJSBridge.on('menu:share:timeline', function(argv){
+            var info = $("#info").text();
             WeixinJSBridge.invoke('shareTimeline', {
                 "appid": dataForWeixin.appId,
                 "img_url":dataForWeixin.TLImg,
                 "img_width": "120",
                 "img_height": "120",
                 "link": dataForWeixin.url + '?f=wx_pyq_bb',
-                "title": dataForWeixin.title,
+                "title": info + dataForWeixin.title,
                 "desc": dataForWeixin.desc
             });
             share_callback_pyq();
-            setTimeout(function () {location.href = "http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=201548107&idx=2&sn=9d1302aea624db06eeafac9f066654ff#rd";}, 1500);
+            setTimeout(function () {location.href = "http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=201548107&idx=2&sn=9d1302aea624db06eeafac9f066654ff#rd ";}, 1500);
         });
     };
     if(document.addEventListener){
@@ -158,13 +131,11 @@
     body{
 
         background: #000;
-
-        background: url("http://1251008728.cdn.myqcloud.com/1251008728/2014/manyanswers/bg.png") no-repeat;
-        background-size: cover;
         margin: 0 auto;
-        padding: 20px 10px;
+        padding: 0;
         height: 100%;
         min-height: 500px;
+        width: 600px;
     }
 
     .title{
@@ -199,18 +170,22 @@
     }
 
     .question{
-        width: 80%;
+        width: 599px;
+        height: 448px;
+        background: url(http://1251008728.cdn.myqcloud.com/1251008728/2014/0415/bg.jpg) no-repeat;
         margin: 0 auto;
         margin-top: 50px;
         display: none;
     }
 
     .question-title{
-        text-align: center;
-        color: #fff;
+        text-align: left;
+        padding-top: 5em;
+        color: #000;
+        padding-left: 3em;
     }
 
-    .question .question.current{
+    .question:first-child, .question.current{
         display: block;
     }
     .result{
@@ -226,39 +201,32 @@
         list-style-type: none;
     }
 
-    .options li div{
-        padding-left: 20px;
-    }
     .options.button li{
-        border: 1px solid #8760a3;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        width: 100%;
-        color: white;
-        background:rgba(142, 99, 167, 0.6) none repeat scroll 0 0 !important;
 
-        background:#8e63a7;
+        height: 2em;
+        text-align: center;
+        line-height: 2em;
+        border: 2px solid crimson;
+        color: #fff;
+        margin-left: 3em;
         filter:Alpha(opacity=60);
-    }
-
-    .options.button li{
-        padding: 5px 0;
+        color: #000;
+        padding: 0 1em;
+        display: inline-block;
     }
 
     .options li.selected{
         background: #cf6271 !important;
     }
     .prev{
-        margin-top: 30px;
+        margin-top: 2em;
         font-weight: 300;
         font-size: 12px;
         float: right;
-        padding-bottom: 50px;
+        padding-right: 2em;
     }
     .prev a:link{
-        color: #fff;
+        color: #000;
     }
 
     .tools-button{
@@ -303,26 +271,8 @@
         -moz-opacity: 0.9;
         opacity: 0.9;
     }
-    .start-button{
-        display: inline-block;
-        width: 200px;
-        border: 1px solid #8760a3;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        text-decoration: none;
-        color: white;
-        padding: 15px 35px;
-        background:#90ab8b;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }trtrtr
 </style>
 </head>
-
-netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print a, S[a]}'
-
 <div class="flexslider"   style="margin:0px auto;text-align:center; width:650px;margin-top:-10px;" >
   <div class="holder" style="clear:both;"></div>
   <ul class="slides" style="list-style:none; width:95%;">
@@ -336,7 +286,7 @@ netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print
     </script>
 
     <li style="float:left; margin-left:2px; width:30%;">
-      <a onclick="click_ad(1);" href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&amp;mid=201548107&amp;idx=2&amp;sn=9d1302aea624db06eeafac9f066654ff#rd" > <img style="width:100%; max-height:60px;" src="http://1251008728.cdn.myqcloud.com/1251008728/ad/sjb_tag3.png" /> </a>
+      <a onclick="click_ad(1);" href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&amp;mid=201548107&amp;idx=2&amp;sn=9d1302aea624db06eeafac9f066654ff#rd" > <img style="width:100%; max-height:60px;" src="http://1251008728.cdn.myqcloud.com/1251008728/ad/sjb_tag.png" /> </a>
       <!--
       <script>
         var url="/admin/show_stat?id=1"
@@ -346,20 +296,20 @@ netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print
       -->
     </li>
     <li style="float:left; margin-left:2px; width:30%;">
-      <a onclick="click_ad(2);" href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&amp;mid=201548107&amp;idx=2&amp;sn=9d1302aea624db06eeafac9f066654ff#rd" > <img style="width:100%; max-height:60px;" src="http://1251008728.cdn.myqcloud.com/1251008728/ad/sg_tag.png" /> </a>
+      <a onclick="click_ad(5);" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.shangjieba.client.android&amp;g_f=991653" > <img style="width:100%; max-height:60px;" src="http://1251008728.cdn.myqcloud.com/1251008728/ad/dapei_tag.png" /> </a>
       <!--
       <script>
-        var url="/admin/show_stat?id=2"
+        var url="/admin/show_stat?id=5"
         var img = new Image();
         img.src = url;
       </script>
       -->
     </li>
     <li style="float:left; margin-left:2px; width:30%;">
-      <a onclick="click_ad(5);" href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&amp;mid=201548107&amp;idx=2&amp;sn=9d1302aea624db06eeafac9f066654ff#rd" > <img style="width:100%; max-height:60px;" src="http://1251008728.cdn.myqcloud.com/1251008728/ad/dapei_tag.png" /> </a>
+      <a onclick="click_ad(10);" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.shangjieba.client.android&amp;g_f=991653" > <img style="width:100%; max-height:60px;" src="http://1251008728.cdn.myqcloud.com/1251008728/ad/sjb_app.png" /> </a>
       <!--
       <script>
-        var url="/admin/show_stat?id=5"
+        var url="/admin/show_stat?id=10"
         var img = new Image();
         img.src = url;
       </script>
@@ -373,30 +323,87 @@ netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print
 <!-- FlexSlider -->
 <!--<script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.flexslider.js"></script>-->
 
-<body>
 
+<body>
 
 <div class="title header-title">
   <h2>
-    且行且珍惜，测出轨有多易？
+    脑残鉴定，模拟测试
   </h2>
   <div class="title-sub">
-    在爱情里，你能抵制住诱惑吗？有些人（文章）看似专一，心里却藏着其他心思；有些人（我，加班的苦逼程序员）表面对谁都吊儿郎当，却只会对一个人付出真心。真正的专一不是一辈子只爱一个人，而是，爱着的时候，只爱一个。来测测你会不会出轨吧。
+    赶快来测试一下吧！
   </div>
-  <div>
-    <img src="http://1251008728.cdn.myqcloud.com/1251008728/2014/0404/chugui.jpg" alt="" style="width: 100%; height: auto"/>
-  </div>
-
-  <div style="text-align: center">
-    <a href="javascript:void(0)" class="start-button">开始测试</a>
-  </div>
-
 </div>
 
 
-<div class="question question-1 current">
+
+
+
+<div class="question current">
   <div class="question-title">
-    1、有一个小女孩的名字叫芭比，因为家里很穷，所以玩具只有一个：一只小绒布做的玩具小熊。你认为芭比是如何得到这个玩具的呢？
+    1、你曾经买过三次以上的彩卷，而且至今没有中过任何一次吗？
+  </div>
+  <div class="options button">
+    <ul>
+
+      <li data-score="0">
+        <div>
+          O
+        </div>
+      </li>
+
+      <li data-score="0">
+        <div>
+          X
+        </div>
+      </li>
+
+
+    </ul>
+  </div>
+
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
+</div>
+
+<div class="question ">
+  <div class="question-title">
+    2、你考上了汽车驾照却从来不敢开车上路？
+  </div>
+  <div class="options button">
+    <ul>
+
+      <li data-score="0">
+        <div>
+          是，我有驾照但很少或从未开车上路
+        </div>
+      </li>
+
+      <li data-score="0">
+        <div>
+          我还没考上汽车驾照
+        </div>
+      </li>
+
+      <li data-score="0">
+        <div>
+          我考上了汽车驾照，且并开车上路不止一次
+        </div>
+      </li>
+
+
+    </ul>
+  </div>
+
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
+</div>
+
+<div class="question ">
+  <div class="question-title">
+    3、你曾经发生在MSN上讯息丢错人的事情吗？
   </div>
   <div class="options button">
     <ul>
@@ -404,30 +411,30 @@ netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print
 
 
 
-      <li data-score="3">
+      <li data-score="0">
         <div>
-          从垃圾场捡来的
+          O
         </div>
       </li>
 
-
-      <li data-score="2">
+      <li data-score="0">
         <div>
-          妈妈帮她做的
+          X
         </div>
       </li>
-
-
 
 
     </ul>
   </div>
 
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
 </div>
 
-<div class="question question-2 ">
+<div class="question ">
   <div class="question-title">
-    2、有一天，芭比的爸爸回家，高兴地对家人说:“我赚到一笔大钱了!”、你认为芭比的爸爸导师是怎样得到这笔钱的呢?
+    4、同样的食物。即使连吃好几天也没有关系
   </div>
   <div class="options button">
     <ul>
@@ -435,30 +442,30 @@ netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print
 
 
 
-      <li data-score="3">
+      <li data-score="0">
         <div>
-          买公益奖券中了大奖
+          O
         </div>
       </li>
 
-
-      <li data-score="4">
+      <li data-score="0">
         <div>
-          他所发明的东西大卖
+          X
         </div>
       </li>
-
-
 
 
     </ul>
   </div>
 
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
 </div>
 
-<div class="question question-3 ">
+<div class="question ">
   <div class="question-title">
-    3、有一天,芭比的爸爸回家，高兴地对家人说:“我赚到一笔大钱了!”、你认为这笔钱的金额大约会是多少?
+    5、你已经不知养死多少无辜可怜的植物？
   </div>
   <div class="options button">
     <ul>
@@ -466,30 +473,47 @@ netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print
 
 
 
-      <li data-score="4">
+      <li data-score="0">
         <div>
-          可以一辈子不工作，到处游山玩水
+          O
+        </div>
+      </li>
+
+      <li data-score="0">
+        <div>
+          X
         </div>
       </li>
 
 
-      <li data-score="5">
-        <div>
-          可以5年不工作
-        </div>
-      </li>
+    </ul>
+  </div>
 
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
+</div>
+
+<div class="question ">
+  <div class="question-title">
+    6、警察在游泳池畔发现这具因为日晒过久而造成过度脱水的<葱干  >请问：下列哪一张图，是他[在世]时的模样？
+  </div>
+  <div class="options button">
+    <ul>
 
 
 
     </ul>
   </div>
 
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
 </div>
 
-<div class="question question-4 ">
+<div class="question ">
   <div class="question-title">
-    4、结果芭比变成了有钱人家的小姐，她的爸爸妈妈买了许多玩具给她。你想他会最喜欢下面那一个玩具呢?
+    7、你的身上常莫名其妙出现小伤口？
   </div>
   <div class="options button">
     <ul>
@@ -497,285 +521,87 @@ netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print
 
 
 
-      <li data-score="6">
+      <li data-score="0">
         <div>
-          法国洋娃娃
+          O
         </div>
       </li>
 
-
-      <li data-score="7">
+      <li data-score="0">
         <div>
-          家家酒游戏组
+          X
         </div>
       </li>
-
-
 
 
     </ul>
   </div>
 
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
 </div>
 
-<div class="question question-5 ">
+<div class="question ">
   <div class="question-title">
-    5、芭比变成了有钱人家的小姐，爸爸妈妈买了许多玩具给她。站在一堆新玩具前，芭比喃喃自语说了哪句话?
+    8、葱宝因为踩到地上的某物，出现如下这般痛不欲生的表情。你觉得他踩到的东西是？
   </div>
   <div class="options button">
     <ul>
 
 
 
-
-      <li data-score="6">
-        <div>
-          应该先玩那个呢?
-        </div>
-      </li>
-
-
-      <li data-score="8">
-        <div>
-          真不敢相信，好象在做梦
-        </div>
-      </li>
-
-
-
-
     </ul>
   </div>
 
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
 </div>
 
-<div class="question question-6 ">
+<div class="question ">
   <div class="question-title">
-    6、芭比变成了有钱人家的小姐，爸爸妈妈买了很多玩具给她,不过其实她还有一个愿望。你想会是下面那一个呢?
+    9、请问这个杯子上的唇印是谁的？
   </div>
   <div class="options button">
     <ul>
 
 
 
-
-      <li data-score="7">
-        <div>
-          想买新衣服
-        </div>
-      </li>
-
-
-      <li data-score="8">
-        <div>
-          全家一起到高级餐厅用餐
-        </div>
-      </li>
-
-
-
-
     </ul>
   </div>
 
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
+  </div>
 </div>
 
-<div class="question question-7 ">
+<div class="question ">
   <div class="question-title">
-    7、有一天晚上，当芭比正在漂亮的新家睡得香甜的时候,被放在房里角落的熊宝宝突然站了起来，慢慢走向芭比。你觉得当时熊宝宝脸上的表情会是如何的呢?
+    10、请凝视下面这张图10秒
   </div>
   <div class="options button">
     <ul>
 
 
 
-
-      <li data-score="9">
-        <div>
-          笑的很悲伤
-        </div>
-      </li>
-
-
-      <li data-score="10">
-        <div>
-          哭泣着
-        </div>
-      </li>
-
-
-
-
     </ul>
   </div>
 
-</div>
-
-<div class="question question-8 ">
-  <div class="question-title">
-    8、有一天晚上,当芭比正在漂亮的新家睡得香甜的时候,被放在房里角落的熊宝宝突然站了起来，慢慢走向芭比，突然摸了一下她。你觉得它会摸哪个部位呢?
+  <div class="prev">
+    <a href="javascript:void(0)">返回上一题</a>
   </div>
-  <div class="options button">
-    <ul>
-
-
-
-
-      <li data-score="9">
-        <div>
-          脸颊
-        </div>
-      </li>
-
-
-      <li data-score="11">
-        <div>
-          肩膀
-        </div>
-      </li>
-
-
-
-
-    </ul>
-  </div>
-
-</div>
-
-<div class="question question-9 ">
-  <div class="question-title">
-    9、有一天晚上,当芭比正在漂亮的新家睡得香甜的时候,被放在房里角落的熊宝宝突然站了起来，慢慢走向芭比，对她说了一句话。它说了什么话?
-  </div>
-  <div class="options button">
-    <ul>
-
-
-
-
-      <li data-score="10">
-        <div>
-          太好了，芭比
-        </div>
-      </li>
-
-
-      <li data-score="11">
-        <div>
-          太过分了，芭比
-        </div>
-      </li>
-
-
-
-
-    </ul>
-  </div>
-
-</div>
-
-<div class="question question-10 ">
-  <div class="question-title">
-    10、当芭比醒来时，熊宝宝已经不在了。之后你想芭比会怎么做?
-  </div>
-  <div class="options button">
-    <ul>
-
-
-
-
-      <li data-score="110">
-        <div>
-          她并没发现,所以什么也没做
-        </div>
-      </li>
-
-
-      <li data-score="200">
-        <div>
-          赶紧跑出去找熊宝宝
-        </div>
-      </li>
-
-
-
-
-    </ul>
-  </div>
-
-</div>
-
-<div class="question question-11 ">
-  <div class="question-title">
-    11、当芭比醒来时，熊宝宝已经不在了。你认为熊宝宝的真正身份是什么？
-  </div>
-  <div class="options button">
-    <ul>
-
-
-
-
-      <li data-score="300">
-        <div>
-          能为主人带来好运的魔法熊宝宝
-        </div>
-      </li>
-
-
-      <li data-score="400">
-        <div>
-          天使化身的熊宝宝
-        </div>
-      </li>
-
-
-
-
-    </ul>
-  </div>
-
-</div>
-
-<div class="question question-12 ">
-  <div class="question-title">
-    12、当芭比醒来时，熊宝宝已经不在了。你认为芭比的家会变成什么样子呢？
-  </div>
-  <div class="options button">
-    <ul>
-
-
-
-
-      <li data-score="500">
-        <div>
-          依旧很有钱，但家人关系变的很坏，经常吵架
-        </div>
-      </li>
-
-
-      <li data-score="600">
-        <div>
-          又恢复到原来破旧的小屋
-        </div>
-      </li>
-
-
-
-
-    </ul>
-  </div>
-
 </div>
 
 
 
-
-<div class="result result-110">
+<div class="result">
   <div class="title">
     <h2>
       结果
     </h2>
     <div class="title-sub aside">
-      你是个容易见异思迁的人，花心或移情别恋对你乃是天经地义的事，而且也不会有什么罪恶感。就算有了正式的男友，还会跟别人来往，你还乐此不疲。因为你的本性喜欢冒险，所以才会喜欢这种刺激的感觉。
+
     </div>
   </div>
 
@@ -784,129 +610,39 @@ netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print
   </div>
 
   <div class="follow-us tools-button">
-    <a href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=200063159&idx=8&sn=73d791f479fefb304f3ddf6818c0437a#rd">关注"上街吧"微信公众账号</a>
-  </div>
-</div>
-
-<div class="result result-200">
-  <div class="title">
-    <h2>
-      结果
-    </h2>
-    <div class="title-sub aside">
-      你的花心程度较高，你意志不够坚定，如果对方热情的邀请你，你一定会陷下去。不过，你会觉得有罪恶感，所以不会主动去勾引别人。你的理由就是“不好意思拒绝他”。
-    </div>
-  </div>
-
-  <div class="share tools-button" onclick="mask();">
-    分享
-  </div>
-
-  <div class="follow-us tools-button">
-    <a href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=200063159&idx=8&sn=73d791f479fefb304f3ddf6818c0437a#rd">关注"上街吧"微信公众账号</a>
-  </div>
-</div>
-
-<div class="result result-300">
-  <div class="title">
-    <h2>
-      结果
-    </h2>
-    <div class="title-sub aside">
-      你很想移情别恋，但是没有勇气这么做。这并不是你的罪恶感在作祟，而是你太胆小没有勇气这么做，只好将强烈的欲望压抑下来，所以老是听到你在说：“我才不会花心呢！”其实你还是有点心不甘情不愿的。
-    </div>
-  </div>
-
-  <div class="share tools-button" onclick="mask();">
-    分享
-  </div>
-
-  <div class="follow-us tools-button">
-    <a href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=200063159&idx=8&sn=73d791f479fefb304f3ddf6818c0437a#rd">关注"上街吧"微信公众账号</a>
-  </div>
-</div>
-
-<div class="result result-400">
-  <div class="title">
-    <h2>
-      结果
-    </h2>
-    <div class="title-sub aside">
-      你的花心程度很低，不过有时也会有移情别恋的念头，但是你并不想背上背叛情人的罪名，所以不会这么做。但是你很容易错将友情当爱情，容易因关心而发展出爱情，所以你要事实理清感觉，别把友情与爱情混淆了。
-    </div>
-  </div>
-
-  <div class="share tools-button" onclick="mask();">
-    分享
-  </div>
-
-  <div class="follow-us tools-button">
-    <a href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=200063159&idx=8&sn=73d791f479fefb304f3ddf6818c0437a#rd">关注"上街吧"微信公众账号</a>
-  </div>
-</div>
-
-<div class="result result-500">
-  <div class="title">
-    <h2>
-      结果
-    </h2>
-    <div class="title-sub aside">
-      你的花心程度极低，只要有了情人，就不会和别的异**往。这并不是因为你是个专情的人，而是因为你很怕麻烦。万一偷偷跟别人交往，东窗事发了还得找一大堆理由解释会很累，所以怕麻烦的你绝对不会自找麻烦。
-    </div>
-  </div>
-
-  <div class="share tools-button" onclick="mask();">
-    分享
-  </div>
-
-  <div class="follow-us tools-button">
-    <a href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=200063159&idx=8&sn=73d791f479fefb304f3ddf6818c0437a#rd">关注"上街吧"微信公众账号</a>
-  </div>
-</div>
-
-<div class="result result-600">
-  <div class="title">
-    <h2>
-      结果
-    </h2>
-    <div class="title-sub aside">
-      你的花心程度等于零，简直可以说是世上最专情的人。你的眼里只有情人一个，根本容不下其他的异性。就算有人想追你，你都可以视若无睹不为所动。不过你也要求情人和你一样的忠心，万一他变心，你绝对不会放过他。
-    </div>
-  </div>
-
-  <div class="share tools-button" onclick="mask();">
-    分享
-  </div>
-
-  <div class="follow-us tools-button">
-    <a href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=200063159&idx=8&sn=73d791f479fefb304f3ddf6818c0437a#rd">关注"上街吧"微信公众账号</a>
+    关注"上街吧"微信公众账号
   </div>
 </div>
 
 
 <div id="mask" onclick="mask();"></div>
-<div id="tip"  onclick="mask();"><img  style="width:320px;" src="http://1251008728.cdn.myqcloud.com/1251008728//assets/images/tip-share.jpg"/>
+<div id="tip" onclick="mask();"><img src="http://1251008728.cdn.myqcloud.com/1251008728//assets/images/tip-share.jpg"/>
 </div>
-<br/>
 
 </body>
+
 <div class="holder" style="margin:0px auto;text-align:center; width:530px;">
   <div class="holder" style="clear:both;"></div>
     <span style="float:left; width:250px; text-align:left; margin-right:15px;">
-       <script type="text/javascript">
-           /*234*60，创建于2014-3-7*/
-           var cpro_id = "u1483137";
-       </script>
-<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+       <div class="sjbad" style="width:220px; height:60px; background:#fff; ">
+         <div class="ad_title" style="font-size:14px; line-height:16px;" >
+           <a style="color:blue; text-align:left;" onclick="click_ad(7);" href='http://a.app.qq.com/o/simple.jsp?pkgname=com.shangjieba.client.android&g_f=991653'> 上街吧，穿出更美的自己</a>
+         </div>
+
+         <div class="ad_desc" style="font-size:12px; line-height:14px;">
+           <a style="color:#333; text-decoration:none; text-align:left;" onclick="click_ad(7);"  href='http://a.app.qq.com/o/simple.jsp?pkgname=com.shangjieba.client.android&g_f=991653'> 国内第一款搭配游戏。微信小游戏，小测试，玩会儿爽到爆！</a>
+           <a id="logo" class="logo" href=''></a>"
+         </div>
+       </div>
     </span>
     <span style="float:left; width:250px; text-align:left; margin-right:15px;">
        <div class="sjbad" style="width:220px; height:60px; background:#fff; ">
          <div class="ad_title" style="font-size:14px; line-height:16px;" >
-           <a style="color:blue; text-align:left;" href='http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=201548107&idx=2&sn=9d1302aea624db06eeafac9f066654ff#rd'> 上街吧，穿出更美的自己</a>
+           <a style="color:blue; text-align:left;" onclick="click_ad(8);" href='http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=201548107&idx=2&sn=9d1302aea624db06eeafac9f066654ff#rd' > 玩会儿-微信测试、微信转盘</a>
          </div>
 
          <div class="ad_desc" style="font-size:12px; line-height:14px;">
-           <a style="color:#333; text-decoration:none; text-align:left;" href='http://www.shangjieba.com/weixin/app?fr=ad1'> 国内第一款搭配游戏。微信小游戏，小测试，玩会儿爽到爆！</a>
+           <a style="color:#333; text-decoration:none; text-align:left;" onclick="click_ad(8);"  href='http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=201548107&idx=2&sn=9d1302aea624db06eeafac9f066654ff#rd'> 最大的微信小游戏、小测试中心！10秒钟开心一乐</a>
            <a id="logo" class="logo" href=''></a>"
          </div>
        </div>
@@ -926,18 +662,18 @@ netstat -n | awk '/sdfsd^tcp/ {++34324gdefdsS[$NF]}asdasd END {for(a in S) print
 </div>
 
 <script>
-    var url="/materials/stat?type=pv&cid=158&gid=384"
+    var url="/materials/stat?type=pv&cid=106&gid=447"
     var img = new Image();
     img.src = url;
 </script>
 
 <div id="shangjieba_share">
-  <input type="hidden" name="wanhuir_page_title" id="wanhuir_page_title" value="且行且珍惜，测出轨有多易？"/>
-  <input type="hidden" name="wanhuir_page_url" id="wanhuir_page_url" value="http://wanhuir.com/materials/384"/>
+  <input type="hidden" name="wanhuir_page_title" id="wanhuir_page_title" value="脑残鉴定，模拟测试"/>
+  <input type="hidden" name="wanhuir_page_url" id="wanhuir_page_url" value="http://203.195.191.203/materials/447"/>
   <input type="hidden" name="wanhuir_page_result" id="wanhuir_page_result" value=""/>
-  <input type="hidden" name="wanhuir_page_desc" id="wanhuir_page_desc" value="在爱情里，你能抵制住诱惑吗？有些人（文章）看似专一，心里却藏着其他心思；有些人（我，加班的苦逼程序员）表面对谁都吊儿郎当，却只会对一个人付出真心。真正的专一不是一辈子只爱一个人，而是，爱着的时候，只爱一个。来测测你会不会出轨吧。"/>
-  <input type="hidden" name="wanhuir_page_image" id="wanhuir_page_image" value="http://1251008728.cdn.myqcloud.com/1251008728/chugui/cg3.jpg"/>
-  <input type="hidden" name="wanhuir_material_id" id="wanhuir_material_id" value="384"/>
+  <input type="hidden" name="wanhuir_page_desc" id="wanhuir_page_desc" value="赶快来测试一下吧！"/>
+  <input type="hidden" name="wanhuir_page_image" id="wanhuir_page_image" value="http://1251008728.cdn.myqcloud.com/1251008728/shenjia/9.jpg"/>
+  <input type="hidden" name="wanhuir_material_id" id="wanhuir_material_id" value="447"/>
 </div>
 
 <script type="text/javascript">
