@@ -1,6 +1,16 @@
 class Admin::BaseController < ActionController::Base
   layout 'admin'
 
+
+  rescue_from StandardError do |exception|
+    new_logger = Logger.new('log/admin_exceptions.log')
+    new_logger.info('THIS IS A NEW EXCEPTION!')
+    new_logger.info(request.url)
+    new_logger.info(params.to_s)
+    new_logger.info(exception.message)
+    raise exception
+  end
+
   before_filter :login_authenticate, :check_cookie, :except => [:click_stat, :show_stat]
   helper_method :current_user
 
