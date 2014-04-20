@@ -98,35 +98,10 @@
         <ul class="">
           <li id="search-3" class="widget widget_search"><div class="widgetblock">
           </li>
-          <div class="widgetblock"> 
-            <div class="widgettitleb"> 
-              <h3 class="widgettitle">
-                最火爆的小三传奇，2048大挑战！
-              </h3> 
-            </div>
-            <ul class="wpinstagram wpinstagram-slideshow live" style="width: 100%;">
-              <li style="width:100%; margin-bottom: 5px !important;">
-                <%= link_to "/materials/227?text=gg&fr=banner" do %>
-                  <%= image_tag "http://1251008728.cdn.myqcloud.com/1251008728/hello/h2.jpg", style:"width:100%; margin-bottom:5px;" %>
-                <% end %>
-              </li>
-            </ul>
-            <div style="clear: both; padding-bottom: 10px;"></div>
-          </div> 
-          <li id="recent-posts-2" class="widget widget_recent_entries"> 
-            <div class="widgetblock">		
-              <div class="widgettitleb"> 
-                <h3 class="widgettitle">最新公告</h3> 
-              </div>
-              <ul>
-                <li>
-                  <%= link_to 'http://www.shangjieba.com/weixin/app?fr=wan' do %>
-                    上街吧, DIY时尚搭配!
-                  <% end %>
-                </li>
-              </ul>
-            </div> 
-          </li>
+
+          <%= render "shared/ad_homepage" %>
+          <%= render "shared/ad_homepage_link" %>
+
         </ul>
       </div>
     </div>
