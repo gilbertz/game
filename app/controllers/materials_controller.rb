@@ -149,7 +149,7 @@ class MaterialsController < ApplicationController
     end
 
     #include ad show stat
-    Ad.where(:on => true).each do |ad|
+    Ad.where(:on => true).where("t < 3").each do |ad|
       key = "ad_show_#{ad.id}"
       $redis.incr(key)
     end

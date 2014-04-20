@@ -1,0 +1,26 @@
+<% @ad = Ad.where(:on => true).where( :t=> 4).last %>
+<script>
+  function click_ad(idx){
+    ajax = new XMLHttpRequest();
+    ajax.open('GET', "/admin/click_stat?id=" + idx, true);
+    ajax.send(null);
+    return false;
+  }
+</script>
+
+
+<li id="recent-posts-2" class="widget widget_recent_entries">
+   <div class="widgetblock">
+   <div class="widgettitleb">
+     <h3 class="widgettitle"><%= @ad.title %></h3>
+   </div>
+  
+   <ul>
+     <li>
+       <a onclick="click_ad(<%= @ad.id %>)" href="<%= @ad.click %>">
+         <%= @ad.desc %>
+       </a>
+     </li> 
+                                                                                                                                                                            </ul>
+                                                                                                                                                                            </div>
+                                                                                                                                                                        </li>
