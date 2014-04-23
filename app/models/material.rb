@@ -72,6 +72,11 @@ class Material < ActiveRecord::Base
     material
   end
 
+  def get_description
+    self.description
+  end
+
+
   private
   def clone_self
     material = Material.new self.attributes.except!("created_at","id")
