@@ -55,8 +55,9 @@ class Admin::BaseController < ActionController::Base
   def clear_page(material)
     l_ip = Socket.ip_address_list.collect{|i| i.ip_address}
 
-    cache_path = "#{Rails.root}/public/materials"
-    FileUtils.rm_r(cache_path) if Dir.exist?(cache_path)
+    expire_page "/materials/#{material.id}"
+    expire_page "/materials/#{material.id}/fr/ios"
+    expire_page "/materials/#{material.id}/fr/andriod"
 
     if l_ip.include? "203.195.191.203"
       res = RestClient.get("http://203.195.186.54:4002/admin/home/clear_single_cache/#{material.id}")
