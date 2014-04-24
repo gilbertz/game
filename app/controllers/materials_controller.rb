@@ -70,7 +70,6 @@ class MaterialsController < ApplicationController
   def show
     @material = Material.find params[:id]
     get_topn(@material.category_id)
-
     render layout: false
   end
 
@@ -145,7 +144,7 @@ class MaterialsController < ApplicationController
     end
 
     #include ad show stat
-    Ad.where(:on => true).each do |ad|
+    Ad.where(:on => true).where("t < 3").each do |ad|
       key = "ad_show_#{ad.id}"
       $redis.incr(key)
     end

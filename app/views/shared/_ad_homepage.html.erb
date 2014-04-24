@@ -1,0 +1,26 @@
+<% @ad = Ad.where(:on => true).where( :t=> 3).last %>
+<script>
+  function click_ad(idx){
+    ajax = new XMLHttpRequest();
+    ajax.open('GET', "/admin/click_stat?id=" + idx, true);
+    ajax.send(null);
+    return false;
+  }
+</script>
+
+
+<div class="widgetblock">
+  <div class="widgettitleb">
+    <h3 class="widgettitle">
+      <%= @ad.desc %>
+    </h3>
+  </div>
+  <ul class="wpinstagram wpinstagram-slideshow live" style="width: 100%;">
+    <li style="width:100%; margin-bottom: 5px !important;">
+      <a onclick="click_ad(<%= @ad.id %>);" href="<%= @ad.click %>" >
+        <%= image_tag @ad.img, style:"width:100%; margin-bottom:5px;" %>
+      </a>
+    </li>
+                                                                                                                                                                            </ul>
+                                                                                                                                                                           <div style="clear: both; padding-bottom: 10px;"></div>
+                                                                                                                                                                        </div>

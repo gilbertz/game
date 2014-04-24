@@ -37,6 +37,8 @@ Game::Application.routes.draw do
   end
 
   get '/materials/:id/fr/:fr' => "materials#show"
+  get '/materials/:id/shuffer/:sid' => "materials#show"
+
   get '/qq/layouts/:layouts/material_id/:material_id' => "qq/welcome#index"
   get '/qq/material_id/:material_id' => "qq/welcome#index"
 

@@ -1,3 +1,14 @@
+<div style="margin-top:5px;" align="center" id="bai">
+  <div style="display: inline;float: left;">
+    <% @ads = Ad.where(:on => true).where( :t=> 2 ) %>
+    <% @ads.each do |ad| %>
+        <%= ad.code.html_safe %>
+    <% end %>
+  </div>
+</div>
+
+
+<!--
 <div class="holder" style="margin:0px auto;text-align:center; width:530px;">
   <div class="holder" style="clear:both;"></div>
   <% @ads = Ad.where(:on => true).where( :t=> 1 ) %>
@@ -7,4 +18,5 @@
     </span>
   <% end %>
   <div class="holder" style="clear:both;"></div> 
-</div>  
+</div>
+-->
