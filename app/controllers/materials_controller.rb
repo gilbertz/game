@@ -74,7 +74,6 @@ class MaterialsController < ApplicationController
   def show
     @material = Material.find params[:id]
     get_topn(@material.category_id)
-
     render layout: false
   end
 
