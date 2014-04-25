@@ -56,11 +56,11 @@
       <%= render "shared/ad_bottom" %>
     <% end %>
     
-    <br/>
-    <br/> 
+    <!--
     <div id='desc' style="margin-top:10px;background-color:white;color:white;font-size:5px;" >
         <%= @material.get_description  %>
     </div>
+    -->
 
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
