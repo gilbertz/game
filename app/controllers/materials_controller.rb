@@ -66,9 +66,32 @@ class MaterialsController < ApplicationController
     render :layout => false
   end
 
-  caches_page :show
+
+  def rand_wid
+    wx_ids = ['wx8820cdf5db680ffa', 'wxf37239efdb6106b8', 'wx333eb5e8a7d7a4b7', 'wx1fd508e23f093612', 'wx78f81724e6590b1d', 'wx14db6de757190903', 'wx843a75276b087b5b', 'wxa4b43775687cda90', 'wx3fb66635e78c1d91']
+    len = wx_ids.length
+    wx_ids[rand(len)]
+  end
+
+
+  def rand_domain
+    wx_domains = ['http://g.shangjieba.com', 'http://g.saibaobei.com', 'http://wx.mna.myqcloud.com', 'http://wanhuir.mna.myqcloud.com' ]
+    len = wx_domains.length
+    wx_domains[rand(len)]
+  end
+
+  #caches_page :show
   def show
+    ua = request.user_agent.downcase
+    @wx_id = "wx7786f97ea666be3c"
+    @wx_domain = rand_domain
+    if ua.index("micromessenger")
+      @wx_id = rand_wid 
+    end
+
     @material = Material.find params[:id]
+
+    @base_category = Category.find(1)
     get_topn(@material.category_id)
     render layout: false
   end

@@ -4,8 +4,6 @@
       <link href="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/wanhuir-icon.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
       <% @category = @material.category %>
       <title><%= @material.name %></title>
-      <meta name="keywords" content="玩会儿,微信测试,微信游戏,微测试,微游戏,小游戏,转盘">
-      <meta name="description" content="<%= @material.description %>" >
       <% @answers = @material.answers %>
       <meta charset="utf-8">
       <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery.js"></script>
@@ -29,7 +27,7 @@
         <%= ERB.new(@category.js).result(binding).html_safe %>
       </script>
       <script type="text/javascript">
-        <%= ERB.new(@category.wx_js || "").result(binding).html_safe %>
+        <%= ERB.new(@base_category.wx_js || "").result(binding).html_safe %>
       </script>
       <style type="text/css">
         <% @css_image   = @material.images.select{|i| i.state == 1 }[0].try(:body) %>
@@ -56,11 +54,11 @@
       <%= render "shared/ad_bottom" %>
     <% end %>
     
-    <br/>
-    <br/> 
-    <div id='desc' style="width:80%;margin-top:10px;background-color:white;color:white;font-size:5px;" >
+    <!--
+    <div id='desc' style="margin-top:10px;background-color:white;color:white;font-size:5px;" >
         <%= @material.get_description  %>
     </div>
+    -->
 
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
