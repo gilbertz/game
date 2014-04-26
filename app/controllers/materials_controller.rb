@@ -82,6 +82,8 @@ class MaterialsController < ApplicationController
     end
 
     @material = Material.find params[:id]
+
+    @base_category = Category.find(1)
     get_topn(@material.category_id)
     render layout: false
   end

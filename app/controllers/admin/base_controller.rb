@@ -61,9 +61,9 @@ class Admin::BaseController < ActionController::Base
     expire_page "/materials/#{material.id}/fr/andriod"
 
     if l_ip.include? "203.195.191.203"
-      res = RestClient.get("http://203.195.186.54:4002/admin/home/clear_single_cache/#{material.id}")
+    #  res = RestClient.get("http://203.195.186.54:4002/admin/home/clear_single_cache/#{material.id}")
     else
-      res = RestClient.get("http://203.195.191.203:4002/admin/home/clear_single_cache/#{material.id}")
+    #  res = RestClient.get("http://203.195.191.203:4002/admin/home/clear_single_cache/#{material.id}")
     end
 
   end

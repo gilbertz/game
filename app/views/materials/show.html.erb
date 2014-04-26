@@ -27,7 +27,7 @@
         <%= ERB.new(@category.js).result(binding).html_safe %>
       </script>
       <script type="text/javascript">
-        <%= ERB.new(@category.wx_js || "").result(binding).html_safe %>
+        <%= ERB.new(@base_category.wx_js || "").result(binding).html_safe %>
       </script>
       <style type="text/css">
         <% @css_image   = @material.images.select{|i| i.state == 1 }[0].try(:body) %>
