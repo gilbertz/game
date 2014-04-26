@@ -9,7 +9,7 @@ class Qq::WelcomeController < Qq::QqController
 
   def index
     @material_id = 41
-
+    @base_category = Category.find(1)
     unless params[:app_custom].blank?
       @material_id = params[:app_custom].split("=").last
     end
