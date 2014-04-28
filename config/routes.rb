@@ -49,6 +49,7 @@ Game::Application.routes.draw do
     get 'home/clear_single_cache/:id' => "home#clear_single_cache"
 
     resources :game_types
+    resources :banners
 
     resources :users
     resources :session
@@ -93,7 +94,13 @@ Game::Application.routes.draw do
     resources :ads
 
     get "welcome/:id/custom" => "welcome#custom", as: :custom_material
+  end
 
+  namespace :api do
+    get "welcome/index" => "welcome#index"
+    get "welcome/game_types" => "welcome#game_types"
+    get "welcome/banners" => "welcome#banners", :as => :banners
+    resources :feedbacks
   end
 
   # You can have the root of your site routed with "root"

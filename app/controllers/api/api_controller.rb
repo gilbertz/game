@@ -1,10 +1,9 @@
-class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+class Api::ApiController < ActionController::Base
+
   protect_from_forgery with: :exception
 
   rescue_from StandardError do |exception|
-    new_logger = Logger.new('log/exceptions.log')
+    new_logger = Logger.new('log/app_api_exceptions.log')
     new_logger.info("THIS IS A NEW EXCEPTION! #{Time.now.to_s}")
     new_logger.info("------ #{request.remote_ip} ------")
     new_logger.info(request.url)
@@ -13,6 +12,5 @@ class ApplicationController < ActionController::Base
     new_logger.info(exception.backtrace.join("\n"))
     raise exception
   end
-
 
 end

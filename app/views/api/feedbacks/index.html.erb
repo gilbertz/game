@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <title>用户反馈</title>
+  <!--<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery-2.0.3.min.js"></script>-->
+  <style type="text/css">
+    body{
+        margin: 1em 1em;
+        padding: 0;
+        background: #f5f5f5;
+    }
+    #feedback_content{
+        width: 100%;
+        height: 8em;
+        border: 0;
+        margin: 0 auto;
+        padding: 0.5em 0.5em;
+        font-size: 1em;
+    }
+    .fb-form{
+        margin-top: 1em;
+    }
+    .fb-form #submit{
+        width: 100%;
+        height: 2em;
+        margin: 0 auto;
+        padding: 0;
+        margin-top: 1em;
+        border: 0;
+        background: #ec6941;
+        color: #ffffff;
+        font-size: 1em;
+        line-height: 2em;
+        border-radius: 0;
+        -webkit-appearance: none;
+    }
+    .fb-list{
+        color: #262626;
+        margin-top: 1em;
+    }
+    .fb-list ul{
+        margin: 0 auto;
+        padding: 0;
+    }
+    .fb-list ul li{
+        list-style-type: none;
+        margin: 2em 0;
+        background: #ffffff;
+        font-size: 0.8em;
+        padding: 0.5em 0.5em;
+    }
+    .fb-list .time{
+        font-size: 0.8em;
+        color: #8b8b8b;
+        display: block;
+        text-align: right;
+    }
+    .fb-list .content{
+        color: #8b8b8b;
+        font-size: 1em;
+    }
+    .fb-list .answer{
+        border-top: 1px solid #f5f5f5;
+        margin-top: 0.5em;
+        padding-top: 0.5em;
+        color: #262626;
+    }
+    .fb-list .answer-time{
+        font-size: 0.8em;
+        color: #464646;
+        display: block;
+        text-align: right;
+    }
+    .notice{
+        margin-top: 1em;
+        height: 3em;
+        line-height: 3em;
+        text-align: center;
+        color: #ec6941;
+    }
+  </style>
+</head>
+<body>
+
+<div class="fb-form">
+  <%= form_for [:api, @feedback], method: :post do |f| %>
+      <%= hidden_field_tag :token, params[:token] %>
+      <%= hidden_field_tag :back, "1" %>
+      <%= f.text_area :content, :placeholder => "请输入你的宝贵意见！" %>
+      <%= f.submit "提交反馈", {:id => "submit"} %>
+  <% end %>
+</div>
+
+<% unless flash[:notice].blank? %>
+
+<div class="notice">
+  <%= flash[:notice] %>
+</div>
+
+<% end %>
+
+<div class="fb-list">
+  <% unless @feedbacks.blank? %>
+  <ul>
+    <% @feedbacks.each do |fb| %>
+    <li>
+      <div class="content">
+        反馈内容: <%= fb.content %>
+
+        <span class="time">
+            <%= fb.created_at.to_local %>
+        </span>
+      </div>
+      <% unless fb.feed_answer.blank? %>
+      <div class="answer">
+        闪购客服: <%= fb.feed_answer.content %>
+        <span class="time"><%= fb.feed_answer.created_at.to_local %></span>
+      </div>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+  <% end %>
+</div>
+
+</body>
+</html>

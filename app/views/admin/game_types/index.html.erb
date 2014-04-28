@@ -2,6 +2,7 @@
   <tr>
     <th>ID</th>
     <th>Game type</th>
+    <th>Type image</th>
     <th>Operate</th>
   </tr>
 
@@ -10,6 +11,9 @@
       <tr>
         <td><%= game_type.id %></td>
         <td><%= game_type.game_type %></td>
+        <td>
+          <img src="<%= game_type.type_image %>" alt="" style="width: 80px; height: 80px"/>
+        </td>
         <td><%= link_to "update", edit_admin_game_type_path(game_type) %></td>
       </tr>
     <% end %>

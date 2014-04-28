@@ -27,7 +27,7 @@ class Admin::GameTypesController < Admin::BaseController
 
   private
   def game_type_params
-    params.require(:game_type).permit(:game_type)
+    params.require(:game_type).permit(:game_type, :type_image)
   end
 
 end

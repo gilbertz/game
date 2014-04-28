@@ -74,13 +74,7 @@ class Material < ActiveRecord::Base
 
   def get_description
     #self.description
-    des = ""
-    count = 18000
-    (0..5).each do |i|
-      key = "discount_data_#{rand(count)}"
-      des += $redis.get(key)
-    end
-    des
+    ""
   end
 
 

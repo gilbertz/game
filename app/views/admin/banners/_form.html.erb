@@ -1,0 +1,31 @@
+<%= form_for [:admin, @banner] do |f| %>
+
+    <div class="control-group">
+      <label class="control-label">图片地址</label>
+      <div class="controls">
+        <%= f.text_field :image_url, required: true, style: "width:500px" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">Wait</label>
+      <div class="controls">
+        <%= f.text_field :wait, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">State</label>
+      <div class="controls">
+        <%= f.select :state, Admin::BannersController::State, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <%= f.submit %>
+      </div>
+    </div>
+
+<% end %>
