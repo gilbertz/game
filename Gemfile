@@ -71,3 +71,8 @@ gem 'actionpack-action_caching'
 gem "request-log-analyzer"
 
 gem "whenever"
+
+# come from api gemspec
+gem 'rabl', '~> 0.9.3'
+gem 'oj'
+gem 'versioncake', '~> 1.2.0'
