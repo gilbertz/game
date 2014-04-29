@@ -5,6 +5,7 @@
   <tr>
     <th>ID</th>
     <th>Image</th>
+    <th>link</th>
     <th>Wait</th>
     <th>State</th>
     <th>Operate</th>
@@ -14,6 +15,7 @@
   <tr>
     <td><%= banner.id %></td>
     <td><%= banner.image_url %></td>
+    <td><%= banner.link %></td>
     <td><%= banner.wait %></td>
     <td><%= banner.state_status %></td>
     <td><%= link_to "Edit", edit_admin_banner_path(banner) %> | <%= link_to "delete", admin_banner_path(banner), :method => :delete, confirm: "确认删除?" %></td>
