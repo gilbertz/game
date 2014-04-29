@@ -60,6 +60,8 @@
     </div>
     -->
 
+    <%= render "shared/rec_games" %>
+
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
     <%= render :partial => "shared/data" %>
