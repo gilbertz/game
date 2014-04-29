@@ -77,6 +77,12 @@ class Material < ActiveRecord::Base
     ""
   end
 
+  def self.recommended_games(n=4, exclude_num=0)  
+    games = Material.where("id != #{exclude_num}").order('redis_wx_share_pyq desc').limit(50)
+    games.sample(n)
+  end
+
+
 
   private
   def clone_self

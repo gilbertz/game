@@ -3,15 +3,13 @@
     <div class="game_header" style="font-size:24px; height:30px; margin:4px auto; color:#999; ">
       【微信游戏推荐】
     </div>
-    <% @games = ['测测你是什么样的人测测你是什么样的人','瑞文智测测你是什么样的人商测试1', '瑞文测测你是什么样的人智商测试2', '测测你会做什么'] %>
+    <% @games = Material.recommended_games(4, @material.id)  %>
     <% @games.each do |game| %>
       <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
-        <a href="#" style="text-decoration:none; ">
-          <%= game %>
+        <a href="/materials/<%= game.id %>" style="text-decoration:none; ">
+          <%= game.name %>
         </a>
       </div>
     <% end %>
   </div>
 </div>
-
-
