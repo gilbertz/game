@@ -35,7 +35,7 @@ class Admin::BannersController < Admin::BaseController
 
   private
   def banner_params
-    params.require(:banner).permit(:image_url, :wait, :state)
+    params.require(:banner).permit(:image_url, :link, :wait, :state)
   end
 
 end

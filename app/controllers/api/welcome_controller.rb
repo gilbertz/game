@@ -23,7 +23,15 @@ class Api::WelcomeController < Api::ApiController
       else
         materials = materials.order('materials.id desc')
       end
-      @materials = materials.page(params[:page]).per(12)
+
+      per_page = params[:per_page] || 12
+
+      @materials = materials.page(params[:page]).per(per_page)
+  end
+
+  def document
+
+    render :layout => false
   end
 
 end
