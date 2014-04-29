@@ -1,4 +1,7 @@
 object false
+node(:total_page){ @materials.total_pages }
+node(:page){ @materials.current_page }
+node(:more_page){ @materials.total_pages - @materials.current_page }
 child @materials do
   node(:id){|m| m.id }
   node(:title){|m| m.wx_title }
