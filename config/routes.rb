@@ -101,6 +101,9 @@ Game::Application.routes.draw do
     get "welcome/game_types" => "welcome#game_types"
     get "welcome/banners" => "welcome#banners", :as => :banners
     resources :feedbacks
+
+    get "welcome/document" => "welcome#document"
+
   end
 
   # You can have the root of your site routed with "root"

@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" type="text/css" href="http://1251008728.cdn.myqcloud.com/1251008728/assets/css/github.css"/>
+  <script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/highlight.pack.js"></script>
+  <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+  <title></title>
+</head>
+<body>
+
+
+<ul>
+  <li>
+    <div>
+    GET  /api/welcome/banners (活动Banner)
+    </div>
+
+    <div>
+      <pre>
+        <code>
+          {"banners":[
+            {"id":2,"image_url":"this is a test image url","wait":2},
+            {"id":1,"image_url":"this is image url","wait":1}
+          ]}
+        </code>
+      </pre>
+    </div>
+  </li>
+
+  <li>
+    <div>
+    GET  /api/welcome/game_types (游戏分类)
+    </div>
+
+    <div>
+      <pre>
+        <code>
+          {"game_types":[
+            {"id":1,"game_type":"智商测试","type_image":"3232"},
+            {"id":2,"game_type":"轮盘测试","type_image":""},
+            {"id":3,"game_type":"情感分析","type_image":""},
+            {"id":4,"game_type":"猜谜游戏","type_image":""},
+            {"id":5,"game_type":"求签砸蛋","type_image":""},
+            {"id":6,"game_type":"姓名图测","type_image":""},
+            {"id":7,"game_type":"H5游戏","type_image":""},
+            {"id":8,"game_type":"视觉游戏","type_image":""},
+            {"id":9,"game_type":"翻牌游戏","type_image":""}
+          ]}
+        </code>
+      </pre>
+    </div>
+  </li>
+
+  <li>
+    <div>
+    GET  /api/welcome/index?page=1&per_page=12&order=hot (游戏列表)
+    </div>
+
+    <div>
+    <pre>
+      <code>
+        page: 页数
+        per_page: 每页多少 可不传 默认12
+        order: 排序 hot, recommend
+      </code>
+    </pre>
+    </div>
+
+    <div>
+      <pre>
+        <code>
+          {"materials":[
+            {"id":455,"title":"11111111222","wx_url":"","wx_tlimg":"111111112222"},
+            {"id":453,"title":"11111111","wx_url":"","wx_tlimg":"11111111"},
+            {"id":445,"title":"五道IQ测试题，看你是不是天才","wx_url":"http://203.195.191.203/materials/445","wx_tlimg":"http://1251008728.cdn.myqcloud.com/1251008728/tiancai/1.jpg"},
+            {"id":442,"title":"吉普赛人古老的神奇读心术，它能感应出你的内心在想什么，你敢试吗？","wx_url":"http://203.195.191.203/materials/442","wx_tlimg":"http://1251008728.cdn.myqcloud.com/1251008728/duxin/dx.jpg"},
+            {"id":441,"title":"测一测你内心的阴暗面！","wx_url":"http://203.195.191.203/materials/441","wx_tlimg":"http://1251008728.cdn.myqcloud.com/1251008728/shenjia/9.jpg"},
+            {"id":440,"title":"测一测：恋爱中你是花痴吗？","wx_url":"http://203.195.191.203/materials/440","wx_tlimg":"http://1251008728.cdn.myqcloud.com/1251008728/huachi/1.jpg"},
+            {"id":439,"title":"测试：你多久会厌倦一个人？","wx_url":"http://203.195.191.203/materials/439","wx_tlimg":"http://1251008728.cdn.myqcloud.com/1251008728/haose/12.jpg"},
+            {"id":438,"title":"测你做什么工作能赚大钱？","wx_url":"http://203.195.191.203/materials/438","wx_tlimg":"http://1251008728.cdn.myqcloud.com/1251008728/gongzuo/gz1.jpg"},
+            {"id":437,"title":"丹麦最新智商测试1","wx_url":"http://203.195.191.203/materials/437","wx_tlimg":"http://wxcover.qiniudn.com/iqceshi.jpg"},
+            {"id":436,"title":"【心理年龄测试】测测你的心理年龄有几岁？","wx_url":"http://203.195.191.203/materials/436","wx_tlimg":"http://1251008728.cdn.myqcloud.com/1251008728/nvxia/xl1.jpg"},
+            {"id":435,"title":"测测你的情商是否能打败小三？敢玩儿吗？","wx_url":"http://203.195.191.203/materials/435","wx_tlimg":"http://1251008728.cdn.myqcloud.com/1251008728/douxiaosan/1.jpg"},
+            {"id":426,"title":"测测看你缺什么?","wx_url":"http://203.195.191.203/materials/426","wx_tlimg":"http://1251008728.cdn.myqcloud.com/1251008728/que/3.jpg"}
+          ]}
+        </code>
+      </pre>
+    </div>
+  </li>
+
+  <li>
+    <div>
+      GET  /api/feedbacks (WebView 加载 反馈)
+    </div>
+
+    <div>
+      <pre>
+        <code>
+          none
+        </code>
+      </pre>
+    </div>
+  </li>
+</ul>
+
+
+</body>
+</html>
