@@ -5,7 +5,11 @@ class Api::WelcomeController < Api::ApiController
   end
 
   def game_types
-    @game_types = GameType.all
+    if params[:all] == "1"
+      @game_types = GameType.all
+    else
+      @game_types = GameType.where("type_image is not null").all
+    end
   end
 
   def index
