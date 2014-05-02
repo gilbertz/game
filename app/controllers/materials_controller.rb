@@ -80,7 +80,7 @@ class MaterialsController < ApplicationController
     wx_domains[rand(len)]
   end
 
-  #caches_page :show
+  caches_page :show
   def show
     ua = request.user_agent.downcase
     @wx_id = "wx7786f97ea666be3c"
