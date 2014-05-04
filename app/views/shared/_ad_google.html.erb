@@ -1,0 +1,10 @@
+<div style=" background:#fff;  " align="center" id="bai">
+  <div style="display: inline;float: left;">
+    <% @ads = Ad.where(:on => true).where( :t=> 5) %>
+    <% @ads.each do |ad| %>
+        <%= ad.code.html_safe %>
+    <% end %>
+  </div>
+</div>
+<div style="clear:both; ">
+</div>

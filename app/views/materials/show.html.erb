@@ -54,13 +54,13 @@
       <%= render "shared/ad_bottom" %>
     <% end %>
     
-    <!--
-    <div id='desc' style="margin-top:10px;background-color:white;color:white;font-size:5px;" >
-        <%= @material.get_description  %>
-    </div>
-    -->
-
     <%= render "shared/rec_games" %>
+  
+    <!--
+    <% unless params[:fr] %>
+      <%= render "shared/ad_google" %>
+    <% end %>"
+    -->
 
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
