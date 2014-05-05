@@ -56,11 +56,9 @@
     
     <%= render "shared/rec_games" %>
   
-    <!--
     <% unless params[:fr] %>
-      <%= render "shared/ad_google" %>
+      <%= render "shared/ad_bottom" %>
     <% end %>"
-    -->
 
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
