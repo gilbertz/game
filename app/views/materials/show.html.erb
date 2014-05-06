@@ -58,7 +58,7 @@
   
     <% unless params[:fr] %>
       <%= render "shared/ad_google" %>
-    <% end %>"
+    <% end %>
 
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
