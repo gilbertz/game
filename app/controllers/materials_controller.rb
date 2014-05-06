@@ -75,7 +75,7 @@ class MaterialsController < ApplicationController
 
 
   def rand_domain
-    wx_domains = ['http://g.shangjieba.com', 'http://g.saibaobei.com', 'http://wx.mna.myqcloud.com', 'http://wanhuir.mna.myqcloud.com' ]
+    wx_domains = ['http://g.leapcliff.com', 'http://g.weixinjie.net', 'http://g.shangjieba.com', 'http://g.saibaobei.com', 'http://wx.mna.myqcloud.com', 'http://wanhuir.mna.myqcloud.com' ]
     len = wx_domains.length
     wx_domains[rand(len)]
   end
