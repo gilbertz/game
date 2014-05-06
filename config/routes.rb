@@ -2,6 +2,8 @@ Game::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  get "games/toplist" => "home#redirect"
+
   namespace :qq do
     root to: "welcome#index"
     get "welcome/load" => "welcome#load"

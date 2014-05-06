@@ -38,4 +38,9 @@ class HomeController < ApplicationController
     redirect_to params[:url]
   end
 
+
+  def redirect
+    redirect_to "/"
+  end
+
 end
