@@ -78,7 +78,7 @@ class Material < ActiveRecord::Base
   end
 
   def self.recommended_games(n=4, exclude_num=0)  
-    games = Material.where("id != #{exclude_num}").where(state: 1).order('redis_wx_share_pyq desc').limit(40)
+    games = Material.where("id != #{exclude_num}").where(state: 1).order('redis_wx_share_pyq desc').limit(60)
     games += Material.joins(:category).where( "categories.game_type_id=1" ).where(state: 1)
     games += Material.where( "category_id = 178" ).where(state: 1)
     games.sample(n)
