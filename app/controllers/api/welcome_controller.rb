@@ -18,12 +18,10 @@ class Api::WelcomeController < Api::ApiController
       cond += " and `categories`.`game_type_id` = #{params["game_type_id"]}" unless params["game_type_id"].blank?
       materials = Material.includes(:images).joins(:category).where(cond).where(state: 1)
 
-      unless params[:order].blank?
-        if params[:order] == "hot"
-          materials = materials.order('redis_pv desc')
-        elsif params[:order] == "recommend"
-          materials = materials.order('redis_wx_share_pyq desc')
-        end
+      if params[:order] == "hot"
+        materials = materials.order('redis_pv desc')
+      elsif params[:order] == "recommend"
+        materials = materials.order('redis_wx_share_pyq desc')
       else
         materials = materials.order('materials.id desc')
       end

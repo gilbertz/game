@@ -7,4 +7,5 @@ child @materials do
   node(:title){|m| m.wx_title }
   node(:wx_url){|m| m.wx_url }
   node(:wx_tlimg){|m| m.wx_tlimg }
+  node(:pv){|m| m.redis_pv }
 end
