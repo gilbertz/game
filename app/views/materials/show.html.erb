@@ -50,7 +50,7 @@
     <%= ERB.new(@category.html).result(binding).html_safe %>
     <br/> 
     
-    <% unless params[:fr] %>
+    <% if true %>
       <%= render "shared/ad_bottom" %>
     <% end %>
     
