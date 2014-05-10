@@ -8,7 +8,7 @@ class Api::WelcomeController < Api::ApiController
     if params[:all] == "1"
       @game_types = GameType.all
     else
-      @game_types = GameType.where("type_image is not null").all
+      @game_types = GameType.where("type_image is not null and type_image != ''").all
     end
   end
 
