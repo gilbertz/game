@@ -1,5 +1,5 @@
-<div style=" background:#fff;  " align="center" id="bai">
-  <div style="display: inline;float: left;">
+<div class="flexslider"   style="margin:0px auto;text-align:center; width:650px;margin-top:-10px;" >
+  <div style="display: inline;">
     <% @ads = Ad.where(:on => true).where( :t=> 5) %>
     <% @ads.each do |ad| %>
         <%= ad.code.html_safe %>
