@@ -39,8 +39,6 @@
     </head>
     <% unless params[:fr] %>
       <%= render "shared/ad" %>
-    <% else %>
-      <%= render "shared/ad_google" %>
     <% end %>
 
     <% @prompt_image = @material.images.select{|i| i.state == 3 }[0].try(:body) %>
