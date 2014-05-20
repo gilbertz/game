@@ -10,6 +10,14 @@ class Material < ActiveRecord::Base
 
   class_attribute :clone
 
+  before_validation :auto_url
+  def auto_url
+    if self.url.blank?
+      self.url = Material.maximum('id').to_s + rand(1000000).to_s
+    end
+  end
+
+
   before_update :clone_self, if: Proc.new{|mate| mate.clone == true}
   def cloning(param)
     self.update_attribute(:clone,param)

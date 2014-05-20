@@ -93,7 +93,7 @@ class MaterialsController < ApplicationController
       @wx_id = rand_wid 
     end
 
-    @material = Material.find params[:id]
+    @material = Material.find_by_url params[:id]
 
     @base_category = Category.find(1)
     get_topn(@material.category_id)

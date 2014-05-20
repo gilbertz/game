@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140402160750) do
+ActiveRecord::Schema.define(version: 20140520152830) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 20140402160750) do
 
   add_index "answers", ["viewable_id", "viewable_type"], name: "index_game_answers_on_viewable_id_and_viewable_type", using: :btree
 
+  create_table "banners", force: true do |t|
+    t.integer  "wait",       default: 1, null: false
+    t.string   "image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "state",      default: 0, null: false
+    t.string   "link"
+  end
+
   create_table "categories", force: true do |t|
     t.text     "wx_js"
     t.text     "re_js"
@@ -61,10 +70,19 @@ ActiveRecord::Schema.define(version: 20140402160750) do
     t.integer  "game_type_id"
   end
 
+  create_table "feedbacks", force: true do |t|
+    t.string   "username"
+    t.text     "content"
+    t.integer  "state",      default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "game_types", force: true do |t|
     t.string   "game_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type_image"
   end
 
   create_table "images", force: true do |t|
@@ -80,7 +98,7 @@ ActiveRecord::Schema.define(version: 20140402160750) do
   add_index "images", ["viewable_id", "viewable_type"], name: "index_game_images_on_viewable_id_and_viewable_type", using: :btree
 
   create_table "materials", force: true do |t|
-    t.integer  "state",              default: 0
+    t.integer  "state",                        default: 0
     t.text     "description"
     t.integer  "category_id"
     t.text     "html"
@@ -93,16 +111,23 @@ ActiveRecord::Schema.define(version: 20140402160750) do
     t.string   "wxdesc"
     t.text     "advertisement"
     t.string   "wx_ln"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.text     "advertisement_1"
-    t.integer  "is_qq",              default: 0, null: false
-    t.integer  "is_recommend_to_qq", default: 0, null: false
+    t.integer  "is_qq",                        default: 0, null: false
+    t.integer  "is_recommend_to_qq",           default: 0, null: false
+    t.integer  "redis_pv",           limit: 8, default: 0, null: false
+    t.integer  "redis_wx_share_pyq", limit: 8, default: 0, null: false
+    t.integer  "user_id",                      default: 1, null: false
+    t.string   "url"
   end
 
   add_index "materials", ["is_qq"], name: "index_materials_on_is_qq", using: :btree
   add_index "materials", ["is_recommend_to_qq"], name: "index_materials_on_is_recommend_to_qq", using: :btree
+  add_index "materials", ["redis_pv"], name: "index_materials_on_redis_pv", using: :btree
+  add_index "materials", ["redis_wx_share_pyq"], name: "index_materials_on_redis_wx_share_pyq", using: :btree
   add_index "materials", ["state"], name: "index_materials_on_state", using: :btree
+  add_index "materials", ["user_id"], name: "index_materials_on_user_id", using: :btree
 
   create_table "question_answers", force: true do |t|
     t.integer "question_id",              null: false
@@ -114,7 +139,7 @@ ActiveRecord::Schema.define(version: 20140402160750) do
 
   create_table "questions", force: true do |t|
     t.integer  "material_id"
-    t.string   "question_title"
+    t.text     "question_title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -128,6 +153,7 @@ ActiveRecord::Schema.define(version: 20140402160750) do
     t.string   "rememberme_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "role",             default: 0, null: false
   end
 
 end

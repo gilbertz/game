@@ -1,7 +1,7 @@
 module ApplicationHelper
 
 def material_path(m)
-  "/weitest/#{m.id}"
+  "/weitest/#{m.url}"
 end
 
 end
