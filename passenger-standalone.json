@@ -1,6 +1,6 @@
 {
-   "port": 4002,
+   "port": 80,
    "environment": "production",
-   "max_pool_size": 100,
-   "min_instances": 20
+   "max_pool_size": 20,
+   "min_instances": 10
 }

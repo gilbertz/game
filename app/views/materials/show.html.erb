@@ -37,9 +37,7 @@
         <%= ERB.new(@category.css).result(binding).html_safe %>
       </style>
     </head>
-    <% unless params[:fr] %>
-      <%= render "shared/ad" %>
-    <% end %>
+    <%= render "shared/ad_bottom" %>
 
     <% @prompt_image = @material.images.select{|i| i.state == 3 }[0].try(:body) %>
     <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
@@ -50,17 +48,8 @@
     <%= ERB.new(@category.html).result(binding).html_safe %>
     <br/> 
     
-    <% if true %>
-      <%= render "shared/ad_bottom" %>
-    <% end %>
+    <%= render "shared/ad_bottom" %>
     
-    <%= render "shared/rec_games" %>
-  
-    <% unless params[:fr] %>
-      <%= render "shared/ad_google" %>
-    <% end %>
-
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
-    <%= render :partial => "shared/data" %>
 </html>
