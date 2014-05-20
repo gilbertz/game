@@ -2,15 +2,15 @@ Game::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  get "games/toplist" => "home#redirect"
+  #get "games/toplist" => "home#redirect"
 
-  namespace :qq do
-    root to: "welcome#index"
-    get "welcome/load" => "welcome#load"
-    get "welcome/recent_material" => "welcome#recent_material"
-    get "welcome/hot_material" => "welcome#hot_material"
-    get "welcome/test" => "welcome#test"
-  end
+  #namespace :qq do
+  #  root to: "welcome#index"
+  #  get "welcome/load" => "welcome#load"
+  #  get "welcome/recent_material" => "welcome#recent_material"
+  #  get "welcome/hot_material" => "welcome#hot_material"
+  #  get "welcome/test" => "welcome#test"
+  #end
 
   root 'home#index'
   resources :home, only: [] do
@@ -19,16 +19,16 @@ Game::Application.routes.draw do
 
   get '/r' => 'home#r'
 
-  get '/materials/:material_id/result' => "materials#result"
+  get '/weitest/:material_id/result' => "weitest#result"
 
-  get '/materials/gabrielecirulli' => 'materials#gabrielecirulli'
-  get '/materials/wx_share' => 'materials#wx_share'
-  get '/materials/report' => 'materials#report',  :as=>"report"
-  get '/materials/stat' => 'materials#stat',  :as=>"stat"
+  #get '/weitest/gabrielecirulli' => 'weitest#gabrielecirulli'
+  get '/weitest/wx_share' => 'weitest#wx_share'
+  get '/weitest/report' => 'weitest#report',  :as=>"report"
+  get '/weitest/stat' => 'weitest#stat',  :as=>"stat"
 
-  get '/materials/hello_test' => 'materials#hello_test'
+  get '/weitest/hello_test' => 'weitest#hello_test'
 
-  resources :materials, only: [:index,:show] do
+  resources :weitest, only: [:index,:show] do
     collection do
       get :egg
     end
@@ -38,11 +38,11 @@ Game::Application.routes.draw do
     end
   end
 
-  get '/materials/:id/fr/:fr' => "materials#show"
-  get '/materials/:id/shuffer/:sid' => "materials#show"
+  #get '/weitest/:id/fr/:fr' => "weitest#show"
+  #get '/weitest/:id/shuffer/:sid' => "weitest#show"
 
-  get '/qq/layouts/:layouts/material_id/:material_id' => "qq/welcome#index"
-  get '/qq/material_id/:material_id' => "qq/welcome#index"
+  #get '/qq/layouts/:layouts/material_id/:material_id' => "qq/welcome#index"
+  #get '/qq/material_id/:material_id' => "qq/welcome#index"
 
   namespace :admin do
     get '/login' => 'session#new', as: :login
@@ -84,29 +84,29 @@ Game::Application.routes.draw do
     get '/click_stat' => 'ads#click_stat', as: :click_stat
   end
 
-  namespace :custom do
+  #namespace :custom do
 
-    get '/login' => 'session#new', as: :login
+  #  get '/login' => 'session#new', as: :login
 
-    root "welcome#index"
-    resources :materials
+  #  root "welcome#index"
+  #  resources :weitest
 
-    resources :session
+  #  resources :session
 
-    resources :ads
+  #  resources :ads
 
-    get "welcome/:id/custom" => "welcome#custom", as: :custom_material
-  end
+  #  get "welcome/:id/custom" => "welcome#custom", as: :custom_material
+  #end
 
-  namespace :api do
-    get "welcome/index" => "welcome#index"
-    get "welcome/game_types" => "welcome#game_types"
-    get "welcome/banners" => "welcome#banners", :as => :banners
-    resources :feedbacks
+  #namespace :api do
+  #  get "welcome/index" => "welcome#index"
+  #  get "welcome/game_types" => "welcome#game_types"
+  #  get "welcome/banners" => "welcome#banners", :as => :banners
+  #  resources :feedbacks
 
-    get "welcome/document" => "welcome#document"
+  #  get "welcome/document" => "welcome#document"
 
-  end
+  #end
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

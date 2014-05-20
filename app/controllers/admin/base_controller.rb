@@ -1,7 +1,7 @@
 class Admin::BaseController < ActionController::Base
   layout 'admin'
   
-  http_basic_authenticate_with :name => 'shangjieba', :password => 'shangjieba123'
+  http_basic_authenticate_with :name => 'zhurun777', :password => '831022'
 
   rescue_from StandardError do |exception|
     new_logger = Logger.new('log/admin_exceptions.log')

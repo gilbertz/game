@@ -17,15 +17,6 @@
   <div>
     <%#= social_share_button_tag("测试", url:"http://www.wanhuir.com/materials/1", image: "http://mashang.qiniudn.com/tc.jpg") %>
   </div>
-  <% if @materials.size < @materials.total_count %>
-    <div style="background: #444;">
-      <%= link_to materials_url(page: 2, order: params[:order], game_type_id: params[:game_type_id]), remote: true, id: "load_materials" do %>
-        <div style="margin: 0 auto 0 auto; width:124px; padding:15px; text-align:center; color:white;">
-          点击加载更多游戏
-        </div>
-      <% end %>
-    </div>
-  <% end %>
 </div>
 
 <div class="bg">
