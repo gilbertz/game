@@ -81,19 +81,20 @@ class MaterialsController < ApplicationController
     wx_domains = ['http://app.shangjieba.com', 'http://app.weixinjie.net', 'http://app.saibaobei.com', 'http://wan.mna.myqcloud.com', 'http://g.leapcliff.com', 'http://g.weixinjie.net', 'http://g.shangjieba.com', 'http://g.saibaobei.com', 'http://wx.mna.myqcloud.com', 'http://wanhuir.mna.myqcloud.com' ]
     len = wx_domains.length
     wx_domains[rand(len)]
-    #wx_domains[ params[:id].to_i % len ] 
+    #wx_domains[ params[:id].to_i % len ]
+    return 'http://51self.com' 
   end
 
-  #caches_page :show
+  caches_page :show
   def show
     ua = request.user_agent.downcase
     @wx_id = "wx7786f97ea666be3c"
     @wx_domain = rand_domain
-    if ua.index("micromessenger")
-      @wx_id = rand_wid 
-    end
+    #if ua.index("micromessenger")
+    #  @wx_id = rand_wid 
+    #end
 
-    @material = Material.find_by_url params[:id]
+    @material = Material.find_by_id params[:id]
 
     @base_category = Category.find(1)
     get_topn(@material.category_id)

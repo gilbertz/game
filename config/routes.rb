@@ -28,6 +28,16 @@ Game::Application.routes.draw do
 
   get '/weitest/hello_test' => 'weitest#hello_test'
 
+  resources :materials, only: [:index,:show] do
+    collection do
+      get :egg
+    end
+    member do
+      get :return
+      get :jiu_gong
+    end
+  end
+
   resources :weitest, only: [:index,:show] do
     collection do
       get :egg

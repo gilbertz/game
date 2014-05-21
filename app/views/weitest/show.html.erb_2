@@ -1,0 +1,103 @@
+<!doctype html>
+<!--<html>
+  <head>
+    <title><%#= @material.title %></title>
+    <%#= ERB.new(@material.category.meta).result(binding).html_safe %>
+    <script type="text/javascript">
+      <%#= ERB.new(@material.category.js).result(binding).html_safe %>
+    </script>
+    <style type="text/css"> 
+      <%#= ERB.new(@material.category.css).result(binding).html_safe %>
+    </style>
+  </head>
+<%#= ERB.new(@material.category.html).result(binding).html_safe %>
+</html>
+<html> --!>
+  <head>
+    <title>玩会儿</title>
+    <link rel="shortcut icon" href="/assets/shangjieba-icon.png" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <%= ERB.new(@material.category.meta).result(binding).html_safe %>
+    <meta name='robots' content='noindex,nofollow' />
+    <%= stylesheet_link_tag    "application", media: "all" %>
+    <%#= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <script type="text/javascript">
+      <%= ERB.new(@material.category.js).result(binding).html_safe %>
+    </script>
+    <style type="text/css"> 
+      <%= ERB.new(@material.category.css).result(binding).html_safe %>
+    </style>
+    <style type="text/css">
+      .recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;} 
+      h1.blogtitle a,.description { color:#444; }
+    </style>
+  </head>
+  <body class="home blog paged paged-2 asides"> 
+    <%= render 'shared/nav' %>
+    <!--<div id="wrapperheader" class="container_15">
+      <div id="header">
+        <div class="headertop">
+          <div id="blog-title" class="blogtitle"> 
+            <%#= link_to '玩会儿', '/' %>
+          </div>
+          <div class="description">Just another WordPress site </div>
+        </div>
+      </div>
+    </div> --!>
+    <div class="clear"></div>
+    <div id="wrapper" class="container_15">	
+      <div class="clear"></div>		
+      <div id="container" class="">
+<%= ERB.new(@material.category.html).result(binding).html_safe %>
+        <%#= yield %>
+      </div>
+      <div id="primary" class="sidebar alpha grid_5 pull_10">
+        <ul class="">
+          <li id="search-3" class="widget widget_search"><div class="widgetblock">
+            <div class="widgettitleb"><h3 class="widgettitle">游戏搜索</h3></div>
+            <form role="search" action="/" class="search-form" >
+              <label>
+                <span class="screen-reader-text">Search for:</span>
+                <input type="search" name="q" class="search-field", placeholder="搜索 ..."/>
+              </label>
+              <input type="submit" class="search-submit", value="搜索"/>
+            </form>
+          </li>
+          <div class="widgetblock"> 
+            <div class="widgettitleb"> 
+              <h3 class="widgettitle">
+                My Instagrams 
+              </h3> 
+            </div>
+            <ul class="wpinstagram wpinstagram-slideshow live" style="width: 300px; height: 300px;">
+              <li style="width: 300px; height: 300px; margin-bottom: 5px !important;">
+                <%= link_to "javascript:;" do %>
+                  <%= image_tag "layout.jpg", style:"width:300px; height:300px; margin-bottom:5px;" %>
+                <% end %>
+              </li>
+            </ul>
+            <div style="clear: both; padding-bottom: 10px;"></div>
+          </div> 
+          <li id="recent-posts-2" class="widget widget_recent_entries"> 
+            <div class="widgetblock">		
+              <div class="widgettitleb"> 
+                <h3 class="widgettitle">最新公告</h3> 
+              </div>
+              <ul>
+                <li>
+                  <%= link_to '#' do %>
+                    最新游戏《马上……》火爆登场, 诸位请锁定昨天早上1点 !
+                  <% end %>
+                </li>
+              </ul>
+            </div> 
+          </li>
+        </ul>
+      </div>
+    </div>
+    <%= render 'shared/mobileonfooter' %>
+    <%= render 'shared/footer' %>
+  </body>
+</html>

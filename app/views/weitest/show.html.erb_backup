@@ -1,0 +1,25 @@
+    <script type="text/javascript">
+      var dataForWeixin = {
+       appId: "wx78f81724e6590b1d",
+       TLImg: "http://tangchao.qiniudn.com/5.jpg",
+       url:   document.location.href,
+       title: "this is a title",
+       desc:  "this is a desc"
+      };
+    </script>
+    <%= javascript_include_tag "wx_share" %>
+<div id="content" class="grid_10 postsingle push_5">
+  <div class="post-11976 post type-post status-publish format-standard hentry category-a-classer tag-glasses tag-oakley cat-links author-admin1310 a-classer"> 
+    <a href="#" title="View all posts in A classer" rel="category tag">A classer</a> 
+  </div>
+  <div class="postsingletext">
+    <div id="post-11976" class="post-11976 post type-post status-publish format-standard hentry category-a-classer tag-glasses tag-oakley author-admin1310 a-classer">
+      <div class="linebreak"></div>
+      <div class="entry-content">
+        <%#= ERB.new(@material.category.html).result(binding).html.safe %>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

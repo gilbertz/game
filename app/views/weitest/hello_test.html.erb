@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+
+  <style type="text/css">
+      body{
+          margin: 0 auto;
+
+          padding: 20px 10px;
+      }
+      .question{
+          display: none;
+      }
+      .question:first-child{
+          display: block;
+      }
+      .result{
+          display:none;
+      }
+      .title h2, .result h2{
+          margin: 20px 0 10px 0;
+          font-weight: 300;
+          color: #888;
+      }
+      .options ul{
+          padding: 0;
+      }
+      .options li{
+          margin: 15px 0;
+          padding: 5px 15px;
+          list-style-type: none;
+      }
+      .options.button li{
+          background: rgb(66, 184, 221);
+          border-radius: 4px;
+          max-width: 200px;
+          color: white;
+      }
+      .options li.selected{
+          background: rgb(202, 60, 60);
+      }
+      .prev{
+          margin-top: 50px;
+          font-weight: 300;
+          font-size: 12px;
+      }
+      .prev a:link{
+          color: #888;
+      }
+      .aside{
+          background: #1f8dd6;
+          padding: 0.3em 1em;
+          border-radius: 3px;
+          color: #fff;
+      }
+  </style>
+
+  <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+
+  <script type="text/javascript">
+      $(document).ready(function(){
+          var result=0;
+          var result_message;
+
+          $(".options ul li").click(function(){
+              var  node = $(this).parent().parent().parent();
+              var next_node = $(node).next();
+
+              $(this).parent().find("li").removeClass("selected");
+              $(this).addClass("selected");
+
+              if(next_node.hasClass("question")){
+                  $(node).hide();
+                  $(next_node).show();
+              }else{
+                  $(node).hide();
+                  $.each($("li.selected"), function(index, value){
+                      result = result + parseInt($(value).attr("data-score"));
+                  });
+
+
+                  <% if @material.category.material_type == 1 %>
+
+                  <% unless @material.answers.blank? %>
+
+                  <% @material.answers.each do |answ| %>
+
+                  if(result >= <%= answ.big_than %> && result <= <%= answ.small_than %>){
+                      result_message = "<%= answ.title %>";
+                  }
+
+                  <% end %>
+
+                  <% end %>
+
+                  <% end %>
+
+                  $(".aside").append(result_message);
+                  $(".result").show();
+              }
+          });
+
+          $(".prev a").click(function(){
+              var node = $(this).parent().parent();
+              var prev_node = $(node).prev();
+              if(prev_node.hasClass("question")){
+                  $(node).hide();
+                  $(prev_node).show();
+              }
+          });
+      });
+  </script>
+
+</head>
+<body>
+
+<body>
+<% questions = @material.questions %>
+<% unless questions.blank? %>
+ <% questions.each do |question| %>
+    <div class="question">
+      <div class="title">
+        <h2>
+          <%= question.question_title %>
+        </h2>
+      </div>
+      <div class="options button">
+        <ul>
+          <% question_answers = question.question_answers %>
+
+          <% unless question_answers.blank? %>
+            <% question_answers.each do |qa| %>
+              <li data-score="<%= qa.answer_score %>"><%= qa.answer %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="prev">
+        <a href="javascript:void(0)">返回上一题</a>
+      </div>
+    </div>
+ <% end %>
+<% end %>
+
+<div class="result">
+<h2>结果</h2>
+  <div class="aside"></div>
+</div>
+</body>
+
+
+</body>
+</html>

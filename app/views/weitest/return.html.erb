@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% @category = @material.category %>
+    <% @wx_appid = @material.wx_appid %>
+    <% @wx_url   = @material.wx_url %>
+    <% @wx_title = @material.wx_title %>
+    <% @wx_desc  = @material.wxdesc %>
+    <% @wx_tlimg = @material.wx_tlimg %>
+
+    <% @re_backgroud = @material.images.select{|i| i.state == 5}[0].try(:body) %>
+
+    <% @re_view   = @material.images.select{|i| i.state == 6}[0].try(:body) %>
+    <% @re_btn    = @material.images.select{|i| i.state == 7}[0].try(:body) %>
+    <% @share_btn = @material.images.select{|i| i.state == 8}[0].try(:body) %>
+    <title><%= @material.name %></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
+    <%= javascript_include_tag "jquery" %>
+    <script type="text/javascript">
+      <%= ERB.new(@category.re_js).result(binding).html_safe %>
+    </script>
+    <style type="text/css">
+      <%= ERB.new(@category.re_css).result(binding).html_safe %>
+    </style>
+  </head>
+  <%= render "shared/data" %>
+  <%= render "shared/ad" %>
+  <%= ERB.new(@category.re_html).result(binding).html_safe %>
+  <%= render "shared/analysis" %>
+</html>
