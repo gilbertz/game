@@ -12,7 +12,9 @@ Game::Application.routes.draw do
   #  get "welcome/test" => "welcome#test"
   #end
 
-  root 'home#index'
+  #root 'home#index'
+  root :to => redirect("/weitest/875161620")
+
   resources :home, only: [] do
     get :search
   end
