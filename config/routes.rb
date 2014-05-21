@@ -30,7 +30,7 @@ Game::Application.routes.draw do
 
   get '/weitest/hello_test' => 'weitest#hello_test'
 
-  resources :materials, only: [:index,:show] do
+  resources :materials, only: [:show] do
     collection do
       get :egg
     end
@@ -40,7 +40,7 @@ Game::Application.routes.draw do
     end
   end
 
-  resources :weitest, only: [:index,:show] do
+  resources :weitest, only: [:show] do
     collection do
       get :egg
     end
