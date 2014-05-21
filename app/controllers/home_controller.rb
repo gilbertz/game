@@ -26,7 +26,7 @@ class HomeController < ApplicationController
       materials = materials.order('id desc')
     end
 
-    @materials = materials.page(params[:page]).per(12)
+    @materials = materials.page(params[:page]).per(24)
 
     @game_types = GameType.all
     @game_type = GameType.find(game_type_id) if game_type_id
