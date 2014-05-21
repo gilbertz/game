@@ -6,15 +6,10 @@
     <% @games = Material.recommended_games(4, @material.id)  %>
     <% @games.each do |game| %>
       <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
-        <a href="/materials/<%= game.id %>?by=brec" style="text-decoration:none; ">
+        <a href="/weitest/<%= game.url %>" style="text-decoration:none; ">
           <%= game.name %>
         </a>
       </div>
     <% end %>
-    <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
-      <a href="http://mp.weixin.qq.com/s?__biz=MjM5MzgxNTAxMQ==&mid=201548107&idx=2&sn=9d1302aea624db06eeafac9f066654ff#rd" style="text-decoration:none; ">
-        更多微信测试，关注上街吧微信
-      </a>
-    </div>
   </div>
 </div>
