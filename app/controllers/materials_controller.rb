@@ -59,7 +59,7 @@ class MaterialsController < ApplicationController
     end
 
     @materials = materials.page(params[:page]).per(12)
-    render json: {content: @materials, href: "/materials?page=#{params[:page].to_i + 1}&game_type_id=#{params["game_type_id"]}&order=#{params["order"]}"}
+    #render json: {content: @materials, href: "/materials?page=#{params[:page].to_i + 1}&game_type_id=#{params["game_type_id"]}&order=#{params["order"]}"}
   end
 
   def hello_test
