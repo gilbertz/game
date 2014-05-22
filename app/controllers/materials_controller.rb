@@ -87,6 +87,8 @@ class MaterialsController < ApplicationController
 
   caches_page :show
   def show
+    redirect_to '/weitest/622992136'
+
     ua = request.user_agent.downcase
     @wx_id = "wx7786f97ea666be3c"
     @wx_domain = rand_domain
