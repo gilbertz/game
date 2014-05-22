@@ -85,9 +85,12 @@ class Material < ActiveRecord::Base
     ""
   end
 
-  def self.recommended_games(n=4, exclude_num=0)  
+  def self.recommended_games(n=3, exclude_num=0)  
+    rec_games = []
+    rec_games << Material.where(state: 1).order('created_at desc').last
     games =  Material.joins(:category).where( "categories.game_type_id=2" ).where(state: 1)
-    games.sample(n)
+    rec_games += games.sample(n)
+    rec_games
   end
 
 
