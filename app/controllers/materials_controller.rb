@@ -89,18 +89,18 @@ class MaterialsController < ApplicationController
   def show
     redirect_to '/weitest/622992136'
 
-    ua = request.user_agent.downcase
-    @wx_id = "wx7786f97ea666be3c"
-    @wx_domain = rand_domain
+    #ua = request.user_agent.downcase
+    #@wx_id = "wx7786f97ea666be3c"
+    #@wx_domain = rand_domain
     #if ua.index("micromessenger")
     #  @wx_id = rand_wid 
     #end
 
-    @material = Material.find_by_id params[:id]
+    #@material = Material.find_by_id params[:id]
 
-    @base_category = Category.find(1)
-    get_topn(@material.category_id)
-    render layout: false
+    #@base_category = Category.find(1)
+    #get_topn(@material.category_id)
+    #render layout: false
   end
 
   def return
