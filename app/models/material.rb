@@ -101,6 +101,7 @@ class Material < ActiveRecord::Base
     material.state = 0
     material.images  = self.images.map {|img| Image.new img.attributes.except!("id") }
     material.answers = self.answers.map{|asw| Answer.new asw.attributes.except!("id")}
+    self.auto_url
     #material.questions = self.questions.map{|que| newQ = Question.new que.attributes.except!("id") }
 
     self.questions.each do |que|
