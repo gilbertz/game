@@ -26,9 +26,11 @@
       <script type="text/javascript">
         <%= ERB.new(@category.js).result(binding).html_safe %>
       </script>
-      <script type="text/javascript">
-        <%= ERB.new(@base_category.wx_js || "").result(binding).html_safe %>
-      </script>
+      <% if  @is_weixin %>
+        <script type="text/javascript">
+          <%= ERB.new(@base_category.wx_js || "").result(binding).html_safe %>
+        </script>
+      <% end %>
       <style type="text/css">
         <% @css_image   = @material.images.select{|i| i.state == 1 }[0].try(:body) %>
         <% @css_image_2 = @material.images.select{|i| i.state == 10}[0].try(:body) %>
