@@ -32,7 +32,8 @@ class Admin::MaterialsController < Admin::BaseController
   end
 
   def edit
-    @material = Material.find params[:id]
+    @material = Material.find_by_url params[:id]
+    @material = Material.find params[:id] unless @material
   end
 
   def update
