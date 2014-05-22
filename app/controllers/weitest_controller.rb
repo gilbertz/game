@@ -124,8 +124,8 @@ class WeitestController < ApplicationController
       key = "wx_gshare_#{params[:f]}"
       $redis.incr(key)
       gid = params[:f].gsub(/(.*?)(\d+)/, '\2')
-      game = Material.find_by_id(gid)
-      game = Material.find_by_url(gid) unless game
+      game = Material.find_by_url(gid) 
+      game = Material.find(gid) unless game
       if game
         cid = game.category_id
         if cid
