@@ -81,7 +81,9 @@ class WeitestController < ApplicationController
 
 
   def rand_domain
-    wx_domains = ['http://app.shangjieba.com', 'http://app.weixinjie.net', 'http://app.saibaobei.com', 'http://wan.mna.myqcloud.com', 'http://g.leapcliff.com', 'http://g.weixinjie.net', 'http://g.shangjieba.com', 'http://g.saibaobei.com', 'http://wx.mna.myqcloud.com', 'http://wanhuir.mna.myqcloud.com' ]
+    #wx_domains = ['http://app.shangjieba.com', 'http://app.weixinjie.net', 'http://app.saibaobei.com', 'http://wan.mna.myqcloud.com', 'http://g.leapcliff.com', 'http://g.weixinjie.net', 'http://g.shangjieba.com', 'http://g.saibaobei.com', 'http://wx.mna.myqcloud.com', 'http://wanhuir.mna.myqcloud.com' ]
+    
+    wx_domains = ['http://ggb.ntjcdx.com', 'http://wei.51self.com', 'http://xsd.xcsgs.com' ]
     len = wx_domains.length
     wx_domains[rand(len)]
     #wx_domains[ params[:id].to_i % len ] 
@@ -92,11 +94,11 @@ class WeitestController < ApplicationController
     ua = request.user_agent.downcase
     @wx_id = "wx22f19a668186d05e"
     @wx_domain = "http://wei.51self.com"
-    #@wx_domain = rand_domain
     #p ua
     if ua.index("micromessenger")
       @is_weixin = true 
-      @wx_id = rand_wid 
+      @wx_id = rand_wid
+      @wx_domain = rand_domain 
     end
 
     @material = Material.find_by_url params[:id]
