@@ -87,12 +87,13 @@ class WeitestController < ApplicationController
     #wx_domains[ params[:id].to_i % len ] 
   end
 
-  caches_page :show
+  #caches_page :show
   def show
     ua = request.user_agent.downcase
     @wx_id = "wx22f19a668186d05e"
     @wx_domain = "http://wei.51self.com"
     #@wx_domain = rand_domain
+    p ua
     if ua.index("micromessenger")
       @is_weixin = true 
       @wx_id = rand_wid 
