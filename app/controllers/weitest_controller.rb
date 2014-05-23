@@ -93,7 +93,7 @@ class WeitestController < ApplicationController
     @wx_id = "wx22f19a668186d05e"
     @wx_domain = "http://wei.51self.com"
     #@wx_domain = rand_domain
-    p ua
+    #p ua
     if ua.index("micromessenger")
       @is_weixin = true 
       @wx_id = rand_wid 
