@@ -97,7 +97,7 @@ class Material < ActiveRecord::Base
 
   private
   def clone_self
-    material = Material.new self.attributes.except!("created_at","id")
+    material = Material.new self.attributes.except!("created_at","id", "url")
     material.state = 0
     material.images  = self.images.map {|img| Image.new img.attributes.except!("id") }
     material.answers = self.answers.map{|asw| Answer.new asw.attributes.except!("id")}

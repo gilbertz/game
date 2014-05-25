@@ -54,17 +54,19 @@ class Admin::BaseController < ActionController::Base
   end
 
   def clear_page(material)
-    l_ip = Socket.ip_address_list.collect{|i| i.ip_address}
+    expire_page "/weitest/#{material.url}"   
 
-    expire_page "/materials/#{material.id}"
-    expire_page "/materials/#{material.id}/fr/ios"
-    expire_page "/materials/#{material.id}/fr/andriod"
+ 
+    #l_ip = Socket.ip_address_list.collect{|i| i.ip_address}
+    #expire_page "/materials/#{material.id}"
+    #expire_page "/materials/#{material.id}/fr/ios"
+    #expire_page "/materials/#{material.id}/fr/andriod"
 
-    if l_ip.include? "203.195.191.203"
+    #if l_ip.include? "203.195.191.203"
     #  res = RestClient.get("http://203.195.186.54:4002/admin/home/clear_single_cache/#{material.id}")
-    else
+    #else
     #  res = RestClient.get("http://203.195.191.203:4002/admin/home/clear_single_cache/#{material.id}")
-    end
+    #end
 
   end
 
