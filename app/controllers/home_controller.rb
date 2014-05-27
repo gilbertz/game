@@ -23,10 +23,10 @@ class HomeController < ApplicationController
         @current_game_order = "热门推荐"
       end
     else
-      materials = materials.order('id desc')
+      materials = materials.order('id asc')
     end
 
-    @materials = materials.page(params[:page]).per(24)
+    @materials = materials.page(params[:page]).per(36)
 
     @game_types = GameType.all
     @game_type = GameType.find(game_type_id) if game_type_id
