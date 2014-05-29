@@ -19,6 +19,18 @@ class Material < ActiveRecord::Base
 
 
   before_update :clone_self, if: Proc.new{|mate| mate.clone == true}
+
+  def get_answers
+     answers = []
+     self.answers.each do |ans|
+       next if ans.weight.to_i < 0
+       (0..ans.weight.to_i).each do 
+         answers << ans
+       end
+     end
+     answers
+  end
+
   def cloning(param)
     self.update_attribute(:clone,param)
   end

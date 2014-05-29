@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140520152830) do
+ActiveRecord::Schema.define(version: 20140529145705) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20140520152830) do
     t.datetime "updated_at",    null: false
     t.integer  "big_than"
     t.integer  "small_than"
+    t.integer  "weight"
   end
 
   add_index "answers", ["viewable_id", "viewable_type"], name: "index_game_answers_on_viewable_id_and_viewable_type", using: :btree
