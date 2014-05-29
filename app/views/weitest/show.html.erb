@@ -50,9 +50,10 @@
     <%= ERB.new(@category.html).result(binding).html_safe %>
     <br/> 
     
-    <%= render "shared/ad_bottom" %>
-    <%= render "shared/rec_games" %>
     <%= render "shared/ad" %>
+    <%= render "shared/rec_games" %>
+
+    <%-#= render "shared/ad_head" %>
  
     <%= render "shared/analysis" %>
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
