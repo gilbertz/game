@@ -130,19 +130,19 @@ class WeitestController < ApplicationController
     if params[:f]
       key = "wx_gshare_#{params[:f]}"
       $redis.incr(key)
-      gid = params[:f].gsub(/(.*?)(\d+)/, '\2')
-      game = Material.find_by_url(gid) 
-      game = Material.find(gid) unless game
+      gurl = params[:f].gsub(/(.*?)(\d+)/, '\2')
+      game = Material.find_by_url(gurl) 
+      game = Material.find(gurl) unless game
       
-      if game and params[:r] and params[:r] != '0'
-        akey = "g#{gid}_#{params[:r]}"
+      if game and params[:r] and params[:r] != '-1'
+        akey = "g#{gurl}_#{params[:r]}"
         $redis.incr(akey)
       end
       if game
         cid = game.category_id
         if cid
           ckey = "wx_cshare_#{params[:f]}"
-          ckey = ckey.gsub(gid.to_s, cid.to_s)
+          ckey = ckey.gsub(gurl.to_s, cid.to_s)
           $redis.incr(ckey)
         end
       end

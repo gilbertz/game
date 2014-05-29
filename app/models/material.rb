@@ -50,10 +50,10 @@ class Material < ActiveRecord::Base
     stat = ""
     i = 0
     self.answers.each do |ans|
-      key = "g#{self.id}_#{i}"
+      key = "g#{self.url}_#{i}"
       if $redis.get(key)
         count = $redis.get(key)
-        stat +=  "#{count}:#{ans.title[0,10]}(#{i}) "
+        stat +=  "#{i}\t#{count}\t#{ans.title[0,10]} \n"
       end
       i += 1
     end
