@@ -48,8 +48,6 @@
     <% @html_image_2 = @material.images.select{|i| i.state == 13}[0].try(:body) %>
     <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
     <%= ERB.new(@category.html).result(binding).html_safe %>
-    <br/> 
-    
     <%= render "shared/ad" %>
     <%= render "shared/rec_games" %>
 

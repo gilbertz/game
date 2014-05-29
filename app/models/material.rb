@@ -45,6 +45,20 @@ class Material < ActiveRecord::Base
      $redis.get(key) 
   end
 
+  
+  def wx_share_stat
+    stat = ""
+    i = 0
+    self.answers.each do |ans|
+      key = "g#{self.id}_#{i}"
+      if $redis.get(key)
+        count = $redis.get(key)
+        stat +=  "#{count}:#{ans.title[0,10]}(#{i}) "
+      end
+      i += 1
+    end
+    return stat
+  end
 
   def invert_state
     val = state.eql?(0) ? 1 : 0

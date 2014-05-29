@@ -133,6 +133,11 @@ class WeitestController < ApplicationController
       gid = params[:f].gsub(/(.*?)(\d+)/, '\2')
       game = Material.find_by_url(gid) 
       game = Material.find(gid) unless game
+      
+      if game and params[:r] and params[:r] != '0'
+        akey = "g#{gid}_#{params[:r]}"
+        $redis.incr(akey)
+      end
       if game
         cid = game.category_id
         if cid
