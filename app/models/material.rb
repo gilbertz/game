@@ -41,7 +41,7 @@ class Material < ActiveRecord::Base
   end
 
   def share_count(type)
-     key = "wx_gshare_#{type}_#{self.id}"
+     key = "wx_gshare_#{type}_#{self.url}"
      $redis.get(key) 
   end
 
