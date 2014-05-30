@@ -81,7 +81,8 @@ class Material < ActiveRecord::Base
       key = "g#{self.url}_#{i}"
       if $redis.get(key)
         count = $redis.get(key)
-        stat +=  "#{i} &nbsp; #{count} &nbsp; #{ans.title[0,10]}<br/>"
+        count = $redis.get(key).to_i / ( 1 + ans.weight.to_i ) if ans.weight.to_i >=0
+        stat +=  "#{i} &nbsp; #{count} &nbsp; #{ans.title[0,10]}  &nbsp; #{ans.weight.to_i} <br/>"
       end
       i += 1
     end
