@@ -31,6 +31,22 @@ class Material < ActiveRecord::Base
      answers
   end
 
+  def get_answer_indexes
+    r_arr = []
+    idx = 0
+    self.answers.each do |ans|
+      if ans.weight.to_i < 0
+        idx += 1
+        next
+      end
+      (0..ans.weight.to_i).each do
+         r_arr << idx
+      end
+      idx += 1
+    end
+    r_arr
+  end
+
   def cloning(param)
     self.update_attribute(:clone,param)
   end
