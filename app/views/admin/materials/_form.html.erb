@@ -114,7 +114,7 @@
       <%= f.text_field :wx_title, required: true, class: "input-xxlarge" %>
     </div>
   </div>
-  <% if action_name == "edit" %>
+  <% if false %>
     <div class="control-group">
       <label class="control-label">链接</label>
       <div class="controls">
@@ -135,18 +135,7 @@
       <%= f.text_field :wx_ln, class: "input-xxlarge" %>
     </div>
   </div>
-  <div class="control-group">
-    <label class="control-label">广告</label>
-    <div class="controls">
-      <%= f.text_area :advertisement, style: "width:800px; height:100px;" %>
-    </div>
-  </div>
-  <div class="control-group">                                                      
-    <label class="control-label">广告_1</label>                                      
-    <div class="controls">                                                         
-      <%= f.text_area :advertisement_1, style: "width:800px; height:100px;" %>       
-    </div>                                                                         
-  </div>
+  
   <div class="form-actions" style="margin-bottom:0px">
     <%= f.submit '提交', class: 'btn btn-primary', id: "tixing" %>
   </div>
