@@ -23,7 +23,7 @@ class HomeController < ApplicationController
         @current_game_order = "热门推荐"
       end
     else
-      materials = materials.order('id asc')
+      materials = materials.order('id desc')
     end
 
     @materials = materials.page(params[:page]).per(36)
