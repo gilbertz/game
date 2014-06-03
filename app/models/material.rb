@@ -131,8 +131,8 @@ class Material < ActiveRecord::Base
   def self.recommended_games(n=3, exclude_num=0)  
     rec_games = []
     rec_games << Material.where(state: 1).order('created_at desc').first
-    games =  Material.where("id != #{exclude_num}").where(state: 1)
-    rec_games += games.sample(n)
+    games =  Material.where("id != #{exclude_num}").where(state: 1).sample(n)
+    rec_games += games
     rec_games
   end
 
