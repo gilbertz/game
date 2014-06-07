@@ -13,18 +13,18 @@ class HomeController < ApplicationController
 
     materials = materials.where(state: 1).where(:user_id => 1)
 
-    @current_game_order = "最新内容"
-    unless params[:order].blank?
-      if params[:order] == "hot"
-        materials = materials.order('redis_pv desc')
-        @current_game_order = "人气最高"
-      elsif params[:order] == "recommend"
-        materials = materials.order('redis_wx_share_pyq desc')
-        @current_game_order = "热门推荐"
-      end
-    else
-      materials = materials.order('id desc')
-    end
+    #@current_game_order = "最新内容"
+    #unless params[:order].blank?
+    #  if params[:order] == "hot"
+    #    materials = materials.order('redis_pv desc')
+    #    @current_game_order = "人气最高"
+    #  elsif params[:order] == "recommend"
+    #    materials = materials.order('redis_wx_share_pyq desc')
+    #    @current_game_order = "热门推荐"
+    #  end
+    #else
+      materials = materials.order('id asc')
+    #end
 
     @materials = materials.page(params[:page]).per(24)
 
