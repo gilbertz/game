@@ -95,6 +95,8 @@ class WeitestController < ApplicationController
     @wx_id = "wx22f19a668186d05e"
     @wx_domain = "http://wei.51self.com"
     #p ua
+    @sid = 0
+    @sid = params[:sid].to_i if params[:sid]
     @is_weixin = true
     if ua.index("micromessenger")
       @is_weixin = true 
