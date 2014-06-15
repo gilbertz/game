@@ -10,8 +10,8 @@ img { border:none; }
 .wrapper { width:960px; margin:0 auto; }
 #con1_1 { position:relative; }
 #con1_1 .product_list { position:absolute; left:0px; top:0px; padding:10px; background:#eee; }
-.product_list img { width:290px; display:block; }
-.product_list h2 { padding:5px 0px; font-size:12px; text-align:center; color:#333; }
+.product_list img { width:440px; display:block; }
+.product_list h2 { padding:5px 0px; font-size:24px; text-align:center; color:#333; }
 </style>
 </head>
 <body>
@@ -25,7 +25,16 @@ img { border:none; }
       </div>
     <% end %> 
   </div>
-  <h3> All Rights Reserved. 苏ICP备13009965号-2 </h3> 
+  <div style="background: #444;">
+      <a href="/?page=<%= @next_page %>" >
+        <div style="margin: 0 auto 0 auto; width:600px; font-size: 36px; padding:15px; text-align:center; color:white;">
+          点击加载更多游戏
+        </div>
+      </a>   
+ </div>
+
+  <br/>
+  <h3> 微信转盘  All Rights Reserved. 苏ICP备13009965号-2 </h3> 
 </div>
 </body>
 <script type="text/javascript">
