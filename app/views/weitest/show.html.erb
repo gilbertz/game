@@ -7,15 +7,6 @@
       <% @answers = @material.answers %>
       <meta charset="utf-8">
       <script src="http://wxfile.youxiyule.com/js/jquery.min.js"></script>
-      <script>  
-        function click_ad(idx){
-          ajax = new XMLHttpRequest();
-          ajax.open('GET', "/admin/click_stat?id=" + idx, true);
-          ajax.send(null);
-          return false;
-        }
-      </script>
-      
       <%= ERB.new(@category.meta).result(binding).html_safe %>
       <% @wx_appid = @material.wx_appid %>
       <% @wx_url   = @material.wx_url %>
