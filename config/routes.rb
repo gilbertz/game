@@ -52,6 +52,7 @@ Game::Application.routes.draw do
 
   #get '/weitest/:id/fr/:fr' => "weitest#show"
   get '/w/:sid/:id' => "weitest#show"
+  get '/s/:sid/:id' => "weitest#show"
 
   #get '/qq/layouts/:layouts/material_id/:material_id' => "qq/welcome#index"
   #get '/qq/material_id/:material_id' => "qq/welcome#index"

@@ -46,6 +46,6 @@
     <%= render "shared/analysis" %>
    
     <% if @is_stat %>   
-    <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
+      <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
     <% end %>
 </html>
