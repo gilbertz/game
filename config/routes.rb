@@ -59,7 +59,7 @@ Game::Application.routes.draw do
 
   namespace :admin do
     get '/login' => 'session#new', as: :login
-    root "home#index"
+    #root "home#index"
 
     get 'home/clear_single_cache/:id' => "home#clear_single_cache"
 

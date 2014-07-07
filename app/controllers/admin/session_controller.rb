@@ -14,7 +14,7 @@ class Admin::SessionController < Admin::BaseController
           expires: 3.day.from_now.utc 
         }
       end
-      redirect_to [:admin,:root]
+      redirect_to [:admin,:materials]
     else
       redirect_to [:admin,:login]
     end
