@@ -25,13 +25,15 @@ img { border:none; }
       </div>
     <% end %> 
   </div>
-  <div style="background: #444;">
+  <% if @next_page.to_i <= 3 %>
+    <div style="background: #444;">
       <a href="/?page=<%= @next_page %>" >
         <div style="margin: 0 auto 0 auto; width:600px; font-size: 36px; padding:15px; text-align:center; color:white;">
           点击加载更多游戏
         </div>
       </a>   
- </div>
+    </div>
+ <% end %>
 
   <br/>
   <h3> 微信转盘  All Rights Reserved. 苏ICP备13009965号-2 </h3> 
