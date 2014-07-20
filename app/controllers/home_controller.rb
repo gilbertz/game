@@ -13,7 +13,8 @@ class HomeController < ApplicationController
     #  materials = materials.where("categories.game_type_id=?", params[:game_type_id])
     #end
 
-    materials = materials.where(state: 1).where(:user_id => 1)
+    max_id = Material.maximum('id') - 5
+    materials = materials.where(state: 1).where(:user_id => 1).where("materials.id <= #{max_id}")
 
     #@current_game_order = "最新内容"
     #unless params[:order].blank?
