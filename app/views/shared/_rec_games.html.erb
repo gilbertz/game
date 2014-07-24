@@ -4,12 +4,6 @@
       【微信游戏推荐】
     </div>
     
-    <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
-        <a href="http://51self.com?f=r" style="text-decoration:none; ">
-         更多免费微信游戏！
-        </a>
-    </div>
-
     <% @games = Material.recommended_games(2, @material.id)  %>
     <% @games.each do |game| %>
       <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
@@ -18,5 +12,12 @@
         </a>
       </div>
     <% end %>
+
+    <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://51self.com?f=r" style="text-decoration:none; ">
+         更多好玩免费游戏！
+        </a>
+    </div>
+
   </div>
 </div>

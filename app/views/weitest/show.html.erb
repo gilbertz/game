@@ -40,7 +40,7 @@
     <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
     <%= ERB.new(@category.html).result(binding).html_safe %>
     
-    <%unless  @material.game_type_id == 7%>
+    <%unless  @category.game_type_id == 7 %>
       <%= render "shared/ad_bottom" %>
       <%= render "shared/rec_games" %>
       <%= render "shared/ad_bottom" %>
