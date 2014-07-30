@@ -32,7 +32,7 @@
     </head>
     <%unless  @category.game_type_id == 7 %>
       <%= render "shared/ad1" %>
-    end
+    <% end %>
 
     <% @prompt_image = @material.images.select{|i| i.state == 3 }[0].try(:body) %>
     <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
