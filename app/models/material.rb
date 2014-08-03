@@ -136,6 +136,12 @@ class Material < ActiveRecord::Base
     rec_games
   end
 
+  
+  def self.h5_games(n=3, exclude_num=0)
+    rec_games = []
+    rec_games = Material.joins(:category).where('categories.game_type_id = 7').where("materials.id != #{exclude_num}").where(state: 1).order('created_at desc').limit(3)
+    rec_games
+  end
 
 
   private
