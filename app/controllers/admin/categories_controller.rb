@@ -5,8 +5,8 @@ class Admin::CategoriesController < Admin::BaseController
   def index
     categories = Category.includes(:materials)
 
-    if params[:game_type_id] == "null"
-      categories = categories.where(:game_type_id => nil)
+    if params[:game_type_id]
+      categories = categories.where(:game_type_id => params[:game_type_id].to_i)
     end
 
     @categories = categories.order("id desc").page(params[:page])

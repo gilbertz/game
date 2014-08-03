@@ -20,6 +20,7 @@ Game::Application.routes.draw do
   end
 
   get '/r' => 'home#r'
+  get '/list/:type' => 'home#index'
 
   get '/weitest/:material_id/result' => "weitest#result"
 

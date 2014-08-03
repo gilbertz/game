@@ -14,7 +14,11 @@ class HomeController < ApplicationController
     #end
 
     max_id = Material.maximum('id')
-    materials = materials.where(state: 1).where(:user_id => 1).where("materials.id <= #{max_id}")
+    if params[:type]
+      materials = materials.where(state: 1).where("categories.game_type_id=?", 7)
+    else
+      materials = materials.where(state: 1).where("materials.id <= #{max_id}")
+    end
 
     #@current_game_order = "最新内容"
     #unless params[:order].blank?
@@ -26,10 +30,14 @@ class HomeController < ApplicationController
     #    @current_game_order = "热门推荐"
     #  end
     #else
-      materials = materials.order('id desc')
+    materials = materials.order('id desc')
     #end
 
-    @materials = materials.page( page ).per(12)
+    unless params[:game]
+      @materials = materials.page( page ).per(12)
+    else
+      @materials = materials
+    end
 
     #@game_types = GameType.all
     #@game_type = GameType.find(game_type_id) if game_type_id

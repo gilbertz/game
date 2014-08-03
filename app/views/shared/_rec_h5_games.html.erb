@@ -1,0 +1,20 @@
+<div class="rec_games" style="margin:0px auto;text-align:center; width:97%;white-space:nowrap; line-height:42px; min-height:230px; border-bottom:none; ">
+  <div class="rec_holder" style="clear:both;">
+    
+    <% @games = Material.h5_games(4, @material.id)  %>
+    <% @games.each do |game| %>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="/weitest/<%= game.url %>?f=r" style="text-decoration:none; ">
+          <%= game.name %>
+        </a>
+      </div>
+    <% end %>
+
+    <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="/list/game" style="text-decoration:none; ">
+         更多免费【微信游戏】！
+        </a>
+    </div>
+
+  </div>
+</div>

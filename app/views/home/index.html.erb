@@ -20,7 +20,7 @@ img { border:none; }
   <br/>
   <div id="con1_1">
     <% @materials.each do |m| %>
-      <div class="product_list"> <a href="weitest/<%= m.url%>"> <img src="<%= m.wx_tlimg %>"></a>
+      <div class="product_list"> <a href="/weitest/<%= m.url%>"> <img src="<%= m.wx_tlimg %>"></a>
         <h2 ><%= m.name[0,15] %></h2>
       </div>
     <% end %> 
