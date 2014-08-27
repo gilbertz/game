@@ -26,7 +26,7 @@
     </style>
   </head>
   <%= render "shared/data" %>
-  <%= render "shared/ad" %>
+  <%#= render "shared/ad" %>
   <%= ERB.new(@category.re_html).result(binding).html_safe %>
   <%= render "shared/analysis" %>
 </html>

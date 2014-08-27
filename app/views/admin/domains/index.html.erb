@@ -1,0 +1,30 @@
+<h1>Listing domains</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Active</th>
+      <th>Tid</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @domains.each do |domain| %>
+      <tr>
+        <td><%= domain.name %></td>
+        <td><%= domain.active %></td>
+        <td><%= domain.tid %></td>
+        <td><%= link_to 'Edit', [:edit, :admin, domain] %></td>
+        <td><%= link_to 'Destroy', [:admin, domain], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Domain', [:new, :admin, :domain] %>

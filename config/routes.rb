@@ -64,6 +64,9 @@ Game::Application.routes.draw do
 
     get 'home/clear_single_cache/:id' => "home#clear_single_cache"
 
+    resources :weixins
+    resources :domains
+
     resources :game_types
     resources :banners
 

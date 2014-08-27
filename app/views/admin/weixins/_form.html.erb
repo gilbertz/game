@@ -1,0 +1,29 @@
+<%= form_for [:admin, @weixin] do |f| %>
+  <% if @weixin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@weixin.errors.count, "error") %> prohibited this weixin from being saved:</h2>
+
+      <ul>
+      <% @weixin.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :wxid %><br>
+    <%= f.text_field :wxid %>
+  </div>
+  <div class="field">
+    <%= f.label :active %><br>
+    <%= f.check_box :active %>
+  </div>
+  <div class="field">
+    <%= f.label :tid %><br>
+    <%= f.number_field :tid %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529145705) do
+ActiveRecord::Schema.define(version: 20140826165255) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -71,6 +71,14 @@ ActiveRecord::Schema.define(version: 20140529145705) do
     t.integer  "game_type_id"
   end
 
+  create_table "domains", force: true do |t|
+    t.string   "name"
+    t.boolean  "active"
+    t.integer  "tid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "feedbacks", force: true do |t|
     t.string   "username"
     t.text     "content"
@@ -85,6 +93,16 @@ ActiveRecord::Schema.define(version: 20140529145705) do
     t.datetime "updated_at"
     t.string   "type_image"
   end
+
+  create_table "hooks", force: true do |t|
+    t.integer  "material_id"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hooks", ["material_id"], name: "index_hooks_on_material_id", using: :btree
+  add_index "hooks", ["url"], name: "index_hooks_on_url", using: :btree
 
   create_table "images", force: true do |t|
     t.string   "title"
@@ -155,6 +173,14 @@ ActiveRecord::Schema.define(version: 20140529145705) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role",             default: 0, null: false
+  end
+
+  create_table "weixins", force: true do |t|
+    t.string   "wxid"
+    t.boolean  "active"
+    t.integer  "tid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

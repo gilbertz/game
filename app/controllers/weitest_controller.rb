@@ -117,7 +117,7 @@ class WeitestController < ApplicationController
   end
 
   def return
-    @material = Material.find params[:id]
+    @material = Material.by_url params[:id]
     if request.xhr?
       ERB.new(@material.category.try(:re_js)).result(binding)
       render json: @json

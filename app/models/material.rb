@@ -20,6 +20,14 @@ class Material < ActiveRecord::Base
 
   before_update :clone_self, if: Proc.new{|mate| mate.clone == true}
 
+
+  def self.by_url url
+    m =  Material.find_by_url( url )
+    m = Material.find_by_id( url ) unless m
+    m
+  end
+
+
   def get_answers
      answers = []
      self.answers.each do |ans|
