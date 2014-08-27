@@ -73,7 +73,9 @@ class WeitestController < ApplicationController
     #wx_ids += ['wx8d92ca1243a4d947', 'wx8fed61e0d05c5732', 'wx7786f97ea666be3c', 'wx8820cdf5db680ffa', 'wxf37239efdb6106b8', 'wx333eb5e8a7d7a4b7', 'wx1fd508e23f093612', 'wx78f81724e6590b1d', 'wx14db6de757190903', 'wx843a75276b087b5b', 'wxa4b43775687cda90', 'wx3fb66635e78c1d91']
     
 
-    wx_ids = ['wx78f81724e6590b1d', 'wx14db6de757190903', 'wx843a75276b087b5b', 'wxa4b43775687cda90', 'wx3fb66635e78c1d91', 'wx6a7bb35a163404cd', 'wxe750bcfd9dbce2d5', 'wx219c5849ac75b3eb', 'wx22f19a668186d05e', 'wx798d5736fef68eac', 'wx2babddd351826991', 'wx5f8a031de25eb179', 'wx80f3dadb401b24e', 'wx9b54843d34112fc8', 'wxe70cffc9973f7705', 'wxc52e77b511eae288', 'wxdd3e820193c3c4bc', 'wx0a4c0018c920674e']
+    #wx_ids = ['wx78f81724e6590b1d', 'wx14db6de757190903', 'wx843a75276b087b5b', 'wxa4b43775687cda90', 'wx3fb66635e78c1d91', 'wx6a7bb35a163404cd', 'wxe750bcfd9dbce2d5', 'wx219c5849ac75b3eb', 'wx22f19a668186d05e', 'wx798d5736fef68eac', 'wx2babddd351826991', 'wx5f8a031de25eb179', 'wx80f3dadb401b24e', 'wx9b54843d34112fc8', 'wxe70cffc9973f7705', 'wxc52e77b511eae288', 'wxdd3e820193c3c4bc', 'wx0a4c0018c920674e']
+    weixins = Weixin.where(:active => true)
+    wx_ids = weixins.map{|wx|wx.wxid}
     len = wx_ids.length
     wx_ids[rand(len)]
     #wx_ids[ params[:id].to_i % len ] 
@@ -83,8 +85,11 @@ class WeitestController < ApplicationController
   def rand_domain
     #wx_domains = ['http://app.shangjieba.com', 'http://app.weixinjie.net', 'http://app.saibaobei.com', 'http://wan.mna.myqcloud.com', 'http://g.leapcliff.com', 'http://g.weixinjie.net', 'http://g.shangjieba.com', 'http://g.saibaobei.com', 'http://wx.mna.myqcloud.com', 'http://wanhuir.mna.myqcloud.com' ]
    
-    wx_domains = ['http://ggb.bbdd08.cn', 'http://wwmxd.kmtuan.cn', 'http://cool.syhly.cn', 'http://abcdefg.gmzzzl.cn', 'http://ggb.ntjcdx.com', 'http://wei.51self.com', 'http://xsd.xcsgs.com' ]
+    #wx_domains = ['http://ggb.bbdd08.cn', 'http://wwmxd.kmtuan.cn', 'http://cool.syhly.cn', 'http://abcdefg.gmzzzl.cn', 'http://ggb.ntjcdx.com', 'http://wei.51self.com', 'http://xsd.xcsgs.com' ]
     #wx_domains = ['http://ggb.bbdd08.cn', 'http://wwmxd.kmtuan.cn', 'http://abcdefg.gmzzzl.cn', 'http://ggb.ntjcdx.com', 'http://wei.51self.com' ]
+    domains = Domain.where(:active => true)
+    wx_domains = domains.map{|d|d.get_name}   
+ 
     len = wx_domains.length
     wx_domains[rand(len)]
     #wx_domains[ params[:id].to_i % len ] 
