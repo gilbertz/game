@@ -105,12 +105,12 @@ class WeitestController < ApplicationController
     @sid = params[:sid].to_i if params[:sid]
     @is_weixin = true
     @is_stat = false
-    if ua.index("micromessenger")
+    #if ua.index("micromessenger")
       @is_weixin = true 
       @wx_id = rand_wid
       @wx_domain = rand_domain 
       @is_stat = true
-    end
+    #end
 
     @material = Material.find_by_url params[:id]
     #@material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzA4NTkwNTIxOQ==&mid=201004496&idx=1&sn=c3dcb0820a5c3746991de7de63429fc8#rd'
