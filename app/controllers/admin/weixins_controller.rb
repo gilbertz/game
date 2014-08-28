@@ -24,11 +24,15 @@ class Admin::WeixinsController < Admin::BaseController
   # POST /weixins
   # POST /weixins.json
   def create
-    @weixin = Weixin.new(weixin_params)
+    if @weixin = Weixin.find_by_wxid(weixin_params[:wxid])
+      @weixin.update(weixin_params)
+    else
+      @weixin = Weixin.new(weixin_params)
+    end
 
     respond_to do |format|
       if @weixin.save
-        format.html { redirect_to [:admin, @weixin], notice: 'Weixin was successfully created.' }
+        format.html { redirect_to :back }
       else
         format.html { render action: 'new' }
       end
