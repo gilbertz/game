@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>pv</th>
       <th>Wxid</th>
       <th>Active</th>
       <th>Tid</th>
@@ -15,6 +16,7 @@
   <tbody>
     <% @weixins.each do |weixin| %>
       <tr>
+        <td><%= weixin.pv %></td> 
         <td><%= weixin.wxid %></td>
         <td><%= weixin.active %></td>
         <td><%= weixin.tid %></td>

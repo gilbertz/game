@@ -22,7 +22,7 @@ echo "-------------------------------------" >> ${MONITOR_LOG}
 
 declare -a processes
 
-processes=("passenger.6000" "passenger.5000" "passenger.7000"  "redis-server"  "nginx")
+processes=("passenger.6001" "passenger.5000" "passenger.7000"  "redis-server"  "nginx")
 
 a_len=${#processes[@]}
 
