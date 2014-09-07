@@ -81,6 +81,10 @@ class Material < ActiveRecord::Base
      $redis.get(key) 
   end
 
+  def answer_qv(i)
+    key = "q#{url}_#{i}"
+  end
+
   
   def wx_share_stat
     stat = ""

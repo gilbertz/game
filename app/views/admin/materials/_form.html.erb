@@ -60,9 +60,13 @@
     <div class="control-group">
       <label class="control-label">答案</label>
       <div class="controls" style="padding-top:6px">
+        <% i = 0%>
         <% answers.each do |asw| %>
+          <%  key = "g#{@material.url}_#{i}"  %>
+          <%  i += 1 %>
+          <% pv = "#{$redis.get(key)}/#{asw.weight.to_i}" %>
           <%= link_to [:edit,:admin,asw], class: :edit_obj do %>
-            <span class="label label-important"><%= asw.title %></span>
+            <span class="label label-important"><%= pv.to_s  + asw.title %></span>
           <% end %>
           <%= link_to [:admin,asw], method: :delete,  
             class: :ajaxDel, data: {confirm: "Are you sure?"} ,remote: true  do %>

@@ -15,7 +15,9 @@
   <tbody>
     <% @domains.each do |domain| %>
       <tr>
-        <td><%= domain.name %></td>
+        <td>
+          <%= link_to domain.name, domain.get_name %>
+        </td>
         <td><%= domain.active %></td>
         <td><%= domain.tid %></td>
         <td><%= link_to 'Edit', [:edit, :admin, domain] %></td>
