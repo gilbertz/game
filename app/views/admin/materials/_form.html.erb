@@ -64,7 +64,7 @@
         <% answers.each do |asw| %>
           <%  key = "g#{@material.url}_#{i}"  %>
           <%  i += 1 %>
-          <% pv = "#{$redis.get(key)}/#{asw.weight.to_i}" %>
+          <% pv = "#{$redis.get(key)}/#{asw.weight.to_i} | " %>
           <%= link_to [:edit,:admin,asw], class: :edit_obj do %>
             <span class="label label-important"><%= pv.to_s  + asw.title %></span>
           <% end %>
