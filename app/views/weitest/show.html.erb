@@ -6,7 +6,11 @@
       <title><%= @material.name %></title>
       <% @answers = @material.answers %>
       <meta charset="utf-8">
-      <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery-2.0.3.min.js"></script>
+
+      <% unless  @category.game_type_id == 11 %>
+        <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery-2.0.3.min.js"></script>
+      <% end %>
+
       <%= ERB.new(@category.meta).result(binding).html_safe %>
       <% @wx_appid = @material.wx_appid %>
       <% @wx_url   = @material.wx_url %>
@@ -30,7 +34,7 @@
         <%= ERB.new(@category.css).result(binding).html_safe %>
       </style>
     </head>
-    <%unless  @category.game_type_id == 7 %>
+    <%if  @category.game_type_id != 7 and @category.game_type_id != 11 %>
       <%= render "shared/ad1" %>
     <% end %>
 
@@ -42,7 +46,7 @@
     <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
     <%= ERB.new(@category.html).result(binding).html_safe %>
     
-    <%unless  @category.game_type_id == 7 %>
+    <% if  @category.game_type_id != 7 and @category.game_type_id != 11 %>
       <%= render "shared/ad_bottom" %>
       <%= render "shared/rec_games" %>
       <%= render "shared/ad_bottom" %>
