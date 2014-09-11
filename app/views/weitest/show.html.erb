@@ -53,6 +53,9 @@
       <%= render "shared/rec_h5_games" %>
       <%= render "shared/ad_bottom" %>
     <% else %>
+      <% if @category.game_type_id == 11 %>
+         <%= render "shared/rec_article_games" %>
+      <% end %>
       <% if @category.id != 255 %>
         <%= render "shared/ad_bottom_h5" %>
       <% end %>

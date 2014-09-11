@@ -154,6 +154,12 @@ class Material < ActiveRecord::Base
     rec_games
   end
 
+  
+  def self.article_games(n=3, exclude_num=0)
+    rec_games = Material.joins(:category).where('categories.game_type_id = 11').where("materials.id != #{exclude_num}").where(state: 1).order('created_at desc').sample(n)
+    rec_games
+  end
+
 
   private
   def clone_self
