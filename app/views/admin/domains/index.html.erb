@@ -29,4 +29,17 @@
 
 <br>
 
+
+<ul>
+<% $redis.keys("wx_domain*").each do |d| %>
+  <li>
+    <tr>
+      <td><%= d %></td>
+      <td><%= $redis.get(d) %></td>
+    </tr>
+  </li>  
+
+<% end %>
+</ul>
+
 <%= link_to 'New Domain', [:new, :admin, :domain] %>

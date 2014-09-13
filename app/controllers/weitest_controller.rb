@@ -95,7 +95,7 @@ class WeitestController < ApplicationController
     #wx_domains[ params[:id].to_i % len ] 
   end
 
-  caches_page :show
+  #caches_page :show
   def show
     ua = request.user_agent.downcase
     @wx_id = "wx22f19a668186d05e"
@@ -113,8 +113,9 @@ class WeitestController < ApplicationController
     #end
 
     @material = Material.find_by_url params[:id]
-    @material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzA4NTkwNTIxOQ==&mid=201004496&idx=1&sn=c3dcb0820a5c3746991de7de63429fc8#rd'
+    #@material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzA4NTkwNTIxOQ==&mid=201004496&idx=1&sn=c3dcb0820a5c3746991de7de63429fc8#rd'
     #@material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MzA3MDk0MzMxNQ==&mid=200586729&idx=1&sn=599156aecedbfa9317785390ddb0b448#rd"
+    @material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MjM5NjIzOTE2OQ==&mid=200366500&idx=1&sn=21c2832b5382e6aafd4e55a0d6c85f5f#rd"
 
     @base_category = Category.find(1)
     get_topn(@material.category_id)
@@ -195,6 +196,16 @@ class WeitestController < ApplicationController
     if params[:type] and params[:gid]                                              
         key = "gstat_#{params[:type]}_#{params[:gid]}"                               
        $redis.incr(key)                                                            
+    end
+
+    if params[:wx_id]
+        key = "wx_id_#{params[:wx_id]}"
+        $redis.incr(key)
+    end
+
+    if params[:wx_domain]
+        key = "wx_domain_#{params[:wx_domain]}"
+        $redis.incr(key)
     end
 
     #include ad show stat

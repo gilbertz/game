@@ -22,6 +22,12 @@
           <li class="<%= controller_name.in?(['banners']) ? 'active' : ''%>">
             <%= link_to 'App Banner管理', [:admin,:banners] %>
           </li>
+          <li class="<%= controller_name.in?(['domains']) ? 'active' : ''%>">
+            <%= link_to '域名管理', [:admin,:domains] %>
+          </li>
+          <li class="<%= controller_name.in?(['weixins']) ? 'active' : ''%>">
+            <%= link_to '微信管理', [:admin,:weixins] %>
+          </li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
