@@ -68,6 +68,14 @@ class Material < ActiveRecord::Base
     $redis.get(key)
   end
 
+  def share_stat
+    stat = ""
+    $redis.keys("share_count_#{self.url}_*").each do |k|
+      stat += "#{k.gsub('share_count_' + self.url.to_s + '_', '')} => #{$redis.get(k)} &nbsp;"
+    end
+    stat
+  end
+
   def fake_pv
     if self.pv.to_i > 10000
       (self.pv.to_i / 100).to_i

@@ -95,22 +95,55 @@ class WeitestController < ApplicationController
     #wx_domains[ params[:id].to_i % len ] 
   end
 
-  caches_page :show
-  def show
-    ua = request.user_agent.downcase
+  
+  def rand_weixin
     @wx_id = "wx22f19a668186d05e"
     @wx_domain = "http://wei.51self.com"
-    #p ua
     @sid = 0
-    @sid = params[:sid].to_i if params[:sid]
+    @option = ''
+    @sc = 1
+
+    if params[:sc]
+      $redis.incr("share_count_#{params[:id]}_#{params[:sc]}")
+      @sc = params[:sc].to_i + 1
+    end
+
+    if params[:wid]
+      $redis.incr("weixin_#{params[:wid]}")
+    end
+   
+    if params[:did]
+      $redis.incr("domain_#{params[:did]}")
+    end
+
+    weixins = Weixin.where(:active => true)
+    domains = Domain.where(:active => true)
+    
+    rand_weixin = weixins.sample(1)[0] 
+    rand_domain = domains.sample(1)[0]
+   
+    @wx_id = rand_weixin.wxid
+    @wx_domain = rand_domain.get_name
+  
+    @option = "?wid=#{rand_weixin.id}&did=#{rand_domain.id}&sc=#{@sc}"
+  end
+
+
+  #caches_page :show
+  def show
+    ua = request.user_agent.downcase
+    #p ua
     @is_weixin = true
     @is_stat = false
+
     #if ua.index("micromessenger")
-      @is_weixin = true 
-      @wx_id = rand_wid
-      @wx_domain = rand_domain 
-      @is_stat = true
+    #  @is_weixin = true 
+    #  @wx_id = rand_wid
+    #  @wx_domain = rand_domain 
+    #  @is_stat = true
     #end
+
+    rand_weixin
 
     @material = Material.find_by_url params[:id]
     #@material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzA4NTkwNTIxOQ==&mid=201004496&idx=1&sn=c3dcb0820a5c3746991de7de63429fc8#rd'

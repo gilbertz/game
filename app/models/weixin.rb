@@ -1,6 +1,6 @@
 class Weixin < ActiveRecord::Base
   def pv
-    key = "wx_id_#{self.wxid}"
+    key = "weixin_#{self.id}"
     $redis.get(key)
   end
 end

@@ -35,7 +35,7 @@ group :development do
   gem 'quiet_assets'
   gem 'rvm-capistrano'
   gem 'thin', '1.3.1'
-  gem 'debugger'
+#  gem 'debugger'
   gem 'sqlite3'
 end
 

@@ -14,6 +14,7 @@
       <th width="10%">创建时间</th>
       <th width="15%">操作</th>
       <th width="10%">QQ空间</th>
+      <th width="10%">转发次数统计</th>
     </tr>
   </thead>
   <tbody>
@@ -57,6 +58,9 @@
           <% else %>
               <%= link_to "设置为QQ平台推荐游戏", [:recommend_game, :admin, c], data: {confirm: "Are you sure?"} %>
           <% end %>
+        </td>
+        <td>
+        <%= c.share_stat.html_safe %>
         </td>
       </tr>
     <% end %>

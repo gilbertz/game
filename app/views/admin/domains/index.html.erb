@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>pv</th>
       <th>Name</th>
       <th>Active</th>
       <th>Tid</th>
@@ -16,6 +17,9 @@
     <% @domains.each do |domain| %>
       <tr>
         <td>
+          <%= domain.pv %>
+        </td>
+        <td>
           <%= link_to domain.name, domain.get_name %>
         </td>
         <td><%= domain.active %></td>
@@ -28,18 +32,5 @@
 </table>
 
 <br>
-
-
-<ul>
-<% $redis.keys("wx_domain*").each do |d| %>
-  <li>
-    <tr>
-      <td><%= d %></td>
-      <td><%= $redis.get(d) %></td>
-    </tr>
-  </li>  
-
-<% end %>
-</ul>
 
 <%= link_to 'New Domain', [:new, :admin, :domain] %>
