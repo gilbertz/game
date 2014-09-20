@@ -117,7 +117,7 @@ class WeitestController < ApplicationController
     end
 
     weixins = Weixin.where(:active => true)
-    domains = Domain.where(:active => true)
+    domains = Domain.where(:active => true).where(:tid => 0)
     
     rand_weixin = weixins.sample(1)[0] 
     rand_domain = domains.sample(1)[0]
@@ -129,7 +129,7 @@ class WeitestController < ApplicationController
   end
 
 
-  #caches_page :show
+  caches_page :show
   def show
     ua = request.user_agent.downcase
     #p ua
