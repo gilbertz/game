@@ -134,7 +134,7 @@ class WeitestController < ApplicationController
     ua = request.user_agent.downcase
     #p ua
     @is_weixin = true
-    @is_stat = false
+    @is_stat = true
 
     #if ua.index("micromessenger")
     #  @is_weixin = true 
