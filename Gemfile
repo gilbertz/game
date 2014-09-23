@@ -71,6 +71,7 @@ gem 'actionpack-action_caching'
 gem "request-log-analyzer"
 
 gem "whenever"
+gem "nokogiri"
 
 # come from api gemspec
 gem 'rabl', '~> 0.9.3'

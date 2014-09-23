@@ -92,6 +92,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    mini_portile (0.6.0)
     minitest (4.7.5)
     multi_json (1.8.4)
     multipart-post (2.0.0)
@@ -103,6 +104,8 @@ GEM
     net-ssh (2.7.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
     oj (2.8.1)
     polyamorous (0.6.4)
       activerecord (>= 3.0)
@@ -196,6 +199,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   mysql2 (~> 0.3.14)
+  nokogiri
   oj
   quiet_assets
   rabl (~> 0.9.3)
