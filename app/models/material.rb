@@ -20,6 +20,56 @@ class Material < ActiveRecord::Base
 
   before_update :clone_self, if: Proc.new{|mate| mate.clone == true}
 
+  def self.create_by_web(url)
+    require 'open-uri'
+
+    docid = Digest::MD5.hexdigest(url.gsub('#rd', ''))
+    return if Material.find_by_docid(docid)
+
+    doc = Nokogiri::HTML(open(url))
+    title = doc.title 
+    html = ""
+    doc.css("#js_content").each do |c|
+      html = c.to_html
+      break
+    end
+
+    src_dict = {}
+    html.scan(/(data-src=\"(.*?)\")/).each{ |m|
+      t = m[1].gsub(/\/0$/, "/640")
+      src_dict[m[0]] = m[0] + " src=\"#{t}\""
+    }
+
+    src_dict.each do |k, v|
+      html = html.gsub(k, v)
+    end
+
+    img_dict = {}
+    html.scan(/src=\"(.*?)\"/).each{ |m|
+      unless /uploads/ =~ m[0]
+        #p m[0]
+        next if m[0].index('v.qq.com/iframe/player.html')
+        img_fn = Digest::MD5.hexdigest(m[0])
+        img_url =  'http://wx.51self.com' + "/uploads/post/#{img_fn}.jpg"
+        `wget  -t 10  -nc -c -x -O /root/weixin_game/public/uploads/post/#{img_fn}.jpg #{m[0]}`
+         img_dict[m[0]] = img_url
+      end
+    }
+    img_dict.each do |k, v|
+      html = html.gsub(k, v)
+    end
+    template = Material.find 920
+    template.cloning(true)
+    m = Material.last
+    m.description = html
+    m.name = title
+    m.wx_title = title
+    m.docid = docid
+    m.link = url
+    m.save
+    m
+  end
+
 
   def self.by_url url
     m =  Material.find_by_url( url )

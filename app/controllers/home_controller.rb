@@ -47,6 +47,13 @@ class HomeController < ApplicationController
     render 'index', :layout => nil
   end
 
+  def add_weixin_url
+    if params[:url]
+      Material.create_by_web(params[:url])      
+    end
+    render :text => "succ!!" 
+  end
+
   def r
     redirect_to params[:url]
   end

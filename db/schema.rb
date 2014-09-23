@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140826165255) do
+ActiveRecord::Schema.define(version: 20140923142127) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -139,8 +139,11 @@ ActiveRecord::Schema.define(version: 20140826165255) do
     t.integer  "redis_wx_share_pyq", limit: 8, default: 0, null: false
     t.integer  "user_id",                      default: 1, null: false
     t.string   "url"
+    t.string   "docid"
+    t.string   "link"
   end
 
+  add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
   add_index "materials", ["is_qq"], name: "index_materials_on_is_qq", using: :btree
   add_index "materials", ["is_recommend_to_qq"], name: "index_materials_on_is_recommend_to_qq", using: :btree
   add_index "materials", ["redis_pv"], name: "index_materials_on_redis_pv", using: :btree
