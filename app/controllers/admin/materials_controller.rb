@@ -26,8 +26,12 @@ class Admin::MaterialsController < Admin::BaseController
   end
 
   def create
-    material = Material.new material_params
-    material.save
+    if material_params[:link].blank?
+      material = Material.new material_params
+      material.save
+    else
+      material = Material.create_by_web(material_params[:link])
+    end
     redirect_to [:admin,:materials]
   end
 
@@ -37,7 +41,11 @@ class Admin::MaterialsController < Admin::BaseController
   end
 
   def update
-    @material.update_attributes material_params
+    if material_params[:link].blank?
+      @material.update_attributes material_params
+    else
+      @material = Material.create_by_web(material_params[:link])
+    end
 
     clear_page(@material)
 
@@ -68,7 +76,7 @@ class Admin::MaterialsController < Admin::BaseController
   end
   private
   def material_params
-    params.require(:material).permit(:name,:description,:category_id,:wx_appid,:wxdesc,:wx_tlimg,:wx_url,:wx_title, :wx_ln, :advertisement, :advertisement_1)
+    params.require(:material).permit(:link, :name,:description,:category_id,:wx_appid,:wxdesc,:wx_tlimg,:wx_url,:wx_title, :wx_ln, :advertisement, :advertisement_1)
   end
 
   def clear_rubbish

@@ -4,9 +4,17 @@
 </style>
 <%= form_for [:admin,@material], html: {class: 'form-horizontal' } do |f| %> 
   <div class="control-group">
+    <label class="control-label">微信文章链接</label>
+    <div class="controls">
+      <%= f.text_field :link, class: "input-xxlarge" %>
+    </div>
+  </div>
+
+
+  <div class="control-group">
     <label class="control-label">游戏名</label>
     <div class="controls">
-      <%= f.text_field :name, required: true, class: "input-xxlarge" %>
+      <%= f.text_field :name, class: "input-xxlarge" %>
     </div>
   </div>
   <div class="control-group">
@@ -100,13 +108,13 @@
   <div class="control-group">
     <label class="control-label">appID</label>
     <div class="controls">
-      <%= f.text_field :wx_appid, required: true, class: "input-xxlarge" %>
+      <%= f.text_field :wx_appid, class: "input-xxlarge" %>
     </div>
   </div>
   <div class="control-group">
     <label class="control-label">图片</label>
     <div class="controls">
-      <%= f.text_field :wx_tlimg, required: true, class: "input-xxlarge" %>
+      <%= f.text_field :wx_tlimg,  class: "input-xxlarge" %>
       <span class="help-block"><a href="<%= @material.wx_tlimg %>">图片预览</a> &nbsp;
         size: <span id="material_size"></span>
       </span>
@@ -115,7 +123,7 @@
   <div class="control-group">
     <label class="control-label">标题</label>
     <div class="controls">
-      <%= f.text_field :wx_title, required: true, class: "input-xxlarge" %>
+      <%= f.text_field :wx_title, class: "input-xxlarge" %>
     </div>
   </div>
   <% if false %>
@@ -130,7 +138,7 @@
   <div class="control-group">
     <label class="control-label">描述</label>
     <div class="controls">
-      <%= f.text_field :wxdesc, required: true, class: "input-xxlarge" %>
+      <%= f.text_field :wxdesc,  class: "input-xxlarge" %>
     </div>
   </div>
   <div class="control-group">
