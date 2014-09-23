@@ -1,0 +1,20 @@
+<div class="list">
+  <div id="olload"><span>精彩内容推荐</span></div>
+  <div id="oldlist">
+    <ul>
+      <% @games = Material.article_games(4, @material.id)  %>
+      <% @games.each do |g| %>
+        <li class="newsmore">
+          <a href="/weitest/<%= g.url %>">
+            <div class="olditem">
+              <div class="title">
+                <%= g.name %>
+              </div>
+            </div>
+          </a>
+        </li>
+      <% end %> 
+    </ul>
+    <a id="hlMore" class="more" href="/">更多精彩内容</a>
+  </div>
+</div>
