@@ -5,6 +5,6 @@ class Domain < ActiveRecord::Base
   end
 
   def get_name
-    self.name.gsub("*", "game"+rand(100).to_s )
+    self.name.gsub("*", "t"+rand(10000).to_s + ".weixin"  )
   end
 end
