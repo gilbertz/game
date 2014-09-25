@@ -52,7 +52,7 @@ Game::Application.routes.draw do
     end
   end
 
-  #get '/weitest/:id/fr/:fr' => "weitest#show"
+  get '/:dd/weitest/:id/' => "weitest#show"
   get '/w/:sid/:id' => "weitest#show"
   get '/s/:sid/:id' => "weitest#show"
 
