@@ -5,6 +5,8 @@ class Domain < ActiveRecord::Base
   end
 
   def get_name
-    self.name.gsub("*", "t"+rand(10000).to_s + ".weixin"  )
+    tags = ['orange', 'banana', 'apple', 'cherry', 'pear']
+    tag = tags.sample(1)[0]
+    self.name.gsub("*", "t"+rand(10000).to_s + ".#{tag}"  )
   end
 end
