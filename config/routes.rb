@@ -12,6 +12,10 @@ Game::Application.routes.draw do
   #  get "welcome/test" => "welcome#test"
   #end
 
+  constraints subdomain: 't' do
+    root :to => 'home#read'
+  end
+
   root 'home#index'
   #root :to => redirect("/weitest/875161620")
 
