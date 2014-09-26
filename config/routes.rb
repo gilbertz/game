@@ -13,10 +13,10 @@ Game::Application.routes.draw do
   #end
 
   constraints subdomain: 't' do
-    root :to => 'home#read'
+    root :to => 'home#read', :as => "read"
   end
 
-  root 'home#index'
+  root :to => 'home#index', :as => "root"
   #root :to => redirect("/weitest/875161620")
 
   resources :home, only: [] do
