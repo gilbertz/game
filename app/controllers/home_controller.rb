@@ -20,18 +20,7 @@ class HomeController < ApplicationController
       materials = materials.where(state: 1).where("materials.id <= #{max_id}")
     end
 
-    #@current_game_order = "最新内容"
-    #unless params[:order].blank?
-    #  if params[:order] == "hot"
-    #    materials = materials.order('redis_pv desc')
-    #    @current_game_order = "人气最高"
-    #  elsif params[:order] == "recommend"
-    #    materials = materials.order('redis_wx_share_pyq desc')
-    #    @current_game_order = "热门推荐"
-    #  end
-    #else
     materials = materials.order('id desc')
-    #end
 
     unless params[:game]
       @materials = materials.page( page ).per(12)
@@ -39,13 +28,21 @@ class HomeController < ApplicationController
       @materials = materials
     end
 
-    #@game_types = GameType.all
-    #@game_type = GameType.find(game_type_id) if game_type_id
-    #@current_game_type = "全部分类"
-    #@current_game_type = @game_type.game_type if @game_type
-
     render 'index', :layout => nil
   end
+
+  def read
+    page = 1
+    limit = 8
+    page = params[:page].to_i if params[:page]
+    limit = params[:limit].to_i if params[:limit]
+    @next_page = 0
+
+    @articles = Material.where(:category_id => 279).order('created_at desc').page(page).per(limit)
+    @next_page = page + 1 if @articles.length >= limit
+    render 'articles', :layout => false
+  end
+
 
   def add_weixin_url
     if params[:url]

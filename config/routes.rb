@@ -20,6 +20,7 @@ Game::Application.routes.draw do
   end
 
   get '/r' => 'home#r'
+  get '/read' => 'home#read'
   get '/list/:type' => 'home#index'
   get '/add_weixin_url' => "home#add_weixin_url"
 
