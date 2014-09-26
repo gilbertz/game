@@ -12,12 +12,11 @@ Game::Application.routes.draw do
   #  get "welcome/test" => "welcome#test"
   #end
 
-  constraints subdomain: 't' do
-    root :to => 'home#read', :as => "read"
-  end
-
-  root :to => 'home#index', :as => "root"
+  #root :to => 'home#index', :as => "root"
   #root :to => redirect("/weitest/875161620")
+
+  get '/', to: 'home#read', constraints: {subdomain: 'pyq'}, as: 'read_root'
+  get '/',  to: "home#index", as: 'default_root'
 
   resources :home, only: [] do
     get :search
