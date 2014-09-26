@@ -8,7 +8,7 @@
       <meta charset="utf-8">
 
       <% unless  @category.game_type_id == 11 %>
-        <script src="http://1251008728.cdn.myqcloud.com/1251008728/assets/javascripts/jquery-2.0.3.min.js"></script>
+        <script src="http://wx.51self.com/js/jquery.min.js"></script>
       <% end %>
 
       <%= ERB.new(@category.meta).result(binding).html_safe %>
