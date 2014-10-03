@@ -35,6 +35,7 @@ Game::Application.routes.draw do
   get '/weitest/wx_share' => 'weitest#wx_share'
   get '/weitest/report' => 'weitest#report',  :as=>"report"
   get '/weitest/stat' => 'weitest#stat',  :as=>"stat"
+  get '/weitest/click_stat' => 'weitest#click_stat',  :as=>"weitest_stat"
 
   get '/weitest/hello_test' => 'weitest#hello_test'
 

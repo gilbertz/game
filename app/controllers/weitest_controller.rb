@@ -251,6 +251,12 @@ class WeitestController < ApplicationController
     render :nothing => true
   end
    
+  def click_stat
+    id = params[:id]
+    key = "ad_click_#{id}"
+    $redis.incr(key)
+    render :nothing => true
+  end
 
   def get_topn(cid)
     begin
