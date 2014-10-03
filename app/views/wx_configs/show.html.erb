@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Wx ad:</strong>
+  <%= @wx_config.wx_ad %>
+</p>
+
+<p>
+  <strong>Wx link:</strong>
+  <%= @wx_config.wx_link %>
+</p>
+
+<p>
+  <strong>Wx:</strong>
+  <%= @wx_config.wx_id %>
+</p>
+
+<p>
+  <strong>Secret:</strong>
+  <%= @wx_config.secret %>
+</p>
+
+<%= link_to 'Edit', edit_wx_config_path(@wx_config) %> |
+<%= link_to 'Back', wx_configs_path %>

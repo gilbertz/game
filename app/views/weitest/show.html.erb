@@ -47,7 +47,8 @@
     <%= ERB.new(@category.html).result(binding).html_safe %>
     
     <% if  @category.game_type_id != 7 and @category.game_type_id != 11 %>
-      <%= render "shared/ad_bottom" %>
+      <%#= render "shared/ad_bottom" %>
+      <%= render "shared/ad_wx" %>
       <%= render "shared/rec_games" %>
       <%= render "shared/ad_bottom" %>
       <%= render "shared/rec_h5_games" %>

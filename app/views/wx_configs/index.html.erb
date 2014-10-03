@@ -1,0 +1,33 @@
+<h1>Listing wx_configs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Wx ad</th>
+      <th>Wx link</th>
+      <th>Wx</th>
+      <th>Secret</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wx_configs.each do |wx_config| %>
+      <tr>
+        <td><%= wx_config.wx_ad %></td>
+        <td><%= wx_config.wx_link %></td>
+        <td><%= wx_config.wx_id %></td>
+        <td><%= wx_config.secret %></td>
+        <td><%= link_to 'Show', wx_config %></td>
+        <td><%= link_to 'Edit', edit_wx_config_path(wx_config) %></td>
+        <td><%= link_to 'Destroy', wx_config, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Wx config', new_wx_config_path %>

@@ -77,3 +77,5 @@ gem "nokogiri"
 gem 'rabl', '~> 0.9.3'
 gem 'oj'
 gem 'versioncake', '~> 1.2.0'
+
+gem 'weixin_authorize'

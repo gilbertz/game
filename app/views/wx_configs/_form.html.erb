@@ -1,0 +1,33 @@
+<%= form_for(@wx_config) do |f| %>
+  <% if @wx_config.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@wx_config.errors.count, "error") %> prohibited this wx_config from being saved:</h2>
+
+      <ul>
+      <% @wx_config.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :wx_ad %><br>
+    <%= f.check_box :wx_ad %>
+  </div>
+  <div class="field">
+    <%= f.label :wx_link %><br>
+    <%= f.text_field :wx_link %>
+  </div>
+  <div class="field">
+    <%= f.label :wx_id %><br>
+    <%= f.text_field :wx_id %>
+  </div>
+  <div class="field">
+    <%= f.label :secret %><br>
+    <%= f.text_field :secret %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

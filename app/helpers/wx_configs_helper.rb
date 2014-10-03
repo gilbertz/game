@@ -1,0 +1,2 @@
+module WxConfigsHelper
+end

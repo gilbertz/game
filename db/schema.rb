@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923142127) do
+ActiveRecord::Schema.define(version: 20141003150321) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -182,6 +182,15 @@ ActiveRecord::Schema.define(version: 20140923142127) do
     t.string   "wxid"
     t.boolean  "active"
     t.integer  "tid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "wx_configs", force: true do |t|
+    t.boolean  "wx_ad"
+    t.string   "wx_link"
+    t.string   "wx_id"
+    t.string   "secret"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

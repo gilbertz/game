@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  before_filter :set_weixin_config
+
   protect_from_forgery with: :exception
 
   rescue_from StandardError do |exception|
@@ -12,6 +14,13 @@ class ApplicationController < ActionController::Base
     new_logger.info(exception.message)
     new_logger.info(exception.backtrace.join("\n"))
     raise exception
+  end
+
+  
+private
+  def set_weixin_config
+    wx_config = WxConfig.find 1
+    @set_wx_ad = wx_config.wx_ad
   end
 
 
