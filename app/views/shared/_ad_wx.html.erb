@@ -7,7 +7,7 @@
   <% else %>
     <% @ad = @ads.sample(1)[0] %>
     <div style="z-index: 99999; width: 100%">
-      <a href="<%= @ad.click %>">
+      <a onclick="click_ad(<%= @ad.id %>);" href="<%= @ad.click %>">
         <img src="<%= @ad.img %>" alt="" style="width: 100%; height: auto"/>
       </a>
     </div>
