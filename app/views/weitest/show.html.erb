@@ -31,7 +31,7 @@
       <script type="text/javascript">
         <%= ERB.new(@category.js).result(binding).html_safe %>
       </script>
-      <% if  @is_weixin %>
+      <% unless  @category.use_wxjs %>
         <script type="text/javascript">
           <%= ERB.new(@base_category.wx_js || "").result(binding).html_safe %>
         </script>
@@ -59,10 +59,12 @@
     <% if  @category.game_type_id != 7 and @category.game_type_id != 11 %>
       <%#= render "shared/ad_bottom" %>
       <%= render "shared/ad_wx" %>
-      <%= render "shared/rec_games" %>
-      <%= render "shared/ad_bottom" %>
-      <%= render "shared/rec_h5_games" %>
-      <%= render "shared/ad_bottom" %>
+      <% unless @category.use_wxjs %>
+        <%= render "shared/rec_games" %>
+        <%= render "shared/ad_bottom" %>
+        <%= render "shared/rec_h5_games" %>
+        <%= render "shared/ad_bottom" %>
+      <% end %> 
     <% else %>
       <% if @category.game_type_id == 11 %>
          <%= render "shared/rec_article_games" %>

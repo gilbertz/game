@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003150321) do
+ActiveRecord::Schema.define(version: 20141015142423) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20141003150321) do
     t.datetime "updated_at",                null: false
     t.integer  "material_type", default: 0, null: false
     t.integer  "game_type_id"
+    t.boolean  "use_wxjs"
   end
 
   create_table "domains", force: true do |t|

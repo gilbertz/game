@@ -79,3 +79,4 @@ gem 'oj'
 gem 'versioncake', '~> 1.2.0'
 
 gem 'weixin_authorize'
+gem 'weixin_rails_middleware'

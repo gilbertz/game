@@ -1,4 +1,5 @@
 Game::Application.routes.draw do
+  mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -62,6 +63,10 @@ Game::Application.routes.draw do
   get '/:dd/weitest/:id/' => "weitest#show"
   get '/w/:sid/:id' => "weitest#show"
   get '/s/:sid/:id' => "weitest#show"
+
+  get '/api/weixin' =>  'weixin#show',  :as=>"weixin"
+  get 'api/weixin/test' =>  'weixin#test',  :as=>"weixin_test"
+  post '/api/weixin' => 'weixin#create', :as=>"weixin_path"
 
   #get '/qq/layouts/:layouts/material_id/:material_id' => "qq/welcome#index"
   #get '/qq/material_id/:material_id' => "qq/welcome#index"
