@@ -125,7 +125,8 @@ class WeitestController < ApplicationController
    
     @wx_id = rand_weixin.wxid
     @wx_domain = rand_domain.get_name
-  
+    #@wx_domain = "http://1.sh.1251225143.clb.myqcloud.com" 
+ 
     @option = "?wid=#{rand_weixin.id}&did=#{rand_domain.id}&sc=#{@sc}"
   end
 
