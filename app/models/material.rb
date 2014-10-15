@@ -77,6 +77,13 @@ class Material < ActiveRecord::Base
     m
   end
 
+  def get_name
+    if self.id == Material.last.id
+      "【新】" + self.name
+    else
+      self.name
+    end 
+  end 
 
   def get_answers
      answers = []
