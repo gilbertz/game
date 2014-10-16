@@ -174,7 +174,7 @@ class Material < ActiveRecord::Base
   def cn_state; { 0 => '下线', 1 => '上线', nil => '下线' }[state] end
 
   def game_type
-    unless self.category.game_type.blank?
+    if self.category and not self.category.game_type.blank?
       self.category.game_type.game_type
     else
       ""

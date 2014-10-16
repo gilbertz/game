@@ -37,12 +37,12 @@
             <span class="label <%= "label-success" if c.state == 1 %>"><%= c.cn_state %></span>
           <% end %>
         </td>
-        <td><%= link_to c.category.try(:name), "/admin/materials?cid=#{c.category.id}" %></td>
+        <td><%= link_to c.category.try(:name), "/admin/materials?cid=#{c.category.id}" if c.category %></td>
         <td><%= c.game_type %></td>
         <td><%= c.created_at.to_local %></td>
         <td> 
           <%= link_to '编辑', [:edit,:admin,c] %> |
-          <%= link_to '编辑模版', [:edit,:admin,c.category]  %> |
+          <%= link_to '编辑模版', [:edit,:admin,c.category] if c.category %> |
           <%= link_to '克隆', [:clone,:admin,c], data: {confirm: "Are you clone one !"} %> |
           <%= link_to '删除', [:admin,c], method: :delete, class: "delMaterial", remote: true, data: {confirm: "Are you sure?"} %>
         </td>

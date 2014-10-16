@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015142423) do
+ActiveRecord::Schema.define(version: 20141015235142) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20141015142423) do
     t.string   "url"
     t.string   "docid"
     t.string   "link"
+    t.string   "thumb"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
