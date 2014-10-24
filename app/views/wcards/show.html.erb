@@ -4,3 +4,5 @@
 <% end %>
 
 <%= ERB.new(@wcard.content).result(binding).html_safe %>
+
+<%= render "shared/analysis" %>
