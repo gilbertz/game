@@ -16,6 +16,15 @@
           <li class="<%= controller_name.in?(['materials']) ? 'active' : '' %>"> 
             <%= link_to '素材管理', [:admin,:materials] %> 
           </li>
+          <li class="<%= controller_name.in?(['wcards']) ? 'active' : '' %>">
+            <%= link_to '微卡管理', [:admin, :wcards] %>
+          </li>
+          
+          <li class="<%= controller_name.in?(['wshows']) ? 'active' : '' %>">
+            <%= link_to '微秀管理', [:admin,:wshows] %>
+          </li> 
+
+
           <li class="<%= controller_name.in?(['ads']) ? 'active' : ''%>">
             <%= link_to '广告管理', [:admin,:ads] %>
           </li>

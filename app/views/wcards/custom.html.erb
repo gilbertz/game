@@ -1,0 +1,39 @@
+<html>
+<head>
+  <title>修改卡片上的滚动文字</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, height=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="http://wx.51self.com/css/wcard/custom.css" media="all">
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head><body>
+
+<form accept-charset="UTF-8" action="/wcards/<%= params[:id] %>" class="contact" id="greet_word_form" method="post"><div style="display:none"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="jzhHjsRbByBbwzL4f4ypI7vNYhHvW3bwKO8wT/Wm4ss="></div><p>写在微卡上的话(不超过200字)：</p><br><fieldset class="contact-inner"><p class="contact-input"><label class="select"><select id="weika_type_id" name="weika[type_id]"><option value="">点击这里选择祝福语</option>
+<option value="房东闪购闪购 ">房东闪购闪购 </option>
+<option value="有一种幸福叫简单，有一种浪漫叫平淡，有一种懂得叫珍惜。生活中，多一份思索，少一份迷茫。多一份淡定，少一份烦恼。多一份宽容，少一份狭隘。多一份坦然，少一份遗憾。心变的简单，日子就会快乐。朋友，安好。">有一种幸福叫简单，有一种浪漫叫平淡，有一种懂得叫珍惜。生活中，多一份思索，少一份迷茫。多一份淡定，少一份烦恼。多一份宽容，少一份狭隘。多一份坦然，少一份遗憾。心变的简单，日子就会快乐。朋友，安好。</option>
+<option value="每一个花开的季节，我都会收取一枚最美的花瓣，夹在一本书中，为的是记住这个季节最美的时刻。以后岁月再长，我依然会忆起收起花瓣那一刻的心情，它已经变成生命中永恒的一瞬间">每一个花开的季节，我都会收取一枚最美的花瓣，夹在一本书中，为的是记住这个季节最美的时刻。以后岁月再长，我依然会忆起收起花瓣那一刻的心情，它已经变成生命中永恒的一瞬间</option>
+<option value="有一种心情，天天传递，依然纯朴；有一种经历，事隔多日，依然怀念；有一种问候，清清淡淡，却最真诚！朋友，愿你的人生铺满鲜花、阳光与微笑；少了孤独，多了祝福；少了忧愁，多了快乐！">有一种心情，天天传递，依然纯朴；有一种经历，事隔多日，依然怀念；有一种问候，清清淡淡，却最真诚！朋友，愿你的人生铺满鲜花、阳光与微笑；少了孤独，多了祝福；少了忧愁，多了快乐！</option>
+<option value="风是透明的，雨是滴答的，云是流动的，歌是自由的，爱是用心的，恋是疯狂的，天是永恒的，你是难忘的。">风是透明的，雨是滴答的，云是流动的，歌是自由的，爱是用心的，恋是疯狂的，天是永恒的，你是难忘的。</option>
+<option value="秋风秋日秋夜长，秋月如水洒人间。秋雨秋水秋叶黄，秋果遍地香满园。秋天麦穗金灿灿，秋天大雁排成行。发个微卡送祝愿，愿你秋天乐神仙！">秋风秋日秋夜长，秋月如水洒人间。秋雨秋水秋叶黄，秋果遍地香满园。秋天麦穗金灿灿，秋天大雁排成行。发个微卡送祝愿，愿你秋天乐神仙！</option>
+<option value="人生最大的幸福不是走平坦的路，而是在坎坷的路上有位患难与共的朋友；最大的快乐不是没有眼泪的生活，而是有位为你擦眼泪的知己。我亲爱的朋友，愿您拥有幸福和快乐!">人生最大的幸福不是走平坦的路，而是在坎坷的路上有位患难与共的朋友；最大的快乐不是没有眼泪的生活，而是有位为你擦眼泪的知己。我亲爱的朋友，愿您拥有幸福和快乐!</option>
+<option value="夜色茫茫照四周，天边新月如钩。往事恍如梦，梦境何处求。人隔千里，路悠悠，请明月，代问候！">夜色茫茫照四周，天边新月如钩。往事恍如梦，梦境何处求。人隔千里，路悠悠，请明月，代问候！</option>
+<option value="一直都很喜欢在宁静的氛围里，去品读文章，聆听音乐，让自己的心也随着这种安宁，徜徉于文字的海洋，随波逐流。那些平淡的，却带着真实情感的文字，仿佛每一种情感，都可以融入我的内心，就如我的每一个文字，都会发自我的心灵深处一样。">一直都很喜欢在宁静的氛围里，去品读文章，聆听音乐，让自己的心也随着这种安宁，徜徉于文字的海洋，随波逐流。那些平淡的，却带着真实情感的文字，仿佛每一种情感，都可以融入我的内心，就如我的每一个文字，都会发自我的心灵深处一样。</option>
+<option value="春有百花，秋有明月。夏有凉风，冬有飘雪。心中若无烦愁事，便是此生好时节!祝你开心！">春有百花，秋有明月。夏有凉风，冬有飘雪。心中若无烦愁事，便是此生好时节!祝你开心！</option>
+<option value="Lift is never be easy, we just go the right way, enjoy our life">Lift is never be easy, we just go the right way, enjoy our life</option>
+<option value="生命如树，四季如歌。愿你的一生犹如春天般绚烂多彩，犹如夏天般热情似火，犹如秋天般深邃睿智，犹如冬天般宁静朴实。">生命如树，四季如歌。愿你的一生犹如春天般绚烂多彩，犹如夏天般热情似火，犹如秋天般深邃睿智，犹如冬天般宁静朴实。</option>
+<option value="任时光匆匆，岁月流逝，永不褪色的是祝福，永不改变的是友情，在这寒冷的日子里，我没别的东西送，只是钱有点多，经过我的几天思考，送你三千万用用：千万要快乐，千万要健康，千万莫忘我。送完再告诉你冬天注意保暖哦！">任时光匆匆，岁月流逝，永不褪色的是祝福，永不改变的是友情，在这寒冷的日子里，我没别的东西送，只是钱有点多，经过我的几天思考，送你三千万用用：千万要快乐，千万要健康，千万莫忘我。送完再告诉你冬天注意保暖哦！</option></select></label></p><p class="contact-input"><textarea id="wording" name="weika[content]"></textarea></p><p class="contact-submit"><input name="commit" type="submit" value="生成微卡"><input id="weika_id" name="weika[id]" type="hidden" value="<%= params[:id] %>"></p></fieldset></form><script type="text/javascript">$("#weika_type_id").change(function(){
+    var greet_word = $("#weika_type_id").val();
+    if(greet_word != null){
+       $("#wording").val(greet_word)
+    }
+});
+$("#greet_word_form").submit(function(event){
+    event.preventDefault();
+    url = "/wcards/"+$("#weika_id").val()+"?content="+$("#wording").val()+"&showcustomer=false";
+    location.href = url;
+});</script>
+
+
+
+<div id="_cfgwp"><span isenoughactivedaynum="true" version="5.2.5"></span></div>
+</body>
+</html>

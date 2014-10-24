@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <% if action_name == "edit" && @material.category.material_type == 1 %>
+  <% if action_name == "edit" && @material.category && @material.category.material_type == 1 %>
 
         <% questions = @material.questions %>
         <div class="control-group">

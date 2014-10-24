@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015235142) do
+ActiveRecord::Schema.define(version: 20141022154309) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -178,6 +178,23 @@ ActiveRecord::Schema.define(version: 20141015235142) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role",             default: 0, null: false
+    t.string   "wx_token"
+  end
+
+  create_table "wcards", force: true do |t|
+    t.text     "content"
+    t.text     "greet_word"
+    t.string   "user_id"
+    t.integer  "bid"
+    t.string   "music"
+    t.string   "cover"
+    t.integer  "cid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "state"
+    t.string   "thumb"
+    t.string   "url"
+    t.string   "title"
   end
 
   create_table "weixins", force: true do |t|
@@ -186,6 +203,22 @@ ActiveRecord::Schema.define(version: 20141015235142) do
     t.integer  "tid"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "wshows", force: true do |t|
+    t.text     "content"
+    t.text     "greet_word"
+    t.string   "user_id"
+    t.integer  "bid"
+    t.string   "music"
+    t.string   "cover"
+    t.integer  "cid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "state"
+    t.string   "thumb"
+    t.string   "url"
+    t.string   "title"
   end
 
   create_table "wx_configs", force: true do |t|

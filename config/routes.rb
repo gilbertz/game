@@ -60,6 +60,26 @@ Game::Application.routes.draw do
     end
   end
 
+  resources :wcards, only: [:show] do
+    collection do
+      get :egg
+    end
+    member do
+      get :custom
+    end
+  end
+
+  resources :wshows, only: [:show] do
+    collection do
+      get :egg
+    end
+    member do
+      get :custom
+      get :save
+    end
+  end
+
+
   get '/:dd/weitest/:id/' => "weitest#show"
   get '/w/:sid/:id' => "weitest#show"
   get '/s/:sid/:id' => "weitest#show"
@@ -109,6 +129,20 @@ Game::Application.routes.draw do
     end
 
     resources :question_answers, except: :new
+    
+    resources :wcards do
+      member do
+        get :clone
+        get :update_state
+      end
+    end
+
+    resources :wshows do
+      member do
+        get :clone
+        get :update_state
+      end
+    end
 
     get '/show_stat' => 'ads#show_stat', as: :show_stat
     get '/click_stat' => 'ads#click_stat', as: :click_stat

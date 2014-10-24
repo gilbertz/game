@@ -1,0 +1,45 @@
+<style> 
+  ul.token-input-list-facebook {position: relative; top: -29px;} 
+  div#cboxLoadedContent {margin-bottom:0px;}
+</style>
+<%= form_for [:admin,@wcard], html: {class: 'form-horizontal' } do |f| %> 
+  <div class="control-group">
+    <label class="control-label">标题:</label>
+    <div class="controls">
+      <%= f.text_field :title, class: "input-xxlarge" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">内容:</label>
+    <div class="controls">
+      <%= f.text_area :content, style:"width:800px;height:100px" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">类别选择</label>
+    <div class="controls">
+      <%= f.select :cid, [["无", 0]] + ::Category.all.collect {|p| [ p.name, p.id ] }%>
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="control-label">背景</label>
+    <div class="controls">
+      <%= f.select :bid, [0..10], class: "input-xxlarge" %>
+    </div>
+  </div>
+
+
+
+  <div class="control-group">
+      <label class="control-label">封面</label>
+      <div class="controls">
+        <%= f.text_field :cover, class: "input-xxlarge" %>
+      </div>
+  </div> 
+ 
+  <div class="form-actions" style="margin-bottom:0px">
+    <%= f.submit '提交', class: 'btn btn-primary', id: "tixing" %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+module WcardHelper
+end
