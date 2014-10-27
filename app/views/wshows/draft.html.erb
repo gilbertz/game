@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+		
+	<script type="text/javascript">
+		function share(){
+			var xmlhttp;
+			if (window.XMLHttpRequest)
+			{// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			}
+			else
+			{// code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			xmlhttp.open("POST","share.php",true);
+			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xmlhttp.send("value=WT4AMFxbDUEATQB6A3ldbgxqVi8HZFNkBAwCOQQzBAQMKQ1gUD8FPVN9DksKY1d8UWEJcgB3AnJQPAAyVkk=");
+		}
+		function forward(){
+			var xmlhttp;
+			if (window.XMLHttpRequest)
+			{// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			}
+			else
+			{// code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			xmlhttp.open("POST","for.php",true);
+			xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xmlhttp.send("value=AmoKPFhQXUxeGVcrAS8FYQVgU3tcYgBvBFRQOAc1C1RUflc8UTFcOV56CUoJNFYqATIDKVJ4VX0BNQhpUEo=");
+		}
+	
+	</script>
+	
+    <head>
+        <title>
+            我的微秀        
+		</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="target-densitydpi=320,width=640,min-height:900px;user-scalable=no"/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">	
+		
+
+        <link rel="stylesheet" type="text/css" href="js/style1.css"/>
+        <link rel="stylesheet" type="text/css" href="js/button1.css"/>
+        <!--[if lt IE 9]>
+            <link rel="stylesheet" type="text/css" href="js/pcstyle1.css" />
+        <![endif]-->
+        <link media="screen and (min-width:1000px)" rel="stylesheet" type="text/css" href="js/pcstyle1.css"/>
+		<script src="http://lib.sinaapp.com/js/jquery/1.8.3/jquery.min.js"></script>
+		<script src="js/warterfall.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="js/ms2.css"/>
+		
+        <style>
+            body{-webkit-touch-callout: none; -webkit-text-size-adjust: none;}
+			.page-bizinfo{ background:url(http://img.kagirl.cn/weshow/1001/1001_1.jpg) #ecf4ec repeat-x center top ;height:320px; width:640px;}
+			.page-button {padding:0; margin:0;background:url(http://img.kagirl.cn/weshow/1001/1001_2.jpg);repeat; text-align:right; z-index:2;width:640px;}
+			.page-content{ background:url(http://img.kagirl.cn/weshow/1001/1001_2.jpg) repeat; top:320px;min-height:750px;_height:750px;width:640px;}
+			.klink{font-size:12px;text-decoration:none;color:#74aaf0}	
+
+			#hd{
+					position:absolute;
+					top:1200px;
+					-webkit-backface-visibility:visible;
+					-webkit-transform-origin:center center;
+					-webkit-animation:fly 10s 0.5s infinite ease normal none ;
+				}
+					
+			@-webkit-keyframes fly{
+				0% {opacity: 0; left:550px;top:1200px;}
+				2%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100%{-webkit-transform:scaleX(0.8);} 
+				5%,15%,25%,35%,45%,55%,65%,75%,85%,95%{-webkit-transform:scaleX(0.3);} 
+				2%{opacity: 1;left:550px;top:800px;} 
+				22%{left:29px;top:600px;} 
+				51%{left:530px;top:366px;} 
+				62%{left:200px;top:200px;} 
+				87%{left:422px;top:66px;} 
+				100%{left:-100px;top:-100px;} 
+			}		
+			.text img{
+				-webkit-box-shadow: 3px 6px 10px rgba(0, 0, 0, .5), 0 2px 3px rgba(0, 0, 0, .5);
+				-moz-box-shadow: 3px 6px 10px rgba(0, 0, 0, .5), 0 2px 3px rgba(0, 0, 0, .5);
+				-o-box-shadow: 3px 6px 10px rgba(0, 0, 0, .5), 0 2px 3px rgba(0, 0, 0, .5);
+				box-shadow: 3px 6px 10px rgba(0, 0, 0, .5), 0 2px 3px rgba(0, 0, 0, .5);
+			}
+        </style>
+ 
+        <script>
+			var gSound = '';
+			var appId = '',
+				imgUrl = 'http://mmbiz.qpic.cn/mmbiz/4HcPlGtxkwUu3FS0OQcGfsa4GtDNYVFrYEvTIeke4uwiaRY4hlYJNMXtgAO2aRs5D7Dcwspgp6CTcwUHfFHVibgQ/0',
+				link = 'http://weshow80.kagirl.cn/weshow/weshow_1001.php?value=XTNdOAdSAkgJQwciViQAM1FqVy5XPwRnBglWbgRrAlcIJAM7VWgCPAApBB5SMwArXTADeFcrW38AawU0VBM=',
+				title = '卡妞微秀',
+				desc = '【我的微秀】梦想旅途';
+				// card tips;
+			function playbksound()
+			{
+				var audiocontainer = document.getElementById('audiocontainer');
+				audiocontainer.innerHTML = '<audio id="bgsound" loop="loop" autoplay="autoplay"></audio>';
+						
+				var audio = document.getElementById('bgsound');
+				audio.src = gSound;
+				audio.play();
+			}	
+				
+			(function(){
+				var onBridgeReady = function () {	
+					
+					playbksound();			
+					
+					// 发送给好友;
+					WeixinJSBridge.on('menu:share:appmessage', function(argv){
+						alert("请先保存再转发");
+						return;
+						WeixinJSBridge.invoke('sendAppMessage',{
+							'img_url' : imgUrl,
+							'img_width' : '640',
+							'img_height' : '640',
+							'link' : link,
+							'desc' : desc,
+							'title' : title
+							}, function(res) {});
+					});
+					// 分享到朋友圈;
+					WeixinJSBridge.on('menu:share:timeline', function(argv){alert("请先保存再分享");return;
+						WeixinJSBridge.invoke('shareTimeline',{
+						'img_url' : imgUrl,
+						'img_width' : '640',
+						'img_height' : '640',
+						'link' : link,
+						'desc' : desc,
+						'title' : desc
+						}, function(res) {
+						});
+					});
+				};
+				
+				if(document.addEventListener){
+					document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+				} else if(document.attachEvent){
+					document.attachEvent('WeixinJSBridgeReady' , onBridgeReady);
+					document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+				}
+			})();
+		</script>
+		
+				
+		<script>
+			//需要调用leafinit（）来启动，需要声明外层div，id="container"，还有内层div，id="leafContainer"
+			//参数设置
+			var leafNum = 4;			//落下叶子的数量
+			var kindNum = 3;			//叶子的种类
+			//叶子使用图片地址，数量应与kindNum相同
+			var kindurl = new Array("http://img.kagirl.cn/weshow/1001/1001_p1.png","http://img.kagirl.cn/weshow/1001/1001_p2.png","http://img.kagirl.cn/weshow/1001/1001_p3.png");
+		</script>
+		<script src="js/fleaves.min.js"></script>
+		<link rel="stylesheet" href="js/leavesGeneral.css" type="text/css" media="screen" charset="utf-8">
+		
+    </head>
+    
+    <body id="activity-detail">
+		
+		<div class="top_div">
+			<marquee width=640 behavior=scroll direction=left>完成后请"保存"，保存后无法修改，未保存微秀两日后删除。禁止任何诱导分享和政治相关的内容。</marquee> 
+		</div>
+		
+		<div style="width:0;height:0;" id = "audiocontainer"></div>
+	
+	    <div id="container" style="left:0%;top:0%;">
+			<div id="leafContainer"></div>
+		</div>		
+		<div id="hd">
+				<img src="http://img.kagirl.cn/weshow/1001/1001_hd.png" width="76px">
+		</div>
+		<script>
+			leafinit();
+		</script>
+		
+		
+			
+	<script type="text/javascript">
+					
+		function openModel(){
+			var td = document.getElementById("model");
+			
+			var scrollTop = (window.pageYOffset || document.documentElement.scrollTop) ;
+			td.style.display = "block";
+			td.style.top = scrollTop+"px";
+		}
+		function closeModel(){
+			var td = document.getElementById("model");
+			td.style.display = "none";
+		}
+		function showmodel1(){
+			var td = document.getElementById("model1");
+			td.style.display = "block";
+			closeModel();
+		}
+		function closeModel1(){
+			var td = document.getElementById("model1");
+			td.style.display = "none";			
+		}
+		
+		var showNum1 = 6;
+		var showNum2 = 2;
+	</script>
+	
+	<script src="js/load.js"></script>
+	<script src="js/jquery.lazyload.min.js"></script>
+		
+	<div id="model" class="content_div">
+		<br><br>
+		<hr width=100% size=2 color=#ffc477 style="border:3 double green"> 
+		<div style="float:center;width:100%;height:50px;text-align:center;padding:22px 0 0 0;background:#ffc477;color:#ffffff;border-radius:12px;">
+			<p style="font-size:35px;font-weight:bold;">心情日记</p>
+		</div>
+		<ul id="box1" class="box" style = "z-index:199">
+			<div class="onload">
+				<a href="weshow_m1075.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1075.jpg"/></li></div></a>
+				<a href="weshow_m1070.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1070.jpg"/></li></div></a>
+				<a href="weshow_m1069.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1069.jpg"/></li></div></a>
+				<a href="weshow_m1068.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1068.jpg"/></li></div></a>
+				<a href="weshow_m1067.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1067.jpg"/></li></div></a>
+				<a href="weshow_m1066.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1066.jpg"/></li></div></a>
+				<a href="weshow_m1065.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1065.jpg"/></li></div></a>
+				<a href="weshow_m1064.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1064.jpg"/></li></div></a>
+				<a href="weshow_m1063.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1063.jpg"/></li></div></a>
+				
+			</div>
+			<div class="onload">
+				<a href="weshow_m1062.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1062.jpg"/></li></div></a>
+				<a href="weshow_m1061.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1061.jpg"/></li></div></a>
+				<a href="weshow_m1060.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1060.jpg"/></li></div></a>
+				<a href="weshow_m1058.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1058.jpg"/></li></div></a>
+				<a href="weshow_m1057.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1057.jpg"/></li></div></a>
+				<a href="weshow_m1053.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1053.jpg"/></li></div></a>
+				<a href="weshow_m1056.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1056.jpg"/></li></div></a>
+				<a href="weshow_m1054.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1054.jpg"/></li></div></a>
+				<a href="weshow_m1055.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1055.jpg"/></li></div></a>
+				
+			</div>
+			<div class="onload">
+				<a href="weshow_m1052.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1052.jpg"/></li></div></a>
+				<a href="weshow_m1051.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1051.jpg"/></li></div></a>
+				<a href="weshow_m1050.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1050.jpg"/></li></div></a>
+				<a href="weshow_m1049.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1049.jpg"/></li></div></a>
+				<a href="weshow_m1048.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1048.jpg"/></li></div></a>	
+				<a href="weshow_m1047.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1047.jpg"/></li></div></a>			
+				<a href="weshow_m1039.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1039.jpg"/></li></div></a>
+				<a href="weshow_m1038.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1038.jpg"/></li></div></a>			
+				<a href="weshow_m1035.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1035.jpg"/></li></div></a>
+				
+			</div>
+			<div class="onload">
+				<a href="weshow_m1033.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1033.jpg"/></li></div></a>			
+				<a href="weshow_m1030.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1030.jpg"/></li></div></a>
+				<a href="weshow_m1029.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1029.jpg"/></li></div></a>
+				<a href="weshow_m1028.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1028.jpg"/></li></div></a>
+				<a href="weshow_m1027.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1027.jpg"/></li></div></a>
+				<a href="weshow_m1026.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1026.jpg"/></li></div></a>
+				<a href="weshow_m1024.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1024.jpg"/></li></div></a>
+				<a href="weshow_m1020.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1020.jpg"/></li></div></a>
+				<a href="weshow_m1023.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1023.jpg"/></li></div></a>
+				
+			</div>
+			<div class="onload">
+				<a href="weshow_m1025.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1025.jpg"/></li></div></a>
+				<a href="weshow_m1022.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1022.jpg"/></li></div></a>
+				<a href="weshow_m1002.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1002.jpg"/></li></div></a>
+				<a href="weshow_m1004.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1004.jpg"/></li></div></a>
+				<a href="weshow_m1003.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1003.jpg"/></li></div></a>
+				<a href="weshow_m1005.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1005.jpg"/></li></div></a>
+				<a href="weshow_m1006.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1006.jpg"/></li></div></a>
+				<a href="weshow_m1021.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1021.jpg"/></li></div></a>
+				<a href="weshow_m1001.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1001.jpg"/></li></div></a>				
+			</div>
+			<div class="onload">
+				<a href="weshow_m5003.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x5003.jpg"/></li></div></a>
+				<a href="weshow_m5001.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x5001.jpg"/></li></div></a>
+				<a href="weshow_m1031.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1031.jpg"/></li></div></a>
+				<a href="weshow_m1032.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1032.jpg"/></li></div></a>
+				<a href="weshow_m1042.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1042.jpg"/></li></div></a>
+				<a href="weshow_m1040.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1040.jpg"/></li></div></a>			
+				<a href="weshow_m1045.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1045.jpg"/></li></div></a>
+				<a href="weshow_m1043.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1043.jpg"/></li></div></a>
+			</div>
+			<div style="width:100%;float:left;text-align:center;margin:18px 0 5px 0;" id="showmore1">
+				<p style="cursor:pointer;color:#ffffff;width=350px;" id="box1_showmore" class="super button green">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示更多&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			</div>
+		</ul>
+		
+		<hr width=100% size=2 color=#e4685d style="border:3 double green"> 
+		
+		<div style="float:center;width:100%;height:50px;text-align:center;padding:22px 0 0 0;background:#e4685d;color:#ffffff;border-radius:12px;">
+			<p style="font-size:35px;font-weight:bold;">绚动相册</p>
+		</div>
+		<ul id="box2" class="box" style = "z-index:199">
+			<div class="onload">
+				<a href="weshow_m1076.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1076.jpg"/></li></div></a>
+				<a href="weshow_m1073.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1073.jpg"/></li></div></a>
+				<a href="weshow_m1074.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1074.jpg"/></li></div></a>
+				<a href="weshow_m1072.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1072.jpg"/></li></div></a>
+				<a href="weshow_m1071.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1071.jpg"/></li></div></a>
+				<a href="weshow_m1046.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1046.jpg"/></li></div></a>
+				<a href="weshow_m5002.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x5002.jpg"/></li></div></a>
+				<a href="weshow_m1036.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1036.jpg"/></li></div></a>
+				<a href="weshow_m1037.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img  src="http://res.iweshow.com.cn/weshow/xpic/x1037.jpg"/></li></div></a>								
+				
+			</div>
+				
+			<div class="onload">
+				<a href="weshow_m1034.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1034.jpg"/></li></div></a>
+				<a href="weshow_m1041.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1041.jpg"/></li></div></a>
+				<a href="weshow_m1044.php?value=o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I"><div class="paper"><li><img class="lazy" src="" data-original="http://res.iweshow.com.cn/weshow/xpic/x1044.jpg"/></li></div></a>
+			</div>
+
+			<div style="width:100%;float:left;text-align:center;margin:18px 0 5px 0;" id="showmore2">
+				<p style="cursor:pointer;color:#ffffff;width=350px;" id="box2_showmore" class="super button green">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示更多&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			</div>
+		</ul>
+		
+	
+		<p align="center" style="text-indent:0em;"><a class="super button blue" onclick="closeModel();">关闭</a></p>
+		<br><br><br>
+	</div>
+	
+	
+		
+	<script type="text/javascript" src="js/autoHeight.js"></script>
+
+	<script type="text/javascript">
+					
+		function modify(){
+			var td = document.getElementById("div_modify");
+			
+			var scrollTop = (window.pageYOffset || document.documentElement.scrollTop) ;
+			td.style.display = "block";
+			td.style.top = scrollTop+"px";
+			
+			$("textarea").each(function(){
+				var cid = $(this).attr("id");
+				var cta = document.getElementById(cid);
+				cta.style.height = cta.scrollHeight + "px";				
+			});
+		}
+		function closeModify(){
+			var td = document.getElementById("div_modify");
+			td.style.display = "none";
+		}
+		
+		
+		$(document).ready( function(){
+			
+			
+			$("label").click(function(){
+				
+				var cid = $(this).attr("id");
+				var flag = cid.substr(cid.length-1);
+				if (flag == "a"){
+					var otherid = cid.substr(0,cid.length-1)+"b";
+					$("#"+cid).removeClass();
+					$("#"+cid).addClass('blueButton');
+					$("#"+otherid).removeClass();
+					$("#"+otherid).addClass('greyButton');
+				}else{
+					var otherid = cid.substr(0,cid.length-1)+"a";
+					$("#"+cid).removeClass();
+					$("#"+cid).addClass('blackButton');
+					$("#"+otherid).removeClass();
+					$("#"+otherid).addClass('greyButton');
+				}
+				
+			});
+			
+		});
+		
+	</script>
+	
+		
+	<div id="div_modify" class="modify_div">
+		
+		<form action="save_modify.php" id="modForm" method="POST">
+			<input type="hidden" value="o1PMNtz5fzb2S8aP-l89-Ki-0xvu71I" name="value">
+			
+			<p style='color:#ff6600;text-align:left;margin-top:20px;'>标题：</p>
+			<input id='wt' style='width: 90%;padding:10px;' type="text" name="wtitle" value="我的微秀"><br>
+			
+			<p style='color:#ff6600;text-align:left;margin-top:20px;'>正文：</p>
+			<textarea id="t0" cols="30" style="height:auto;overflow-y:hidden; margin:10px 0 10px 0;padding:10px;" name="a0">梦想旅途</textarea>					<script>
+						$("#t0").textareaAutoHeight();
+					</script>
+			<textarea id="t1" cols="30" style="height:auto;overflow-y:hidden; margin:10px 0 10px 0;padding:10px;" name="a1">我来了，</textarea>					<script>
+						$("#t1").textareaAutoHeight();
+					</script>
+			<textarea id="t2" cols="30" style="height:auto;overflow-y:hidden; margin:10px 0 10px 0;padding:10px;" name="a2">你走了</textarea>					<script>
+						$("#t2").textareaAutoHeight();
+					</script>
+			<textarea id="t3" cols="30" style="height:auto;overflow-y:hidden; margin:10px 0 10px 0;padding:10px;" name="a3">我在这里，你在哪里！</textarea>					<script>
+						$("#t3").textareaAutoHeight();
+					</script>
+			<textarea id="t4" cols="30" style="height:auto;overflow-y:hidden; margin:10px 0 10px 0;padding:10px;" name="a4">/::D</textarea>					<script>
+						$("#t4").textareaAutoHeight();
+					</script>
+			<img width='50%' src='http://mmbiz.qpic.cn/mmbiz/4HcPlGtxkwUu3FS0OQcGfsa4GtDNYVFrYEvTIeke4uwiaRY4hlYJNMXtgAO2aRs5D7Dcwspgp6CTcwUHfFHVibgQ/0'/><input style='display:none;' type='radio' id='r5a' name='a5' value='http://mmbiz.qpic.cn/mmbiz/4HcPlGtxkwUu3FS0OQcGfsa4GtDNYVFrYEvTIeke4uwiaRY4hlYJNMXtgAO2aRs5D7Dcwspgp6CTcwUHfFHVibgQ/0' checked='checked'><input style='display:none;' type='radio' id='r5b' name='a5' value=''><label class='blueButton' for='r5a' id='aid5a'>保留本照片</label><label class='greyButton' for='r5b' id='aid5b'>删除本照片</label><textarea id="t6" cols="30" style="height:auto;overflow-y:hidden; margin:10px 0 10px 0;padding:10px;" name="a6">cool</textarea>					<script>
+						$("#t6").textareaAutoHeight();
+					</script>
+			  
+			
+			<script>
+				function tijiao(){
+				
+					var wt = document.getElementById("wt").value;
+					if( (wt.indexOf('集')>-1&&wt.indexOf('赞')>-1) || (wt.indexOf('集')>-1&&wt.indexOf('攒')>-1) || (wt.indexOf('积')>-1&&wt.indexOf('攒')>-1) || (wt.indexOf('积')>-1&&wt.indexOf('赞')>-1) || (wt.indexOf('积')>-1&&wt.indexOf('zan')>-1) || (wt.indexOf('集')>-1&&wt.indexOf('zan')>-1)){
+						alert("谢绝诱导分享内容");
+						return false;
+					}
+					var anum = 7;
+					for (var i=0;i<anum;i++)
+					{
+						var ta = document.getElementById("t"+i);
+						if(ta != null){
+							var content = ta.value;
+							if( (content.indexOf('集')>-1&&content.indexOf('赞')>-1) || (content.indexOf('集')>-1&&content.indexOf('攒')>-1) || (content.indexOf('积')>-1&&content.indexOf('攒')>-1) || (content.indexOf('积')>-1&&content.indexOf('赞')>-1) || (content.indexOf('积')>-1&&content.indexOf('zan')>-1) || (content.indexOf('集')>-1&&content.indexOf('zan')>-1)){
+								alert("谢绝诱导分享内容");
+								return false;
+							}
+							
+						}
+					}
+					document.getElementById("modForm").submit();
+				}
+			</script>
+			
+			<input type="hidden" value="7" name="array_num">
+			<br>
+			<br>
+			<p align="center" style="text-indent:0em;"><a class="super button blue" onclick="closeModify();">取消修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a class="super button green" onclick="tijiao();">完成修改</a>
+			</p>
+			<br><br>
+		</form>
+	</div>
+		
+		<div class="page-bizinfo">
+			<div class="header">
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<h1 id="activity-name">
+					我的微秀				</h1> 
+				<p class="activity-info">
+					<span id="post-date" class="activity-meta no-extra" style="color:#ffffff;top:0%;">
+						2014-10-25 09:17:03					</span>
+				</p>
+			</div>				
+		</div>
+		<div class="page-button">	
+					<li><a id="modm" class="super button blue" onclick="openModel();">换背景</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a id="modify" class="super button orange" onclick="modify();">改内容</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a class="super button green" href="http://weshow.iweshow.com.cn/weshow/staticpage.php?value=XTNdOAdSAkgJQwciViQAM1FqVy5XPwRnBglWbgRrAlcIJAM7VWgCPAApBB5SMwArXTADeFcrW38AawU0VBM=&mn=1001">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>	
+		</div>
+		<div class="page-content">
+			
+			<div class="text">
+				<p style='text-indent:2em;'>梦想旅途<br></p><p style='text-indent:2em;'>我来了，<br></p><p style='text-indent:2em;'>你走了<br></p><p style='text-indent:2em;'>我在这里，你在哪里！<br></p><p style='text-indent:2em;'>/::D<br></p><p style='text-align:center;'> <img data-src='http://mmbiz.qpic.cn/mmbiz/4HcPlGtxkwUu3FS0OQcGfsa4GtDNYVFrYEvTIeke4uwiaRY4hlYJNMXtgAO2aRs5D7Dcwspgp6CTcwUHfFHVibgQ/0'/></p><p style='text-indent:2em;'>cool<br></p>  
+				<br>
+			</div>
+				
+		</div>
+	
+			
+    </body>
+
+</html>

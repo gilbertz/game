@@ -72,6 +72,7 @@ Game::Application.routes.draw do
   resources :wshows, only: [:show] do
     collection do
       get :egg
+      get :draft
     end
     member do
       get :custom
