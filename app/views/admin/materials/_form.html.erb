@@ -138,12 +138,11 @@
       <%= f.text_field :wx_title, class: "input-xxlarge" %>
     </div>
   </div>
-  <% if false %>
+  <% if true %>
     <div class="control-group">
-      <label class="control-label">链接</label>
+      <label class="control-label">分享链接</label>
       <div class="controls">
-        <% wx_url = @material.wx_url %>
-        <%= f.text_field :wx_url, value: wx_url, class: "input-xxlarge" %>
+        <%= f.text_field :share_url, class: "input-xxlarge" %>
       </div>
     </div>
   <% end %>

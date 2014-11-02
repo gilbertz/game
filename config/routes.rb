@@ -20,6 +20,7 @@ Game::Application.routes.draw do
 
   get '/', to: 'home#read', constraints: {subdomain: 't'}, as: 'read_root'
   get '/',  to: "home#index", as: 'default_root'
+  get '/games', to: "home#list"
 
   resources :home, only: [] do
     get :search

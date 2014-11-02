@@ -76,7 +76,7 @@ class Admin::MaterialsController < Admin::BaseController
   end
   private
   def material_params
-    params.require(:material).permit(:link, :name,:description,:category_id,:wx_appid,:wxdesc,:wx_tlimg, :thumb, :wx_url,:wx_title, :wx_ln, :advertisement, :advertisement_1)
+    params.require(:material).permit(:link, :name,:description,:category_id,:wx_appid,:wxdesc,:wx_tlimg, :thumb, :wx_url,:share_url, :wx_title, :wx_ln, :advertisement, :advertisement_1)
   end
 
   def clear_rubbish

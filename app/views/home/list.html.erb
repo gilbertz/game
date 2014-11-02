@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+  <meta http-equiv="expires" content="0">
+  <title>微转盘</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1.0, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="http://1251008728.cdn.myqcloud.com/1251008728/2014/07/21/comm.css">
+  <link rel="stylesheet" type="text/css" href="http://1251008728.cdn.myqcloud.com/1251008728/2014/07/21/info.css" media="screen, projection">
+</head>
+<body >
+
+<article class="content">
+  <section class="app-intro">
+    <ul class="mod-app-intro game_list" id="j_game_list">
+
+    </ul>
+  </section>
+</article>
+
+<script language="javascript">
+    var Game = {
+        request: function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+    }
+
+
+    var i = 0;
+    var games = new Array();
+
+    <% unless @materials.blank? %>
+
+        <% @materials.each do |material| %>
+            games[i] = new Array();
+            games[i].name = "<%= material.wx_title %>";
+            games[i].type = "<%= material.game_type %>";
+            games[i].score = 70+Math.floor(Math.random()*20);
+            games[i].icon = "<%= material.wx_tlimg %>";
+            games[i].ishot = true;
+            games[i].src = "/weitest/<%= material.url %>";
+            i++;
+        <% end %>
+
+    <% end %>
+
+
+    function draw() {
+        var sr = "";
+        for (var i = 0; i < games.length; i++) {
+            var gtype = games[i].type;
+            if (!gtype)gtype = "休闲竞技";
+            var score = games[i].score;
+            if (!score)score = 60;
+            sr += "<li data-url='" + games[i].src + "'><figure><img src='" + games[i].icon + "'/><figcaption><h3 class='tit'>" + games[i].name + "</h3><p>" + gtype + " 好评" + score + "%</p><p><span>" + (100000 + parseInt(Math.random() * 1000000)) + "人玩过</span></p></figcaption><span class='btn btn-g' data-url='" + games[i].src + "'>开始玩</span></figure></li>";
+
+        }
+        document.getElementById("j_game_list").innerHTML = sr;
+    }
+    draw();
+
+</script>
+
+
+<script src="http://1251008728.cdn.myqcloud.com/1251008728/2014/07/21/base.js"></script>
+
+<script>
+    seajs.use('http://1251008728.cdn.myqcloud.com/1251008728/2014/07/21/common.js', function (init) {
+        init();
+    });
+</script>
+<footer class="footer" id="j_foot_nav" style="display: block;">
+
+  <menu class="d-menu" style="display:none;"></menu>
+  <div class="ft-copy">
+    <p><span>©2014 微转盘</span></p>
+
+    <div class="btn-top" style=""><a id="j_back_top" data-pvtag="foot.back" data-nogo="1">回顶部</a></div>
+  </div>
+</footer>
+
+<br>
+<br>
+<br>
+<style>
+    #fix_footer {
+        -moz-box-shadow: 0px 0px 11px #191919;
+        -webkit-box-shadow: 0px 0px 11px #191919;
+        box-shadow: 0px 0px 11px #191919;
+    }
+
+    #fix_footer_menu {
+        border-right: 1px solid rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.1);
+        font-family: 黑 体;
+    }
+
+    #fix_footer_menu_on {
+        border-right: 1px solid rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.3);
+        font-family: 黑 体;
+        background: #202020; /* Fallback color for old browsers */
+    }
+</style>
+
+<%= render "shared/analysis" %>
+
+</body>
+</html>
