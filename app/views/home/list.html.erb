@@ -48,6 +48,7 @@
             games[i].icon = "<%= material.wx_tlimg %>";
             games[i].ishot = true;
             games[i].src = "/weitest/<%= material.url %>";
+            games[i].pv = "<%= material.fake_pv %>";
             i++;
         <% end %>
 
@@ -61,7 +62,7 @@
             if (!gtype)gtype = "休闲竞技";
             var score = games[i].score;
             if (!score)score = 60;
-            sr += "<li data-url='" + games[i].src + "'><figure><img src='" + games[i].icon + "'/><figcaption><h3 class='tit'>" + games[i].name + "</h3><p>" + gtype + " 好评" + score + "%</p><p><span>" + (100000 + parseInt(Math.random() * 1000000)) + "人玩过</span></p></figcaption><span class='btn btn-g' data-url='" + games[i].src + "'>开始玩</span></figure></li>";
+            sr += "<li data-url='" + games[i].src + "'><figure><img src='" + games[i].icon + "'/><figcaption><h3 class='tit'>" + games[i].name + "</h3><p>" + gtype + " 好评" + score + "%</p><p><span>" + games[i].pv + "人玩过</span></p></figcaption><span class='btn btn-g' data-url='" + games[i].src + "'>开始玩</span></figure></li>";
 
         }
         document.getElementById("j_game_list").innerHTML = sr;

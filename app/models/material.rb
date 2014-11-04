@@ -134,11 +134,7 @@ class Material < ActiveRecord::Base
   end
 
   def fake_pv
-    if self.pv.to_i > 10000
-      (self.pv.to_i / 100).to_i
-    else
-      self.pv
-    end
+    self.pv.to_i * 10 + rand(10)
   end
 
   def share_count(type)
