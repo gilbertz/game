@@ -20,7 +20,7 @@ WeixinRailsMiddleware.configure do |config|
   # Wiki https://github.com/lanrion/weixin_rails_middleware/wiki/Custom-Adapter
   # config.custom_adapter = "MyCustomAdapter"
 
-  config.weixin_token_string  = 'c06a2a40256fdeb47ff0c7cc'
-  config.weixin_secret_string = 'J92Eba24yRpG-s9LGYOA03FcnULHYFYs'
+  config.weixin_token_string  = '020fc4f5c2e609f20b06ece2'
+  config.weixin_secret_string = 'ror6uymrqmetukfxkw27ngg4blv9tghxe0r8vlvxktc'
 
 end

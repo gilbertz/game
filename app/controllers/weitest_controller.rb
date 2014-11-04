@@ -154,7 +154,7 @@ class WeitestController < ApplicationController
     #@material.wx_ln = "http://share.51self.com"
 
     if @material.category
-      @base_category = Category.find(1)
+      @base_category = Category.find(9)
       get_topn(@material.category_id)
       render layout: false
     else
