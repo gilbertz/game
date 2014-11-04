@@ -19,7 +19,7 @@ Game::Application.routes.draw do
   #root :to => redirect("/weitest/875161620")
 
   get '/', to: 'home#read', constraints: {subdomain: 't'}, as: 'read_root'
-  get '/',  to: "home#index", as: 'default_root'
+  get '/',  to: "home#list", as: 'default_root'
   get '/games', to: "home#list"
 
   resources :home, only: [] do
