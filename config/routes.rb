@@ -32,6 +32,7 @@ Game::Application.routes.draw do
   get '/add_weixin_url' => "home#add_weixin_url"
 
   get '/weitest/:material_id/result' => "weitest#result"
+  get '/gouhai/:gurl/:title' => "wcards#gouhai" 
 
   #get '/weitest/gabrielecirulli' => 'weitest#gabrielecirulli'
   get '/weitest/wx_share' => 'weitest#wx_share'

@@ -1,7 +1,9 @@
+<!--
 <%= form_for(@wcard) do |f| %>
    <%= f.hidden_field :id, value: @wcard.id %>
    <%= f.hidden_field :greet_word,value:params[:content] %>
 <% end %>
+-->
 
 <%= ERB.new(@wcard.content).result(binding).html_safe %>
 

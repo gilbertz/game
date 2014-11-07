@@ -1,3 +1,3 @@
-    <%= @material.description.html_safe  %>
+    <%= ERB.new( @material.description ).result(binding).html_safe %>
  
     <%= render "shared/analysis" %>
