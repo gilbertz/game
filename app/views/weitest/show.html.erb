@@ -70,11 +70,15 @@
         <%#= render "shared/ad_bottom" %>
       <% end %> 
     <% else %>
-      <% if @category.game_type_id == 11 %>
-         <%= render "shared/rec_article_games" %>
-      <% end %>
-      <% if @category.id != 255 %>
-        <%= render "shared/ad_bottom_h5" %>
+      <% unless show_rec %>
+        <%= render "shared/ad_bottom" %>  
+      <% else %>
+         <% if @category.game_type_id == 11 %>
+           <%= render "shared/rec_article_games" %>
+         <% end %>
+         <% if @category.id != 255 %>
+           <%= render "shared/ad_bottom_h5" %>
+         <% end %>
       <% end %>
     <% end %>
  
