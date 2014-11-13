@@ -48,7 +48,7 @@
     <% show_rec = @material.category.material_type != 1 %>
 
     <%if @category.game_type_id != 7 and @category.game_type_id != 11 %>
-      <%= render "shared/ad2" %>
+      <%= render "shared/ad1" %>
     <% end %>
 
     <% @prompt_image = @material.images.select{|i| i.state == 3 }[0].try(:body) %>
