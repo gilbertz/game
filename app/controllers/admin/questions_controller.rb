@@ -37,7 +37,7 @@ class Admin::QuestionsController < Admin::BaseController
 
   private
   def question_params
-    params.require(:question).permit(:question_title, :material_id)
+    params.require(:question).permit(:question_title, :question_img, :material_id)
   end
 
 end

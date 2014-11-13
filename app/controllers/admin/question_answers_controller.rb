@@ -42,7 +42,7 @@ class Admin::QuestionAnswersController < Admin::BaseController
 
   private
   def question_answer_params
-    params.require(:question_answer).permit(:answer, :answer_score, :question_id)
+    params.require(:question_answer).permit(:answer, :answer_img, :answer_score, :question_id)
   end
 
 end

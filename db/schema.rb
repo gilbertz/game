@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028040805) do
+ActiveRecord::Schema.define(version: 20141113035444) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20141028040805) do
     t.integer  "big_than"
     t.integer  "small_than"
     t.integer  "weight"
+    t.text     "desc"
   end
 
   add_index "answers", ["viewable_id", "viewable_type"], name: "index_game_answers_on_viewable_id_and_viewable_type", using: :btree
@@ -158,6 +159,8 @@ ActiveRecord::Schema.define(version: 20141028040805) do
     t.integer "question_id",              null: false
     t.string  "answer",                   null: false
     t.integer "answer_score", default: 0, null: false
+    t.string  "answer_img"
+    t.integer "answer_jump"
   end
 
   add_index "question_answers", ["question_id"], name: "index_question_answers_on_question_id", using: :btree
@@ -167,6 +170,7 @@ ActiveRecord::Schema.define(version: 20141028040805) do
     t.text     "question_title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "question_img"
   end
 
   add_index "questions", ["material_id"], name: "index_questions_on_material_id", using: :btree

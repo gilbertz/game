@@ -20,7 +20,14 @@
         <strong>问题标题:</strong>
       </label>
       <div class="controls" style="margin:0 30px 0 110px">
-        <%= f.text_area :question_title, style: "width:400px", required: true %>
+        <%= f.text_area :question_title, style: "width:400px" %>
+      </div>
+
+      <label class="control-label" style="width:100px">
+        <strong>问题图片:</strong>
+      </label>
+      <div class="controls" style="margin:0 30px 0 110px">
+        <%= f.text_area :question_img, style: "width:400px" %>
       </div>
     </div>
 

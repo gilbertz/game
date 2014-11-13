@@ -44,7 +44,10 @@
         <%= ERB.new(@category.css).result(binding).html_safe %>
       </style>
     </head>
-    <%if  @category.game_type_id != 7 and @category.game_type_id != 11 %>
+    
+    <% show_rec = @material.category.material_type != 1 %>
+
+    <%if show_rec and @category.game_type_id != 7 and @category.game_type_id != 11 %>
       <%= render "shared/ad1" %>
     <% end %>
 
@@ -56,8 +59,7 @@
     <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
     <%= ERB.new(@category.html).result(binding).html_safe %>
    
-    <% show_rec = @material.category and @material.category.material_type != 1 %>
- 
+
     <% if show_rec and @category.game_type_id != 7 and @category.game_type_id != 11 %>
       <%#= render "shared/ad_bottom" %>
       <%= render "shared/ad_wx" %>

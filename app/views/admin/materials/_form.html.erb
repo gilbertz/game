@@ -39,12 +39,18 @@
           <% questions.each do |q| %>
           <div class="controls well" style="padding-top:6px">
             <%= q.question_title %>
+           <% unless q.question_img.blank? %>
+             <img src = "<%= q.question_img %>">
+           <% end %> 
             <hr style="margin: 0">
             <% qas = q.question_answers %>
             <% unless qas.blank? %>
                 <ul>
                   <% qas.each do |qa| %>
                       <li>
+                        <% unless qa.answer_img.blank? %>
+                          <img src = "<%= qa.answer_img %>">
+                        <% end %>  
                         <%= qa.answer %> | <%= qa.answer_score %> | <%= link_to '编辑问题答案', [:edit,:admin,qa], id: :add_obj, class: "btn btn-mini btn-success", remote: true %>
                         | <%= link_to '删除', [:admin,qa], method: :delete, class: "btn btn-mini btn-success", confirm: "Are you sure to delete this?" %>
                       </li>
