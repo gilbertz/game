@@ -3,6 +3,7 @@ class WcardsController < ApplicationController
  
   def gouhai
     @wcard = Wcard.find 10
+    @game = Material.find_by_url(params[:gurl])
     render :show,  layout: false
   end
 
