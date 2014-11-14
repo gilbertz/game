@@ -152,6 +152,7 @@ class WeitestController < ApplicationController
     #@material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MzA3MDk0MzMxNQ==&mid=200586729&idx=1&sn=599156aecedbfa9317785390ddb0b448#rd"
     #@material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MjM5NjIzOTE2OQ==&mid=200366500&idx=1&sn=21c2832b5382e6aafd4e55a0d6c85f5f#rd"
     #@material.wx_ln = "http://share.51self.com"
+    @material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=200813347&idx=1&sn=eed8f29236a28b1ca2ec963ad9632311#rd"
 
     if @material.category
       @base_category = Category.find(9)
