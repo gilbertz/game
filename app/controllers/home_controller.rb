@@ -37,6 +37,7 @@ class HomeController < ApplicationController
     page = 1
     page = params[:page].to_i if params[:page]
     @next_page = page + 1
+    limit = 20
 
     materials = Material.includes(:images).joins(:category)
 
@@ -54,7 +55,7 @@ class HomeController < ApplicationController
     materials = materials.order('id desc')
 
     unless params[:game]
-      @materials = materials.page( page ).per(12)
+      @materials = materials.page( page ).per( limit )
     else
       @materials = materials
     end
