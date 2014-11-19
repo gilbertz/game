@@ -158,7 +158,7 @@ class WeitestController < ApplicationController
     @material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=200727692&idx=1&sn=486772b0aa019ee35b2c1d628df8a9ad#wechat_redirect'
  
     if @material.category
-      @base_category = Category.find(1)
+      @base_category = Category.find(9)
       get_topn(@material.category_id)
       render layout: false
     else
