@@ -222,6 +222,17 @@ class Material < ActiveRecord::Base
   end
 
 
+  def self.by_hook(url)
+    m = Material.find_by_id url
+    m = Material.find_by_url(url) unless m
+    unless m
+      hook = Hook.find_by_url(url)
+      m = Material.find_by_id(hook.material_id) if hook
+    end
+    m
+  end
+
+
   private
   def clone_self
     material = Material.new self.attributes.except!("created_at","id", "url")
