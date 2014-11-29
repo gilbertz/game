@@ -4,6 +4,7 @@ class Admin::MaterialsController < Admin::BaseController
     cond = "1=1"
     cond += " and category_id=#{params[:cid]}" if params[:cid]
     cond += " and user_id = 1"
+    cond += " and name like '%#{params[:q]}%'" if params[:q]
     @materials = Material.includes(:category).where(cond).order('id desc').page(params[:page])
   end
 
