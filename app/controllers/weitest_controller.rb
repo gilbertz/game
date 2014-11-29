@@ -131,7 +131,7 @@ class WeitestController < ApplicationController
   end
 
 
-  caches_page :show
+  #caches_page :show
   def show
     ua = request.user_agent.downcase
     #p ua
