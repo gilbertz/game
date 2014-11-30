@@ -45,7 +45,7 @@
         <% @materials.each do |material| %>
             games[i] = new Array();
             games[i].name = "<%= material.wx_title %>";
-            games[i].type = "<%= material.game_type %>";
+            //games[i].type = "<%= material.game_type %>";
             games[i].score = 70+Math.floor(Math.random()*20);
             games[i].icon = "<%= material.wx_tlimg %>";
             games[i].ishot = true;
@@ -61,7 +61,7 @@
         var sr = "";
         for (var i = 0; i < games.length; i++) {
             var gtype = games[i].type;
-            if (!gtype)gtype = "休闲竞技";
+            if (!gtype)gtype = "";
             var score = games[i].score;
             if (!score)score = 60;
             sr += "<li data-url='" + games[i].src + "'><figure><img src='" + games[i].icon + "'/><figcaption><h3 class='tit'>" + games[i].name + "</h3><p>" + gtype + " 好评" + score + "%</p><p><span>" + games[i].pv + "人玩过</span></p></figcaption><span class='btn btn-g' data-url='" + games[i].src + "'>开始玩</span></figure></li>";
