@@ -102,7 +102,7 @@ class WeitestController < ApplicationController
     @sid = 0
     @option = ''
     @sc = 1
-    @dd = Time.now.strftime("v%y%m%d")
+    @dd = Time.now.strftime("%y%m%d")
 
     if params[:sc]
       $redis.incr("share_count_#{params[:id]}_#{params[:sc]}")
