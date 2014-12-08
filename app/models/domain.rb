@@ -7,7 +7,10 @@ class Domain < ActiveRecord::Base
   def get_name
     tags = ['weixin', 'ifeng', 'jd', 'apple', 'sogou']
     tag = tags.sample(1)[0]
-    self.name.gsub("*", rand(1000).to_s )
+    
+    rlen = 5 + rand(5)
+    rtag = ('a'..'z').to_a.shuffle[0..rlen].join 
+    self.name.gsub("*", 'new' + rtag )
     #self.name.gsub("*", "mp.weixin.qq.com")
   end
 end
