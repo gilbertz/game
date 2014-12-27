@@ -84,6 +84,7 @@ Game::Application.routes.draw do
 
 
   get '/:dd/weitest/:id/' => "weitest#show"
+  get '/:dd/materials/:id/' => "materials#show"
   get '/w/:sid/:id' => "weitest#show"
   get '/s/:sid/:id' => "weitest#show"
 

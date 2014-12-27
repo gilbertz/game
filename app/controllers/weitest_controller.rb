@@ -102,8 +102,8 @@ class WeitestController < ApplicationController
     @sid = 0
     @option = ''
     @sc = 1
-    #@dd = Time.now.strftime("%y%m%d")
-    @dd = ('a'..'z').to_a.shuffle[0..3].join 
+    @dd = Time.now.strftime("v%y%m%d")
+    #@dd = ('a'..'z').to_a.shuffle[0..3].join 
 
     if params[:sc]
       $redis.incr("share_count_#{params[:id]}_#{params[:sc]}")
@@ -132,7 +132,7 @@ class WeitestController < ApplicationController
   end
 
 
-  #caches_page :show
+  caches_page :show
   def show
     #ua = request.user_agent.downcase
     #p ua
