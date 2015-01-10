@@ -34,6 +34,6 @@ class Admin::AnswersController < Admin::BaseController
 
   private
   def answer_params
-    params.require(:answer).permit(:title, :desc, :group,:viewable_id,:viewable_type,:img, :big_than, :small_than, :weight)
+    params.require(:answer).permit(:title, :url, :desc, :group,:viewable_id,:viewable_type,:img, :big_than, :small_than, :weight)
   end
 end

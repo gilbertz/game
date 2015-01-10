@@ -1,4 +1,4 @@
-# encoding: utf-8
+# ncoding: utf-8
 class WeitestController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
@@ -179,7 +179,7 @@ class WeitestController < ApplicationController
   end
 
   def return
-    @material = Material.by_url params[:id]
+    @material = Material.by_hook params[:id]
     if request.xhr?
       ERB.new(@material.category.try(:re_js)).result(binding)
       render json: @json
@@ -201,8 +201,7 @@ class WeitestController < ApplicationController
       key = "wx_gshare_#{params[:f]}"
       $redis.incr(key)
       gurl = params[:f].gsub(/(.*?)(\d+)/, '\2')
-      game = Material.find_by_url(gurl) 
-      game = Material.find(gurl) unless game
+      game = Material.by_hook(gurl) 
       
       if game and params[:r] and params[:r] != '-1'
         akey = "g#{gurl}_#{params[:r]}"
