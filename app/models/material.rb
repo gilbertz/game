@@ -232,6 +232,15 @@ class Material < ActiveRecord::Base
     m
   end
 
+  def get_share_url(domain='')
+    domain = 'http://51self.com' if domain.blank?
+    unless self.share_url
+      domain + "/weitest/#{@material.url}"  
+    else
+      self.share_url
+    end
+  end
+
 
   private
   def clone_self

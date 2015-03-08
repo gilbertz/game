@@ -132,7 +132,7 @@ class WeitestController < ApplicationController
   end
 
 
-  caches_page :show
+  #caches_page :show
   def show
     #ua = request.user_agent.downcase
     #p ua
@@ -168,11 +168,16 @@ class WeitestController < ApplicationController
       @game_url = hook.url
       @material.url = @game_url 
     end 
+
  
     if @material.category
-      @base_category = Category.find(9)
-      get_topn(@material.category_id)
-      render layout: false
+      unless @material.category.game_type_id >= 13
+        @base_category = Category.find(9)
+        get_topn(@material.category_id)
+        render layout: false
+      else
+        render 'show_new', layout: false
+      end
     else
       render 'static', layout: false
     end
