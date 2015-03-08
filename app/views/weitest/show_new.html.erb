@@ -22,12 +22,6 @@
 
       <%= ERB.new(@category.meta).result(binding).html_safe %>
 
-  <% sign_package = $wxclient.get_jssign_package(request.url) %>
-      
-  <script type="text/javascript">
-    <%= ERB.new(@category.js).result(binding).html_safe %>
-  </script>
-  
   <style type="text/css"> 
     <% @css_image   = @material.images.select{|i| i.state == 1 }[0].try(:body) %>
     <% @css_image_2 = @material.images.select{|i| i.state == 10}[0].try(:body) %>
@@ -38,12 +32,14 @@
    
  </head>
 
+
+<% sign_package = $wxclient.get_jssign_package(request.url) %>
 <script src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js' type='text/javascript'></script>
 <script>
   wx.config({
-    debug: true,
+    debug: false,
     appId: "<%= sign_package['appId'] %>",
-    timestamp: "<%= sign_package['timestamp'] %>",
+    timestamp: <%= sign_package['timestamp'] %>,
     nonceStr:  "<%= sign_package['nonceStr'] %>",
     signature: "<%= sign_package['signature'] %>",
     jsApiList: [
@@ -99,14 +95,6 @@
     wx.onMenuShareAppMessage({
       title: "<%= @material.wx_title %>", // 分享标题
       desc: "<%= @material.wxdesc %>", // 分享描述
-    <% show_rec = @material.category.material_type != 1 %>
-
-    <%if @category.game_type_id != 7 and @category.game_type_id != 11 and @category.game_type_id != 13 %>
-      <%= render "shared/ad1" %>
-    <% end %>
-
-
-    <% @prompt_image = @material.images.select{|i| i.state == 3 }[0].try(:body) %>
       link: "<%= @material.get_share_url %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       type: '', // 分享类型,music、video或link，不填默认为link
@@ -117,10 +105,14 @@
       cancel: function () { 
         // 用户取消分享后执行的回调函数
       }
+    });
   });
 
 </script>
 
+  <script type="text/javascript">
+    <%= ERB.new(@category.js).result(binding).html_safe %>
+  </script>
 
     <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
     <% @close_btn    = @material.images.select{|i| i.state == 16}[0].try(:body) %>
@@ -132,4 +124,5 @@
     <%= render "shared/analysis" %>
    
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
+
 </html>
