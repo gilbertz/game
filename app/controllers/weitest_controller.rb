@@ -189,7 +189,11 @@ class WeitestController < ApplicationController
       ERB.new(@material.category.try(:re_js)).result(binding)
       render json: @json
     else
-      render layout: false
+      unless @material.category.game_type_id >= 13
+        render layout: false
+      else
+        render 'return_new', layout: false
+      end
     end
   end
 

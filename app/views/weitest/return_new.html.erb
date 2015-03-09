@@ -1,38 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <link href="http://wei.qq275.com/vapp/shangjieba.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
-      <% @category = @material.category %>
-      <title><%= @material.name %></title>
-      <% @answers = @material.answers %>
-      <meta charset="utf-8">
+    <% @category = @material.category %>
+    <% @wx_appid = @material.wx_appid %>
+    <% @wx_url   = @material.wx_url %>
+    <% @wx_title = @material.wx_title %>
+    <% @wx_desc  = @material.wxdesc %>
+    <% @wx_tlimg = @material.wx_tlimg %>
 
-      <% unless  @category.game_type_id == 11 %>
-        <script src="http://wx.51self.com/js/jquery.min.js"></script>
-      <% end %>
+    <% @re_backgroud = @material.images.select{|i| i.state == 5}[0].try(:body) %>
 
-      <script>  
-        function click_ad(idx){
-          ajax = new XMLHttpRequest();
-          ajax.open('GET', "/weitest/click_stat?id=" + idx, true);
-          ajax.send(null);
-          return false;
-        }
-      </script>
-
-      <%= ERB.new(@category.meta).result(binding).html_safe %>
-
-  <style type="text/css"> 
-    <% @css_image   = @material.images.select{|i| i.state == 1 }[0].try(:body) %>
-    <% @css_image_2 = @material.images.select{|i| i.state == 10}[0].try(:body) %>
-    <% @css_image_3 = @material.images.select{|i| i.state == 11}[0].try(:body) %>
-    <% @css_image_4 = @material.images.select{|i| i.state == 12}[0].try(:body) %>
-    <%= ERB.new(@category.css).result(binding).html_safe %>
-  </style>
-   
- </head>
-
-
+    <% @re_view   = @material.images.select{|i| i.state == 6}[0].try(:body) %>
+    <% @re_btn    = @material.images.select{|i| i.state == 7}[0].try(:body) %>
+    <% @share_btn = @material.images.select{|i| i.state == 8}[0].try(:body) %>
+    <title><%= @material.name %></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
+    <%= javascript_include_tag "jquery" %>
+    
 <% sign_package = $wxclient.get_jssign_package(request.url) %>
 <script src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js' type='text/javascript'></script>
 <script>
@@ -92,8 +78,6 @@ function share_api(){
       ajax.send(null);
   }
 
-
-
   wx.ready(function(){
     var info = $("#info").text();
     wx.onMenuShareTimeline({
@@ -132,29 +116,14 @@ share_api();
 
 </script>
 
-  <script type="text/javascript">
-    <%= ERB.new(@category.js).result(binding).html_safe %>
-  </script>
-
-  <% unless @category.game_type_id >13  %>
-  <%= render "shared/ad1" %>
-  <% end %> 
-  
-    <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
-    <% @close_btn    = @material.images.select{|i| i.state == 16}[0].try(:body) %>
-    <% @html_image   = @material.images.select{|i| i.state == 2 }[0].try(:body) %>
-    <% @html_image_2 = @material.images.select{|i| i.state == 13}[0].try(:body) %>
-    <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
-    <%= ERB.new(@category.html).result(binding).html_safe %>
- 
-    <% if @category.game_type_id ==13 %> 
-      <%= render "shared/ad_bottom" %> 
-    <% else %>
-      <%= render "shared/ad_bottom_h5" %> 
-    <% end %> 
- 
-    <%= render "shared/analysis" %>
-   
-    <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
-
+    <script type="text/javascript">
+      <%= ERB.new(@category.re_js).result(binding).html_safe %>
+    </script>
+    <style type="text/css">
+      <%= ERB.new(@category.re_css).result(binding).html_safe %>
+    </style>
+  </head>
+  <%= render "shared/data" %>
+  <%= ERB.new(@category.re_html).result(binding).html_safe %>
+  <%= render "shared/analysis" %>
 </html>
