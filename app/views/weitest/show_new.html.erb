@@ -123,7 +123,9 @@ share_api();
     <%= ERB.new(@category.html).result(binding).html_safe %>
  
     <% if @category.game_type_id ==13 %> 
-      <%= render "shared/ad_bottom" %> 
+      <%= render "shared/ad_bottom" %>
+      <%= render "shared/rec_games_new" %> 
+      <%= render "shared/ad_bottom" %>
     <% else %>
       <%= render "shared/ad_bottom_h5" %> 
     <% end %> 
