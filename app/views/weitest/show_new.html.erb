@@ -111,7 +111,7 @@ share_api();
     <%= ERB.new(@category.js).result(binding).html_safe %>
   </script>
 
-  <% unless @category.game_type_id >13  %>
+  <% if @category.game_type_id == 13  %>
   <%= render "shared/ad1" %>
   <% end %> 
   
