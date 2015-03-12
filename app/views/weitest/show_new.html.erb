@@ -126,7 +126,7 @@ share_api();
       <%= render "shared/ad_bottom" %>
       <%= render "shared/rec_games_new" %> 
       <%= render "shared/ad_bottom" %>
-    <% else %>
+    <% elsif @category.game_type_id >13 %>
       <%= render "shared/ad_bottom_h5" %> 
     <% end %> 
  

@@ -171,7 +171,7 @@ class WeitestController < ApplicationController
 
  
     if @material.category
-      unless @material.category.game_type_id >= 13
+      unless @material.category.game_type_id >= 12
         @base_category = Category.find(9)
         get_topn(@material.category_id)
         render layout: false
