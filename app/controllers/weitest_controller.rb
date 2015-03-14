@@ -161,6 +161,7 @@ class WeitestController < ApplicationController
     #@material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=200727692&idx=1&sn=486772b0aa019ee35b2c1d628df8a9ad#wechat_redirect'
    
     @material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzAxOTE1MzQ3Ng==&mid=203971151&idx=1&sn=5f6daddfd553757fa640e10b683adad4#wechat_redirect'
+    @material.wx_ln = 'http://51self.com/weitest/1203611402'
 
     @game_url = @material.url
     hook = Hook.find_all_by_material_id(@material.id).last
