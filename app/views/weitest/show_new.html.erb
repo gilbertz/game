@@ -122,11 +122,11 @@ share_api();
     <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
     <%= ERB.new(@category.html).result(binding).html_safe %>
  
-    <% if @category.game_type_id ==13 %> 
+    <% if @category.game_type_id == 13 %> 
       <%= render "shared/ad_bottom" %>
       <%= render "shared/rec_games_new" %> 
       <%= render "shared/ad_bottom" %>
-    <% elsif @category.game_type_id >13 %>
+    <% elsif @category.game_type_id > 13 %>
       <%= render "shared/ad_bottom_h5" %> 
     <% end %> 
  
