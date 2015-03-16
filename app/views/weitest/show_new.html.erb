@@ -74,8 +74,10 @@ function share_api(){
       link: "<%= @material.get_share_url %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       success: function () {
-        share_callback_pyq(); 
-        location.href = "<%= @material.wx_ln %> ";
+        share_callback_pyq();
+        <% if @category.game_type_id >= 13  %> 
+          location.href = "<%= @material.wx_ln %> ";
+        <% end %> 
         // 用户确认分享后执行的回调函数
       },
       cancel: function () { 
@@ -92,7 +94,9 @@ function share_api(){
       dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
       success: function () {
         share_callback_hy();
-        location.href = "<%= @material.wx_ln %> "; 
+         <% if @category.game_type_id >= 13  %> 
+          location.href = "<%= @material.wx_ln %> ";
+         <% end %>
         // 用户确认分享后执行的回调函数
       },
       cancel: function () { 
