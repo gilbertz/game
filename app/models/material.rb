@@ -239,7 +239,7 @@ class Material < ActiveRecord::Base
   def get_share_url(domain='')
     domain = 'http://51self.com' if domain.blank?
     unless self.share_url
-      domain + "/weitest/#{@material.url}"  
+      domain + "/weitest/#{self.url}"  
     else
       self.share_url
     end
