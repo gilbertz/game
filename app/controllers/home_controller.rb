@@ -33,18 +33,12 @@ class HomeController < ApplicationController
 
   
   def list
-    #game_type_id = params[:game_type_id] unless params[:game_type_id].blank?
     page = 1
     page = params[:page].to_i if params[:page]
     @next_page = page + 1
     limit = 20
 
     materials = Material.includes(:images).joins(:category)
-
-    #unless game_type_id.blank?
-    #  materials = materials.where("categories.game_type_id=?", params[:game_type_id])
-    #end
-
     max_id = Material.maximum('id')
     if params[:type]
       materials = materials.where(state: 1).where("categories.game_type_id=?", 7)
@@ -59,6 +53,23 @@ class HomeController < ApplicationController
     else
       @materials = materials
     end
+
+    render 'list', :layout => nil
+  end
+
+
+
+  def o2o
+    page = 1
+    page = params[:page].to_i if params[:page]
+    @next_page = page + 1
+    limit = 10
+
+    materials = Material.includes(:images).joins(:category)
+    materials = materials.where(rrr: 1)
+    materials = materials.order('id desc')
+
+    @materials = materials.page( page ).per( limit )
 
     render 'list', :layout => nil
   end

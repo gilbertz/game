@@ -167,7 +167,14 @@ class Material < ActiveRecord::Base
     self.update_attributes(state: val)
   end
 
+  def invert_rrr
+    val = rrr.eql?(0) ? 1 : 0
+    self.update_attributes(rrr: val)
+  end
+
   def cn_state; { 0 => '下线', 1 => '上线', nil => '下线' }[state] end
+
+  def cn_rrr; { 0 => '不推荐', 1 => '推荐', nil => '无' }[rrr] end
 
   def game_type
     if self.category and not self.category.game_type.blank?
@@ -243,6 +250,24 @@ class Material < ActiveRecord::Base
     else
       self.share_url
     end
+  end
+
+  def game_type_id
+    if self.category and not self.category.game_type.blank?
+      self.category.game_type.id
+    else
+      0
+    end
+  end
+
+
+  def get_link
+    if self.game_type_id == 7 or  self.game_type_id == 14
+      "http://www.51self.com/weitest/#{self.url}"
+    else
+      "/weitest/#{self.url}"
+    end
+
   end
 
 

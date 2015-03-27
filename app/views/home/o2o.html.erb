@@ -6,7 +6,7 @@
   <meta http-equiv="pragma" content="no-cache">
   <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
   <meta http-equiv="expires" content="0">
-  <title>微转盘</title>
+  <title>疯狂摇一摇</title>
 
   <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1.0, maximum-scale=1, user-scalable=no">
   <!-- <link rel="stylesheet" href="http://1251008728.cdn.myqcloud.com/1251008728/2014/07/21/comm.css"> -->
@@ -14,8 +14,6 @@
   <link rel="stylesheet" type="text/css" href="http://1251008728.cdn.myqcloud.com/1251008728/2014/07/21/info.css" media="screen, projection">
 </head>
 <body >
-
-<%= render '/shared/ad1' %>
 
 <br/>
 
@@ -50,7 +48,7 @@
             games[i].score = 70+Math.floor(Math.random()*20);
             games[i].icon = "<%= material.wx_tlimg %>";
             games[i].ishot = true;
-            games[i].src = "<%= material.get_link %>";
+            games[i].src = "<%= material.get_link(true) %>";
             games[i].pv = "<%= material.fake_pv %>";
             i++;
         <% end %>
@@ -97,7 +95,7 @@
 
   <menu class="d-menu" style="display:none;"></menu>
   <div class="ft-copy">
-    <p><span>©2014 微转盘</span></p>
+    <p><span>©2014 疯狂摇一摇</span></p>
 
     <div class="btn-top" style=""><a id="j_back_top" data-pvtag="foot.back" data-nogo="1">回顶部</a></div>
   </div>

@@ -9,6 +9,7 @@
       <th width="15%">转发统计</th>
       <th>微信链接</th>
       <th width="5%">状态</th>
+      <th width="5%">推荐</th>
       <th width="15%">分类</th>
       <th width="5%">类型</th>
       <th width="10%">创建时间</th>
@@ -37,6 +38,14 @@
             <span class="label <%= "label-success" if c.state == 1 %>"><%= c.cn_state %></span>
           <% end %>
         </td>
+
+        <td>
+          <%= link_to [:update_rrr,:admin,c], remote: true, class: 'ajax',
+            data: {confirm: 'are you sure?'} do %>
+            <span class="label <%= "label-success" if c.rrr == 1 %>"><%= c.cn_rrr %></span>
+          <% end %>
+        </td>
+
         <td><%= link_to c.category.try(:name), "/admin/materials?cid=#{c.category.id}" if c.category %></td>
         <td><%= c.game_type %></td>
         <td><%= c.created_at.to_local %></td>

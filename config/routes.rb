@@ -21,6 +21,7 @@ Game::Application.routes.draw do
   get '/', to: 'home#read', constraints: {subdomain: 't'}, as: 'read_root'
   get '/',  to: "home#list", as: 'default_root'
   get '/games', to: "home#list"
+  get '/o2o', to: "home#o2o"
 
   resources :home, only: [] do
     get :search
@@ -121,6 +122,7 @@ Game::Application.routes.draw do
       member do
         get :clone
         get :update_state
+        get :update_rrr
         get :recommend_to_qq
         get :recommend_game
       end

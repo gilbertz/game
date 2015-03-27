@@ -59,6 +59,14 @@ class Admin::MaterialsController < Admin::BaseController
     render json: {msg: 'ok', val: material.reload.cn_state}
   end
 
+  def update_rrr
+    material = Material.find params[:id]
+    material.invert_rrr
+    render json: {msg: 'ok', val: material.reload.cn_rrr}
+  end
+
+  
+
   def clone
     material = Material.find params[:id]
     material.cloning(true)

@@ -62,22 +62,22 @@
 
     <% if show_rec and @category.game_type_id != 7 and @category.game_type_id != 11 and @category.game_type_id != 13 %>
       <%#= render "shared/ad_bottom" %>
-      <%= render "shared/ad_wx" %>
+      <%#= render "shared/ad_wx" %>
       <% unless @category.use_wxjs %>
         <%= render "shared/rec_games" %>
-        <%= render "shared/ad_bottom" %>
+        <%#= render "shared/ad_bottom" %>
         <%= render "shared/rec_h5_games" %>
         <%#= render "shared/ad_bottom" %>
       <% end %> 
     <% else %>
       <% unless show_rec %>
-        <%= render "shared/ad_bottom" %>  
+        <%#= render "shared/ad_bottom" %>  
       <% else %>
          <% if @category.game_type_id == 11 %>
            <%= render "shared/rec_article_games" %>
          <% end %>
          <% if @category.game_type_id != 13 and @category.id != 255 %>
-           <%= render "shared/ad_bottom_h5" %>
+           <%#= render "shared/ad_bottom_h5" %>
          <% end %>
       <% end %>
     <% end %>
