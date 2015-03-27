@@ -48,7 +48,7 @@
             games[i].score = 70+Math.floor(Math.random()*20);
             games[i].icon = "<%= material.wx_tlimg %>";
             games[i].ishot = true;
-            games[i].src = "<%= material.get_link(true) %>";
+            games[i].src = "<%= material.get_link(false) %>";
             games[i].pv = "<%= material.fake_pv %>";
             i++;
         <% end %>

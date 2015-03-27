@@ -261,13 +261,16 @@ class Material < ActiveRecord::Base
   end
 
 
-  def get_link
-    if self.game_type_id == 7 or  self.game_type_id == 14
-      "http://www.51self.com/weitest/#{self.url}"
+  def get_link(ad=true)
+    if ad
+      if self.game_type_id == 7 or  self.game_type_id == 14
+        "http://www.51self.com/weitest/#{self.url}"
+      else
+        "/weitest/#{self.url}"
+      end
     else
-      "/weitest/#{self.url}"
+       "/gs/#{self.url}"
     end
-
   end
 
 

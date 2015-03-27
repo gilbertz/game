@@ -184,6 +184,17 @@ class WeitestController < ApplicationController
     end
   end
 
+
+  def o2o
+    @material = Material.by_hook params[:id]
+    @material.wx_ln = ''
+
+    if @material.category
+      render 'o2o', layout: false
+    end
+  end
+
+
   def return
     @material = Material.by_hook params[:id]
     if request.xhr?

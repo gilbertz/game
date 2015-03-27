@@ -89,6 +89,8 @@ Game::Application.routes.draw do
   get '/w/:sid/:id' => "weitest#show"
   get '/s/:sid/:id' => "weitest#show"
 
+  get '/gs/:id' => 'weitest#o2o'
+
   get '/api/weixin' =>  'weixin#show',  :as=>"weixin"
   get 'api/weixin/test' =>  'weixin#test',  :as=>"weixin_test"
   post '/api/weixin' => 'weixin#create', :as=>"weixin_path"

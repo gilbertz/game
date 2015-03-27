@@ -71,7 +71,7 @@ class HomeController < ApplicationController
 
     @materials = materials.page( page ).per( limit )
 
-    render 'list', :layout => nil
+    render 'o2o', :layout => nil
   end
 
 
