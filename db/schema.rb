@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327120523) do
+ActiveRecord::Schema.define(version: 20150327135028) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -55,7 +55,10 @@ ActiveRecord::Schema.define(version: 20150327120523) do
     t.string   "fid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "unionid"
   end
+
+  add_index "authentications", ["unionid"], name: "index_authentications_on_unionid", using: :btree
 
   create_table "banners", force: true do |t|
     t.integer  "wait",       default: 1, null: false
@@ -208,6 +211,13 @@ ActiveRecord::Schema.define(version: 20150327120523) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "desc"
+    t.string   "profile_img_url"
+    t.integer  "sex"
+    t.string   "city"
+    t.string   "country"
+    t.string   "language"
+    t.string   "province"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

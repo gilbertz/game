@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:weixin]
 
+  cattr_accessor :current_user 
   attr_accessor :password
+ 
   validates :name,                                                                                  
     :presence     => true,
     :uniqueness   => true,
@@ -18,6 +20,7 @@ class User < ActiveRecord::Base
   :length       => {in: 6..18},
   :on => :create
 
+  has_many :authentications
   has_many :materials
 
   before_create :make_password

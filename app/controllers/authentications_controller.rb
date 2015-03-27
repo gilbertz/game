@@ -21,15 +21,20 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     if(@user)
       print @user
       print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      raw_info = auth['extra']['raw_info']
+      p raw_info['city'], auth["info"], auth["info"]["image"], raw_info["sex"], raw_info["language"], raw_info["province"], raw_info["city"], raw_info["country"]
+      @auth_hash = {:name=>auth["info"]["name"], :sex=>raw_info["sex"], :language=>raw_info["language"], :province=>raw_info["province"], :city=>raw_info["city"], :country=>raw_info["country"], :profile_img_url=>auth["info"]["image"]} 
+      @user.update_attributes( @auth_hash )
       cookies[:userid] = { :value => "#{@user.id}", :expires => 10.year.from_now }
       sign_in_or_redirect
     else
-      @username="dpms"+Devise.friendly_token[0,20]
+      @username="fk"+Devise.friendly_token[0,20]
       @email=@username+"@dapeimishu.com"
-      @password=Devise.friendly_token[0,20]
-      @authinfo={:name=>auth["info"]["name"], :email=>@email, :password=>@password, :remember_me=>1, :desc=>auth["info"]["description"],
+      @password=Devise.friendly_token[0,12]
+      @auth_hash = {:name=>auth["info"]["name"], :email=>@email, :password=>@password, :sex=>auth["info"]["sex"], :language=>auth["info"]["language"], :province=>auth["info"]["province"], :city=>auth["info"]["city"], :country=>auth["info"]["country"],  :remember_me=>1, :desc=>auth["info"]["description"],
         :profile_img_url=>auth["info"]["image"]}
-      @user = User.new(@authinfo)
+      @user = User.new( @auth_hash )
+      p @user
       if @user.save
         @user=Authentication.create_from_hash(auth, @user)
         #print @user
