@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link href="http://wei.qq275.com/vapp/shangjieba.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+      <% @category = @material.category %>
+      <title><%= @material.name %></title>
+      <% @answers = @material.answers %>
+      <meta charset="utf-8">
+
+      <% unless  @category.game_type_id == 11 %>
+        <script src="http://wx.51self.com/js/jquery.min.js"></script>
+      <% end %>
+
+      <script>  
+        function click_ad(idx){
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', "/weitest/click_stat?id=" + idx, true);
+          ajax.send(null);
+          return false;
+        }
+      </script>
+
+      <%= ERB.new(@category.meta).result(binding).html_safe %>
+
+  <style type="text/css"> 
+    <% @css_image   = @material.images.select{|i| i.state == 1 }[0].try(:body) %>
+    <% @css_image_2 = @material.images.select{|i| i.state == 10}[0].try(:body) %>
+    <% @css_image_3 = @material.images.select{|i| i.state == 11}[0].try(:body) %>
+    <% @css_image_4 = @material.images.select{|i| i.state == 12}[0].try(:body) %>
+    <%= ERB.new(@category.css).result(binding).html_safe %>
+  </style>
+   
+ </head>
+
+
+<% sign_package = $wxclient.get_jssign_package(request.url) %>
+<script src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js' type='text/javascript'></script>
+<script>
+  wx.config({
+    debug: false,
+    appId: "<%= sign_package['appId'] %>",
+    timestamp: <%= sign_package['timestamp'] %>,
+    nonceStr:  "<%= sign_package['nonceStr'] %>",
+    signature: "<%= sign_package['signature'] %>",
+    jsApiList: [
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareWeibo',
+      'hideMenuItems',
+      'showMenuItems'
+    ]
+  });
+
+function share_api(){
+  var share_callback_hy = function () {
+      ajax = new XMLHttpRequest();
+      ajax.open('GET', '/materials/wx_share?f=hy_<%= params[:id]%>', true);
+      ajax.send(null);
+  }
+
+  var share_callback_pyq = function () {
+      ajax = new XMLHttpRequest();
+      ajax.open('GET', '/materials/wx_share?f=pyq_<%= params[:id]%>', true);
+      ajax.send(null);
+  }
+
+
+
+  wx.ready(function(){
+    var info = $("#info").text();
+    wx.onMenuShareTimeline({
+      title: info + "<%= @material.wx_title %>", // 分享标题
+      link: "<%= @material.get_share_url %>", // 分享链接
+      imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
+      success: function () {
+        share_callback_pyq();
+        <% if @category.game_type_id >= 13  %> 
+          location.href = "<%= @material.wx_ln %> ";
+        <% end %> 
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function () { 
+        // 用户取消分享后执行的回调函数
+      }
+    });
+
+    wx.onMenuShareAppMessage({
+      title: info + "<%= @material.wx_title %>", // 分享标题
+      desc: "<%= @material.wxdesc %>", // 分享描述
+      link: "<%= @material.get_share_url %>", // 分享链接
+      imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
+      type: '', // 分享类型,music、video或link，不填默认为link
+      dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+      success: function () {
+        share_callback_hy();
+         <% if @category.game_type_id >= 13  %> 
+          location.href = "<%= @material.wx_ln %> ";
+         <% end %>
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function () { 
+        // 用户取消分享后执行的回调函数
+      }
+    });
+  });
+
+}
+
+share_api();
+
+</script>
+
+  <script type="text/javascript">
+    <%= ERB.new(@category.js).result(binding).html_safe %>
+  </script>
+
+    <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
+    <% @close_btn    = @material.images.select{|i| i.state == 16}[0].try(:body) %>
+    <% @html_image   = @material.images.select{|i| i.state == 2 }[0].try(:body) %>
+    <% @html_image_2 = @material.images.select{|i| i.state == 13}[0].try(:body) %>
+    <% @html_image_3 = @material.images.select{|i| i.state == 14}[0].try(:body) %>
+    <%= ERB.new(@category.html).result(binding).html_safe %>
+ 
+    <%= render "shared/analysis" %>
+   
+    <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
+
+</html>

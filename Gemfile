@@ -80,3 +80,8 @@ gem 'versioncake', '~> 1.2.0'
 
 gem 'weixin_authorize'
 gem 'weixin_rails_middleware'
+
+gem 'omniauth'
+gem 'omniauth-oauth2'
+gem 'omniauth-weixin'
+gem 'devise'

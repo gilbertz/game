@@ -157,6 +157,9 @@ Game::Application.routes.draw do
     get '/click_stat' => 'ads#click_stat', as: :click_stat
   end
 
+  devise_for :users, :controllers => {:sessions => "sessions", :passwords => "passwords", :registrations => "registration", :omniauth_callbacks => "authentications"}
+
+
   #namespace :custom do
 
   #  get '/login' => 'session#new', as: :login
