@@ -190,6 +190,7 @@ class WeitestController < ApplicationController
     @material.wx_ln = ''
 
     if @material.category
+      get_topn(@material.category_id)
       render 'o2o', layout: false
     end
   end
@@ -250,14 +251,10 @@ class WeitestController < ApplicationController
          $redis.zadd(key, params[:score].to_i * -1, params[:score])
          $redis.lpush(key1, params[:score])
       end
-      $redis.zrem(key, "783272881145583")
-      $redis.zrem(key, "4255367378012730") 
-      $redis.zrem(key, "999999")
-      $redis.zrem(key, "99999")
-      if $redis.zcard(key) > 20
+      if $redis.zcard(key) > 10
         $redis.zremrangebyrank(key, -1, -1)
       end
-      if $redis.llen(key1) > 20
+      if $redis.llen(key1) > 10
         $redis.rpop(key1)
       end
     end

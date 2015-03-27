@@ -38,6 +38,7 @@ Game::Application.routes.draw do
   #get '/weitest/gabrielecirulli' => 'weitest#gabrielecirulli'
   get '/weitest/wx_share' => 'weitest#wx_share'
   get '/weitest/report' => 'weitest#report',  :as=>"report"
+  get '/materials/report' => 'materials#report',  :as=>"mreport" 
   get '/weitest/stat' => 'weitest#stat',  :as=>"stat"
   get '/weitest/click_stat' => 'weitest#click_stat',  :as=>"weitest_stat"
 
