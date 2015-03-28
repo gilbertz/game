@@ -277,7 +277,7 @@ class Material < ActiveRecord::Base
     end
   end
 
-  def get_top(limit)
+  def get_top(limit=10)
     rs = Record.where(:game_id => self.id ).order('score desc').limit(limit)
     rs
   end

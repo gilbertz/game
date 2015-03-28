@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
  
   validates :name,                                                                                  
     :presence     => true,
-    :uniqueness   => true,
     :on => :create
   #:format       => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i }
 

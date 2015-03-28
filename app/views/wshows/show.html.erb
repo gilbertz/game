@@ -1,4 +1,2 @@
-<%= raw @wshow.content %>
-
-
+<%= ERB.new(@wshow.content).result(binding).html_safe %>
 <%= render "shared/analysis" %>

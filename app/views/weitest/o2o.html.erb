@@ -115,6 +115,88 @@ share_api();
     <%= ERB.new(@category.js).result(binding).html_safe %>
   </script>
 
+<link rel="stylesheet" type="text/css" href="http://game.9g.com/css/game9g.css">
+<!--
+<script src="http://game.9g.com/js/game9g.js"></script>
+-->
+
+<!--
+<div class="lis">
+  <div style="float: left;width:33%;"><a style="border-bottom: 3px solid #fd6766;" href="/o2o">游戏列表</a></div>
+  <div style="float: left;width:34%;"><a style="border-bottom: 3px solid #04fece;" href="/wshows/4?game_id=<%= @material.id %>">排名</a></div>
+  <div style="float: left;width:33%;"><a style="width:100%;margin:0;border-bottom: 3px solid #fdcd01;" href="#">
+    <img width="15" src="http://1251008728.cdn.myqcloud.com/1251008728/2014/08/01/4.png">重玩</a>
+  </div>
+</div>
+
+<style>
+.lis{overflow: hidden;width: 100%;z-index: 99999;position: absolute;top:0;}
+.lis a{display: block;width:99.9%;color:#ffffff;font-size:14px;text-decoration: none;background:#606783;text-align: center;opacity: 0.5;line-height:30px;font-weight: bold;font-family:"微软雅黑"}
+.lis a img{position: relative;top: 1px;}
+</style>
+-->
+
+
+<a id="game9g9gstart" class="game9g9gstart pulse infinite"></a>
+<div id="game9gmenu" class="game9gmenu">
+<ul>
+  <li><img src="http://game.9g.com/img/menu/icon_03.png"><a href='/wshows/4?game_id=<%= @material.id%>'>实时排名</a></li>
+  <li><img src="http://game.9g.com/img/menu/icon_04.png"><a>我的游戏</a></li>
+  <li><img src="http://game.9g.com/img/menu/icon_01.png"><a href='/o2o'>玩游戏列表</a></li>
+  
+  <!--
+  <li id="game9gmenu_credit"><img src="http://game.9g.com/img/menu/icon_05.png"><a>我的积分</a></li>
+  <li><img src="http://game.9g.com/img/menu/icon_06.png"><a>关注我们</a></li>
+  <li><img src="http://game.9g.com/img/menu/icon_02.png"><a>一起玩　</a></li>
+  <li><img src="http://game.9g.com/img/menu/icon_01.png"><a href='/o2o'>玩游戏　</a></li>
+  -->
+</ul>
+</div>
+
+<script>
+  $("#game9g9gstart").on('touch mousedown', function(e){
+    $("#game9gmenu").addClass('show');
+    mask();
+    //e.stopPropagation();
+  });
+
+ 
+  $("#mask").on('touch mousedown', function(e){
+    mask();
+    //e.stopPropagation();
+  }); 
+
+  var mask = function () {
+    if (document.getElementById('mask').style.display == 'inline') {
+      document.getElementById('mask').style.display = 'none';
+      $("#game9gmenu").removeClass('show');
+    } else {
+      document.getElementById('mask').style.display = 'inline';
+    }
+  }
+
+
+</script>
+
+<style>
+  #mask {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: none;
+                background-color: #333;
+                filter: alpha(Opacity=90);
+                -moz-opacity: 0.9;
+                opacity: 0.9;
+                z-index: 999;
+            }
+</style>
+
+    <div id="mask" onclick="mask();"></div>
+
+
     <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
     <% @close_btn    = @material.images.select{|i| i.state == 16}[0].try(:body) %>
     <% @html_image   = @material.images.select{|i| i.state == 2 }[0].try(:body) %>
