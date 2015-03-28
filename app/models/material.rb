@@ -252,6 +252,10 @@ class Material < ActiveRecord::Base
     end
   end
 
+  def get_o2o_url
+    "http://test.51self.com/gs/#{self.url}"
+  end
+
   def game_type_id
     if self.category and not self.category.game_type.blank?
       self.category.game_type.id
