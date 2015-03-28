@@ -273,6 +273,21 @@ class Material < ActiveRecord::Base
     end
   end
 
+  def get_top(limit)
+    rs = Record.where(:game_id => self.id ).order('score desc').limit(limit)
+    rs
+  end
+
+  def get_rank(uid)
+    r = Record.find_by_user_id_and_game_id(uid, self.id)
+    if r
+      rs = Record.where(:game_id => self.id ).where( "score > ?", r.score).order('score desc')
+      rs.length + 1
+    else
+      0
+    end
+  end 
+  
 
   private
   def clone_self

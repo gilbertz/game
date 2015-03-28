@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327135028) do
+ActiveRecord::Schema.define(version: 20150328011611) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -191,6 +191,23 @@ ActiveRecord::Schema.define(version: 20150327135028) do
   end
 
   add_index "questions", ["material_id"], name: "index_questions_on_material_id", using: :btree
+
+  create_table "records", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.integer  "score"
+    t.integer  "beaconid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "records", ["beaconid", "score"], name: "index_records_on_beaconid_and_score", using: :btree
+  add_index "records", ["beaconid"], name: "index_records_on_beaconid", using: :btree
+  add_index "records", ["game_id", "score"], name: "index_records_on_game_id_and_score", using: :btree
+  add_index "records", ["game_id"], name: "index_records_on_game_id", using: :btree
+  add_index "records", ["score"], name: "index_records_on_score", using: :btree
+  add_index "records", ["user_id", "game_id"], name: "index_records_on_user_id_and_game_id", using: :btree
+  add_index "records", ["user_id"], name: "index_records_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

@@ -143,22 +143,22 @@ class MaterialsController < ApplicationController
     params[:game_id] = params[:category_id] if params[:category_id]
     if params[:game_id] and params[:score]
       key = "score_#{params[:game_id]}_top"
-      key1 = "score_#{params[:game_id]}_recent"
+      #key1 = "score_#{params[:game_id]}_recent"
 
       if params[:score].length < 10 and params[:score].to_i < 100000
-         $redis.zadd(key, params[:score].to_i * -1, params[:score])
-         $redis.lpush(key1, params[:score])
+         unless current_user
+           $redis.zadd(key, params[:score].to_i * -1, params[:score])
+         else
+           $redis.zadd(key, params[:score].to_i * -1, "u#{current_user.id}")
+         end
+         #$redis.lpush(key1, params[:score])
       end
-      $redis.zrem(key, "783272881145583")
-      $redis.zrem(key, "4255367378012730") 
-      $redis.zrem(key, "999999")
-      $redis.zrem(key, "99999")
       if $redis.zcard(key) > 20
         $redis.zremrangebyrank(key, -1, -1)
       end
-      if $redis.llen(key1) > 20
-        $redis.rpop(key1)
-      end
+      #if $redis.llen(key1) > 20
+      #  $redis.rpop(key1)
+      #end
     end
     render nothing: true
   end

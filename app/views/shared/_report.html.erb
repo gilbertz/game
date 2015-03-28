@@ -1,5 +1,7 @@
+<% @uid = nil %>
+<% @uid = current_user.id if current_user %>
 <script>
-  var url="/weitest/stat?type=<%= type %>&cid=<%= cid %>&gid=<%= gid %>&wx_id=<%= @wx_id%>&wx_domain=<%= @wx_domain %>"
+  var url="/weitest/stat?type=<%= type %>&cid=<%= cid %>&gid=<%= gid %>&uid=<%= @uid%>"
   var img = new Image();
   img.src = url;
 </script>

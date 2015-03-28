@@ -175,7 +175,10 @@ class WeitestController < ApplicationController
     if @material.category
       unless @material.category.game_type_id >= 12
         @base_category = Category.find(9)
-        get_topn(@material.category_id)
+        @topn = @material.get_top(10)
+        if current_user
+          @myrank = @material.get_rank(current_user.id)
+        end
         render layout: false
       else
         render 'show_new', layout: false
@@ -191,7 +194,10 @@ class WeitestController < ApplicationController
     @material.wx_ln = ''
 
     if @material.category
-      get_topn(@material.category_id)
+      @topn = @material.get_top(10)
+      if current_user
+        @myrank = @material.get_rank(current_user.id)
+      end
       render 'o2o', layout: false
     end
   end
@@ -243,20 +249,15 @@ class WeitestController < ApplicationController
   end
 
   def report
-    params[:game_id] = params[:category_id] if params[:category_id]
-    if params[:game_id] and params[:score]
-      key = "score_#{params[:game_id]}_top"
-      key1 = "score_#{params[:game_id]}_recent"
-
-      if params[:score].length < 10 and params[:score].to_i < 100000
-         $redis.zadd(key, params[:score].to_i * -1, params[:score])
-         $redis.lpush(key1, params[:score])
-      end
-      if $redis.zcard(key) > 10
-        $redis.zremrangebyrank(key, -1, -1)
-      end
-      if $redis.llen(key1) > 10
-        $redis.rpop(key1)
+    if current_user
+      r= Record.find_by_user_id_and_game_id(current_user.id, params[:game_id])
+      if r
+        if r.score < params[:score].to_i
+          r.score = params[:score].to_i
+          r.save
+        end
+      else
+        Record.create(:user_id => current_user.id, :game_id => params[:game_id], :score => params[:score])
       end
     end
     render nothing: true
@@ -300,14 +301,11 @@ class WeitestController < ApplicationController
   def get_topn(cid)
     begin
       @topn = []
-      @recentn = []
-      if cid == 66
-        cid = 48
-      end
+      #@recentn = []
       key = "score_#{cid}_top"
-      key1 = "score_#{cid}_recent"
+      #key1 = "score_#{cid}_recent"
       @topn = $redis.zrange(key, 0, 9)
-      @recentn = $redis.lrange(key1, 0, 9)
+      #@recentn = $redis.lrange(key1, 0, 9)
     rescue =>e
       p e.to_s
     end
@@ -323,7 +321,7 @@ class WeitestController < ApplicationController
 
 private
   def authorize_url(url)
-    rurl = 'http://test.51self.com/accounts/info/auth/weixin/callback?rurl=' + url
+    rurl = 'http://test.51self.com/users/auth/weixin/callback?rurl=' + url
     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx456ffb04ee140d84&redirect_uri=#{rurl}&response_type=code&scope=snsapi_base&connect_redirect=1#wechat_redirect"
   end
 
