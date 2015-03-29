@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150328011611) do
+ActiveRecord::Schema.define(version: 20150329021943) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -199,6 +199,7 @@ ActiveRecord::Schema.define(version: 20150328011611) do
     t.integer  "beaconid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "remark"
   end
 
   add_index "records", ["beaconid", "score"], name: "index_records_on_beaconid_and_score", using: :btree
@@ -210,20 +211,20 @@ ActiveRecord::Schema.define(version: 20150328011611) do
   add_index "records", ["user_id"], name: "index_records_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "name"
+    t.string   "name",                   limit: 100
     t.string   "encrypt_pwd"
     t.string   "salt"
     t.string   "rememberme_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "role",                   default: 0,  null: false
+    t.integer  "role",                               default: 0,  null: false
     t.string   "wx_token"
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                              default: "", null: false
+    t.string   "encrypted_password",                 default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"

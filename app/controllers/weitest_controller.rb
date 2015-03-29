@@ -2,7 +2,7 @@
 class WeitestController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
-  #before_filter :weixin_authorize, :only => [:o2o]
+  before_filter :weixin_authorize, :only => [:o2o]
 
   def result
     unless params[:material_id].blank?
