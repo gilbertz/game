@@ -1,0 +1,78 @@
+
+body, div, ul, dl, ol, form, img, label { margin: 0; }
+
+body { font-family: "Microsoft YaHei", "微软雅黑", "宋体"; font-size: 14px; background-color: #eeeeee; }
+p { margin: 10px 0; line-height: 180%; }
+h1 { margin: 10px 0; text-align: center; font-size: 16px; }
+h2 { text-align: center; }
+hr { border: 0; height: 1px; background-color: #CCC; margin: 5px 0; }
+a { color: #FFF; }
+a:hover { color: #FF7830; }
+
+/** 导航菜单 **/
+.fix_footer { -moz-box-shadow:0px 0px 11px #191919; -webkit-box-shadow:0px 0px 11px #191919; box-shadow:0px 0px 11px #191919; }
+.fix_footer_menu { border-right:1px solid rgba(0, 0, 0, 0.4); background: rgba(0, 0, 0, 0.1); font-family: 黑体; }
+.fix_footer_menu_on { border-right:1px solid rgba(0, 0, 0, 0.4); background: rgba(0, 0, 0, 0.3); font-family: 黑体; background:#202020; /* Fallback color for old browsers */ }
+
+/** 排行榜 **/
+.wrap { min-height: 620px; }
+
+img.ad { width: 100%; border-radius:5px; }
+
+.my { color: #FFF; line-height: 150%; margin-bottom: 10px; border: 2px solid #9BB9FA; border-radius: 5px; padding: 5px; background: #5A1752; }
+.my a { color: #FFCC47; text-decoration: underline; }
+.my .hl { color: #0F0; }
+.my .pt { color: #FFCC47; font-weight: bold; }
+.my .op { color: #FF7171; display: none; }
+
+.tip { color: #FFF; line-height: 150%; margin-bottom: 10px; border: 2px solid #9BB9FA; border-radius: 5px; padding: 5px; background: #204753; }
+.tip a { color: #FFCC47; text-decoration: underline; }
+.tip .hl { color: #0F0; }
+.tip .pt { color: #FFCC47; font-weight: bold; }
+.tip .op { color: #FF7171; display: none; }
+
+.nav { height: 70px; overflow: hidden; }
+.nav .logo { float: left; width: 80px; height: 70px; }
+.nav .logo a { display: block; margin: 5px 0 0 10px; }
+.nav .logo img { width: 60px; height: 60px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+.nav .tab { color: #FFF; text-shadow: 0 2px 2px #000; line-height: 70px; }
+.refresh { margin: -3px 0 5px 0; color: #CCC; }
+
+.list { list-style: none; padding: 0;  zoom: 1; }
+.list li { position: relative; padding: 7px; height: 35px; background: #FFF; border-bottom: 1px solid #E5E5E5; }
+.list li.template { display: none; }
+.list li.lucky { background: #eeeeee; } /** 中奖项背景 **/
+.list li.highlight { background: #A7AFFF; } /** 我的位置背景 **/
+.list li.mypos { line-height: 60px; cursor: pointer; text-align: center; text-shadow: 0 1px 1px #fff; font-weight: bold; color: #DF2D5F; }
+.list .num { width: 32px; height: 32px; text-align: center; font-size: 18px; line-height: 32px; color: #131F35; font-weight: bold; text-shadow: 0 1px 1px #fff; float: left; margin-right: 10px; }
+.list .num1 { background: url(http://game.9g.com/rank/img/5.png) no-repeat;background-size:32px 32px }
+.list .num2 { background: url(http://game.9g.com/rank/img/6.png) no-repeat;background-size:32px 32px }
+.list .num3 { background: url(http://game.9g.com/rank/img/7.png) no-repeat;background-size:32px 32px }
+/* .list .num9g { background: url(http://game.9g.com/rank/img/9g.png) no-repeat; } */
+.list div.lucky { position: absolute; left: 0; top: 0; width: 32px; height: 32px; background: url(http://game.9g.com/rank/img/lucky.png) no-repeat; background-size:32px 32px}
+.list .avatar { width: 32px; height: 32px; float: left; margin-right: 20px; border: 1px solid #FFF; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+.list .score { min-width: 160px; height: 48px; margin-left: 85px; overflow: hidden; }
+.list .nickname, .list .scorename { line-height: 18px; color: #211717; text-shadow: 0 1px 1px #fff; height: 20px; overflow: hidden; }
+.list .nickname { font-weight: bold; overflow: hidden; }
+.list .nickname a { color: #FF4545; text-decoration: none; }
+.list .score .name0 { color: #777777; }
+.list .score .name1 { color: #526590; }
+.list .score .name2 { color: #EC4684; }
+.name0 { color: #777777; }
+.name1 { color: #526590; }
+.name2 { color: #EC4684; }
+.list .time { position: absolute; right: 10px; top: 10px; color: #777; text-align: right;font-size:12px }
+.list .bindphone { position: absolute; right: 10px; top: 28px; color: red; text-align: right;font-size:12px }
+.list .recent { color: #FF4545; }
+.list .phone { position: absolute; left: 75px; top: 25px; width: 10px; height: 18px; background: url(http://game.9g.com/rank/img/phone20.png) no-repeat;background-size:10px 18px }
+.list .mobile { color: #E03232; position: absolute; right: 10px; top: 10px; text-align: right; }
+.list .bind_a1 { position: absolute; right: 10px; top: 10px; color: #777; text-align: right; }
+.list .bind_a2 { position: absolute; right: 10px; top: 40px; color: #E03232; text-align: right; }
+/*
+.action { height: 58px; margin: 10px 0; text-align: center; overflow: hidden; zoom: 1; }
+.action a { display: inline-block; margin: 0 5px; }
+*/
+
+/** 正在加载中 **/
+.loading { height: 60px; line-height: 60px; text-align: center; display: none; }
+.loading img { vertical-align: middle; }

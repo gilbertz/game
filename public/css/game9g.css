@@ -1,0 +1,313 @@
+/* Game9G 公用 CSS */
+
+.game9gloading { position: fixed; z-index: 9999; width: 100%; height: 100%; left: 0; top: 0; background: #F00; }
+.game9gloading img.game9glogo { display: block; margin: 25% auto 0 auto; width: 70%; }
+.game9gloading img.game9glogo_up { display: block; margin: 10% auto 0 auto; width: 70%; margin-bottom: 15px; }
+.game9gloading img.cplogo { display: block; margin: 0 auto; max-width: 50%; }
+
+img.game9gad { position: fixed; z-index: 9995; left: 0; top: 0; width: 100%; cursor: pointer; }
+img.game9gadbottom { position: fixed; z-index: 9995; left: 0; bottom: 0; width: 100%; cursor: pointer; }
+img.game9gzhongsoutip { position: fixed; z-index: 9999; top: 0; right: 5%; width: 50%; }
+
+img.game9gshare { position: fixed; width: 100%; left: 0; top: 0; z-index: 9999; }
+img.game9gucicon { position: absolute; left: 0; top: 0; width: 64px; height: 64px; z-index: 9999; background-color: #FFF; }
+
+.game9gdialog { color: #000; background-color: #FFF; text-align: center; font-size: medium; border-radius: 8px; line-height: 150%; font-weight: normal; width: 90%; z-index: 9991; top: 20%; left: 5%; position: fixed; }
+.game9gdialog header { font-weight: bold; margin: 4% 0; text-align: center; height: auto; width:auto; }
+.game9gdialog h2 { font-size: 1em; font-weight: bold; }
+.game9gdialog section { padding: 0px 20px 20px 20px; text-align: center; font-size: 5vw; font-weight: normal; height: auto; width: auto; box-shadow: rgb(178, 178, 178) 0px -1px 1px -1px inset; }
+.game9gdialog footer { padding: 1% 0; }
+.game9gdialog footer a { display: inline-block; color: #FFF; text-align: center; line-height: 40px; font-size: 5vw; text-decoration: none; cursor: pointer; width:43%; margin: 8px; background-color: #2D9916; border-radius: 5px; }
+.game9gmask { z-index: 9990; background-color: rgb(0, 0, 0); position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; opacity: 0.5 }
+
+.game9gsharetip { position: fixed; z-index: 9999; width: 100%; height: 100%; left: 0; top: 0; background: #000; opacity: 0.9; font-size: medium; font-family: SimHei; }
+.game9gsharetip img.goup { position: absolute; top: 1%; right: 5%; height: 11%; }
+/*.game9gsharetip div.title { position: absolute; top: 12%; right: 20%; }*/
+/*.game9gsharetip div.content { position: absolute; left: 0; top: 40%; width: 100%; text-align: center; font-size: 1.5em; font-weight: bold; color: #696969; }*/
+.game9gsharetip div.title { position: absolute; top: 18%; right: 20%; color: #FFF; }
+.game9gsharetip div.content { position: absolute; top: 10%; right: 5%; width: 100%; text-align: center; font-size: 1.3em; color: #FFF; }
+.game9gsharetip div.ignore { position: absolute; left: 10%; bottom: 20%; padding-left: 50px; color: #777; }
+.game9gsharetip img.godown { position: absolute; left: 10%; bottom: 10%; height: 10%; }
+.game9gsharetip a { position: absolute; cursor: pointer; left: 5%; bottom: 4%; color: #777; }
+.game9gsharetip img.pm { position: absolute; left: 0; top: 35%; width: 100%; cursor: pointer; }
+
+.game9gsharemask { position: fixed; z-index: 9996; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.5; background: #000; }
+@-webkit-keyframes game9gshareeventmove { from { top: 0; } to { top: 5px; } }
+		@keyframes game9gshareeventmove { from { top: 0; } to { top: 5px; } }
+img.game9gshareevent { position: fixed; z-index: 9997; left: 0; top: 0; width: 100%;
+	-webkit-animation: game9gshareeventmove 0.4s ease-in-out infinite alternate;
+			animation: game9gshareeventmove 0.4s ease-in-out infinite alternate;
+}
+img.game9ggohome { position: fixed; z-index: 9997; left: 3%; top: 2%; width: 18%; }
+
+/************************************ UI *******************************************/
+
+.game9g9gstart { position: fixed; z-index: 9998; left: 3%; top: 2%; width: 15%; height: 15%; background: url(http://wx.51self.com/img/shake.png) no-repeat; background-size: contain; }
+.game9g9gstarttip { position: fixed; z-index: 9996; left: 16%; top: 9%; width: 46%; opacity: 0; }
+.game9gmenumask { position: fixed; z-index: 9997; left: 0; top: 0; width: 100%; height: 100%; }
+.game9gmenu { position: fixed; z-index: 9999; left: -75%; top: 0; width: 75%; height: 100%; background: #000; }
+.game9gmenu { -webkit-transition: left 0.2s; -moz-transition: left 0.2s; transition: left 0.2s; }
+.game9gmenu.show { left: 0; }
+.game9gmenu div.main { margin: 20px; color: #FFF; }
+.game9gmenu ul { list-style-type: none; margin-left: 15%; padding: 0; }
+.game9gmenu ul li { position: relative; margin: 10% 0; }
+.game9gmenu ul li img { vertical-align: middle; width: 23%; margin-right: 5%; }
+.game9gmenu ul li a { font-size: 6vw; font-family: SimHei; color: #FFF; text-align: left; text-decoration: none; }
+.game9gmenu ul li .notice { position: absolute; left: 16%; top: -20%; padding: 0.6% 2%; text-align: center; font-size: 4vw; font-family: Arial; color: #FFF; background: #F00; border-radius: 10px; }
+
+/************************************ animate.css *******************************************/
+
+@-webkit-keyframes bounceInLeft {
+  0%, 60%, 75%, 90%, 100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(-3000px, 0, 0);
+            transform: translate3d(-3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(25px, 0, 0);
+            transform: translate3d(25px, 0, 0);
+  }
+
+  75% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(5px, 0, 0);
+            transform: translate3d(5px, 0, 0);
+  }
+
+  100% {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+
+@keyframes bounceInLeft {
+  0%, 60%, 75%, 90%, 100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(-3000px, 0, 0);
+            transform: translate3d(-3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(25px, 0, 0);
+            transform: translate3d(25px, 0, 0);
+  }
+
+  75% {
+    -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(5px, 0, 0);
+            transform: translate3d(5px, 0, 0);
+  }
+
+  100% {
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+
+.bounceInLeft {
+  -webkit-animation: bounceInLeft 1s;
+          animation: bounceInLeft 1s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes bounceInRight {
+  0%, 60%, 75%, 90%, 100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(3000px, 0, 0);
+            transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(-25px, 0, 0);
+            transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    opacity: 1;
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    opacity: 1;
+    -webkit-transform: translate3d(-5px, 0, 0);
+            transform: translate3d(-5px, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+
+@keyframes bounceInRight {
+  0%, 60%, 75%, 90%, 100% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(3000px, 0, 0);
+            transform: translate3d(3000px, 0, 0);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(-25px, 0, 0);
+            transform: translate3d(-25px, 0, 0);
+  }
+
+  75% {
+    opacity: 1;
+    -webkit-transform: translate3d(10px, 0, 0);
+            transform: translate3d(10px, 0, 0);
+  }
+
+  90% {
+    opacity: 1;
+    -webkit-transform: translate3d(-5px, 0, 0);
+            transform: translate3d(-5px, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+
+.bounceInRight {
+  -webkit-animation: bounceInRight 1s;
+          animation: bounceInRight 1s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes bounceOutLeft {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    -webkit-transform: translate3d(20px, 0, 0);
+            transform: translate3d(20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3d(-2000px, 0, 0);
+            transform: translate3d(-2000px, 0, 0);
+  }
+}
+
+@keyframes bounceOutLeft {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    -webkit-transform: translate3d(20px, 0, 0);
+            transform: translate3d(20px, 0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3d(-2000px, 0, 0);
+            transform: translate3d(-2000px, 0, 0);
+  }
+}
+
+.bounceOutLeft {
+  -webkit-animation: bounceOutLeft 1s;
+          animation: bounceOutLeft 1s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+            transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.05, 1.05, 1.05);
+            transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+  }
+}
+
+.pulse {
+  -webkit-animation: pulse 1s infinite;
+          animation: pulse 1s infinite;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes fadeOut {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+@keyframes fadeOut {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+.fadeOut {
+  -webkit-animation: fadeOut 1s;
+          animation: fadeOut 1s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
