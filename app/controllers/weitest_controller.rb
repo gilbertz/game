@@ -194,10 +194,10 @@ class WeitestController < ApplicationController
     @material.wx_ln = ''
 
     if @material.category
-      @topn = @material.get_top(10)
-      if current_user
-        @myrank = @material.get_rank(current_user.id)
-      end
+      #@topn = @material.get_top(10)
+      #if current_user
+      #  @myrank = @material.get_rank(current_user.id)
+      #end
       render 'o2o', layout: false
     end
   end
@@ -321,7 +321,7 @@ class WeitestController < ApplicationController
 
 private
   def authorize_url(url)
-    rurl = 'http://test.51self.com/users/auth/weixin/callback?rurl=' + url
+    rurl = 'http://i.51self.com/users/auth/weixin/callback?rurl=' + url
     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx456ffb04ee140d84&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
   end
 

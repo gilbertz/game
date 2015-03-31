@@ -1,4 +1,8 @@
 Game::Application.routes.draw do
+  resources :bgames
+
+  resources :ibeacons
+
   mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 

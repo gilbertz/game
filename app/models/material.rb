@@ -253,7 +253,7 @@ class Material < ActiveRecord::Base
   end
 
   def get_o2o_url
-    "http://test.51self.com/gs/#{self.url}"
+    "http://i.51self.com/gs/#{self.url}"
   end
 
   def game_type_id

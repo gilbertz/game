@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329021943) do
+ActiveRecord::Schema.define(version: 20150330044532) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 20150329021943) do
     t.string   "link"
   end
 
+  create_table "bgames", force: true do |t|
+    t.integer  "ibeacon_id"
+    t.integer  "game_id"
+    t.integer  "state"
+    t.string   "remark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "categories", force: true do |t|
     t.text     "wx_js"
     t.text     "re_js"
@@ -120,6 +129,19 @@ ActiveRecord::Schema.define(version: 20150329021943) do
 
   add_index "hooks", ["material_id"], name: "index_hooks_on_material_id", using: :btree
   add_index "hooks", ["url"], name: "index_hooks_on_url", using: :btree
+
+  create_table "ibeacons", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "state"
+    t.string   "remark"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ibeacons", ["url"], name: "index_ibeacons_on_url", length: {"url"=>191}, using: :btree
+  add_index "ibeacons", ["user_id"], name: "index_ibeacons_on_user_id", using: :btree
 
   create_table "images", force: true do |t|
     t.string   "title"
