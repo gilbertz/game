@@ -251,13 +251,15 @@ class WeitestController < ApplicationController
   def report
     if current_user
       r= Record.find_by_user_id_and_game_id(current_user.id, params[:game_id])
+      beaconid= 1
       if r
         if r.score < params[:score].to_i
           r.score = params[:score].to_i
+          r.beaconid = beaconid 
           r.save
         end
       else
-        Record.create(:user_id => current_user.id, :game_id => params[:game_id], :score => params[:score])
+        Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => params[:score])
       end
     end
     render nothing: true
