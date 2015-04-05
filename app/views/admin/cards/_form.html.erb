@@ -1,0 +1,90 @@
+<%= form_for [:admin, @card] do |f| %>
+
+    <div class="control-group">
+      <label class="control-label">title</label>
+      <div class="controls">
+        <%= f.text_field :title, required: true, style: "width:500px" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">sub_title</label>
+      <div class="controls">
+        <%= f.text_field :sub_title, style: "width:500px" %>
+      </div>
+    </div>
+  
+    <div class="control-group">
+      <label class="control-label">desc</label>
+      <div class="controls">
+        <%= f.text_field :desc %>
+      </div>
+    </div>  
+
+    <div class="control-group">
+      <label class="control-label">ibeacon</label>
+      <div class="controls">
+        <%= f.text_field :beaconid, required: true %>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <label class="control-label">store</label>
+      <div class="controls">
+        <%= f.text_field :store, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">type</label>
+      <div class="controls">
+        <%= f.text_field :tid %>
+      </div>
+    </div>
+     
+
+    <div class="control-group">
+      <label class="control-label">appid</label>
+      <div class="controls">
+        <%= f.text_field :appid %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">cardid</label>
+      <div class="controls">
+        <%= f.text_field :cardid %>
+      </div>
+    </div>
+   
+   <div class="control-group">
+      <label class="control-label">start_date</label>
+      <div class="controls">
+        <%= f.text_field :start_date %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">end_date</label>
+      <div class="controls">
+        <%= f.text_field :end_date %>
+      </div>
+    </div>
+    
+
+    <div class="control-group">
+      <label class="control-label">State</label>
+      <div class="controls">
+        <%= f.select :state, Admin::CardsController::State, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <%= f.submit %>
+      </div>
+    </div>
+
+<% end %>

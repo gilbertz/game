@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
 
   has_many :authentications
   has_many :materials
+  has_many :ibeacons
 
   before_create :make_password
 

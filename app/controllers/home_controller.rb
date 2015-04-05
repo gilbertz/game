@@ -58,6 +58,14 @@ class HomeController < ApplicationController
   end
 
 
+  def ibeacon
+    @ibeacon = Ibeacon.find_by_url( params[:url] )
+    burls = Burl.where(:beaconid => @ibeacon.id).where(:state => 1)
+    burl = burls.sample(1)[0]
+    redirect_to burl.url    
+  end
+
+
 
   def o2o
     page = 1

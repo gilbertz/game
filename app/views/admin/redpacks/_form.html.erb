@@ -1,0 +1,105 @@
+<%= form_for [:admin, @redpack] do |f| %>
+
+    <div class="control-group">
+      <label class="control-label">sender_name</label>
+      <div class="controls">
+        <%= f.text_field :sender_name, required: true, style: "width:500px" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">wishing</label>
+      <div class="controls">
+        <%= f.text_field :wishing, style: "width:500px" %>
+      </div>
+    </div>
+  
+    <div class="control-group">
+      <label class="control-label">action_title</label>
+      <div class="controls">
+        <%= f.text_field :action_title %>
+      </div>
+    </div> 
+
+    <div class="control-group">
+      <label class="control-label">action_remark</label>
+      <div class="controls">
+        <%= f.text_field :action_remark %>
+      </div>
+    </div>
+    
+
+    <div class="control-group">
+      <label class="control-label">ibeacon</label>
+      <div class="controls">
+        <%= f.text_field :beaconid, required: true %>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <label class="control-label">store</label>
+      <div class="controls">
+        <%= f.text_field :store, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">app id</label>
+      <div class="controls">
+        <%= f.text_field :app_id %>
+      </div>
+    </div>
+     
+
+    <div class="control-group">
+      <label class="control-label">shop_id</label>
+      <div class="controls">
+        <%= f.text_field :shop_id %>
+      </div>
+    </div>
+
+   <div class="control-group">
+      <label class="control-label">min</label>
+      <div class="controls">
+        <%= f.text_field :min %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">max</label>
+      <div class="controls">
+        <%= f.text_field :max %>
+      </div>
+    </div>
+   
+    <div class="control-group">
+      <label class="control-label">suc url</label>
+      <div class="controls">
+        <%= f.text_field :suc_url %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">fail url</label>
+      <div class="controls">
+        <%= f.text_field :fail_url %>
+      </div>
+    </div>
+ 
+
+    <div class="control-group">
+      <label class="control-label">State</label>
+      <div class="controls">
+        <%= f.select :state, Admin::RedpacksController::State, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <%= f.submit %>
+      </div>
+    </div>
+
+<% end %>

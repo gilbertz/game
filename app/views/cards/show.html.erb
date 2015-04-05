@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Beaconid:</strong>
+  <%= @card.beaconid %>
+</p>
+
+<p>
+  <strong>Shop:</strong>
+  <%= @card.shop_id %>
+</p>
+
+<p>
+  <strong>Appid:</strong>
+  <%= @card.appid %>
+</p>
+
+<p>
+  <strong>Cardid:</strong>
+  <%= @card.cardid %>
+</p>
+
+<%= link_to 'Edit', edit_card_path(@card) %> |
+<%= link_to 'Back', cards_path %>

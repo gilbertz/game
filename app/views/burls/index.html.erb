@@ -1,0 +1,43 @@
+<h1>Listing burls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Url</th>
+      <th>Beaconid</th>
+      <th>Weight</th>
+      <th>State</th>
+      <th>Pv</th>
+      <th>Uv</th>
+      <th>Title</th>
+      <th>Img</th>
+      <th>Remark</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @burls.each do |burl| %>
+      <tr>
+        <td><%= burl.url %></td>
+        <td><%= burl.beaconid %></td>
+        <td><%= burl.weight %></td>
+        <td><%= burl.state %></td>
+        <td><%= burl.pv %></td>
+        <td><%= burl.uv %></td>
+        <td><%= burl.title %></td>
+        <td><%= burl.img %></td>
+        <td><%= burl.remark %></td>
+        <td><%= link_to 'Show', burl %></td>
+        <td><%= link_to 'Edit', edit_burl_path(burl) %></td>
+        <td><%= link_to 'Destroy', burl, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Burl', new_burl_path %>

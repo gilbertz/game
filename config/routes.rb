@@ -1,8 +1,4 @@
 Game::Application.routes.draw do
-  resources :bgames
-
-  resources :ibeacons
-
   mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 
@@ -25,7 +21,9 @@ Game::Application.routes.draw do
   get '/', to: 'home#read', constraints: {subdomain: 't'}, as: 'read_root'
   get '/',  to: "home#list", as: 'default_root'
   get '/games', to: "home#list"
-  get '/o2o', to: "home#o2o"
+  
+  #get '/o2o', to: "home#o2o"
+  get ':url', to: "home#ibeacon"
 
   resources :home, only: [] do
     get :search
@@ -108,6 +106,16 @@ Game::Application.routes.draw do
     #root "home#index"
 
     get 'home/clear_single_cache/:id' => "home#clear_single_cache"
+    
+    get 'records' =>'records#index'
+   
+    resources :ibeacons
+    resources :burls
+    resources :cards
+    resources :redpacks
+    resources :bgames
+    resources :checks
+    resources :flinks
 
     resources :weixins
     resources :domains

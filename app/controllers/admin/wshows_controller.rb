@@ -10,7 +10,7 @@ class Admin::WshowsController < Admin::BaseController
   def create
     wshow = Wshow.new wshow_params
     wshow.save
-    redirect_to [:wshowmin, :wshows]
+    redirect_to [:admin, :wshows]
   end
 
   def clone

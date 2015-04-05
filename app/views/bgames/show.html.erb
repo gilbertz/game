@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ibeacon:</strong>
+  <%= @bgame.ibeacon_id %>
+</p>
+
+<p>
+  <strong>Game:</strong>
+  <%= @bgame.game_id %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @bgame.state %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @bgame.remark %>
+</p>
+
+<%= link_to 'Edit', edit_bgame_path(@bgame) %> |
+<%= link_to 'Back', bgames_path %>

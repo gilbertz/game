@@ -1,0 +1,2 @@
+module BurlsHelper
+end

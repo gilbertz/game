@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ibeacon.name %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @ibeacon.user_id %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @ibeacon.state %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @ibeacon.remark %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @ibeacon.url %>
+</p>
+
+<%= link_to 'Edit', edit_ibeacon_path(@ibeacon) %> |
+<%= link_to 'Back', ibeacons_path %>

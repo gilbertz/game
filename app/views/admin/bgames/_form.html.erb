@@ -1,0 +1,39 @@
+<%= form_for [:admin, @bgame] do |f| %>
+
+    <div class="control-group">
+      <label class="control-label">game_id</label>
+      <div class="controls">
+        <%= f.text_field :game_id, required: true, style: "width:500px" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">ibeacon id</label>
+      <div class="controls">
+        <%= f.text_field :beaconid, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">remark</label>
+      <div class="controls">
+        <%= f.text_field :remark %>
+      </div>
+    </div>
+     
+
+    <div class="control-group">
+      <label class="control-label">State</label>
+      <div class="controls">
+        <%= f.select :state, Admin::BgamesController::State, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <%= f.submit %>
+      </div>
+    </div>
+
+<% end %>

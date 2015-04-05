@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Beaconid:</strong>
+  <%= @flink.beaconid %>
+</p>
+
+<p>
+  <strong>Wxid:</strong>
+  <%= @flink.wxid %>
+</p>
+
+<p>
+  <strong>Wxurl:</strong>
+  <%= @flink.wxurl %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @flink.state %>
+</p>
+
+<%= link_to 'Edit', edit_flink_path(@flink) %> |
+<%= link_to 'Back', flinks_path %>

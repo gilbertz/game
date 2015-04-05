@@ -11,31 +11,50 @@
             <%= link_to '用户管理', [:admin,:users] %> 
           </li>
           <li class="<%= controller_name.in?(['categories']) ? 'active' : '' %>"> 
-            <%= link_to '分类管理', [:admin,:categories] %> 
+            <%= link_to '模板管理', [:admin,:categories] %> 
           </li>
           <li class="<%= controller_name.in?(['materials']) ? 'active' : '' %>"> 
-            <%= link_to '素材管理', [:admin,:materials] %> 
+            <%= link_to '应用管理', [:admin,:materials] %> 
           </li>
           <li class="<%= controller_name.in?(['wcards']) ? 'active' : '' %>">
-            <%= link_to '微卡管理', [:admin, :wcards] %>
+            <%= link_to '微卡微秀管理', [:admin, :wcards] %>
           </li>
           
           <li class="<%= controller_name.in?(['wshows']) ? 'active' : '' %>">
-            <%= link_to '微秀管理', [:admin,:wshows] %>
+            <%= link_to '页面管理', [:admin,:wshows] %>
+          </li> 
+
+          <li class="<%= controller_name.in?(['ibeacons']) ? 'active' : '' %>">
+            <%= link_to 'ibeacon管理', [:admin,:ibeacons] %>
+          </li>
+
+
+          <li class="<%= controller_name.in?(['burls']) ? 'active' : '' %>">
+            <%= link_to 'burl管理', [:admin, :burls] %>
+          </li>
+
+
+          <li class="<%= controller_name.in?(['cards']) ? 'active' : '' %>">
+            <%= link_to '卡券管理', [:admin, :cards] %>
+          </li>
+
+
+          <li class="<%= controller_name.in?(['redpacks']) ? 'active' : '' %>">
+            <%= link_to '红包管理', [:admin, :redpacks] %>
+          </li> 
+
+          <li class="<%= controller_name.in?(['bgames']) ? 'active' : '' %>">
+            <%= link_to '游戏管理', [:admin, :bgames] %>
+          </li>
+
+
+          <li class="<%= controller_name.in?(['records']) ? 'active' : '' %>">
+            <%= link_to '用户活动', [:admin,:records] %>
           </li> 
 
 
           <li class="<%= controller_name.in?(['ads']) ? 'active' : ''%>">
             <%= link_to '广告管理', [:admin,:ads] %>
-          </li>
-          <li class="<%= controller_name.in?(['banners']) ? 'active' : ''%>">
-            <%= link_to 'App Banner管理', [:admin,:banners] %>
-          </li>
-          <li class="<%= controller_name.in?(['domains']) ? 'active' : ''%>">
-            <%= link_to '域名管理', [:admin,:domains] %>
-          </li>
-          <li class="<%= controller_name.in?(['weixins']) ? 'active' : ''%>">
-            <%= link_to '微信管理', [:admin,:weixins] %>
           </li>
         </ul>
       </div><!--/.nav-collapse -->

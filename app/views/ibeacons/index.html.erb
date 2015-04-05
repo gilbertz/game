@@ -1,0 +1,35 @@
+<h1>Listing ibeacons</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>User</th>
+      <th>State</th>
+      <th>Remark</th>
+      <th>Url</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ibeacons.each do |ibeacon| %>
+      <tr>
+        <td><%= ibeacon.name %></td>
+        <td><%= ibeacon.user_id %></td>
+        <td><%= ibeacon.state %></td>
+        <td><%= ibeacon.remark %></td>
+        <td><%= ibeacon.url %></td>
+        <td><%= link_to 'Show', ibeacon %></td>
+        <td><%= link_to 'Edit', edit_ibeacon_path(ibeacon) %></td>
+        <td><%= link_to 'Destroy', ibeacon, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ibeacon', new_ibeacon_path %>

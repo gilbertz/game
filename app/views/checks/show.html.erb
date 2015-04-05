@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Beacondid:</strong>
+  <%= @check.beacondid %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @check.user_id %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @check.state %>
+</p>
+
+<p>
+  <strong>Lng:</strong>
+  <%= @check.lng %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @check.lat %>
+</p>
+
+<%= link_to 'Edit', edit_check_path(@check) %> |
+<%= link_to 'Back', checks_path %>

@@ -7,6 +7,7 @@ class Material < ActiveRecord::Base
   has_many :answers, as: :viewable, class_name: "Answer",  dependent: :destroy
 
   has_many :questions
+  has_many :records
 
   class_attribute :clone
 
@@ -270,7 +271,7 @@ class Material < ActiveRecord::Base
       if self.game_type_id == 7 or  self.game_type_id == 14
         "http://www.51self.com/weitest/#{self.url}"
       else
-        "/weitest/#{self.url}"
+        "http://www.021591.com/weitest/#{self.url}"
       end
     else
        "/gs/#{self.url}"

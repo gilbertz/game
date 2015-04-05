@@ -1,0 +1,35 @@
+<h1>Listing checks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Beacondid</th>
+      <th>User</th>
+      <th>State</th>
+      <th>Lng</th>
+      <th>Lat</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @checks.each do |check| %>
+      <tr>
+        <td><%= check.beacondid %></td>
+        <td><%= check.user_id %></td>
+        <td><%= check.state %></td>
+        <td><%= check.lng %></td>
+        <td><%= check.lat %></td>
+        <td><%= link_to 'Show', check %></td>
+        <td><%= link_to 'Edit', edit_check_path(check) %></td>
+        <td><%= link_to 'Destroy', check, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Check', new_check_path %>

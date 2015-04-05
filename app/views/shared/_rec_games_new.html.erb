@@ -4,7 +4,7 @@
     <% @games = Material.rec_games_new(4, @material.id)  %>
     <% @games.each do |game| %>
       <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
-        <a href="/weitest/<%= game.url %>?f=r" style="text-decoration:none; ">
+        <a href="<%= game.get_link %>" style="text-decoration:none; ">
           <%= game.get_name %>
         </a>
       </div>

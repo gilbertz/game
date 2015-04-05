@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330044532) do
+ActiveRecord::Schema.define(version: 20150405154508) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -70,12 +70,43 @@ ActiveRecord::Schema.define(version: 20150330044532) do
   end
 
   create_table "bgames", force: true do |t|
-    t.integer  "ibeacon_id"
+    t.integer  "beaconid"
     t.integer  "game_id"
     t.integer  "state"
     t.string   "remark"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "burls", force: true do |t|
+    t.string   "url"
+    t.integer  "beaconid"
+    t.integer  "weight"
+    t.integer  "state"
+    t.integer  "pv"
+    t.integer  "uv"
+    t.string   "title"
+    t.string   "img"
+    t.string   "remark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cards", force: true do |t|
+    t.integer  "beaconid"
+    t.string   "shop_id"
+    t.string   "appid"
+    t.string   "cardid"
+    t.string   "title"
+    t.string   "sub_title"
+    t.text     "desc"
+    t.integer  "store"
+    t.integer  "tid"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "state"
   end
 
   create_table "categories", force: true do |t|
@@ -97,6 +128,16 @@ ActiveRecord::Schema.define(version: 20150330044532) do
     t.boolean  "use_wxjs"
   end
 
+  create_table "checks", force: true do |t|
+    t.integer  "beacondid"
+    t.integer  "user_id"
+    t.integer  "state"
+    t.float    "lng"
+    t.float    "lat"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "domains", force: true do |t|
     t.string   "name"
     t.boolean  "active"
@@ -109,6 +150,15 @@ ActiveRecord::Schema.define(version: 20150330044532) do
     t.string   "username"
     t.text     "content"
     t.integer  "state",      default: 0, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "flinks", force: true do |t|
+    t.integer  "beaconid"
+    t.string   "wxid"
+    t.string   "wxurl"
+    t.integer  "state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -138,8 +188,11 @@ ActiveRecord::Schema.define(version: 20150330044532) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "provider"
+    t.string   "uid"
   end
 
+  add_index "ibeacons", ["uid"], name: "index_ibeacons_on_uid", length: {"uid"=>191}, using: :btree
   add_index "ibeacons", ["url"], name: "index_ibeacons_on_url", length: {"url"=>191}, using: :btree
   add_index "ibeacons", ["user_id"], name: "index_ibeacons_on_user_id", using: :btree
 
@@ -222,6 +275,7 @@ ActiveRecord::Schema.define(version: 20150330044532) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remark"
+    t.string   "action_name"
   end
 
   add_index "records", ["beaconid", "score"], name: "index_records_on_beaconid_and_score", using: :btree
@@ -231,6 +285,24 @@ ActiveRecord::Schema.define(version: 20150330044532) do
   add_index "records", ["score"], name: "index_records_on_score", using: :btree
   add_index "records", ["user_id", "game_id"], name: "index_records_on_user_id_and_game_id", using: :btree
   add_index "records", ["user_id"], name: "index_records_on_user_id", using: :btree
+
+  create_table "redpacks", force: true do |t|
+    t.integer  "beaconid"
+    t.integer  "app_id"
+    t.integer  "shop_id"
+    t.string   "sender_name"
+    t.string   "wishing"
+    t.string   "action_title"
+    t.string   "action_remark"
+    t.integer  "min"
+    t.integer  "max"
+    t.string   "suc_url"
+    t.string   "fail_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "store"
+    t.integer  "state"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name",                   limit: 100
