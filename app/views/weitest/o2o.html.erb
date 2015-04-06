@@ -71,7 +71,7 @@ function share_api(){
     var info = $("#info").text();
     wx.onMenuShareTimeline({
       title: info + "<%= @material.wx_title %>", // 分享标题
-      link: "<%= @material.get_o2o_url %>", // 分享链接
+      link: "<%= @material.get_o2o_url(@beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       success: function () {
         share_callback_pyq();

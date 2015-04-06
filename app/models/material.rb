@@ -253,8 +253,12 @@ class Material < ActiveRecord::Base
     end
   end
 
-  def get_o2o_url
-    "http://i.51self.com/gs/#{self.url}"
+  def get_o2o_url(beacon=nil)
+    unless beacon
+      "http://i.51self.com/gs/#{self.url}"
+    else
+      "http://i.51self.com/#{beacon.url}/gs/#{self.url}" 
+    end
   end
 
   def game_type_id
