@@ -133,7 +133,7 @@ class WeitestController < ApplicationController
   end
 
 
-  #caches_page :show
+  caches_page :show
   def show
     #ua = request.user_agent.downcase
     #p ua
@@ -151,6 +151,7 @@ class WeitestController < ApplicationController
 
     #@material = Material.find_by_url params[:id]
     @material = Material.by_hook params[:id]
+    get_object
 
     #@material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzA4NTkwNTIxOQ==&mid=201004496&idx=1&sn=c3dcb0820a5c3746991de7de63429fc8#wechat_redirect'
     #@material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MzA3MDk0MzMxNQ==&mid=200586729&idx=1&sn=599156aecedbfa9317785390ddb0b448#wechat_redirect"
@@ -193,11 +194,8 @@ class WeitestController < ApplicationController
     @material = Material.by_hook params[:id]
     @material.wx_ln = ''
 
+    get_object 
     if @material.category
-      #@topn = @material.get_top(10)
-      #if current_user
-      #  @myrank = @material.get_rank(current_user.id)
-      #end
       render 'o2o', layout: false
     end
   end
@@ -252,6 +250,10 @@ class WeitestController < ApplicationController
     if current_user
       r= Record.find_by_user_id_and_game_id(current_user.id, params[:game_id])
       beaconid= 1
+      if params[:beaconid] 
+        b = Ibeacon.find params[:beaconid] 
+        beaconid = b.id if b
+      end
       if r
         if r.score < params[:score].to_i
           r.score = params[:score].to_i
@@ -333,5 +335,14 @@ private
     end
   end
 
+  def get_object
+    if not @material.object_type.blank? and @material.object_id
+      @object = @material.object_type.capitalize.constantize.find @material.object_id
+      if current_user and @object
+        rs = Record.where(:user_id => current_user.id, :game_id => @object_id)
+        @record = rs[0] if rs and rs.length > 0 
+      end
+    end
+  end
 
 end

@@ -11,12 +11,12 @@ class Admin::CardsController < Admin::BaseController
   end
 
   def show
-    respond_with(@card)
+    redirect_to [:admin,:cards]
   end
 
   def new
     @card = Card.new
-    respond_with(@card)
+    redirect_to [:admin,:cards]
   end
 
   def edit
@@ -25,17 +25,17 @@ class Admin::CardsController < Admin::BaseController
   def create
     @card = Card.new(card_params)
     @card.save
-    respond_with(@card)
+    redirect_to [:admin,:cards]
   end
 
   def update
     @card.update(card_params)
-    respond_with(@card)
+    redirect_to [:admin,:cards]
   end
 
   def destroy
     @card.destroy
-    respond_with(@card)
+    redirect_to [:admin,:cards]
   end
 
   private
