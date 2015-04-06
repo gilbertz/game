@@ -136,7 +136,7 @@ share_api();
 </style>
 -->
 
-
+<% unless @beacon %>
 <a id="game9g9gstart" class="game9g9gstart pulse infinite"></a>
 <div id="game9gmenu" class="game9gmenu">
 <ul>
@@ -152,6 +152,7 @@ share_api();
   -->
 </ul>
 </div>
+<% end %>
 
 <script>
   $("#game9g9gstart").on('touch mousedown', function(e){
