@@ -254,7 +254,7 @@ class Material < ActiveRecord::Base
   end
 
   def get_o2o_url(beacon=nil)
-    unless beacon
+    if beacon.nil?
       "http://i.51self.com/gs/#{self.url}"
     else
       "http://i.51self.com/#{beacon.url}/gs/#{self.url}" 

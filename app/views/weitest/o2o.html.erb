@@ -88,7 +88,7 @@ function share_api(){
     wx.onMenuShareAppMessage({
       title: info + "<%= @material.wx_title %>", // 分享标题
       desc: "<%= @material.wxdesc %>", // 分享描述
-      link: "<%= @material.get_o2o_url %>", // 分享链接
+      link: "<%= @material.get_o2o_url(@beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       type: '', // 分享类型,music、video或link，不填默认为link
       dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
