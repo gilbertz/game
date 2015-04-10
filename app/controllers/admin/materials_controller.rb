@@ -5,7 +5,9 @@ class Admin::MaterialsController < Admin::BaseController
     cond += " and category_id=#{params[:cid]}" if params[:cid]
     cond += " and user_id = 1"
     cond += " and name like '%#{params[:q]}%'" if params[:q]
-    @materials = Material.includes(:category).where(cond).order('rrr desc, id desc').page(params[:page])
+    #@materials = Material.includes(:category).where(cond).order('rrr desc, id desc').page(params[:page])
+  
+    @materials = Material.includes(:category).where(cond).order('id desc').page(params[:page])
   end
 
   def recommend_to_qq

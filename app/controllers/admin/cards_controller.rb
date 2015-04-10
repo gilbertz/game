@@ -1,7 +1,7 @@
 class Admin::CardsController < Admin::BaseController
   before_action :set_card, only: [:show, :edit, :update, :destroy]
 
-   State = [["下线", 0], ["上线", 1]]
+  State = [["下线", 0], ["上线", 1]]
 
   respond_to :html
 
@@ -16,7 +16,6 @@ class Admin::CardsController < Admin::BaseController
 
   def new
     @card = Card.new
-    redirect_to [:admin,:cards]
   end
 
   def edit
