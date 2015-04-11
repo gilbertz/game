@@ -1,0 +1,49 @@
+<%= form_for [:admin, @check] do |f| %>
+
+    <div class="control-group">
+      <label class="control-label">user</label>
+      <div class="controls">
+        <%= f.text_field :user_id, required: true, style: "width:500px" %>
+      </div>
+    </div>
+
+    
+    <div class="control-group">
+      <label class="control-label">ibeacon</label>
+      <div class="controls">
+        <%= f.text_field :beaconid, required: true %>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <label class="control-label">lng</label>
+      <div class="controls">
+        <%= f.text_field :lng %>
+      </div>
+    </div>
+     
+    
+    <div class="control-group">
+      <label class="control-label">lat</label>
+      <div class="controls">
+        <%= f.text_field :lat %>
+      </div>
+    </div>
+    
+
+    <div class="control-group">
+      <label class="control-label">State</label>
+      <div class="controls">
+        <%= f.select :state, Admin::IbeaconsController::State, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <%= f.submit %>
+      </div>
+    </div>
+
+<% end %>

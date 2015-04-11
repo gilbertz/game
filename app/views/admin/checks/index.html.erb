@@ -1,0 +1,27 @@
+<% unless @checks.blank? %>
+
+<table class="table">
+
+  <tr>
+    <th>ID</th>
+    <th>ibeacon</th>
+    <th>user</th>
+    <th>State</th>
+    <th>lng</th>
+    <th>lat</th>
+    <th>Operate</th>
+  </tr>
+
+  <% @checks.each do |check| %>
+  <tr>
+    <td><%= check.id %></td>
+    <td><%= check.beacon_name %></td>
+    <td><%= check.user_name %></td>
+    <td><%= check.state %></td>
+    <td><%= check.lng %></td>
+    <td><%= check.lat %></td>
+    <td><%= link_to "Edit", edit_admin_check_path(check) %> | <%= link_to "delete", admin_check_path(check), :method => :delete, confirm: "确认删除?" %></td>
+  </tr>
+  <% end %>
+</table>
+<% end %>

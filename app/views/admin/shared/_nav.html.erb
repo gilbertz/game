@@ -47,6 +47,9 @@
             <%= link_to '游戏管理', [:admin, :bgames] %>
           </li>
 
+          <li class="<%= controller_name.in?(['checks']) ? 'active' : '' %>">
+            <%= link_to '签到管理', [:admin, :checks] %>
+          </li>
 
           <li class="<%= controller_name.in?(['records']) ? 'active' : '' %>">
             <%= link_to '用户活动', [:admin,:records] %>

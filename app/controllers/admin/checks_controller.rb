@@ -1,4 +1,4 @@
-class ChecksController < ApplicationController
+class Admin::ChecksController < Admin::BaseController
   before_action :set_check, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
@@ -23,17 +23,17 @@ class ChecksController < ApplicationController
   def create
     @check = Check.new(check_params)
     @check.save
-    respond_with(@check)
+    redirect_to [:admin, :checks]
   end
 
   def update
     @check.update(check_params)
-    respond_with(@check)
+    redirect_to [:admin, :checks]
   end
 
   def destroy
     @check.destroy
-    respond_with(@check)
+    redirect_to [:admin, :checks]
   end
 
   private
@@ -42,6 +42,6 @@ class ChecksController < ApplicationController
     end
 
     def check_params
-      params.require(:check).permit(:beacondid, :user_id, :state, :lng, :lat)
+      params.require(:check).permit(:beaconid, :user_id, :state, :lng, :lat)
     end
 end
