@@ -270,15 +270,15 @@ class Material < ActiveRecord::Base
   end
 
 
-  def get_link(ad=true)
-    if ad
+  def get_link(beaconid=nil)
+    if beaconid.nil?
       if self.game_type_id == 7 or  self.game_type_id == 14
         "http://www.51self.com/weitest/#{self.url}"
       else
         "http://www.021591.com/weitest/#{self.url}"
       end
     else
-       "/gs/#{self.url}"
+       "/#{beaconid}/gs/#{self.url}"
     end
   end
 
