@@ -66,6 +66,21 @@ class HomeController < ApplicationController
   end
 
 
+  def home
+    page = 1
+    page = params[:page].to_i if params[:page]
+    @next_page = page + 1
+    limit = 10
+    
+    @beacon = Ibeacon.find_by_url( params[:beaconid] )
+    @materials = []
+    if @beacon 
+      bgames = Bgame.where(:beaconid => @beacon.id).order('created_at desc').page( page ).per( limit )
+      @materials = bgames.map{|b| b.get_game }
+    end
+    render 'o2o', :layout => nil 
+  end
+
 
   def o2o
     page = 1

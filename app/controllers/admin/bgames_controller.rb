@@ -25,17 +25,17 @@ class Admin::BgamesController < Admin::BaseController
   def create
     @bgame = Bgame.new(bgame_params)
     @bgame.save
-    respond_with(@bgame)
+    redirect_to [:admin, :bgames]
   end
 
   def update
     @bgame.update(bgame_params)
-    respond_with(@bgame)
+    redirect_to [:admin, :bgames]
   end
 
   def destroy
     @bgame.destroy
-    respond_with(@bgame)
+    redirect_to [:admin, :bgames]
   end
 
   private

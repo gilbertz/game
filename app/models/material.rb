@@ -282,8 +282,13 @@ class Material < ActiveRecord::Base
     end
   end
 
-  def get_top(limit=10)
-    rs = Record.where(:game_id => self.id ).order('score desc').limit(limit)
+  def get_top(limit=10, beaconid=nil)
+    cond = '1=1'
+    unless beaconid.nil?
+      b = Ibeacon.find_by_url(beaconid)
+      cond = "beaconid=#{b.id}"
+    end
+    rs = Record.where(:game_id => self.id ).where(cond).order('score desc').limit(limit)
     rs
   end
 

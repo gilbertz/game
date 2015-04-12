@@ -1,7 +1,7 @@
 class Admin::IbeaconsController < Admin::BaseController
   before_action :set_ibeacon, only: [:show, :edit, :update, :destroy]
 
-   State = [["下线", 0], ["上线", 1]]
+   State = [["下线", 0], ["上线", 1], ["社区", 2]]
 
   respond_to :html
 

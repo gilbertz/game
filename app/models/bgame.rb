@@ -6,6 +6,12 @@ class Bgame < ActiveRecord::Base
     end
   end
 
+  def get_game
+    if self.game_id
+      Material.find self.game_id
+    end
+  end
+
   def game_name
     if self.game_id
       b = Material.find self.game_id
