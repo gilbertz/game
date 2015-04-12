@@ -256,15 +256,15 @@ class WeitestController < ApplicationController
       if @beacon
         beaconid = @beacon.id if @beacon
       end
-      if r and params[:score]
-        if r.score < params[:score].to_i
-          r.score = params[:score].to_i
-          r.beaconid = beaconid 
-          r.save
-        end
-      else
+      #if r and params[:score]
+      #  if r.score < params[:score].to_i
+      #    r.score = params[:score].to_i
+      #    r.beaconid = beaconid 
+      #    r.save
+      #  end
+      #else
         Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => params[:score], :remark=>params[:remark])
-      end
+      #end
     end
     render nothing: true
   end
