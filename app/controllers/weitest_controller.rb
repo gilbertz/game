@@ -2,7 +2,7 @@
 class WeitestController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
-  #before_filter :weixin_authorize, :only => [:o2o]
+  before_filter :weixin_authorize, :only => [:o2o]
 
   def result
     unless params[:material_id].blank?
@@ -250,12 +250,12 @@ class WeitestController < ApplicationController
 
   def report
     if current_user
-      r= Record.find_by_user_id_and_game_id(current_user.id, params[:game_id])
       beaconid= 1
       get_beacon
       if @beacon
         beaconid = @beacon.id if @beacon
       end
+      r= Record.find_by_user_id_and_game_id(current_user.id, params[:game_id])
       #if r and params[:score]
       #  if r.score < params[:score].to_i
       #    r.score = params[:score].to_i
