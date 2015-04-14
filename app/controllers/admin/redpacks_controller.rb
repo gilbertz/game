@@ -1,4 +1,5 @@
 class Admin::RedpacksController < Admin::BaseController
+  skip_before_filter :verify_authenticity_token
   before_action :set_redpack, only: [:show, :edit, :update, :destroy]
 
   State = [["下线", 0], ["上线", 1]]
