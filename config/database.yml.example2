@@ -1,0 +1,29 @@
+development:
+  adapter: mysql2
+  database: game
+  pool: 5
+  username: root
+  encoding: utf8
+  reconnect: false
+  host: localhost
+
+production:
+  adapter: mysql2
+  encoding: utf8mb4
+  database: game
+  host: "rdsnjuzn3bybvrj.mysql.rds.aliyuncs.com"
+  port: 3306
+  pool: 5
+  username: kao
+  password: kao123
+  #socket: /var/run/mysqld/mysqld.sock
+
+test:
+  adapter: mysql2
+  database: game
+  poll: 5
+  username: root
+  password: 
+  reconnect: true
+  encoding: utf8
+  host: localhost
