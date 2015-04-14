@@ -50,6 +50,12 @@ class User < ActiveRecord::Base
     ::SecureRandom.urlsafe_base64
   end
 
+  def get_openid
+    au = Authentication.find_by_user_id(self.id)
+    return au.uid  if au
+  end
+
+
   private
   def make_password
     self.salt = generate_salt
