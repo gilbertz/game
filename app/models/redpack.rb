@@ -1,6 +1,8 @@
 class Redpack < ActiveRecord::Base
   require 'net/https'
   require 'uri'
+  require 'rexml/document'
+  include REXML
 
   def beacon_name
     if self.beaconid
@@ -19,11 +21,49 @@ class Redpack < ActiveRecord::Base
 
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
-    request.body = "<?xml version='1.0' encoding='UTF-8'?><somedata><sign>C380BEC2BFD727A4B6845133519F3AD6</sign><mch_billno>10000098201411111234567890</mch_billno><mch_id>10000098</mch_id><wxappid>wx8888888888888888</wxappid><nick_name>天虹百货</nick_name><send_name>天虹百货</send_name><re_openid>oxTWIuGaIt6gTKsQRLau2M0yL16E</re_openid><total_amount>100</total_amount><min_value>100</min_value><max_value>100</max_value><total_num>1</total_num><wishing>感谢您参加猜灯谜活动，祝您元宵节快乐</wishing><client_ip>192.168.0.1</client_ip><act_name>猜灯谜抢红包活动</act_name><act_id></act_id><remark>猜越多得越多，快来抢！</remark><logo_imgurl></logo_imgurl><share_content></share_content><share_url></share_url><share_imgurl></share_imgurl><nonce_str>5K8264ILTKCH16CQ2502SI8ZNMTM67VS</nonce_str></somedata>"
+
+     request.body = array_xml
      response = http.start do |http|
      ret = http.request(request)
      puts request.body
      puts ret.body
      end
   end
+
+    def array_xml
+      doc = Document.new"<somedata/>"
+      root_node = doc.root
+      el1 = root_node.add_element "sign"
+      el1.text = ""
+      el2 = root_node.add_element "mch_billno"
+      el2.text = ""
+      el3 = root_node.add_element "mch_id"
+      el3.text = ""
+      el4 = root_node.add_element "wxappid"
+      el4.text = ""
+      el5 = root_node.add_element "nick_name"
+      el5.text = ""
+      el6 = root_node.add_element "send_name"
+      el6.text = ""
+      el7 = root_node.add_element "re_openid"
+      el7.text = ""
+      el8 = root_node.add_element "total_amount"
+      el8.text = ""
+      el9 = root_node.add_element "min_value"
+      el10 = root_node.add_element "max_value"
+      el11 = root_node.add_element "total_num"
+      el12 = root_node.add_element "wishing"
+      el12.text = Redpack.find_by(beaconid: beaconid).wishing
+      el13 = root_node.add_element "client_ip"
+      el14 = root_node.add_element "act_name"
+      el15 = root_node.add_element "act_id"
+      el16 = root_node.add_element "remark"
+      el17 = root_node.add_element "logo_imgurl"
+      el18 = root_node.add_element "share_content"
+      el19 = root_node.add_element "share_url"
+      el20 = root_node.add_element "share_imgurl"
+      el21 = root_node.add_element "nonce_str"
+      return doc.to_s
+    end
+
 end
