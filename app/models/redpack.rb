@@ -64,7 +64,7 @@ class Redpack < ActiveRecord::Base
       el9 = root_node.add_element "min_value"
       el9.text = '100'
       el10 = root_node.add_element "max_value"
-      el10.text = '100'
+      el10.text = '100' 
       el11 = root_node.add_element "total_num"
       el11.text = '1'
       el12 = root_node.add_element "wishing"
