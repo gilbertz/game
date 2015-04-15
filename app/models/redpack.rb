@@ -42,7 +42,7 @@ class Redpack < ActiveRecord::Base
     def array_xml
       doc = Document.new"<somedata/>"
       root_node = doc.root
-      stringA="appid=wxd930ea5d5a258f4f&body=test&device_info=1000&mch_id=1233034702&nonce_str=ibuaiVcKdpRxkhJA";
+      stringA="appid=wx456ffb04ee140d84&body=test&device_info=1000&mch_id=1233034702&nonce_str=ibuaiVcKdpRxkhJA";
       stringSignTemp="stringA"+"&key=192006250b4c09247ec02edce69f6a2d"
       sign=Digest::MD5.hexdigest(stringSignTemp).upcase
       el1 = root_node.add_element "sign"
