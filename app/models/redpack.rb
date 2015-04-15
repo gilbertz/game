@@ -59,7 +59,7 @@ class Redpack < ActiveRecord::Base
       el21 = root_node.add_element "nonce_str"
       el21.text = Digest::MD5.hexdigest(rand(999999).to_s).to_s
       el22 = root_node.add_element "re_openid"
-      el22.text = 'oNnqbt0tR5uMo8LNVM0_8upfRkeo'
+      el22.text = current_user.get_openid
       el16 = root_node.add_element "remark"
       el16.text = '1'
       el6 = root_node.add_element "send_name"
