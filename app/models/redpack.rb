@@ -16,7 +16,7 @@ class Redpack < ActiveRecord::Base
     return 
   end
 
-  def weixin_post
+  def weixin_post(user)
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == "https"  # enable SSL/TLS
@@ -27,7 +27,7 @@ class Redpack < ActiveRecord::Base
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
 
-     request.body = array_xml
+     request.body = array_xml(user)
      response = http.start do |http|
      ret = http.request(request)
      puts request.body
@@ -39,7 +39,7 @@ class Redpack < ActiveRecord::Base
      end
   end
 
-    def array_xml
+    def array_xml(user)
       doc = Document.new"<xml/>"
       root_node = doc.root
       el14 = root_node.add_element "act_name"
@@ -59,7 +59,7 @@ class Redpack < ActiveRecord::Base
       el21 = root_node.add_element "nonce_str"
       el21.text = Digest::MD5.hexdigest(rand(999999).to_s).to_s
       el22 = root_node.add_element "re_openid"
-      el22.text = current_user.get_openid
+      el22.text = user.get_openid
       el16 = root_node.add_element "remark"
       el16.text = '1'
       el6 = root_node.add_element "send_name"
