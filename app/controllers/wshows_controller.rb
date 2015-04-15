@@ -1,6 +1,7 @@
 class WshowsController < ApplicationController
   def show
     @wshow = Wshow.find params[:id]
+    @rp = Redpack.find_by_beaconid(1).weixin_post
     render layout: false
   end
 
