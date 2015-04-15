@@ -1,0 +1,21 @@
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: gtest
+  host: "rdsnjuzn3bybvrj.mysql.rds.aliyuncs.com"
+  port: 3306
+  pool: 5
+  username: kao
+  password: kao123
+  #socket: /var/run/mysqld/mysqld.sock
+
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: gtest
+  host: "rdsnjuzn3bybvrj.mysql.rds.aliyuncs.com"
+  port: 3306
+  pool: 5
+  username: kao
+  password: kao123
+
