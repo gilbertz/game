@@ -1,0 +1,83 @@
+<% if @beacon %>
+<% @count = Record.where( :beaconid => @beacon.id,  :game_id => @material.id ).group(:user_id).length %>
+<% @rs = Record.where( :beaconid => @beacon.id,  :game_id => @material.id).group(:user_id).order('created_at desc').limit(20) %>
+<% @store = @object.store %>
+<% end %>
+<body id="activity-detail">
+  <div class="container">
+    <!--top part-->
+    <% if @record %>
+    <div class="top_coupon">
+      <img class="coupon_bg" src="http://wx.51self.com/img/card/hongbao/hb_bg%20up.png" alt="" />
+      <img class="decorate" src="http://wx.51self.com/img/card/hongbao/hb_decorection.png" alt="" />
+      <div class="interactive"> 
+        <img src="http://wx.51self.com/img/card/hongbao/hb_AterOpen_get.png"/>
+        <span><%=Record.find_by(user_id: current_user.id, game_id: @material.id).score%>元</span> 
+      </div>
+    <img class="logo" src="http://wx.51self.com/img/card/hongbao/logo.png" alt="" />
+    </div>
+    <% elsif @count and @count  < @store %>
+    <div class="top_coupon">
+      <img class="coupon_bg" src="http://wx.51self.com/img/card/hongbao/hb_bg%20up.png" alt="" />
+      <img class="decorate" src="http://wx.51self.com/img/card/hongbao/hb_decorection.png" alt="" />
+      <div class="interactive" >
+        <img id="interactive-tip"src="http://wx.51self.com/img/card/hongbao/hb_BeforeOpen.png" alt="" onClick="interactive()"/> 
+        <span id="money"></span> 
+      </div>
+    <img class="logo" src="http://wx.51self.com/img/card/hongbao/logo.png" alt="" />
+    </div>
+    <% else %>
+    <div class="top_coupon">
+      <img class="coupon_bg" src="http://wx.51self.com/img/card/hongbao/hb_bg%20up.png" alt="" />
+      <img class="decorate" src="http://wx.51self.com/img/card/hongbao/hb_decorection.png" alt="" />
+      <div class="interactive" >
+        <img src="http://wx.51self.com/img/card/hongbao/hb_AfterOpen_notget.png" alt="" />
+      </div>
+    <img class="logo" src="http://wx.51self.com/img/card/hongbao/logo.png" alt="" />
+    </div>
+    <% end %>
+
+
+    <!--middle part , people list-->
+    <% if @beacon %>      
+    <div class="item-list">
+      <div class="item-list-header" id="item-list-header">已有<%= @count%>人领取红包</div>
+      <% @rs.each do |t| %>
+      <% u = User.find_by_id t.user_id %>
+      <div class="item-list-detail">
+        <img src="<%= u.profile_img_url %>" width="32" class="userphoto">
+        <span><%= u.name %></span>
+        <span class="right">领到<%=t.score %>元红包</span>
+      </div>
+      <% end %> 
+    </div>
+    <% end %> 
+  </div>
+
+  <script type="text/javascript">
+
+   function interactive(){
+
+    document.getElementById('interactive-tip').setAttribute("src","http://wx.51self.com/img/card/hongbao/hb_AterOpen_get.png");
+
+    <% if current_user and not @record%>
+    <% id = Ibeacon.find_by(:url=>params[:beaconid]).id%>
+    <% @rp = Redpack.find_by(beaconid: id).weixin_post(current_user ).to_i/100%>
+    score = '<%= @rp %>';
+    ajax = new XMLHttpRequest();
+    ajax.open('GET', 'http://i.51self.com/weitest/report?beaconid=<%= params[:beaconid] %>&game_id=<%= @material.id %>&score=' + score, true);
+    ajax.send(null);
+
+    document.getElementById('money').innerHTML="<%= @rp %>";
+
+    var rHtml = "已有<%= @count+1 %>人领取";
+    $("#item-list-header").html(rHtml );
+    var insertHtml = "<div class='item-list-detail'><img src='<%= current_user.profile_img_url %>' width='32' class='userphoto'><span><%= current_user.name %></span><span class='right'>领取了优惠券</span></div>";
+    $(insertHtml).insertAfter("#item-list-header");
+    var qrHtml='<div id="bar-code" class="top_barcode"><p class="time">使用时间：2015/04/20-2015/04/26</p><p>使用门店：世纪联华中环店</p><p class="method">使用方法：出示此页面或者截图给营业员</p></div>';
+    $(qrHtml).insertAfter(".top_coupon");         
+    <% end %>
+  }
+
+</script>
+</body>
