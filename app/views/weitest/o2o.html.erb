@@ -116,9 +116,6 @@ share_api();
   </script>
 
 <link rel="stylesheet" type="text/css" href="http://wx.51self.com/css/game9g.css">
-<!--
-<script src="http://wx.51self.com/js/game9g.js"></script>
--->
 
 <!--
 <div class="lis">
@@ -154,9 +151,42 @@ share_api();
 </div>
 <% end %>
 
-<script>
+<script type="text/javascript">
+  var SHAKE_THRESHOLD = 1000;
+  var last_update = 0;
+  var x, y, z, last_x = 0, last_y = 0, last_z = 0;
+
+  function show_menu(){
+    mask();
+  }
+
+
+  function deviceMotionHandler(eventData) {
+    var acceleration =eventData.accelerationIncludingGravity;
+    var curTime = new Date().getTime();
+    if ((curTime-last_update)> 10) {
+        var diffTime = curTime -last_update;
+        last_update = curTime;
+        x = acceleration.x;
+        y = acceleration.y;
+        z = acceleration.z;
+        var speed = Math.abs(x +y + z - last_x - last_y - last_z) / diffTime * 10000;
+
+        if (speed > SHAKE_THRESHOLD) {
+          show_menu();
+        }
+        last_x = x;
+        last_y = y;
+        last_z = z;
+    }
+  }
+  if (window.DeviceMotionEvent) {
+    window.addEventListener('devicemotion',deviceMotionHandler,false);
+  } else {
+    document.getElementById("dmEvent").innerHTML = "Not supported on your device."
+  }
+
   $("#game9g9gstart").on('touch mousedown', function(e){
-    $("#game9gmenu").addClass('show');
     mask();
     //e.stopPropagation();
   });
@@ -172,6 +202,7 @@ share_api();
       document.getElementById('mask').style.display = 'none';
       $("#game9gmenu").removeClass('show');
     } else {
+      $("#game9gmenu").addClass('show'); 
       document.getElementById('mask').style.display = 'inline';
     }
   }
