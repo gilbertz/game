@@ -248,6 +248,13 @@ class WeitestController < ApplicationController
     render nothing: true
   end
 
+  def weixin_redpack
+    if current_user and not @record
+      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+      @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid]).to_i
+    end
+  end  
+
   def report
     if current_user
       beaconid= 1
