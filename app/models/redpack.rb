@@ -42,7 +42,7 @@ class Redpack < ActiveRecord::Base
 
 
   def array_xml(user)
-    money = Redpack.redpack_rand
+    money = Redpack.current_redpack.redpack_rand
     doc = Document.new"<xml/>"
     root_node = doc.root
     el14 = root_node.add_element "act_name"
