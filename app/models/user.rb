@@ -23,6 +23,9 @@ class User < ActiveRecord::Base
   has_many :materials
   has_many :ibeacons
   has_many :checks
+  has_many :scores
+  has_many :redpacks
+  has_many :images
 
   before_create :make_password
 

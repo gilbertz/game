@@ -2,6 +2,7 @@
 class Image < ActiveRecord::Base
   belongs_to :category, class_name: "Category", polymorphic: true 
   belongs_to :viewable, class_name: "Material", polymorphic: true  
+  belongs_to :user
 
   STATE = { 
     1  => "背景",
@@ -25,4 +26,25 @@ class Image < ActiveRecord::Base
   def cn_state 
     STATE[self.state] 
   end
+
+
+  def beacon_name
+    if self.beaconid
+      b = Ibeacon.find_by_id self.beaconid
+      if b
+        return b.name
+      end
+    end
+  end
+
+  def user_name
+    if self.user
+      self.user.name
+    end
+  end
+
+  def app_name
+  end
+    
+
 end

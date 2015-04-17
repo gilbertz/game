@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417074754) do
+ActiveRecord::Schema.define(version: 20150417093002) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -208,8 +208,10 @@ ActiveRecord::Schema.define(version: 20150417074754) do
     t.datetime "updated_at",    null: false
     t.string   "photo_name"
     t.string   "photo_path"
+    t.integer  "user_id"
   end
 
+  add_index "images", ["user_id"], name: "index_images_on_user_id", using: :btree
   add_index "images", ["viewable_id", "viewable_type"], name: "index_game_images_on_viewable_id_and_viewable_type", using: :btree
 
   create_table "materials", force: true do |t|
