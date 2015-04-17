@@ -27,62 +27,81 @@ class Redpack < ActiveRecord::Base
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
 
-     request.body = array_xml(user)
-     response = http.start do |http|
-     ret = http.request(request)
-     puts request.body
-     puts ret.body
-     doc = Document.new(ret.body)
-     chapter1 = doc.root.elements[8] #输出节点中的子节点
-     puts chapter1.text #输出第一个节点的包含文本
-     return chapter1.text
-     end
+    request.body = array_xml(user)
+    response = http.start do |http|
+      ret = http.request(request)
+      puts request.body
+      puts ret.body
+      doc = Document.new(ret.body)
+      chapter1 = doc.root.elements[8] #输出节点中的子节点
+      puts chapter1.text #输出第一个节点的包含文本
+      return chapter1.text
+    end
   end
 
-    def array_xml(user)
-      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      redpack = Redpack.find_by(beaconid: beaconid)
-      doc = Document.new"<xml/>"
-      root_node = doc.root
-      el14 = root_node.add_element "act_name"
-      el14.text = redpack.action_title
-      el13 = root_node.add_element "client_ip"
-      el13.text = '121.42.47.121'
-      el10 = root_node.add_element "max_value"
-      el10.text = redpack.max
-      el2 = root_node.add_element "mch_billno"
-      el2.text = '1233034702'+Time.new.strftime("%Y%d%m").to_s+rand(9999999999).to_s
-      el3 = root_node.add_element "mch_id"
-      el3.text = '1233034702'
-      el9 = root_node.add_element "min_value"
-      el9.text = redpack.min
-      el5 = root_node.add_element "nick_name"
-      el5.text = "盛也网络公司"
-      el21 = root_node.add_element "nonce_str"
-      el21.text = Digest::MD5.hexdigest(rand(999999).to_s).to_s
-      el22 = root_node.add_element "re_openid"
-      el22.text = user.get_openid
-      el16 = root_node.add_element "remark"
-      el16.text = redpack.action_remark
-      el6 = root_node.add_element "send_name"
-      el6.text = redpack.sender_name
-      el8 = root_node.add_element "total_amount"
-      el8.text = 500
-      el11 = root_node.add_element "total_num"
-      el11.text = redpack.store
-      el12 = root_node.add_element "wishing"
-      el12.text = redpack.wishing
-      el4 = root_node.add_element "wxappid"
-      el4.text = 'wx456ffb04ee140d84'
 
-      stringA="act_name="+el14.text.to_s+"&client_ip="+el13.text.to_s+"&max_value="+el10.text.to_s+"&mch_billno="+el2.text.to_s+"&mch_id="+el3.text.to_s+"&min_value="+el9.text.to_s+"&nick_name="+el5.text.to_s+"&nonce_str="+el21.text.to_s+"&re_openid="+el22.text.to_s+"&remark="+el16.text.to_s+"&send_name="+el6.text.to_s+"&total_amount="+el8.text.to_s+"&total_num="+el11.text.to_s+"&wishing="+el12.text.to_s+"&wxappid="+el4.text.to_s
-      stringSignTemp=stringA+"&key=wangpeisheng1234567890leapcliffW"
-      puts stringSignTemp
-      sign=Digest::MD5.hexdigest(stringSignTemp).upcase
-      el1 = root_node.add_element "sign"
-      el1.text = sign
 
-      return doc.to_s
+  def array_xml(user)
+    money = Redpack.repack_rand
+    doc = Document.new"<xml/>"
+    root_node = doc.root
+    el14 = root_node.add_element "act_name"
+    el14.text = Redpack.current_redpack.action_title
+    el13 = root_node.add_element "client_ip"
+    el13.text = '121.42.47.121'
+    el10 = root_node.add_element "max_value"
+    el10.text = money
+    el2 = root_node.add_element "mch_billno"
+    el2.text = '1233034702'+Time.new.strftime("%Y%d%m").to_s+rand(9999999999).to_s
+    el3 = root_node.add_element "mch_id"
+    el3.text = '1233034702'
+    el9 = root_node.add_element "min_value"
+    el9.text = money
+    el5 = root_node.add_element "nick_name"
+    el5.text = "盛也网络公司"
+    el21 = root_node.add_element "nonce_str"
+    el21.text = Digest::MD5.hexdigest(rand(999999).to_s).to_s
+    el22 = root_node.add_element "re_openid"
+    el22.text = user.get_openid
+    el16 = root_node.add_element "remark"
+    el16.text = Redpack.current_redpack.action_remark
+    el6 = root_node.add_element "send_name"
+    el6.text = Redpack.current_redpack.sender_name
+    el8 = root_node.add_element "total_amount"
+    el8.text = money
+    el11 = root_node.add_element "total_num"
+    el11.text = 1
+    el12 = root_node.add_element "wishing"
+    el12.text = Redpack.current_redpack.wishing
+    el4 = root_node.add_element "wxappid"
+    el4.text = 'wx456ffb04ee140d84'
+
+    stringA="act_name="+el14.text.to_s+"&client_ip="+el13.text.to_s+"&max_value="+el10.text.to_s+"&mch_billno="+el2.text.to_s+"&mch_id="+el3.text.to_s+"&min_value="+el9.text.to_s+"&nick_name="+el5.text.to_s+"&nonce_str="+el21.text.to_s+"&re_openid="+el22.text.to_s+"&remark="+el16.text.to_s+"&send_name="+el6.text.to_s+"&total_amount="+el8.text.to_s+"&total_num="+el11.text.to_s+"&wishing="+el12.text.to_s+"&wxappid="+el4.text.to_s
+    stringSignTemp=stringA+"&key=wangpeisheng1234567890leapcliffW"
+    puts stringSignTemp
+    sign=Digest::MD5.hexdigest(stringSignTemp).upcase
+    el1 = root_node.add_element "sign"
+    el1.text = sign
+
+    return doc.to_s
+  end
+
+  def current_redpack
+    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+    redpack = Redpack.find_by(beaconid: beaconid)
+    return redpack
+  end
+
+  def repack_rand
+    rand_num = rand(10)
+    if 0..8.include?(rand_num)
+      repack_rand = Redpack.current_redpack.min
+    elsif rand_num == 9
+      repack_rand = rand（Redpack.current_redpack.min..Redpack.current_redpack.max)
+    elsif rand_num == 10
+      repack_rand = Redpack.current_redpack.max
     end
+    return redpack_rand
+  end
 
 end
