@@ -52,4 +52,30 @@ class Image < ActiveRecord::Base
   end
     
 
+  def self.build(user_id, image_data, image_type, file_data=nil)
+    m = Image.new
+    m.user_id = user_id
+
+    unless file_data
+      file_type = image_type
+      bi_image=Base64::decode64( image_data )
+    else
+      file_type  = file_data.original_filename.split(".").last
+      bi_image = file_data.read
+    end
+
+    local_path = "/data/www/game/public/uploads/sucai/"
+    new_str = Time.now.to_i.to_s + ((100..999).to_a.shuffle[0].to_s)
+    if file_type == "jpg" or file_type == "png"
+      local_file_name = new_str + "." + file_type
+      local_file = local_path + local_file_name
+      File.open(local_file, "wb") { |f| f.write( bi_image ) }
+      m.photo_path = local_path
+      m.photo_name = local_file_name
+      m.name = new_str
+      return
+    end
+ end
+
+
 end
