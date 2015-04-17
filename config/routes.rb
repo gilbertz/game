@@ -111,7 +111,8 @@ Game::Application.routes.draw do
     get 'home/clear_single_cache/:id' => "home#clear_single_cache"
     
     get 'records' =>'records#index'
-   
+  
+    resources :scores 
     resources :ibeacons
     resources :burls
     resources :cards
@@ -146,7 +147,7 @@ Game::Application.routes.draw do
       end
     end
     resources :ads
-    resources :images, except: :new
+    resources :images #, except: :new
     resources :answers, except: :new
     resources :questions, except: :new do
       resources :question_answers, only: :new

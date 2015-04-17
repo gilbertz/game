@@ -269,6 +269,19 @@ class WeitestController < ApplicationController
     render nothing: true
   end
 
+  def score
+    if current_user
+      beaconid= 1
+      get_beacon
+      if @beacon
+        beaconid = @beacon.id if @beacon
+      end
+      Score.create(:user_id => current_user.id, :beaconid=>beaconid, :value => params[:score], :remark=>params[:remark])
+      
+     end
+    render nothing: true
+  end
+
   def stat
     if params[:type] and params[:cid]
         key = "stat_#{params[:type]}_#{params[:cid]}"

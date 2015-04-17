@@ -46,6 +46,6 @@ class Admin::BurlsController < Admin::BaseController
     end
 
     def burl_params
-      params.require(:burl).permit(:url, :beaconid, :weight, :state, :pv, :uv, :title, :img, :remark)
+      params.require(:burl).permit(:url, :beaconid, :target_id, :target_type, :weight, :state, :pv, :uv, :title, :img, :remark)
     end
 end
