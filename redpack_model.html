@@ -56,8 +56,12 @@
 
   <script type="text/javascript">
 
-   function interactive(){
-
+      var first = false;
+      function interactive(){ 
+         if( first ){
+            return true;
+         }
+         first = true;
     document.getElementById('interactive-tip').setAttribute("src","http://wx.51self.com/img/card/hongbao/hb_AterOpen_get.png");
 
     <% if current_user and not @record%>

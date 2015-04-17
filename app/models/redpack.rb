@@ -94,12 +94,16 @@ class Redpack < ActiveRecord::Base
   def get_redpack_rand(beaconid_url)
     rand_num = rand(10)
     current_redpack = get_current_redpack(beaconid_url)
-    if (0..1).include?(rand_num)
-      redpack_rand = current_redpack.max
-    # elsif (0..10).include?(rand_num)
-    #   redpack_rand = rand((current_redpack.min)..(current_redpack.max))
-    elsif (2..9).include?(rand_num)
-      redpack_rand = current_redpack.max
+    min = current_redpack.min*100
+    max = current_redpack.max*100
+    weight_1 = 0.5
+    weight_2 = 0.8
+    if (0..4).include?(rand_num)
+      redpack_rand = (rand(min..((max-min)*weight_1+min))/100).to_i
+    elsif (5..8).include?(rand_num)
+      redpack_rand = (rand(((max-min)*weight_1+min)..((max-min)*weight_2+min))/100).to_i
+    elsif (9..9).include?(rand_num)
+      redpack_rand = (rand(((max-min)*weight_2+min)..max)/100).to_i
     end
     return redpack_rand
   end
