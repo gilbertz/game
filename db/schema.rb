@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416114630) do
+ActiveRecord::Schema.define(version: 20150417074754) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -90,6 +90,8 @@ ActiveRecord::Schema.define(version: 20150416114630) do
     t.string   "remark"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "target_id"
+    t.string   "target_type"
   end
 
   create_table "cards", force: true do |t|
@@ -204,6 +206,8 @@ ActiveRecord::Schema.define(version: 20150416114630) do
     t.string   "body"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "photo_name"
+    t.string   "photo_path"
   end
 
   add_index "images", ["viewable_id", "viewable_type"], name: "index_game_images_on_viewable_id_and_viewable_type", using: :btree
@@ -308,6 +312,16 @@ ActiveRecord::Schema.define(version: 20150416114630) do
     t.datetime "updated_at"
     t.integer  "store"
     t.integer  "state"
+  end
+
+  create_table "scores", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "beaconid"
+    t.integer  "value"
+    t.integer  "from_user_id"
+    t.string   "remark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

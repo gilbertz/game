@@ -1,4 +1,8 @@
 class Admin::ImagesController < Admin::BaseController
+  def index
+    cond = "1=1"
+    @images = Image.where(cond).order('id desc').page(params[:page])
+  end
 
   def new
     material = Material.find params[:material_id]
