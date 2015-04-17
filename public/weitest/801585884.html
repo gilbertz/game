@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link href="http://wei.qq275.com/vapp/shangjieba.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+      <title>【游戏】朋友圈装B神器</title>
+      <meta charset="utf-8">
+
+        <script src="http://wx.51self.com/js/jquery.min.js"></script>
+
+      <script>  
+        function click_ad(idx){
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', "/weitest/click_stat?id=" + idx, true);
+          ajax.send(null);
+          return false;
+        }
+      </script>
+
+      <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>朋友圈装B神器，色魔、神经猫、小苹果通通有！</title>
+<style type="text/css">
+*{margin:0;padding:0;}
+body{ width:300px; margin:0 auto; font-size:16px; background:#E7E8EB; text-align:center;}
+input{ width:100px; height:30px; text-align:center; font-size:20px;}
+span{ font-size:20px; font-weight:bold;}
+article{ padding:60px 10px 10px 10px; line-height:40px}
+</style>
+</head>
+
+
+      <script type="text/javascript">
+        
+      </script>
+        <script type="text/javascript">
+                var r = -1;  
+      var share_callback_hy = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=hy_801585884&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var share_callback_pyq = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=pyq_801585884&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var dataForWeixin = {
+              appId: "wx24a514a78202a831",
+              TLImg: "http://1251008728.cdn.myqcloud.com/1251008728/sisi/1.jpg",
+              
+                   url: "http://newqpbdihf.miaozhucn.com" + "/v150410/weitest/801585884"  ,  
+              
+              title: "哈哈哈，有了这个，谁来跟我比分数？ ", 
+              desc: "赶快来装b一下吧"
+        };
+   
+(function(){
+	var onBridgeReady = function () {	
+		WeixinJSBridge.on('menu:share:appmessage', function(argv){
+                        var info = $("#info").text();          
+                        info = info.replace("你", "我"); 
+			WeixinJSBridge.invoke('sendAppMessage',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : info + '  ' + dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "send_app_msg:confirm":
+					case "send_app_msg:ok":
+						location.href = "http://51self.com/weitest/1203611402"; 
+						break;
+				}
+			});
+			share_callback_hy ();
+		});
+		WeixinJSBridge.on('menu:share:timeline', function(argv){
+                        var info = $("#info").text();          
+                        info = info.replace("你", "我"); 
+			WeixinJSBridge.invoke('shareTimeline',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : info + '  ' + dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "share_timeline:confirm":
+					case "share_timeline:ok":
+						location.href = "http://51self.com/weitest/1203611402"; 
+						break;
+				}
+			});
+			share_callback_pyq();
+		});
+	};
+	
+	if(document.addEventListener){
+		document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	} else if(document.attachEvent){
+		document.attachEvent('WeixinJSBridgeReady' , onBridgeReady);
+		document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+	}
+	
+})();	
+
+
+        </script>
+      <style type="text/css">
+        
+      </style>
+    </head>
+    
+
+
+    <body>
+<script>
+function share(){
+        document.getElementById('mcover').style.display='block';
+	document.title='我用了'+document.getElementById("chengji").value+'步围住了神经猫，击败了100%的人，你能超过我嘛？';
+        document.getElementById('info').innerHTML = document.title;
+        dataForWeixin.url = 'http://51self.com/weitest/784294658'
+}
+
+
+function share1(){
+        document.getElementById('mcover').style.display='block';
+	document.title= '我吃掉了'+ document.getElementById("chengji1").value  +'个小苹果，不服来挑战！！！';
+        document.getElementById('info').innerHTML = document.title;
+        dataForWeixin.url = 'http://51self.com/weitest/770779565';
+        dataForWeixin.TLImg=  'http://mmbiz.qpic.cn/mmbiz/9OwLibM3EYaq99oD6D4qrWCBqniciarRJwicGbRqtPNxMBnD0STJObBrD19HtXCoKnnSUJfc4mdOKhn2zLDInWcCIQ/640';
+}
+
+function share2(){
+        document.getElementById('mcover').style.display='block';
+        var score = document.getElementById("chengji2").value;
+        var p =  100;
+	document.title= '我闯过了'+ score  + '关，击败了100%的人。我是色狼【LV' + p + '】不服来挑战！！！';
+        document.getElementById('info').innerHTML = document.title;
+        dataForWeixin.url = 'http://51self.com/weitest/800757032';
+        dataForWeixin.TLImg=  'http://1251008728.cdn.myqcloud.com/1251008728/zi/14.jpg';
+}
+
+
+function share3(){
+        document.getElementById('mcover').style.display='block';
+        var score = document.getElementById("chengji3").value;
+	document.title= '10秒我能点'+ score  + '下，击败了100%的好友。不服来挑战！！！';
+        document.getElementById('info').innerHTML = document.title;
+        dataForWeixin.url = 'http://51self.com/weitest/797848324';
+        dataForWeixin.TLImg=  'http://1251008728.cdn.myqcloud.com/1251008728/ty/ty.jpg';
+}
+
+</script>
+
+        <div id="info" style="display:none;">     </div>
+
+
+<article>
+
+<img src="http://1251008728.cdn.myqcloud.com/1251008728/ty/ty.jpg" width='100px;'>
+疯狂手指作弊器<br />
+
+10秒内，我点了<input type="number" id="chengji3" name="chengji3" required="required" value="0"> <span>下</span>
+
+</article>
+				<link rel="stylesheet" href="http://m.aicece.com/ceshi/css/sharetowx.css" />
+				<div id="mcover" onclick="document.getElementById('mcover').style.display='';" style="display:none;">
+
+					<img src="http://m.aicece.com/ceshi/images/sharetowx/guide.png" />
+				</div>
+
+				<div class="text" id="content">
+					<div id="mess_share">
+
+						<div id="share_2">
+							<div class="button2" onclick="share3();">
+								<img src="http://m.aicece.com/ceshi/images/sharetowx/icon_timeline.png" width="64" height="64" />分享到朋友圈
+							</div>
+						</div>
+
+						<div id="share_2">
+							<div class="button2" onclick="share3();">
+								<img src="http://m.aicece.com/ceshi/images/sharetowx/icon_msg.png" width="64" height="64" />发送给朋友
+							</div>
+						</div>
+						
+						<div class="clr"></div>
+					</div>
+				</div>
+
+
+<article>
+
+<img src="http://1251008728.cdn.myqcloud.com/1251008728/zi/14.jpg" width='100px;'>
+色魔作弊器<br />
+
+我闯过了<input type="number" id="chengji2" name="chengji2" required="required" value="0"> <span>关了</span>
+成为【LV100色魔】
+</article>
+				<link rel="stylesheet" href="http://m.aicece.com/ceshi/css/sharetowx.css" />
+				<div id="mcover" onclick="document.getElementById('mcover').style.display='';" style="display:none;">
+
+					<img src="http://m.aicece.com/ceshi/images/sharetowx/guide.png" />
+				</div>
+
+				<div class="text" id="content">
+					<div id="mess_share">
+
+						<div id="share_2">
+							<div class="button2" onclick="share2();">
+								<img src="http://m.aicece.com/ceshi/images/sharetowx/icon_timeline.png" width="64" height="64" />分享到朋友圈
+							</div>
+						</div>
+
+						<div id="share_2">
+							<div class="button2" onclick="share2();">
+								<img src="http://m.aicece.com/ceshi/images/sharetowx/icon_msg.png" width="64" height="64" />发送给朋友
+							</div>
+						</div>
+						
+						<div class="clr"></div>
+					</div>
+				</div>
+
+
+
+<article>
+
+<img src="http://1251001823.cdn.myqcloud.com/1251001823/wechat/mao80.jpg" width='100px;'>
+神经猫作弊器<br />
+
+我用了<input type="number" id="chengji" name="chengji" required="required" value="0"> <span>步围住神经猫</span>
+
+</article>
+
+
+
+				<link rel="stylesheet" href="http://m.aicece.com/ceshi/css/sharetowx.css" />
+				<div id="mcover" onclick="document.getElementById('mcover').style.display='';" style="display:none;">
+
+					<img src="http://m.aicece.com/ceshi/images/sharetowx/guide.png" />
+				</div>
+
+				<div class="text" id="content">
+					<div id="mess_share">
+
+						<div id="share_1">
+							<div class="button2" onclick="share();">
+								<img src="http://m.aicece.com/ceshi/images/sharetowx/icon_timeline.png" width="64" height="64" />分享到朋友圈
+							</div>
+						</div>
+
+						<div id="share_2">
+							<div class="button2" onclick="share();">
+								<img src="http://m.aicece.com/ceshi/images/sharetowx/icon_msg.png" width="64" height="64" />发送给朋友
+							</div>
+						</div>
+						
+						<div class="clr"></div>
+					</div>
+				</div>
+
+
+
+<article>
+
+
+
+<img src="http://mmbiz.qpic.cn/mmbiz/9OwLibM3EYaq99oD6D4qrWCBqniciarRJwicGbRqtPNxMBnD0STJObBrD19HtXCoKnnSUJfc4mdOKhn2zLDInWcCIQ/640" width='100px;'>
+小苹果作弊器
+<br/>
+
+
+我吃掉了<input type="number" id="chengji1" name="chengji1" required="required" value="0"> <span>个小苹果</span>
+
+</article>
+
+				<link rel="stylesheet" href="http://m.aicece.com/ceshi/css/sharetowx.css" />
+				<div id="mcover" onclick="document.getElementById('mcover').style.display='';" style="display:none;">
+					<img src="http://m.aicece.com/ceshi/images/sharetowx/guide.png" />
+				</div>
+
+				<div class="text" id="content">
+					<div id="mess_share">
+
+						<div id="share_1">
+							<div class="button2" onclick="share1();">
+								<img src="http://m.aicece.com/ceshi/images/sharetowx/icon_timeline.png" width="64" height="64" />分享到朋友圈
+							</div>
+						</div>
+
+						<div id="share_2">
+							<div class="button2" onclick="share1();">
+								<img src="http://m.aicece.com/ceshi/images/sharetowx/icon_msg.png" width="64" height="64" />发送给朋友
+							</div>
+						</div>
+						
+						<div class="clr"></div>
+					</div>
+				</div>
+
+
+
+
+</body>
+   
+    <br/>
+
+ 
+    <div style="display: none;">                                                   
+  <script src="http://v1.cnzz.com/z_stat.php?id=1000438304&web_id=1000438304" language="JavaScript"></script>
+</div>   
+
+   
+      <script>
+  var url="/weitest/stat?type=pv&cid=251&gid=802&uid="
+  var img = new Image();
+  img.src = url;
+</script>
+
+</html>

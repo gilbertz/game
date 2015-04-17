@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link href="http://wei.qq275.com/vapp/shangjieba.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+      <title>你在唐朝长什么样子？ 【火爆】</title>
+      <meta charset="utf-8">
+
+        <script src="http://wx.51self.com/js/jquery.min.js"></script>
+
+      <script>  
+        function click_ad(idx){
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', "/weitest/click_stat?id=" + idx, true);
+          ajax.send(null);
+          return false;
+        }
+      </script>
+
+      <meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
+
+      <script type="text/javascript">
+         var info = "";
+      var reason = "";
+      var name = "";
+
+       var jump_urls = ['http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202194953&idx=1&sn=172c395f7da60dc369c6cfe3368900cb#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202194991&idx=1&sn=99b2a48424e5cdf24d986dfc4a3da738#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202195018&idx=1&sn=e2bce681caa465937daba68479ad61e5#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202228293&idx=1&sn=dc2279479b642030c6529ded7a81ebc3#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202228322&idx=1&sn=98012cc160a83449d613093b08322773#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202228348&idx=1&sn=093da0b246aa72a81a3488e1e1726ffc#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202228384&idx=1&sn=e57b39c8c81e88d29f7c75ede204e43e#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202228369&idx=1&sn=3c62313d5efb2c75d9def544d573f7b2#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202228368&idx=1&sn=04d1dd16a1134b0232eb3530b0081863#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202228387&idx=1&sn=f973742f2717dcae97c0bf590e237847#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202228404&idx=1&sn=3377a723a2c1e243dcefb8f2600e38ff#rd','http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=202228417&idx=1&sn=512d3afa3db078a4a8d7ce8bd2fd660a#rd']
+ 
+
+       function getRandom(arr){
+	  var len = arr.length;
+	  return arr[Math.floor(Math.random()*len)]
+      }
+
+      $(function(){
+          $("#begin").click(function(){
+              var name = $("#name").val();
+              if(name == "" || name.length == 0){
+                  alert("请输入你的姓名!");
+                  return false
+              }
+                
+              var number = 0;
+              for(var a=0;a< name.length;a++){
+                  number = number + name.charCodeAt(a);
+              }
+              number = number % jump_urls.length;
+              location.href = jump_urls[number];
+
+          });
+
+          $("body").on("click", "#close", function(){
+              $("#result").hide();
+          });
+
+          $("#share").click(function(){
+              var info = $("#info").text();
+          });
+
+      
+      })
+      </script>
+        <script type="text/javascript">
+                var r = -1;  
+      var share_callback_hy = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=hy_1148225214&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var share_callback_pyq = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=pyq_1148225214&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var dataForWeixin = {
+              appId: "wx8660f33ee5c65120",
+              TLImg: "http://1251008728.cdn.myqcloud.com/1251008728/tangch/5.jpg",
+              
+                   url: "http://newftukiel.51self.com" + "/v150411/weitest/1156626324"  ,  
+              
+              title: "回到唐朝，你长啥样子？ ", 
+              desc: "你在唐朝长什么样？"
+        };
+   
+(function(){
+	var onBridgeReady = function () {	
+		WeixinJSBridge.on('menu:share:appmessage', function(argv){
+                        var info = $("#info").text();          
+                        info = info.replace("你", "我"); 
+			WeixinJSBridge.invoke('sendAppMessage',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : info + '  ' + dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "send_app_msg:confirm":
+					case "send_app_msg:ok":
+						location.href = "http://51self.com/weitest/1203611402"; 
+						break;
+				}
+			});
+			share_callback_hy ();
+		});
+		WeixinJSBridge.on('menu:share:timeline', function(argv){
+                        var info = $("#info").text();          
+                        info = info.replace("你", "我"); 
+			WeixinJSBridge.invoke('shareTimeline',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : info + '  ' + dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "share_timeline:confirm":
+					case "share_timeline:ok":
+						location.href = "http://51self.com/weitest/1203611402"; 
+						break;
+				}
+			});
+			share_callback_pyq();
+		});
+	};
+	
+	if(document.addEventListener){
+		document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	} else if(document.attachEvent){
+		document.attachEvent('WeixinJSBridgeReady' , onBridgeReady);
+		document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+	}
+	
+})();	
+
+
+        </script>
+      <style type="text/css">
+        body{
+          padding: 0;
+          margin: 0;
+          background: #fff;
+      }
+      #content{
+          padding: 0;
+          margin: 0 auto;
+          width: 100%;
+          background: #fff;
+      }
+      #bg{
+          margin: 0 auto;
+          width: 100%;
+          height: auto;
+          background-repeat: no-repeat;
+          background-position: center;
+      }
+      #marry-who{
+          margin: 0 auto;
+          padding-top: 10px;
+          width: 95%;
+          height: 160px;
+          background-image: url(http://mashang.qiniudn.com/tc.jpg);
+          background-repeat: no-repeat;
+          background-position: bottom;
+          filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+          -moz-background-size:100% 100%;
+          background-size:100% 100%;
+      }
+      
+      #marry-innput{
+          margin: 0 auto;
+          padding-top: 10px;
+          width: 95%;
+          height: 160px;
+          background-repeat: no-repeat;
+          background-position: bottom;
+          filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+          -moz-background-size:100% 100%;
+          background-size:100% 100%;
+      }
+
+      #marry-form{
+          padding-top: 20px;
+          padding-left: 20px;
+      }
+      #marry-form .form-one{
+          margin-top: 10px;
+      }
+      #display_head img{
+         width:5px;
+         height:5px;
+      }
+      #begin{
+          margin: 0 auto;
+          margin-top: 0px;
+          width:200px;
+          cursor: pointer;
+      }
+
+      #begin img{
+          width: 200px;
+          height: auto;
+      }
+
+     #ad{
+         margin: 0 auto;
+         text-align:center;
+     }
+
+      #round{
+          width: 80%;
+          height: auto;
+          margin: 0 auto;
+          margin-top: 10px;
+          background-image: url(http://qq-taobao.qiniudn.com/bb_zp.png);
+          filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+          -moz-background-size:100% 100%;
+          background-size:100% 100%;
+      }
+      #arrow{
+          margin: 0 auto;
+          padding-top: 10em;
+          text-align: center;
+      }
+      #arrow-img{
+        width: 100%;
+        height: auto;
+      }
+      #result{
+          width: 90%;
+          height: 158px;
+          margin: 0 auto;
+          position: fixed;
+          top: 200px;
+          background-image: url(http://qq-taobao.qiniudn.com/bb_result.png);
+          background-repeat: no-repeat;
+          filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+          -moz-background-size:100% 100%;
+          background-size:100% 100%;
+          display: none;
+          z-index: 999;
+      }
+      #info{
+          padding-top: 50px;
+          padding-bottom: 10px;
+          padding-left: 20px;
+          z-index: 999;
+      }
+      #tools{
+          padding-left: 20px;
+      }
+      #close{
+          position: absolute;
+          width: 46px;
+          height: 46px;
+          right: 0;
+          margin-top: -5px;
+          margin-right: -5px;
+      }
+    #name{
+       height:40px; width:150px; font-size:28px;
+    }
+   label{
+       font-size:25px;
+   }
+      </style>
+    </head>
+    
+
+      <div class="flexslider"   style="margin:0px auto; align:center;" >
+      <a href="http://51self.com/weitest/1203611402" >
+          <img style="width:100%; max-height:60px;" src="http://kaokao.qiniudn.com/head1.png" /> </a>
+  <div class="holder" style="clear:both;"></div>
+</div>
+
+
+    <body>
+<div id="result">
+  <div id="close">
+    <img src="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/close.png" alt=""/>
+  </div>
+  <div id="info">
+    Hello world!
+  </div>
+  <div id="tools">
+    <span id="share">
+      点击右上角分享到朋友圈！
+    </span>
+  </div>
+</div>
+<div id="content">
+  <div id="bg">
+
+    <div id="marry-who">
+    </div>
+
+    <br/>     
+
+    <div id="marry-input">
+      <div id="marry-form">
+        <div class="form-one" style="margin: 0 auto 0 auto; width:340px; height:45px;">
+          <label for="name">填写姓名</label>
+          <input type="text" name="name" id="name"/>
+        </div>
+        </br>
+      </div>
+    </div>
+    
+    <div id="begin">
+      <img src="http://qq-taobao.qiniudn.com/bb_button.png" alt=""/>
+    </div>
+
+  </div>
+</div>
+
+</body>
+   
+    <br/>
+
+      
+      <div class="flexslider"   style="margin:0px auto; align:center;" >
+      <a href="http://51self.com/weitest/1203611402" >
+          <img style="width:100%; max-height:60px;" src="http://kaokao.qiniudn.com/head1.png" /> </a>
+  <div class="holder" style="clear:both;"></div>
+</div>
+
+        <div class="rec_games" style="margin:0px auto;text-align:center; width:97%;white-space:nowrap; line-height:42px; min-height:230px; border-bottom:none; ">
+  <div class="rec_holder" style="clear:both;">
+    
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/1275831380" style="text-decoration:none; ">
+          【新】最让你念念不忘的那个人是谁？
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/1182760086" style="text-decoration:none; ">
+          测测你10年后的身家！
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/464385620" style="text-decoration:none; ">
+          你是一个容易······的人？知足、纠结、害羞？
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/1017570045" style="text-decoration:none; ">
+          前世看今生！出生年月看你【天生财运】
+        </a>
+      </div>
+
+    <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://021591.com?f=r" style="text-decoration:none; ">
+         更多好玩免费游戏！
+        </a>
+    </div>
+
+  </div>
+</div>
+
+        <div class="flexslider"   style="margin:0px auto; align:center;" >
+      <a href="http://51self.com/weitest/1203611402" >
+          <img style="width:100%; max-height:60px;" src="http://kaokao.qiniudn.com/head1.png" /> </a>
+  <div class="holder" style="clear:both;"></div>
+</div>
+
+        <div class="rec_games" style="margin:0px auto;text-align:center; width:97%;white-space:nowrap; line-height:42px; min-height:230px; border-bottom:none; ">
+  <div class="rec_holder" style="clear:both;">
+    
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="/weitest/99698689?f=r" style="text-decoration:none; ">
+          不搬砖！搬金条！朋友圈又玩疯了！
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="/weitest/1020654288?f=r" style="text-decoration:none; ">
+          是男人就撑过30秒
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="/weitest/840224761?f=r" style="text-decoration:none; ">
+          【游戏】疯狂打企鹅
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="/weitest/1003103926?f=r" style="text-decoration:none; ">
+          明星大富翁
+        </a>
+      </div>
+
+    <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://mp.weixin.qq.com/s?__biz=MjM5NjIzOTE2OQ==&mid=200366500&idx=1&sn=21c2832b5382e6aafd4e55a0d6c85f5f#wechat_redirect" style="text-decoration:none; ">
+         更多免费【微信游戏】！
+        </a>
+    </div>
+
+  </div>
+</div>
+
+ 
+    <div style="display: none;">                                                   
+  <script src="http://v1.cnzz.com/z_stat.php?id=1000438304&web_id=1000438304" language="JavaScript"></script>
+</div>   
+
+   
+      <script>
+  var url="/weitest/stat?type=pv&cid=321&gid=1149&uid="
+  var img = new Image();
+  img.src = url;
+</script>
+
+</html>

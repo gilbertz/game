@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link href="http://wei.qq275.com/vapp/shangjieba.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+      <title>测你从事哪个行业能发财? 准爆了！</title>
+      <meta charset="utf-8">
+
+        <script src="http://wx.51self.com/js/jquery.min.js"></script>
+
+      <script>  
+        function click_ad(idx){
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', "/weitest/click_stat?id=" + idx, true);
+          ajax.send(null);
+          return false;
+        }
+      </script>
+
+      <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+
+  <style type="text/css"> 
+    body{
+        margin:0;
+        padding: 0;
+      }
+
+      body{
+        width:100%;
+        height: 100%;
+        font-size: 67.5%;
+        font-family: Arial, "微软雅黑", Helvetica, sans-serif;
+        background: #95d15f;
+      }
+
+      ul, li{
+        list-style: none;padding:0;
+      }
+
+      img{width: 100%;}
+
+      p{margin: 0; padding: 5px;}
+
+      .title{
+        margin: 0 auto;
+      }
+
+      .title h2{
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        font-size: 1.7em;
+        font-weight: normal;
+        margin-bottom: 0;
+        margin-top:5px;
+        background: url(http://1251008728.cdn.myqcloud.com/1251008728/1q/title_bg.png) no-repeat;
+        height: 40px;
+        background-size: 100%;
+      }
+
+      .title-sub{
+        padding: 20px 20px;
+        color: #761511;
+        border-top: 0;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        margin: 0 auto;
+        filter:Alpha(opacity=20);
+        font-size:1.8em;
+      }
+
+      .question{
+        width: 85%;
+        margin: 0 auto;
+        margin-top: 30px;
+        display: none;
+      }
+
+      .question-title{
+        color:#761511;
+        font-size:1.8em;
+      }
+
+      .question.current{
+        display: block;
+      }
+
+      .result{
+        display:none;
+      }
+
+      .options ul{
+        padding: 0;
+      }
+
+      .options li{
+        margin: 15px 0;
+        padding: 5px 15px;
+        list-style-type: none;
+      }
+
+      .options li p{
+        text-align: center;
+      }
+
+      .options.button li{
+        border: 1px solid #f9baba;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        color: #761511;
+        font-weight: bold;
+        line-height:1.7em;
+        font-size:1.7em;
+
+        background:#f9baba;
+        filter:Alpha(opacity=60);
+      }
+
+      .options.button li{
+        padding: 5px 0;
+      }
+
+      .options li.selected{
+        background: #cf6271 !important;
+      }
+
+      .prev{
+        margin-top: 30px;
+        font-weight: 300;
+        font-size: 12px;
+        float: right;
+        padding-bottom: 50px;
+      }
+
+      .prev a:link{
+        color: #fff;
+      }
+
+      .tools-button{
+        padding: 10px 0;
+        color: #317eac;
+        text-align: center;
+        margin: 0 auto;
+        width: 80%;
+        filter:Alpha(opacity=30);
+
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+
+        margin-top: 30px;
+
+      }
+
+      .share{
+        filter:Alpha(opacity=60);
+        color: #317eac;
+        font-size:1.3em;
+      }
+
+      #tip {
+        display: none;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+
+      #mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background-color: #333;
+        filter: alpha(Opacity=90);
+        -moz-opacity: 0.9;
+        opacity: 0.9;
+      }
+      .wrapper{
+        max-width: 640px;
+        margin: 0 auto;
+        padding-top: 10px;
+      }
+      .slides{padding-left:20px;}
+      li.menu{
+        float: left; 
+        margin-left: 5px; 
+        width: 30%;
+      }
+
+      .begin-test{
+        width: 50%;
+        margin: 0 auto;
+        padding-top: 30px;
+      }
+
+      .hide{display: none;}
+.share_div a{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc ; 
+    border-radius:5px;
+    margin-bottom:10px;
+    background:#ccc ;
+    font-size:1.4em;
+}
+
+.share_div{width:50%; 
+   margin:0 auto;
+   text-align:center;
+}
+
+  </style>
+   
+ </head>
+
+
+<script src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js' type='text/javascript'></script>
+<script>
+  wx.config({
+    debug: false,
+    appId: "wx629a5ad4f3fc5f63",
+    timestamp: 1428758186,
+    nonceStr:  "8f2d454ba47b0caae0fdf1a9668ec2fd",
+    signature: "7493afeeefe9a661b54cdf49edc1103fd6636b50",
+    jsApiList: [
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareWeibo',
+      'hideMenuItems',
+      'showMenuItems'
+    ]
+  });
+
+function share_api(){
+  var share_callback_hy = function () {
+      ajax = new XMLHttpRequest();
+      ajax.open('GET', '/materials/wx_share?f=hy_1109729195', true);
+      ajax.send(null);
+  }
+
+  var share_callback_pyq = function () {
+      ajax = new XMLHttpRequest();
+      ajax.open('GET', '/materials/wx_share?f=pyq_1109729195', true);
+      ajax.send(null);
+  }
+
+
+
+  wx.ready(function(){
+    var info = $("#info").text();
+    wx.onMenuShareTimeline({
+      title: info + "测你从事哪个行业能发财?准爆了！", // 分享标题
+      link: "", // 分享链接
+      imgUrl: "http://1251008728.cdn.myqcloud.com/1251008728/zhim/22.jpg", // 分享图标
+      success: function () {
+        share_callback_pyq();
+          location.href = "http://51self.com/weitest/1203611402 ";
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function () { 
+        // 用户取消分享后执行的回调函数
+      }
+    });
+
+    wx.onMenuShareAppMessage({
+      title: info + "测你从事哪个行业能发财?准爆了！", // 分享标题
+      desc: "工作没有激情，整天无精打采，想要跳槽很无助，不知道要从事哪个行业！你是否还在为跳槽的事情烦恼呢？快来测试看看吧，看看自己哪个行业能如鱼得水。", // 分享描述
+      link: "", // 分享链接
+      imgUrl: "http://1251008728.cdn.myqcloud.com/1251008728/zhim/22.jpg", // 分享图标
+      type: '', // 分享类型,music、video或link，不填默认为link
+      dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+      success: function () {
+        share_callback_hy();
+          location.href = "http://51self.com/weitest/1203611402 ";
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function () { 
+        // 用户取消分享后执行的回调函数
+      }
+    });
+  });
+
+}
+
+share_api();
+
+</script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+        var result=0;
+        var result_message;
+        var a = 0;
+        var b = 0;
+        var c = 0;
+        var d = 0;
+        var res_arr = [];          
+
+        $(".options ul li").on('click',(function(){
+          var  node = $(this).parent().parent().parent();
+          var next_node = $(node).next();
+
+          var dataScore = $(this).attr("data-score");
+
+          if( dataScore === '1'){
+            $('#test_desc').addClass('hide');
+            $('#test_title').removeClass('hide') ;
+          }
+
+          $(node).hide();
+
+          if(parseInt(dataScore) >= 100){
+              if (false)
+                  hideResult()  ;  
+              $('#test_title').addClass('hide');
+              $(".result-"+dataScore).show();
+              if ( is_weixin() ) {
+                  $("#share2").hide();
+              }else{
+                  $("#share1").hide();
+              }
+          }else{
+              $(".question-"+dataScore).show();
+          }
+        }));
+
+        $(".prev a").click(function(){
+            var node = $(this).parent().parent();
+            var prev_node = $(node).prev();
+
+            if(prev_node.hasClass("question")){
+                $(node).hide();
+                $(prev_node).show();
+            }
+        });
+
+        function hideResult () {
+          var div = document.createElement('div') ,
+              img = document.createElement('img') ; 
+
+          img.src = 'http://1251008728.cdn.myqcloud.com/1251008728/1q/share.png' ;
+          img.style.width= '100%' ;
+
+          div.id = 'show_share_img' ; 
+          div.style.position = 'fixed' ; 
+          div.style.top = 0; 
+          div.style.left = 0; 
+          div.style.height = '100%';
+          div.style.width = '100%';
+          div.style.background = 'rgb(0,0,0)' ; 
+          div.style.zIndex = '999' ;  
+
+          div.appendChild(img) ; 
+          document.body.appendChild(div) ;
+        }
+      });
+
+  function show_result() {
+    var result_show = document.getElementById('show_share_img')
+    if(result_show != null) result_show.style.display =  'none' ;
+    WeixinJSBridge.call('showToolbar');
+
+}
+
+
+     var arr = ['超级准确，不看后悔！', '你敢测测吗？','超准的测试!','准到爆！太恐怖了！', '超级准确，不看后悔！', '超准的测试', '准到戳心', '据说人人中枪!', '万人鉴定，准确率99%！'];
+
+       function getRandom(arr){
+	  var len = arr.length;
+	  return arr[Math.floor(Math.random()*len)]
+        }
+
+     var rnd = getRandom(arr );
+
+     var r = -1;  
+      var share_callback_hy = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=hy_1109729195&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var share_callback_pyq = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=pyq_1109729195&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var dataForWeixin = {
+              appId: "",
+              TLImg : "",
+              url:  "http://newwtohngrxa.gmzzzl.cn" + "/v150411/weitest/1147290289"  ,    
+              title: ", "  + rnd, 
+              desc: ""
+        };
+
+
+(function(){
+       document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            WeixinJSBridge.call('hideToolbar');
+        });
+
+	var onBridgeReady = function () {	        
+		WeixinJSBridge.on('menu:share:appmessage', function(argv){  
+			WeixinJSBridge.invoke('sendAppMessage',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "send_app_msg:confirm":
+					case "send_app_msg:ok":
+						show_result();
+						break;
+				}
+			});
+			share_callback_hy ();
+		});
+		WeixinJSBridge.on('menu:share:timeline', function(argv){       
+			WeixinJSBridge.invoke('shareTimeline',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "share_timeline:confirm":
+					case "share_timeline:ok":
+						show_result();
+						break;
+				}
+			});
+			share_callback_pyq();
+		});
+	};
+	
+	if(document.addEventListener){
+		document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	} else if(document.attachEvent){
+		document.attachEvent('WeixinJSBridgeReady' , onBridgeReady);
+		document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+	}
+	
+})();	
+  </script>
+
+  <div class="flexslider"   style="margin:0px auto; align:center;" >
+      <a href="http://51self.com/weitest/1203611402" >
+          <img style="width:100%; max-height:60px;" src="http://kaokao.qiniudn.com/head1.png" /> </a>
+  <div class="holder" style="clear:both;"></div>
+</div>
+
+  
+    <body style=" background-color: rgb(250, 249, 249);" >
+<div class='wrapper'>
+ <div class="title header-title" id='test_desc'>
+  <h2>
+    
+  </h2>
+  <div class="title-sub">
+  <div >
+  </div>
+
+  </div>
+
+</div>
+<div id="test_title" class="hide title">
+      <h2></h2>
+    </div>
+
+    <div class="begin-test">
+      <div class="options button">
+        <ul><li data-score='1'><p>马上开始</p></li></ul>        
+      </div>
+    </div>
+
+
+
+
+
+
+ 
+    <div class="question question-1 ">
+      <div class="question-title">
+          1、下列哪个词语最能形容你目前的生活状态?
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="2">
+                  <p>
+                  A、欢乐
+                  </p>
+               </li>
+            
+            
+              <li data-score="3">
+                  <p>
+                  B、平淡
+                  </p>
+               </li>
+            
+            
+              <li data-score="4">
+                  <p>
+                  C、乏味
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+    <div class="question question-2 ">
+      <div class="question-title">
+          2、你喜欢和哪种性格的人一起共事？
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="3">
+                  <p>
+                  A、温和大度
+                  </p>
+               </li>
+            
+            
+              <li data-score="4">
+                  <p>
+                  B、泼辣干练
+                  </p>
+               </li>
+            
+            
+              <li data-score="5">
+                  <p>
+                  C、正直严谨
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+    <div class="question question-3 ">
+      <div class="question-title">
+          3、假如要在卧室的墙上挂上一件物品，你会选择下面哪个呢？
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="4">
+                  <p>
+                  A、艺术照
+                  </p>
+               </li>
+            
+            
+              <li data-score="5">
+                  <p>
+                  B、风景画
+                  </p>
+               </li>
+            
+            
+              <li data-score="6">
+                  <p>
+                  C、吉祥物
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+    <div class="question question-4 ">
+      <div class="question-title">
+          4、你是个比较“念旧”的人？
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="6">
+                  <p>
+                  A、是
+                  </p>
+               </li>
+            
+            
+              <li data-score="7">
+                  <p>
+                  B、否
+                  </p>
+               </li>
+            
+            
+              <li data-score="7">
+                  <p>
+                  C、不确定
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+    <div class="question question-5 ">
+      <div class="question-title">
+          5、平时喜欢在博客里写些文章？
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="6">
+                  <p>
+                  A、是
+                  </p>
+               </li>
+            
+            
+              <li data-score="7">
+                  <p>
+                  B、不是
+                  </p>
+               </li>
+            
+            
+              <li data-score="8">
+                  <p>
+                  C、不确定
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+    <div class="question question-6 ">
+      <div class="question-title">
+          6、你比较会控制自己的情绪？
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="7">
+                  <p>
+                  A、是
+                  </p>
+               </li>
+            
+            
+              <li data-score="8">
+                  <p>
+                  B、不是
+                  </p>
+               </li>
+            
+            
+              <li data-score="9">
+                  <p>
+                  C、不确定
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+    <div class="question question-7 ">
+      <div class="question-title">
+          7、你认同“过程做好了，结果也不会太坏”这句话吗？ 
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="8">
+                  <p>
+                  A、赞同
+                  </p>
+               </li>
+            
+            
+              <li data-score="9">
+                  <p>
+                  B、反对
+                  </p>
+               </li>
+            
+            
+              <li data-score="10">
+                  <p>
+                  C、不确定
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+    <div class="question question-8 ">
+      <div class="question-title">
+          8、心情不佳时，你会选择哪种方式来发泄郁闷？
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="9">
+                  <p>
+                  A、闭目养神，听些舒缓的音乐
+                  </p>
+               </li>
+            
+            
+              <li data-score="10">
+                  <p>
+                  B、一个人到户外走走，看看风景
+                  </p>
+               </li>
+            
+            
+              <li data-score="110">
+                  <p>
+                  C、到KTV去唱歌
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+    <div class="question question-9 ">
+      <div class="question-title">
+          9、当看到沿街乞讨的残疾人，你会有何感想？
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="10">
+                  <p>
+                  A、骗子很多，千万不能相信！
+                  </p>
+               </li>
+            
+            
+              <li data-score="110">
+                  <p>
+                  B、真可怜，得帮一下他！
+                  </p>
+               </li>
+            
+            
+              <li data-score="300">
+                  <p>
+                  C、很普通的现象，没感觉
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+    <div class="question question-10 ">
+      <div class="question-title">
+          10、你是个能守住秘密的人？
+      </div>
+      <div class="options button">
+        <ul>
+          
+          
+          
+            
+              <li data-score="300">
+                  <p>
+                  A、是
+                  </p>
+               </li>
+            
+            
+              <li data-score="200">
+                  <p>
+                  B、不是
+                  </p>
+               </li>
+            
+            
+              <li data-score="200">
+                  <p>
+                  C、不确定
+                  </p>
+               </li>
+            
+            
+
+          
+        </ul>
+      </div>
+
+    </div>
+ 
+
+
+
+<div class="result result-110">
+            <div class="title">
+              <h2>
+                结果
+              </h2>
+              <div class="title-sub aside">
+                　A、靠外貌生财
+　　职业方向、演员、歌手、模特等
+　　你有着良好的外形条件和出众的气质，你眼神中散发出来的光芒是那样的柔和、迷人，非常具有亲和力。你的模仿能力很强，也有一定的表现欲，适应能力也不错，比较合适往娱乐行业发展。“科技紫微星座网”认为你很有明星的潜质，会有大放光彩的一天。不妨培养自己这方面的兴趣和爱好，多学点才艺和技能，挖掘出自己的潜力。
+              </div>
+                        
+          <div class="title-sub aside">
+               <a href='http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=200727692&idx=1&sn=486772b0aa019ee35b2c1d628df8a9ad#wechat_redirect'>关注我们</a>
+              </div>         
+            </div>
+
+             <div class="share tools-button" >
+              <a href='http://more.51self.com'>更多好玩游戏</a>
+            </div>
+
+         </div>
+
+<div class="result result-200">
+            <div class="title">
+              <h2>
+                结果
+              </h2>
+              <div class="title-sub aside">
+                B、动口生财
+　　职业方向、律师、主持人、教师等
+　　你是个很有思想的人，能够深入研究学问，也能将自己内心的想法准确的表达出来。口才了得，多思善辩，做事积极的你适合从事动口生财的行业。你朝着这方面发展，不仅能获得巨大的财富，还能获得成就感、满足感。因此，“科技紫微星座网”建议你多多锻炼自己的表达能力、组织能力，积蓄能量，终有一天会一鸣惊人。
+              </div>
+                        
+          <div class="title-sub aside">
+               <a href='http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=200727692&idx=1&sn=486772b0aa019ee35b2c1d628df8a9ad#wechat_redirect'>关注我们</a>
+              </div>         
+            </div>
+
+             <div class="share tools-button" >
+              <a href='http://more.51self.com'>更多好玩游戏</a>
+            </div>
+
+         </div>
+
+<div class="result result-300">
+            <div class="title">
+              <h2>
+                结果
+              </h2>
+              <div class="title-sub aside">
+                C、靠头脑生财
+　　职业方向、自主创业、策划、广告设计等
+　　你头脑灵活，独立性强，不喜欢被约束，能够接受新鲜的事物，适合做一些有关创意方面的事情，比如策划、设计、文案等。若是你不喜欢做职员，不妨考虑自主创业，凭着你活络的头脑、良好的应变能力，可以在商界闯出一番天地。“科技紫微星座网”要提醒你的是，平时广结善缘，多多结交一些优秀人士，对自己的事业会有很大的帮助。
+              </div>
+                        
+          <div class="title-sub aside">
+               <a href='http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=200727692&idx=1&sn=486772b0aa019ee35b2c1d628df8a9ad#wechat_redirect'>关注我们</a>
+              </div>         
+            </div>
+
+             <div class="share tools-button" >
+              <a href='http://more.51self.com'>更多好玩游戏</a>
+            </div>
+
+         </div>
+
+
+       <div id="mask" onclick="mask();"></div>
+       <div id="tip"  onclick="mask();"><img  style="width:320px;" src="http://1251008728.cdn.myqcloud.com/1251008728//assets/images/tip-share.jpg"/>
+       </div>
+<br/>
+</div>
+</body>
+ 
+      <div class="flexslider"   style="margin:0px auto; align:center;" >
+      <a href="http://51self.com/weitest/1203611402" >
+          <img style="width:100%; max-height:60px;" src="http://kaokao.qiniudn.com/head1.png" /> </a>
+  <div class="holder" style="clear:both;"></div>
+</div>
+
+      <div class="rec_games" style="margin:0px auto;text-align:center; width:97%;white-space:nowrap; line-height:42px; min-height:230px; border-bottom:none; ">
+  <div class="rec_holder" style="clear:both;">
+    
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/1182760086" style="text-decoration:none; ">
+          测测你10年后的身家！
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/125947861" style="text-decoration:none; ">
+          你的初吻能够值多少钱
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/1262763140" style="text-decoration:none; ">
+          秒测！你的什么美梦能成真？
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/464385620" style="text-decoration:none; ">
+          你是一个容易······的人？知足、纠结、害羞？
+        </a>
+      </div>
+
+    <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://51self.com/weitest/1203611402" style="text-decoration:none; ">
+         更多免费【微信游戏】！
+        </a>
+    </div>
+
+  </div>
+</div>
+ 
+      <div class="flexslider"   style="margin:0px auto; align:center;" >
+      <a href="http://51self.com/weitest/1203611402" >
+          <img style="width:100%; max-height:60px;" src="http://kaokao.qiniudn.com/head1.png" /> </a>
+  <div class="holder" style="clear:both;"></div>
+</div>
+
+ 
+    <div style="display: none;">                                                   
+  <script src="http://v1.cnzz.com/z_stat.php?id=1000438304&web_id=1000438304" language="JavaScript"></script>
+</div>   
+
+   
+    <script>
+  var url="/weitest/stat?type=pv&cid=295&gid=1110&uid="
+  var img = new Image();
+  img.src = url;
+</script>
+
+
+</html>

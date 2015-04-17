@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link href="http://wei.qq275.com/vapp/shangjieba.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+      <title>你一生辜负多少人？</title>
+      <meta charset="utf-8">
+
+        <script src="http://wx.51self.com/js/jquery.min.js"></script>
+
+      <script>  
+        function click_ad(idx){
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', "/weitest/click_stat?id=" + idx, true);
+          ajax.send(null);
+          return false;
+        }
+      </script>
+
+      <script src="http://wx.51self.com/js/jQueryRotateCompressed.js"></script>
+<meta name="viewport" content="target-densitydpi=320,width=640,user-scalable=no">
+
+  <style type="text/css"> 
+    body{
+          padding: 0;
+          margin: 0;
+          background: #fff;
+      }
+      #content{
+          padding: 0;
+          margin: 0 auto;
+          width: 100%;
+          height: 90%;
+          /*background: #170220;*/
+          background:#fff;
+      }
+      #bg{
+          margin: 0 auto;
+          width: 100%;
+          height: auto;
+          /*
+          background-image: url(http://jfcs.qiniudn.com/bg.jpg);
+          background-repeat: no-repeat;
+          background-position: center;
+           */
+          background:#fff;
+      }
+      label{
+      font-size:24px;
+      }
+      #name{
+           height:28px;
+           margin-top:12px;
+           font-size:18px;
+      }
+      #marry-who{
+          margin: 0 auto;
+          padding-top: 10px;
+          width: 100%;
+          height: 128px;
+          background-image: url(http://1251008728.cdn.myqcloud.com/1251008728/gu/gu1.jpg);
+          background-repeat: no-repeat;
+          background-position: bottom;
+          filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+          -moz-background-size:100% 100%;
+          background-size:100% 100%;
+      }
+      #marry-form{
+          padding-top: 17px;
+          padding-left: 20px;
+          width:85%;
+          margin:0 auto;
+          text-align:center;
+      }
+      #ad{
+          margin:0 auto;
+          text-align:center;
+      }
+      #marry-form .form-one{
+          float:left;
+      }
+      #display_head img{
+         width:5px;
+         height:5px;
+      }
+
+      #begin{
+          margin: 0 auto;
+          margin-top:5px;
+          width: 100px;
+          height: 30px;
+          cursor: pointer;
+          float:right;
+          margin-right:30px;
+      }
+
+      #begin img{
+          width: 150px;
+          height:50px;
+          height: auto;
+      }
+
+      #round{
+          width: 90%;
+          height: auto;
+          margin: 0 auto;
+          margin-top: 10px;
+          background-image: url(http://1251008728.cdn.myqcloud.com/1251008728/gu/gu.jpg);
+          filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+          -moz-background-size:100% 100%;
+          background-size:100% 100%;
+      }
+      #arrow{
+          margin: 0 auto;
+          padding-top: 10em;
+          text-align: center;
+      }
+      #arrow-img{
+        width: 100%;
+        height: auto;
+      }
+      #result{
+          width: 80%;
+          height: 158px;
+          margin: 0 auto;
+          position: fixed;
+          top:40%;
+          background-image: url(http://jfcs.qiniudn.com/result.png);
+          background-repeat: no-repeat;
+          filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+          -moz-background-size:100% 100%;
+          background-size:100% 100%;
+          display: none;
+          z-index: 999;
+          padding-left:30px;
+      }
+      #info{
+          padding-top: 40px;
+          font-weight:800;
+          padding-bottom: 8px;
+          padding-left: 10px;
+          font-size:24px;
+          width:95%;
+          z-index: 999;
+      }
+      #tools{
+          padding-left: 10px;
+          font-size:24px;
+      }
+      #share{
+          font-size:20px;
+          margin-top:2px;
+          color:red;
+       }
+      #close{
+          position: absolute;
+          width: 46px;
+          height: 46px;
+          right: 0;
+          margin-top: -5px;
+          margin-right: -5px;
+      }
+
+.guanzhu a{
+   /*color:#aa1111;*/
+   font-size:24px;
+}
+
+
+
+            #mask {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: none;
+                background-color: #333;
+                filter: alpha(Opacity=90);
+                -moz-opacity: 0.9;
+                opacity: 0.9;
+            }
+            #tip {
+                display: none;
+                position: absolute;
+                width: 100%;
+                top: 10px;
+                left: 15px;
+            }
+            #tip img{
+                width:90%;
+                margin:0 auto;
+                text-align:center;
+            }
+  </style>
+   
+ </head>
+
+
+<script src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js' type='text/javascript'></script>
+<script>
+  wx.config({
+    debug: false,
+    appId: "wx629a5ad4f3fc5f63",
+    timestamp: 1428650354,
+    nonceStr:  "7e908662a712af8464dd134077115af5",
+    signature: "e8f6a9dccabaced0a1842dcd5caabb5e81a92eda",
+    jsApiList: [
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareWeibo',
+      'hideMenuItems',
+      'showMenuItems'
+    ]
+  });
+
+function share_api(){
+  var share_callback_hy = function () {
+      ajax = new XMLHttpRequest();
+      ajax.open('GET', '/materials/wx_share?f=hy_1177970700', true);
+      ajax.send(null);
+  }
+
+  var share_callback_pyq = function () {
+      ajax = new XMLHttpRequest();
+      ajax.open('GET', '/materials/wx_share?f=pyq_1177970700', true);
+      ajax.send(null);
+  }
+
+
+
+  wx.ready(function(){
+    var info = $("#info").text();
+    wx.onMenuShareTimeline({
+      title: info + "你一生辜负多少人？", // 分享标题
+      link: "http://2000056486.zhan.qq.com/mobile/index.html", // 分享链接
+      imgUrl: "http://1251008728.cdn.myqcloud.com/1251008728/yan/yan2.jpg", // 分享图标
+      success: function () {
+        share_callback_pyq();
+          location.href = "http://51self.com/weitest/1203611402 ";
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function () { 
+        // 用户取消分享后执行的回调函数
+      }
+    });
+
+    wx.onMenuShareAppMessage({
+      title: info + "你一生辜负多少人？", // 分享标题
+      desc: "赶快来转一下！", // 分享描述
+      link: "http://2000056486.zhan.qq.com/mobile/index.html", // 分享链接
+      imgUrl: "http://1251008728.cdn.myqcloud.com/1251008728/yan/yan2.jpg", // 分享图标
+      type: '', // 分享类型,music、video或link，不填默认为link
+      dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+      success: function () {
+        share_callback_hy();
+          location.href = "http://51self.com/weitest/1203611402 ";
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function () { 
+        // 用户取消分享后执行的回调函数
+      }
+    });
+  });
+
+}
+
+share_api();
+
+</script>
+
+  <script type="text/javascript">
+          var info = "";
+      var reason = "";
+      var name = "";
+
+      var mask = function () {
+                if (document.getElementById('mask').style.display == 'inline') {
+                    document.getElementById('mask').style.display = 'none';
+                    document.getElementById('tip').style.display = 'none';
+                } else {
+                    document.getElementById('mask').style.display = 'inline';
+                    document.getElementById('tip').style.display = 'inline';
+                }
+            }
+
+      $(function(){
+
+          var r_h = $("#round").width();
+          $("#round").css("height", r_h + "px");
+
+          var a_p = r_h*3/8;
+
+          $("#arrow").css("width", a_p + "px");
+
+          var p_t = (r_h/2) - (a_p/2);
+          $("#arrow").css("padding-top", p_t + "px");
+
+
+          $("#begin").click(function(){
+              var name = $("#name").val();
+              var birth = $("#month").val() + "" + $("#day").val();
+              //---------------------------
+
+              if(name == "" || name.length == 0){
+                  alert("请输入你的姓名!");
+                  return false
+              }
+
+              $.getJSON("/weitest/1178/return", {name: name}, function(data){
+                  d = parseInt(data["d"]);
+                  r = d;
+                  info = data["info"];           
+                  d = d * 30 + 15;
+                  $('#arrow-img').stopRotate();
+                  $("#arrow-img").rotate({
+                      angle:0,
+                      duration: 5000,
+                      animateTo: d+1440,
+                      callback:function(){
+                          var w = $(document).width();
+                          var l;
+                          var r_w = $("#result").width();
+
+                          l = w/2 - (r_w/2);
+                          $("#result").css("left", l + "px");
+                          
+                          $("#wanhuir_page_result").val(info);
+
+                          $("#info").text(info);
+                          document.title = info;                               
+                          $("#result").show();            
+                          share_api();                   
+                      }
+                  });
+                  location.href = "#arrow";          
+                  
+              });
+
+          });
+
+          $("body").on("click", "#close", function(){
+              $("#result").hide();
+              $("#ad").show();      
+              $("#content").show();               
+          });
+
+          $("#share").click(function(){
+              var info = $("#info").text();         
+          });
+
+      })
+  </script>
+
+  <div class="flexslider"   style="margin:0px auto; align:center;" >
+      <a href="http://51self.com/weitest/1203611402" >
+          <img style="width:100%; max-height:60px;" src="http://kaokao.qiniudn.com/head1.png" /> </a>
+  <div class="holder" style="clear:both;"></div>
+</div>
+
+  
+    <body>
+<div id="display_head">  
+</div>
+<div id="result">
+  <div id="close">
+    <img src="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/close.png" alt=""/>
+  </div>
+  <div id="info">    
+  </div>
+
+  <div id="tools">
+
+
+
+                
+                        <span id="share">
+      <img src="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/1.gif" /> 好牛呀！点右上角分享给好友们!   
+    </span>
+                
+            
+  </div>
+
+</div>
+<div id="content">
+
+   <div id="bg">
+      <div id="round">
+        <div id="arrow">
+           <a href='http://51self.com/weitest/1203611402' >
+              <img src="http://kaokao.qiniudn.com/arrow2.png" id="arrow-img" alt=""/>
+           </a>        
+       </div>
+    </div>
+  
+
+
+ 
+
+    <div id="marry-who">   
+      <div id="marry-form">
+        </br>
+        <div id="begin">
+         <img src="http://wx.51self.com/start.png" alt=""/>
+        </div>
+        <div class="form-one">
+          &nbsp;&nbsp;
+          <label for="name">填写你的姓名</label>
+          <input type="text" name="name" id="name"/>
+        </div>
+        <br/>
+     
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+<br/>
+
+<div id="mask" onclick="mask();"></div>
+<div id="tip" onclick="mask();"><img src="http://1251008728.cdn.myqcloud.com/1251008728/assets/images/tip-share.jpg"/></div>           
+
+</body>
+ 
+      <div class="flexslider"   style="margin:0px auto; align:center;" >
+      <a href="http://51self.com/weitest/1203611402" >
+          <img style="width:100%; max-height:60px;" src="http://kaokao.qiniudn.com/head1.png" /> </a>
+  <div class="holder" style="clear:both;"></div>
+</div>
+
+      <div class="rec_games" style="margin:0px auto;text-align:center; width:97%;white-space:nowrap; line-height:42px; min-height:230px; border-bottom:none; ">
+  <div class="rec_holder" style="clear:both;">
+    
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/1191413082" style="text-decoration:none; ">
+          你靠什么吸引异性？你造吗？
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/1267283199" style="text-decoration:none; ">
+          你受欢迎吗？大家喜欢你吗？
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/1078745793" style="text-decoration:none; ">
+          测一测你10年后开什么车？
+        </a>
+      </div>
+      <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://www.021591.com/weitest/1199320590" style="text-decoration:none; ">
+          测测你的人缘怎么样？
+        </a>
+      </div>
+
+    <div class="game" style="display:inlineblock; margin:10px 0px; padding-left:20px; background:#fff; width:100%; font-size:30px; overflow:hidden;  border-bottom:1px solid #555; text-align:left;">
+        <a href="http://51self.com/weitest/1203611402" style="text-decoration:none; ">
+         更多免费【微信游戏】！
+        </a>
+    </div>
+
+  </div>
+</div>
+ 
+      <div class="flexslider"   style="margin:0px auto; align:center;" >
+      <a href="http://51self.com/weitest/1203611402" >
+          <img style="width:100%; max-height:60px;" src="http://kaokao.qiniudn.com/head1.png" /> </a>
+  <div class="holder" style="clear:both;"></div>
+</div>
+
+ 
+    <div style="display: none;">                                                   
+  <script src="http://v1.cnzz.com/z_stat.php?id=1000438304&web_id=1000438304" language="JavaScript"></script>
+</div>   
+
+   
+    <script>
+  var url="/weitest/stat?type=pv&cid=329&gid=1178&uid="
+  var img = new Image();
+  img.src = url;
+</script>
+
+
+</html>

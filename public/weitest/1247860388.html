@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link href="http://wei.qq275.com/vapp/shangjieba.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+      <title>德高巴士浇水大战</title>
+      <meta charset="utf-8">
+
+        <script src="http://wx.51self.com/js/jquery.min.js"></script>
+
+      <script>  
+        function click_ad(idx){
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', "/weitest/click_stat?id=" + idx, true);
+          ajax.send(null);
+          return false;
+        }
+      </script>
+
+      <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+<base href="http://wx.51self.com/img/dg/shui"/>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: block;
+            height: 100%;
+            margin: auto
+        }
+
+        .board {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            text-align: center
+        }
+
+        .board-img {
+            height: 100%
+        }
+
+        .board-btn {
+            position: absolute;
+            width: 67%;
+            left: 17%;
+            height: 10%;
+            top: 47%;
+            cursor: pointer
+        }
+
+        .board-text {
+            position: absolute;
+            width: 80%;
+            max-height: 30%;
+            overflow: hidden;
+            top: 22%;
+            left: 10%;
+            font-size: 34px;
+            color: #2860ad
+        }
+
+        .share-tip {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(http://1251008728.cdn.myqcloud.com/1251008728/2014/08/21/share_tip.png?1408476074) 50% 0 rgba(0, 0, 0, .6) no-repeat;
+            background-size: 80% auto
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, .6);
+            width: 100%;
+            height: 100%
+        }
+
+        .loading-text {
+            color: #fff;
+            position: absolute;
+            top: 40%;
+            width: 100%;
+            text-align: center
+        }
+
+        .start {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(http://www.51self.com/img/dg/shui/start.jpg?1408476074) 50% 50% no-repeat;
+            background-size: auto 100%
+        }
+
+        .start-btn {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 50%;
+            height: 50%;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            tap-highlight-color: transparent
+        }
+    </style>
+      <script type="text/javascript">
+        
+      </script>
+        <script type="text/javascript">
+                var r = -1;  
+      var share_callback_hy = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=hy_1247860388&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var share_callback_pyq = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=pyq_1247860388&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var dataForWeixin = {
+              appId: "wxebf5a21c8c3a4949",
+              TLImg: "http://www.51self.com/img/dg/shui/dd.png",
+              
+                   url: "http://newmcvrjwydge.51self.com" + "/v150410/weitest/1247860388"  ,  
+              
+              title: "德高巴士浇水大战 ", 
+              desc: "拨水不道德抢座乘客，共建和谐巴士"
+        };
+   
+(function(){
+	var onBridgeReady = function () {	
+		WeixinJSBridge.on('menu:share:appmessage', function(argv){
+                        var info = $("#info").text();          
+                        info = info.replace("你", "我"); 
+			WeixinJSBridge.invoke('sendAppMessage',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : info + '  ' + dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "send_app_msg:confirm":
+					case "send_app_msg:ok":
+						location.href = "http://51self.com/weitest/1203611402"; 
+						break;
+				}
+			});
+			share_callback_hy ();
+		});
+		WeixinJSBridge.on('menu:share:timeline', function(argv){
+                        var info = $("#info").text();          
+                        info = info.replace("你", "我"); 
+			WeixinJSBridge.invoke('shareTimeline',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : info + '  ' + dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "share_timeline:confirm":
+					case "share_timeline:ok":
+						location.href = "http://51self.com/weitest/1203611402"; 
+						break;
+				}
+			});
+			share_callback_pyq();
+		});
+	};
+	
+	if(document.addEventListener){
+		document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	} else if(document.attachEvent){
+		document.attachEvent('WeixinJSBridgeReady' , onBridgeReady);
+		document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+	}
+	
+})();	
+
+
+        </script>
+      <style type="text/css">
+        
+      </style>
+    </head>
+    
+
+
+    <body screen_capture_injected="true">
+<canvas id="canvas" width="640" height="960">
+    alternate content
+</canvas>
+<div id="start" class="start">
+    <div id="start-btn" class="start-btn">
+    </div>
+</div>
+<div id="loading" class="loading" style="display: none;">
+    <div class="loading-text">
+        疯狂载入中... [
+        <span id="loading-progress">100.00</span>
+        %]
+    </div>
+</div>
+<div id="board" class="board">
+    <img class="board-img" src="./冰桶挑战_files/board2.png">
+
+    <div id="board-text" class="board-text">
+    </div>
+    <div class="board-btn" data-action="retry">
+    </div>
+    <div class="board-btn" style="top:65%" data-action="share">
+    </div>
+</div>
+<div id="share-tip" class="share-tip">
+</div>
+<script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2014/08/21/create.js"></script>
+<script type="text/javascript" src="http://www.51self.com/js/game/dg/shui_game.js"></script>
+<script language="javascript">
+    var mebtnopenurl = 'http://i.51self.com/o2o';
+    
+    function goHome() {
+        window.location = mebtnopenurl;
+    }
+    function clickMore() {
+        goHome();
+    }
+    function dp_share() {
+        document.title = "我给不文明强座位者浇了" + myData.score + "桶冰水，超过了" + myData.percent + "%的挑战者！谁来挑战我！";
+        document.getElementById("info").innerText =  document.title ;
+        document.getElementById("share").style.display = "";   
+        share_api();
+    }
+    function dp_Ranking() {
+        window.location = mebtnopenurl;
+    }
+
+    function showAd() {
+    }
+    function hideAd() {
+    }
+</script>
+<div id="share" style="display: none">
+</div>
+<div id="info" style="display: none">
+</div>
+<div style="display: none;">
+    <script type="text/javascript">
+        var myData = {};
+        
+        function dp_submitScore(score, percent) {       
+           myData.score = score;
+           myData.percent = percent;
+           myData.scoreName = "倒了" + score + "桶";    
+
+           score =parseInt(score);				
+           ajax = new XMLHttpRequest();
+           ajax.open('GET', 'http://i.51self.com/weitest/report?game_id=1248&score=' + Math.round(score), true);
+           ajax.send(null);
+          
+            if (score > 0) {
+                dp_share();                
+            }
+        }
+        function onShareComplete(res) {
+                document.location.href = mebtnopenurl;
+        }
+    </script>
+</div>
+</body>
+   
+    <br/>
+
+ 
+    <div style="display: none;">                                                   
+  <script src="http://v1.cnzz.com/z_stat.php?id=1000438304&web_id=1000438304" language="JavaScript"></script>
+</div>   
+
+   
+      <script>
+  var url="/weitest/stat?type=pv&cid=351&gid=1248&uid="
+  var img = new Image();
+  img.src = url;
+</script>
+
+</html>

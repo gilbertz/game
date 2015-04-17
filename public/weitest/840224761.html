@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link href="http://wei.qq275.com/vapp/shangjieba.png" rel="shortcut icon" type="image/vnd.microsoft.icon">
+      <title>【游戏】疯狂打企鹅</title>
+      <meta charset="utf-8">
+
+        <script src="http://wx.51self.com/js/jquery.min.js"></script>
+
+      <script>  
+        function click_ad(idx){
+          ajax = new XMLHttpRequest();
+          ajax.open('GET', "/weitest/click_stat?id=" + idx, true);
+          ajax.send(null);
+          return false;
+        }
+      </script>
+
+          
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2014/08/08/1/createjs.min.js"></script>
+
+    <script type="text/javascript" src="http://1251008728.cdn.myqcloud.com/1251008728/2014/08/08/1/zepto.min.js"></script>
+    <script src="http://1251008728.cdn.myqcloud.com/1251008728/2014/08/08/1/common.js"></script>
+    <link type="text/css" href="http://1251008728.cdn.myqcloud.com/1251008728/2014/08/08/1/common.css" rel="stylesheet">
+    <style>
+        body, html {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        #container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <base href="http://51self.com/"/>
+      <script type="text/javascript">
+        
+      </script>
+        <script type="text/javascript">
+                var r = -1;  
+      var share_callback_hy = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=hy_840224761&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var share_callback_pyq = function () {
+            ajax = new XMLHttpRequest();
+            ajax.open('GET', '/weitest/wx_share?f=pyq_840224761&r=' + r, true);
+            ajax.send(null);
+        }
+
+        var dataForWeixin = {
+              appId: "wx769ddb5e3ea46f28",
+              TLImg: "http://1251008728.cdn.myqcloud.com/1251008728/zi/21.jpg",
+              
+                   url: "http://newihlzsvdqt.tingq.com" + "/v150411/weitest/840224761"  ,  
+              
+              title: "【游戏】疯狂打企鹅 ", 
+              desc: "看看你可以把企鹅打多远！"
+        };
+   
+(function(){
+	var onBridgeReady = function () {	
+		WeixinJSBridge.on('menu:share:appmessage', function(argv){
+                        var info = $("#info").text();          
+                        info = info.replace("你", "我"); 
+			WeixinJSBridge.invoke('sendAppMessage',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : info + '  ' + dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "send_app_msg:confirm":
+					case "send_app_msg:ok":
+						location.href = "http://51self.com/weitest/1203611402"; 
+						break;
+				}
+			});
+			share_callback_hy ();
+		});
+		WeixinJSBridge.on('menu:share:timeline', function(argv){
+                        var info = $("#info").text();          
+                        info = info.replace("你", "我"); 
+			WeixinJSBridge.invoke('shareTimeline',{
+				'img_url' : dataForWeixin.TLImg ,
+				'img_width' : '120',
+				'img_height' : '120',
+				'link' : dataForWeixin.url,
+				'desc' : dataForWeixin.desc,
+				'title' : info + '  ' + dataForWeixin.title
+			}, function(res) {
+				switch(res.err_msg) {
+					case "share_timeline:confirm":
+					case "share_timeline:ok":
+						location.href = "http://51self.com/weitest/1203611402"; 
+						break;
+				}
+			});
+			share_callback_pyq();
+		});
+	};
+	
+	if(document.addEventListener){
+		document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	} else if(document.attachEvent){
+		document.attachEvent('WeixinJSBridgeReady' , onBridgeReady);
+		document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+	}
+	
+})();	
+
+
+        </script>
+      <style type="text/css">
+        
+      </style>
+    </head>
+    
+
+
+    <body>
+
+<div id="container" style="width: 646.4842105263158px; height: 853px; top: 0px; left: 303.7578947368421px;">
+    <canvas id="canvas" width="720" height="950"></canvas>
+</div>
+
+<div style="display: none;">
+</div>
+<script src="http://1251008728.cdn.myqcloud.com/1251008728/2014/08/08/1/index.js"></script>
+<script src="http://1251008728.cdn.myqcloud.com/1251008728/2014/08/08/1/flyline.js"></script>
+
+<script language="javascript">
+    var mebtnopenurl = 'http://wei.51self.com';
+    window.shareData = {
+        "imgUrl": "http://game.9g.com/dqe/icon.png",
+        "timeLineLink": "http://51self.com/weitest/840224761",
+        "tTitle": "【游戏】疯狂打企鹅",
+        "tContent": "你可以把企鹅达到1000米吗？"
+    };
+
+    function goHome() {
+        window.location = mebtnopenurl;
+    }
+    function clickMore() {
+
+            goHome();
+      
+    }
+    function dp_share() {
+        document.title = "你简直霸气侧漏，把企鹅击飞出" + myData.scoreName + "，谁还能超越我？";
+        document.getElementById("share").style.display = "";
+        window.shareData.tTitle = document.title;
+    }
+    function dp_Ranking() {
+        window.location = mebtnopenurl;
+    }
+
+    function showAd() {
+    }
+    function hideAd() {
+    }
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url": window.shareData.imgUrl,
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, onShareComplete);
+        });
+
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, onShareComplete);
+        });
+    }, false);
+</script>
+<div id="share" style="display: none">
+    <img width="100%" src="http://1251008728.cdn.myqcloud.com/1251008728/2014/08/08/1/share.png" style="position: fixed; z-index: 9999; top: 0; left: 0; display: "
+         ontouchstart="document.getElementById(&#39;share&#39;).style.display=&#39;none&#39;;">
+</div>
+
+<script type="text/javascript">
+    var myData = { gameid: "dqe" };
+
+    function dp_submitScore(score) {
+        myData.score = score * 10;
+        myData.scoreName = score + "米";
+        if (score > 0) {
+ 
+             if (confirm("你太猛了，大力出奇迹，一下把伦家击飞" + score + "米！要不要通知一下小伙伴")) {
+                dp_share();
+            }
+            
+        }
+    }
+    function onShareComplete(res) {
+
+        document.location.href = mebtnopenurl;
+
+    }
+</script>
+
+</body>
+   
+    <br/>
+
+ 
+    <div style="display: none;">                                                   
+  <script src="http://v1.cnzz.com/z_stat.php?id=1000438304&web_id=1000438304" language="JavaScript"></script>
+</div>   
+
+   
+      <script>
+  var url="/weitest/stat?type=pv&cid=260&gid=841&uid="
+  var img = new Image();
+  img.src = url;
+</script>
+
+</html>
