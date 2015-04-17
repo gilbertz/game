@@ -61,18 +61,18 @@
     document.getElementById('interactive-tip').setAttribute("src","http://wx.51self.com/img/card/hongbao/hb_AterOpen_get.png");
 
     <% if current_user and not @record%>
-    <% id = Ibeacon.find_by(:url=>params[:beaconid]).id%>
-    <% @rp = Redpack.find_by(beaconid: id).weixin_post(current_user ).to_i/100%>
+    <% beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id%>
+    <% @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user ).to_i/100%>
     score = '<%= @rp %>';
     ajax = new XMLHttpRequest();
     ajax.open('GET', 'http://i.51self.com/weitest/report?beaconid=<%= params[:beaconid] %>&game_id=<%= @material.id %>&score=' + score, true);
     ajax.send(null);
 
-    document.getElementById('money').innerHTML="<%= @rp %>";
+    document.getElementById('money').innerHTML="<%= @rp %>元";
 
     var rHtml = "已有<%= @count+1 %>人领取";
     $("#item-list-header").html(rHtml );
-    var insertHtml = "<div class='item-list-detail'><img src='<%= current_user.profile_img_url %>' width='32' class='userphoto'><span><%= current_user.name %></span><span class='right'>领取了优惠券</span></div>";
+    var insertHtml = "<div class='item-list-detail'><img src='<%= current_user.profile_img_url %>' width='32' class='userphoto'><span><%= current_user.name %></span><span class='right'>领到<%= @rp %>元红包</span></div>";
     $(insertHtml).insertAfter("#item-list-header");
     var qrHtml='<div id="bar-code" class="top_barcode"><p class="time">使用时间：2015/04/20-2015/04/26</p><p>使用门店：世纪联华中环店</p><p class="method">使用方法：出示此页面或者截图给营业员</p></div>';
     $(qrHtml).insertAfter(".top_coupon");         

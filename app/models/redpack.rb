@@ -40,44 +40,41 @@ class Redpack < ActiveRecord::Base
   end
 
     def array_xml(user)
+      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+      redpack = Redpack.find_by(beaconid: beaconid)
       doc = Document.new"<xml/>"
       root_node = doc.root
       el14 = root_node.add_element "act_name"
-      el14.text = '恭喜发财'
+      el14.text = redpack.action_title
       el13 = root_node.add_element "client_ip"
       el13.text = '121.42.47.121'
       el10 = root_node.add_element "max_value"
-      el10.text = '100' 
+      el10.text = redpack.max
       el2 = root_node.add_element "mch_billno"
       el2.text = '1233034702'+Time.new.strftime("%Y%d%m").to_s+rand(9999999999).to_s
       el3 = root_node.add_element "mch_id"
       el3.text = '1233034702'
       el9 = root_node.add_element "min_value"
-      el9.text = '100'
+      el9.text = redpack.min
       el5 = root_node.add_element "nick_name"
-      el5.text = "恭喜发财"
+      el5.text = "盛也网络公司"
       el21 = root_node.add_element "nonce_str"
       el21.text = Digest::MD5.hexdigest(rand(999999).to_s).to_s
       el22 = root_node.add_element "re_openid"
       el22.text = user.get_openid
       el16 = root_node.add_element "remark"
-      el16.text = '盛也网络公司'
+      el16.text = redpack.action_remark
       el6 = root_node.add_element "send_name"
-      el6.text = "恭喜发财"
+      el6.text = redpack.sender_name
       el8 = root_node.add_element "total_amount"
-      el8.text = "100"
+      el8.text = 500
       el11 = root_node.add_element "total_num"
-      el11.text = '1'
+      el11.text = redpack.store
       el12 = root_node.add_element "wishing"
-      el12.text = "恭喜发财"
+      el12.text = redpack.wishing
       el4 = root_node.add_element "wxappid"
       el4.text = 'wx456ffb04ee140d84'
-      # el15 = root_node.add_element "act_id"
-      # el15.text = "1"
-      # el17 = root_node.add_element "logo_imgurl"
-      # el18 = root_node.add_element "share_content"
-      # el19 = root_node.add_element "share_url"
-      # el20 = root_node.add_element "share_imgurl"
+
       stringA="act_name="+el14.text.to_s+"&client_ip="+el13.text.to_s+"&max_value="+el10.text.to_s+"&mch_billno="+el2.text.to_s+"&mch_id="+el3.text.to_s+"&min_value="+el9.text.to_s+"&nick_name="+el5.text.to_s+"&nonce_str="+el21.text.to_s+"&re_openid="+el22.text.to_s+"&remark="+el16.text.to_s+"&send_name="+el6.text.to_s+"&total_amount="+el8.text.to_s+"&total_num="+el11.text.to_s+"&wishing="+el12.text.to_s+"&wxappid="+el4.text.to_s
       stringSignTemp=stringA+"&key=wangpeisheng1234567890leapcliffW"
       puts stringSignTemp
