@@ -16,7 +16,7 @@ class Redpack < ActiveRecord::Base
     return 
   end
 
-  def weixin_post(user)
+  def weixin_post(user,beaconid_url)
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == "https"  # enable SSL/TLS
@@ -27,7 +27,7 @@ class Redpack < ActiveRecord::Base
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
 
-    request.body = array_xml(user)
+    request.body = array_xml(user,beaconid_url)
     response = http.start do |http|
       ret = http.request(request)
       puts request.body
@@ -39,8 +39,9 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-  def array_xml(user)
-    money = get_redpack_rand
+  def array_xml(user,beaconid_url)
+    current_redpack = get_current_redpack(beaconid_url)
+    money = get_redpack_rand(beaconid_url)
     doc = Document.new"<xml/>"
     root_node = doc.root
     el14 = root_node.add_element "act_name"
@@ -84,20 +85,21 @@ class Redpack < ActiveRecord::Base
     return doc.to_s
   end
 
-  def get_current_redpack
-    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    redpack = Redpack.find_by(beaconid: beaconid)
-    return redpack
+  def get_current_redpack(beaconid_url)
+    beaconid = Ibeacon.find_by(:url=>beaconid_url).id
+    current_redpack = Redpack.find_by(beaconid: beaconid)
+    return current_redpack
   end
 
-  def get_redpack_rand
+  def get_redpack_rand(beaconid_url)
     rand_num = rand(10)
+    current_redpack = get_current_redpack(beaconid_url)
     if 0..8.include?(rand_num)
-      redpack_rand = get_current_redpack.min
+      redpack_rand = current_redpack.min
     elsif rand_num == 9
-      redpack_rand = rand((get_current_redpack.min)..(get_current_redpack.max))
+      redpack_rand = rand((current_redpack.min)..(current_redpack.max))
     elsif rand_num == 10
-      redpack_rand = get_current_redpack.max
+      redpack_rand = current_redpack.max
     end
     return redpack_rand
   end

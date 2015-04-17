@@ -62,7 +62,7 @@
 
     <% if current_user and not @record%>
     <% beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id%>
-    <% @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user ).to_i/100%>
+    <% @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid]).to_i/100%>
     score = '<%= @rp %>';
     ajax = new XMLHttpRequest();
     ajax.open('GET', 'http://i.51self.com/weitest/report?beaconid=<%= params[:beaconid] %>&game_id=<%= @material.id %>&score=' + score, true);
