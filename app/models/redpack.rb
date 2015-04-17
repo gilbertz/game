@@ -97,7 +97,7 @@ class Redpack < ActiveRecord::Base
     if 0..8.include?(rand_num)
       repack_rand = Redpack.current_redpack.min
     elsif rand_num == 9
-      repack_rand = rand（Redpack.current_redpack.min..Redpack.current_redpack.max)
+      repack_rand = rand((Redpack.current_redpack.min)..(Redpack.current_redpack.max))
     elsif rand_num == 10
       repack_rand = Redpack.current_redpack.max
     end
