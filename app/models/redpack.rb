@@ -39,14 +39,12 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-
-
   def array_xml(user)
-    money = Redpack.current_redpack.redpack_rand
+    money = get_redpack_rand
     doc = Document.new"<xml/>"
     root_node = doc.root
     el14 = root_node.add_element "act_name"
-    el14.text = Redpack.current_redpack.action_title
+    el14.text = get_current_redpack.action_title
     el13 = root_node.add_element "client_ip"
     el13.text = '121.42.47.121'
     el10 = root_node.add_element "max_value"
@@ -64,15 +62,15 @@ class Redpack < ActiveRecord::Base
     el22 = root_node.add_element "re_openid"
     el22.text = user.get_openid
     el16 = root_node.add_element "remark"
-    el16.text = Redpack.current_redpack.action_remark
+    el16.text = get_current_redpack.action_remark
     el6 = root_node.add_element "send_name"
-    el6.text = Redpack.current_redpack.sender_name
+    el6.text = get_current_redpack.sender_name
     el8 = root_node.add_element "total_amount"
     el8.text = money
     el11 = root_node.add_element "total_num"
     el11.text = 1
     el12 = root_node.add_element "wishing"
-    el12.text = Redpack.current_redpack.wishing
+    el12.text = get_current_redpack.wishing
     el4 = root_node.add_element "wxappid"
     el4.text = 'wx456ffb04ee140d84'
 
@@ -86,20 +84,20 @@ class Redpack < ActiveRecord::Base
     return doc.to_s
   end
 
-  def current_redpack
+  def get_current_redpack
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
     redpack = Redpack.find_by(beaconid: beaconid)
     return redpack
   end
 
-  def redpack_rand
+  def get_redpack_rand
     rand_num = rand(10)
     if 0..8.include?(rand_num)
-      redpack_rand = Redpack.current_redpack.min
+      redpack_rand = get_current_redpack.min
     elsif rand_num == 9
-      redpack_rand = rand((Redpack.current_redpack.min)..(Redpack.current_redpack.max))
+      redpack_rand = rand((get_current_redpack.min)..(get_current_redpack.max))
     elsif rand_num == 10
-      redpack_rand = Redpack.current_redpack.max
+      redpack_rand = get_current_redpack.max
     end
     return redpack_rand
   end
