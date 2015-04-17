@@ -7,11 +7,8 @@ class Admin::IbeaconsController < Admin::BaseController
 
   def index
     @ibeacons = Ibeacon.all
-    respond_with(@ibeacons)
-<<<<<<< HEAD
+    #respond_with(@ibeacons)
     #redirect_to admin_ibeacons_path
-=======
->>>>>>> 71d4f3b2b8797e0c1d63d3347ad751e79bb0ff80
   end
 
   def show

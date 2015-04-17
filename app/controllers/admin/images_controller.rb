@@ -5,8 +5,12 @@ class Admin::ImagesController < Admin::BaseController
   end
 
   def new
-    material = Material.find params[:material_id]
-    @image = material.images.build(state: params[:state])
+    if params[:material_id]
+      material = Material.find params[:material_id]
+      @image = material.images.build(state: params[:state])
+    else
+      @image = Image.new
+    end
     render partial: 'form'
   end
 

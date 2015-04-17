@@ -4,7 +4,8 @@ class Image < ActiveRecord::Base
   belongs_to :viewable, class_name: "Material", polymorphic: true  
   belongs_to :user
 
-  STATE = { 
+  STATE = {
+    0  => "无",
     1  => "背景",
     2  => "页面",
     3  => "提示",
@@ -44,6 +45,10 @@ class Image < ActiveRecord::Base
   end
 
   def app_name
+  end
+
+  def get_url
+    self.body
   end
     
 
