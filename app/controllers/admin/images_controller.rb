@@ -19,6 +19,7 @@ class Admin::ImagesController < Admin::BaseController
       params[:images].each do |img|
         Image.build(1, nil, nil, img)
       end
+      redirect_to [:admin, :images]
     else
       image = ::Image.new image_params 
       image.save

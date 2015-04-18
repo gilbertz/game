@@ -7,15 +7,13 @@
       <th>微信好友分享</th>
       <th>朋友圈分享</th>
       <th width="15%">转发统计</th>
-      <th>微信链接</th>
+      <th width='10%'>微信链接</th>
       <th width="5%">状态</th>
       <th width="5%">推荐</th>
       <th width="15%">分类</th>
       <th width="5%">类型</th>
       <th width="10%">创建时间</th>
       <th width="15%">操作</th>
-      <th width="10%">QQ空间</th>
-      <th width="10%">转发次数统计</th>
     </tr>
   </thead>
   <tbody>
@@ -31,7 +29,7 @@
         <td><%= c.share_count("hy") %></td>
         <td><%= c.share_count("pyq") %></td>
         <td><%= c.wx_share_stat.html_safe %></td>
-        <td><%= c.wx_share_id unless c.wx_url.blank? %></td>
+        <td><img src="<%= c.get_qr_img %>" width='100px'> </td>
         <td> 
           <%= link_to [:update_state,:admin,c], remote: true, class: 'ajax',  
             data: {confirm: 'are you sure?'} do %>
@@ -54,22 +52,6 @@
           <%= link_to '编辑模版', [:edit,:admin,c.category] if c.category %> |
           <%= link_to '克隆', [:clone,:admin,c], data: {confirm: "Are you clone one !"} %> |
           <%= link_to '删除', [:admin,c], method: :delete, class: "delMaterial", remote: true, data: {confirm: "Are you sure?"} %>
-        </td>
-        <td>
-          <% if c.is_qq == 1 %>
-              <%= link_to "已推送", "#" %>
-          <% else %>
-              <%= link_to "推送到QQ平台", [:recommend_to_qq, :admin, c], data: {confirm: "Are you sure?"} %>
-          <% end %>
-          |
-          <% if c.is_recommend_to_qq == 1 %>
-              <%= link_to "已推荐", "#" %>
-          <% else %>
-              <%= link_to "设置为QQ平台推荐游戏", [:recommend_game, :admin, c], data: {confirm: "Are you sure?"} %>
-          <% end %>
-        </td>
-        <td>
-        <%= c.share_stat.html_safe %>
         </td>
       </tr>
     <% end %>
