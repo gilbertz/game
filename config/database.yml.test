@@ -1,6 +1,6 @@
 production:
   adapter: mysql2
-  encoding: utf8
+  encoding: utf8mb4
   database: gtest
   host: "rdsnjuzn3bybvrj.mysql.rds.aliyuncs.com"
   port: 3306
@@ -11,7 +11,7 @@ production:
 
 development:
   adapter: mysql2
-  encoding: utf8
+  encoding: utf8mb4
   database: gtest
   host: "rdsnjuzn3bybvrj.mysql.rds.aliyuncs.com"
   port: 3306
