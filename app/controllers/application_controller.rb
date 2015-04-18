@@ -16,6 +16,21 @@ class ApplicationController < ActionController::Base
     raise exception
   end
 
+
+protected
+  def check_cookie
+    if cookies[:remember_me].present?
+      unless is_login?
+        if cookies.signed[:remember_me].present?
+          user = User.find_by_rememberme_token cookies.signed[:remember_me]
+          if user && user.rememberme_token == cookies.signed[:remember_me]
+            session[:admin_user_id] = user.id
+          end
+        end
+      end
+    end
+  end
+
   
 private
   def set_weixin_config

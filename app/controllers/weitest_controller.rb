@@ -2,6 +2,8 @@
 class WeitestController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
+  
+  before_filter :check_cookie, :weixin_authorize
   before_filter :weixin_authorize, :only => [:o2o]
 
   def result
