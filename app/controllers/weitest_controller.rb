@@ -251,15 +251,15 @@ class WeitestController < ApplicationController
   end
 
   def weixin_redpack
-     if current_user and not @record
+    if current_user and not @record
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
       @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid]).to_i
       Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp)
       render :status => 200, json: {'rp' => @rp}
-     else
-       render :status => 200, json: {'result' => 'not current_user or record' }
-    end
-  end  
+    else
+      render :status => 200, json: {'result' => 'not current_user or record' }
+    end 
+  end
 
   def report
     if current_user
