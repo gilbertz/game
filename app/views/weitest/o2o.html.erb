@@ -209,8 +209,6 @@ share_api();
 
 </script>
 
-<% end %>
-
 <style>
   #mask {
                 position: absolute;
@@ -229,6 +227,7 @@ share_api();
 
     <div id="mask" onclick="mask();"></div>
 
+<% end %>
 
     <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
     <% @close_btn    = @material.images.select{|i| i.state == 16}[0].try(:body) %>
