@@ -48,4 +48,5 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     end
   end
 
+
 end

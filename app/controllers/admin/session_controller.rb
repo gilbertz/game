@@ -11,7 +11,7 @@ class Admin::SessionController < Admin::BaseController
         user.update_rememberme_token 
         cookies.signed[:remember_me] = {   
           value:  user.rememberme_token,
-          expires: 3.day.from_now.utc 
+          expires: 7.day.from_now.utc 
         }
       end
       redirect_to [:admin,:materials]
