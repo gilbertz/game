@@ -251,6 +251,7 @@ class WeitestController < ApplicationController
   end
 
   def weixin_redpack
+    get_object
     if current_user and not @record
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
       @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid]).to_i
