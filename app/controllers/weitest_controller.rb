@@ -254,6 +254,7 @@ class WeitestController < ApplicationController
       @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid]).to_i
       report
     end
+    render nothing: true
   end  
 
   def report
