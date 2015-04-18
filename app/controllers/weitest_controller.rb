@@ -52,11 +52,11 @@ class WeitestController < ApplicationController
     materials = Material.includes(:images).joins(:category).where(cond).where(state: 1)
 
     unless params[:order].blank?
-        if params[:order] == "hot"
-          materials = materials.order('redis_pv desc')
-        elsif params[:order] == "recommend"
-          materials = materials.order('redis_wx_share_pyq desc')
-        end
+      if params[:order] == "hot"
+        materials = materials.order('redis_pv desc')
+      elsif params[:order] == "recommend"
+        materials = materials.order('redis_wx_share_pyq desc')
+      end
     else
       materials = materials.order('materials.id desc')
     end
@@ -87,12 +87,12 @@ class WeitestController < ApplicationController
 
   def rand_domain
     #wx_domains = ['http://app.shangjieba.com', 'http://app.weixinjie.net', 'http://app.saibaobei.com', 'http://wan.mna.myqcloud.com', 'http://g.leapcliff.com', 'http://g.weixinjie.net', 'http://g.shangjieba.com', 'http://g.saibaobei.com', 'http://wx.mna.myqcloud.com', 'http://wanhuir.mna.myqcloud.com' ]
-   
+
     #wx_domains = ['http://ggb.bbdd08.cn', 'http://wwmxd.kmtuan.cn', 'http://cool.syhly.cn', 'http://abcdefg.gmzzzl.cn', 'http://ggb.ntjcdx.com', 'http://wei.51self.com', 'http://xsd.xcsgs.com' ]
     wx_domains = ['http://ggb.bbdd08.cn', 'http://wwmxd.kmtuan.cn', 'http://abcdefg.gmzzzl.cn', 'http://ggb.ntjcdx.com', 'http://wei.51self.com' ]
     #domains = Domain.where(:active => true).where(:tid => 2)
     #wx_domains = domains.map{|d|d.get_name}   
- 
+
     len = wx_domains.length
     wx_domains[rand(len)]
     #wx_domains[ params[:id].to_i % len ] 
@@ -116,7 +116,7 @@ class WeitestController < ApplicationController
     if params[:wid]
       $redis.incr("weixin_#{params[:wid]}")
     end
-   
+
     if params[:did]
       $redis.incr("domain_#{params[:did]}")
     end
@@ -126,11 +126,11 @@ class WeitestController < ApplicationController
     
     rand_weixin = weixins.sample(1)[0] 
     rand_domain = domains.sample(1)[0]
-   
+
     @wx_id = rand_weixin.wxid
     @wx_domain = rand_domain.get_name
     #@wx_domain = "http://1.sh.1251225143.clb.myqcloud.com" 
- 
+
     @option = "?wid=#{rand_weixin.id}&did=#{rand_domain.id}&sc=#{@sc}"
   end
 
@@ -164,7 +164,7 @@ class WeitestController < ApplicationController
     #@material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=200917206&idx=1&sn=284ce5d49ae72daf9bf4c8fefa54ee88#wechat_redirect"
     #@material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MjM5NjIzOTE2OQ==&mid=200366500&idx=1&sn=21c2832b5382e6aafd4e55a0d6c85f5f#wechat_redirect"
     #@material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzAwNjExMzk1Mg==&mid=200727692&idx=1&sn=486772b0aa019ee35b2c1d628df8a9ad#wechat_redirect'
-   
+
     @material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzAxOTE1MzQ3Ng==&mid=203971151&idx=1&sn=5f6daddfd553757fa640e10b683adad4#wechat_redirect'
     @material.wx_ln = 'http://51self.com/weitest/1203611402'
 
@@ -175,7 +175,7 @@ class WeitestController < ApplicationController
       @material.url = @game_url 
     end 
 
- 
+
     if @material.category
       unless @material.category.game_type_id >= 12
         @base_category = Category.find(9)
@@ -251,12 +251,14 @@ class WeitestController < ApplicationController
   end
 
   def weixin_redpack
-    if current_user and not @record
+     if current_user and not @record
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
       @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid]).to_i
-      report
+      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp)
+      render :status => 200, json: {'rp' => @rp}
+     else
+       render :status => 200, json: {'result' => 'not current_user or record' }
     end
-    render nothing: true
   end  
 
   def report
@@ -274,7 +276,7 @@ class WeitestController < ApplicationController
       #    r.save
       #  end
       #else
-        Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => params[:score], :remark=>params[:remark])
+      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => params[:score], :remark=>params[:remark])
       #end
     end
     render nothing: true
@@ -289,28 +291,28 @@ class WeitestController < ApplicationController
       end
       Score.create(:user_id => current_user.id, :beaconid=>beaconid, :value => params[:score], :remark=>params[:remark])
       
-     end
+    end
     render nothing: true
   end
 
   def stat
     if params[:type] and params[:cid]
-        key = "stat_#{params[:type]}_#{params[:cid]}"
-        $redis.incr(key) 
+      key = "stat_#{params[:type]}_#{params[:cid]}"
+      $redis.incr(key) 
     end
     if params[:type] and params[:gid]                                              
-        key = "gstat_#{params[:type]}_#{params[:gid]}"                               
-       $redis.incr(key)                                                            
+      key = "gstat_#{params[:type]}_#{params[:gid]}"                               
+      $redis.incr(key)                                                            
     end
 
     if params[:wx_id]
-        key = "wx_id_#{params[:wx_id]}"
-        $redis.incr(key)
+      key = "wx_id_#{params[:wx_id]}"
+      $redis.incr(key)
     end
 
     if params[:wx_domain]
-        key = "wx_domain_#{params[:wx_domain]}"
-        $redis.incr(key)
+      key = "wx_domain_#{params[:wx_domain]}"
+      $redis.incr(key)
     end
 
     #include ad show stat
@@ -320,7 +322,7 @@ class WeitestController < ApplicationController
     end
     render :nothing => true
   end
-   
+
   def click_stat
     id = params[:id]
     key = "ad_click_#{id}"
@@ -349,7 +351,7 @@ class WeitestController < ApplicationController
     render layout: false
   end
 
-private
+  private
   def authorize_url(url)
     rurl = 'http://i.51self.com/users/auth/weixin/callback?rurl=' + url
     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx456ffb04ee140d84&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
