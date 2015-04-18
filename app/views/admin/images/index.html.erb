@@ -4,10 +4,11 @@
 
   <tr>
     <th>ID</th>
-    <th>name</th>
     <th>user</th>
-    <th>body</th>
-    <th>img</th>
+    <th>pic</th>
+    <th>img url</th>
+    <th>photo_name</th>
+    <th>photo_path</th>
     <th>viewable_id</th>
     <th>viewable_type</th> 
     <th>Operate</th>
@@ -16,10 +17,11 @@
   <% @images.each do |image| %>
   <tr>
     <td><%= image.id %></td>
-    <td><%= image.photo_name %></td>
     <td><%= image.user_name %></td>
-    <td><%= image.body %></td>
+    <td><img src="<%= image.get_url %>" ></td>
     <td><%= image.get_url %></td>
+    <td><%= image.photo_name %></td>
+    <td><%= image.photo_path %></td>
     <td><%= image.viewable_id %></td>
     <td><%= image.viewable_type %></td>
     <td><%= link_to "Edit", edit_admin_image_path(image) %> | <%= link_to "delete", admin_image_path(image), :method => :delete, confirm: "确认删除?" %></td>

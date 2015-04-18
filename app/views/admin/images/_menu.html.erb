@@ -19,11 +19,11 @@
 <div class="well sidebar-nav">
   <ul class="nav nav-list">
     <li class="nav-header">Banner</li>
-    <li class="<%= controller_name == 'ibeacons' and action_name.in?(['index','edit']) && 'active' %>">
-      <%= link_to '全部ibeacon', [:admin,:ibeacons] %>
+    <li class="<%= controller_name == 'images' and action_name.in?(['index','edit']) && 'active' %>">
+      <%= link_to '全部image', [:admin,:images] %>
     </li>
     <li class="<%= controller_name == 'categories' and action_name.eql?('new') && 'active' %>">
-      <%= link_to '新建ibeacon', [:new,:admin,:ibeacon] %>
+      <%= link_to '新建image', [:new,:admin,:image] %>
     </li>
   </ul>
 </div>
