@@ -19,12 +19,15 @@ class ApplicationController < ActionController::Base
 
 protected
   def check_cookie
-    if cookies[:remember_me].present?
+    #if cookies[:remember_me].present?
+    if true
       unless current_user
         if cookies.signed[:remember_me].present?
-          current_user = User.find_by_rememberme_token cookies.signed[:remember_me]
-          if current_user && current_user.rememberme_token == cookies.signed[:remember_me]
-            session[:admin_user_id] = current_user.id
+          user = User.find_by_rememberme_token cookies.signed[:remember_me]
+          if user && user.rememberme_token == cookies.signed[:remember_me]
+            session[:admin_user_id] = user.id
+            current_user = user
+            User.current_user = current_user
           end
         end
       end
