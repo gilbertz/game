@@ -2,6 +2,7 @@
 class Authentication < ActiveRecord::Base
   belongs_to :user
   validates :provider, :uid, presence: true
+  
   def self.find_from_hash(hash)
     uid = hash['uid']
     authen=Authentication.where(:uid => uid.to_s).first()

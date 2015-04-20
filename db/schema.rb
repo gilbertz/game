@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417113310) do
+ActiveRecord::Schema.define(version: 20150420075254) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -317,6 +317,13 @@ ActiveRecord::Schema.define(version: 20150417113310) do
     t.datetime "updated_at"
     t.integer  "store"
     t.integer  "state"
+    t.integer  "amount"
+    t.integer  "probability"
+    t.integer  "each_max"
+    t.integer  "each_num"
+    t.datetime "time"
+    t.integer  "password"
+    t.integer  "virtual_num"
   end
 
   create_table "scores", force: true do |t|
@@ -327,6 +334,7 @@ ActiveRecord::Schema.define(version: 20150417113310) do
     t.string   "remark"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "game_id"
   end
 
   create_table "users", force: true do |t|
