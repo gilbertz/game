@@ -23,4 +23,13 @@ class Score < ActiveRecord::Base
   end
 
 
+  def self.jifen(b, u)
+    ss = Score.where(:beaconid=>b.id, :user_id=>u.id)
+    ss.sum{|s|s.value}
+  end
+
+  def self.rank(b, u)
+    
+  end
+
 end
