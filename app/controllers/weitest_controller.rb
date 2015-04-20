@@ -251,6 +251,7 @@ class WeitestController < ApplicationController
   end
 
   def weixin_redpack
+    @material = Material.by_hook params[:game_id]
     get_object
     if current_user and not @record
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
