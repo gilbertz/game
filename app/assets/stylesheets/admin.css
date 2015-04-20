@@ -12,4 +12,6 @@
  *= require bootstrap
  *= require bootstrap-responsive
  *= require colorbox
+ *=require bootstrap.min.css
+ *=require bootstrap-datetimepicker.min.css
  */
