@@ -169,6 +169,8 @@ Game::Application.routes.draw do
         get :update_state
       end
     end
+    get '/ws/new' => "wshows#new"
+
     get '/show_stat' => 'ads#show_stat', as: :show_stat
     get '/click_stat' => 'ads#click_stat', as: :click_stat
   end
