@@ -1,4 +1,5 @@
 Game::Application.routes.draw do
+  post '/' => "wx_third_auth#componentVerifyTicket"
   mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 
