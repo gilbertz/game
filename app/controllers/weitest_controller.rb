@@ -3,7 +3,6 @@ class WeitestController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
   
-  before_filter :check_cookie, :weixin_authorize
   before_filter :weixin_authorize, :only => [:o2o]
 
   def result
@@ -251,15 +250,34 @@ class WeitestController < ApplicationController
   end
 
   def weixin_redpack
-     if current_user and not @record
+    @material = Material.by_hook params[:game_id]
+    get_object
+    if current_user and not @record
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
       @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid]).to_i
       Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp)
       render :status => 200, json: {'rp' => @rp}
-     else
-       render :status => 200, json: {'result' => 'not current_user or record' }
+    else
+      render :status => 200, json: {'result' => 'not current_user or record' }
+    end 
+  end
+
+  def weixin_score
+    @material = Material.by_hook params[:game_id]
+    if current_user
+      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+      s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => params[:value])
+      if params[:openid]
+        au = Authentication.find_by_uid( params[:openid] )
+        s.from_user_id = au.user_id if au
+      end
+      s.save
+      render :status => 200, json: {'value' => s.value }
+    else
+      render :status => 200, json: {'result' => 'not current_user or score' }
     end
-  end  
+  end
+
 
   def report
     if current_user
@@ -357,7 +375,24 @@ class WeitestController < ApplicationController
     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx456ffb04ee140d84&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
   end
 
+  def check_cookie
+    if true
+      unless current_user
+        if cookies.signed[:remember_me].present?
+          user = User.find_by_rememberme_token cookies.signed[:remember_me]
+          if user && user.rememberme_token == cookies.signed[:remember_me]
+            session[:admin_user_id] = user.id
+            current_user = user
+            User.current_user = current_user
+          end
+        end
+      end
+    end
+  end
+
+
   def weixin_authorize
+    check_cookie
     unless current_user
       redirect_to authorize_url(request.url)
     end

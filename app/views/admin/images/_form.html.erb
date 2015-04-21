@@ -1,5 +1,5 @@
 <% asw = @image %>
-<%= form_for [:admin, asw], html: {class: "form-horizontal", style: "margin-bottom:0px;"} do |f| %>
+<%= form_for [:admin, asw], html: {class: "form-horizontal", style: "margin-bottom:0px;", :multipart => true } do |f| %>
   <h3 style="margin-top:0px"> 
     <%= action_name.in?(['new', 'create']) ? "添加" : "编辑" %> Image
   </h3>
@@ -17,6 +17,9 @@
   <% end %>
   <%= f.hidden_field :viewable_id %>
   <%= f.hidden_field :viewable_type %>
+  
+  <input class="form-control" id="image" name="images[]" type="file" multiple>
+
   <div class="control-group">
     <label class="control-label" style="width:100px"><strong>类型:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">
@@ -26,7 +29,7 @@
   <div class="control-group">
     <label class="control-label" style="width:100px"><strong>图片链接:</strong></label>
     <div class="controls" style="margin:0 30px 0 110px">
-      <%= f.text_field :body, style: "width:320px", required: true %> 
+      <%= f.text_field :body, style: "width:320px" %> 
       <span class="help-block"><a href="<%= @image.body %>">图片预览</a> &nbsp;
         size: <span id="size"></span>
       </span>

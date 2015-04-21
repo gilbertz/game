@@ -48,7 +48,10 @@
       'onMenuShareQQ',
       'onMenuShareWeibo',
       'hideMenuItems',
-      'showMenuItems'
+      'showMenuItems',
+      'addCard',
+      'chooseCard',
+      'openCard'
     ]
   });
 
@@ -71,7 +74,7 @@ function share_api(){
     var info = $("#info").text();
     wx.onMenuShareTimeline({
       title: info + "<%= @material.wx_title %>", // 分享标题
-      link: "<%= @material.get_o2o_url(@beacon) %>", // 分享链接
+      link: "<%= share_link(@material, @beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       success: function () {
         share_callback_pyq();
@@ -88,7 +91,7 @@ function share_api(){
     wx.onMenuShareAppMessage({
       title: info + "<%= @material.wx_title %>", // 分享标题
       desc: "<%= @material.wxdesc %>", // 分享描述
-      link: "<%= @material.get_o2o_url(@beacon) %>", // 分享链接
+      link: "<%= share_link(@material, @beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       type: '', // 分享类型,music、video或link，不填默认为link
       dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -209,8 +212,6 @@ share_api();
 
 </script>
 
-<% end %>
-
 <style>
   #mask {
                 position: absolute;
@@ -229,6 +230,7 @@ share_api();
 
     <div id="mask" onclick="mask();"></div>
 
+<% end %>
 
     <% @commit_btn   = @material.images.select{|i| i.state == 9 }[0].try(:body) %>
     <% @close_btn    = @material.images.select{|i| i.state == 16}[0].try(:body) %>

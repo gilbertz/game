@@ -41,6 +41,7 @@ Game::Application.routes.draw do
   #get '/weitest/gabrielecirulli' => 'weitest#gabrielecirulli'
   get '/weitest/wx_share' => 'weitest#wx_share'
   get '/weitest/weixin_redpack' => 'weitest#weixin_redpack', :as=>"weixin_redpack"
+  get '/weitest/weixin_score' => 'weitest#weixin_score', :as=>"weixin_score"
   get '/weitest/report' => 'weitest#report',  :as=>"report"
   get '/materials/report' => 'materials#report',  :as=>"mreport" 
   get '/weitest/stat' => 'weitest#stat',  :as=>"stat"
@@ -170,6 +171,7 @@ Game::Application.routes.draw do
         get :update_state
       end
     end
+    get '/ws/new' => "wshows#new"
 
     get '/show_stat' => 'ads#show_stat', as: :show_stat
     get '/click_stat' => 'ads#click_stat', as: :click_stat

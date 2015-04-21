@@ -15,11 +15,22 @@ class Admin::ImagesController < Admin::BaseController
   end
 
   def create
-    image = ::Image.new image_params
-    image.save
-    material = image.viewable
-    expire_fragment(material)
-    redirect_to [:edit,:admin,material]
+    if params[:images]
+      params[:images].each do |img|
+        Image.build(1, nil, nil, img)
+      end
+      redirect_to [:admin, :images]
+    else
+      image = ::Image.new image_params 
+      image.save
+      if image.viewable
+        material = image.viewable
+        expire_fragment(material)
+        redirect_to [:edit,:admin,material]
+      else
+        redirect_to [:admin, :images]
+      end
+    end
   end
 
   def edit

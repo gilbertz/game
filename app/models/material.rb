@@ -278,7 +278,7 @@ class Material < ActiveRecord::Base
         "http://www.021591.com/weitest/#{self.url}"
       end
     else
-       "/#{beaconid}/gs/#{self.url}"
+       "http://i.51self.com/#{beaconid}/gs/#{self.url}"
     end
   end
 
@@ -301,7 +301,10 @@ class Material < ActiveRecord::Base
       0
     end
   end 
-  
+
+  def get_qr_img
+    'http://qr.liantu.com/api.php?text=' + self.get_link('shengye')
+  end  
 
   private
   def clone_self

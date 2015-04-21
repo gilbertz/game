@@ -11,11 +11,6 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-  def do_red_pack_request
-    weixin_post
-    return 
-  end
-
   def weixin_post(user,beaconid_url)
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
     http = Net::HTTP.new(uri.host, uri.port)

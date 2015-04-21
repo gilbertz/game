@@ -48,7 +48,12 @@ class Image < ActiveRecord::Base
   end
 
   def get_url
-    self.body
+    if not self.photo_path.blank? and not self.photo_name.blank?
+      #self.photo_path + self.photo_name
+      "http://wx.51self.com/uploads/sucai/" + self.photo_name
+    else
+      self.body
+    end
   end
     
 
@@ -64,15 +69,15 @@ class Image < ActiveRecord::Base
       bi_image = file_data.read
     end
 
-    local_path = "/data/www/game/public/uploads/sucai/"
+    photo_path = "/data/www/game/public/uploads/sucai/"
     new_str = Time.now.to_i.to_s + ((100..999).to_a.shuffle[0].to_s)
     if file_type == "jpg" or file_type == "png"
-      local_file_name = new_str + "." + file_type
-      local_file = local_path + local_file_name
-      File.open(local_file, "wb") { |f| f.write( bi_image ) }
-      m.photo_path = local_path
-      m.photo_name = local_file_name
-      m.name = new_str
+      photo_file_name = new_str + "." + file_type
+      photo_file = photo_path + photo_file_name
+      File.open(photo_file, "wb") { |f| f.write( bi_image ) }
+      m.photo_path = photo_path
+      m.photo_name = photo_file_name
+      m.save
       return
     end
  end
