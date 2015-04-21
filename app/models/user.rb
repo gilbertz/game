@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :scores
   has_many :redpacks
   has_many :images
+  has_many :user_scores
 
   before_create :make_password
 
@@ -56,6 +57,25 @@ class User < ActiveRecord::Base
   def get_openid
     au = Authentication.find_by_user_id(self.id)
     return au.uid  if au
+  end
+
+  def get_user_score(beaconid)
+    us = UserScore.find_by(:user_id => self.id, :beaconid => beaconid)
+    us = UserScore.create(:user_id => self.id, :beaconid => beaconid, :total_score => 0) unless us
+    us
+  end
+
+  def total_score(beaconid)
+    self.get_user_score(beaconid).total_score
+  end
+
+
+  def update_user_score(beaconid)
+    ss = Score.where(:user_id => self.id, :beaconid => beaconid )
+    total_score = ss.sum{|s|s.value}
+    us = self.get_user_score( beaconid )
+    us.total_score = total_score
+    us.save
   end
 
 

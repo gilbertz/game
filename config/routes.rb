@@ -1,4 +1,6 @@
 Game::Application.routes.draw do
+  resources :user_scores
+
   mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 
