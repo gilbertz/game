@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @user_score.user_id %>
+</p>
+
+<p>
+  <strong>Beaconid:</strong>
+  <%= @user_score.beaconid %>
+</p>
+
+<p>
+  <strong>Total score:</strong>
+  <%= @user_score.total_score %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @user_score.state %>
+</p>
+
+<%= link_to 'Edit', edit_user_score_path(@user_score) %> |
+<%= link_to 'Back', user_scores_path %>

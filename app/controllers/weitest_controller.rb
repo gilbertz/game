@@ -3,7 +3,6 @@ class WeitestController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
   
-  before_filter :check_cookie, :weixin_authorize
   before_filter :weixin_authorize, :only => [:o2o]
 
   def result
@@ -376,7 +375,24 @@ class WeitestController < ApplicationController
     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx456ffb04ee140d84&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
   end
 
+  def check_cookie
+    if true
+      unless current_user
+        if cookies.signed[:remember_me].present?
+          user = User.find_by_rememberme_token cookies.signed[:remember_me]
+          if user && user.rememberme_token == cookies.signed[:remember_me]
+            session[:admin_user_id] = user.id
+            current_user = user
+            User.current_user = current_user
+          end
+        end
+      end
+    end
+  end
+
+
   def weixin_authorize
+    check_cookie
     unless current_user
       redirect_to authorize_url(request.url)
     end
