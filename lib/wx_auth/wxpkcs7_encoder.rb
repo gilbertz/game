@@ -1,4 +1,4 @@
-require './wx_error_code'
+#require './wx_error_code'
 
 # /**
 # * PKCS7Encoder class
