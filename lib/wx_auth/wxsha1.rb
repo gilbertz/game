@@ -1,4 +1,3 @@
-require './wx_error_code'
 require 'digest/sha2'
 # /**
 #  * SHA1 class
