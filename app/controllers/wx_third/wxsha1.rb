@@ -1,4 +1,4 @@
-require './wx_error_code'
+require File.expand_path('../wx_error_code',__FILE__)
 require 'digest/sha2'
 # /**
 #  * SHA1 class

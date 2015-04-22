@@ -25,6 +25,8 @@ GEM
       actionpack (>= 4.0.0, < 5.0)
     actionpack-page_caching (1.0.2)
       actionpack (>= 4.0.0, < 5)
+    actionpack-xml_parser (1.0.2)
+      actionpack (>= 4.0.0, < 5)
     activemodel (4.0.0)
       activesupport (= 4.0.0)
       builder (~> 3.1.0)
@@ -247,6 +249,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
+  actionpack-xml_parser
   bcrypt-ruby
   coffee-rails (~> 4.0.0)
   devise
