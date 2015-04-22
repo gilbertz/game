@@ -154,6 +154,7 @@ class WeitestController < ApplicationController
     @material = Material.by_hook params[:id]
     get_beacon
     get_object
+    get_redpack_time
 
     #@material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzA4NTkwNTIxOQ==&mid=201004496&idx=1&sn=c3dcb0820a5c3746991de7de63429fc8#wechat_redirect'
     #@material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MzA3MDk0MzMxNQ==&mid=200586729&idx=1&sn=599156aecedbfa9317785390ddb0b448#wechat_redirect"
@@ -254,7 +255,7 @@ class WeitestController < ApplicationController
     get_object
     if current_user and not @record
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid]).to_i
+      @rp = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].weixin_post(current_user, params[:beaconid]).to_i
       Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp)
       render :status => 200, json: {'rp' => @rp}
     else
@@ -415,4 +416,11 @@ class WeitestController < ApplicationController
     end
   end
 
+  def get_redpack_time
+    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+    if Time.now.to_i>Redpack.where(:beaconid => beaconid).order("start_time asc")[0].start_time.to_i
+      Redpack.where(:beaconid => beaconid).order("start_time asc")[0].update(:state =>1)
+    end
+    @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
+  end  
 end
