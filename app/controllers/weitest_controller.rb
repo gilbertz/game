@@ -417,10 +417,12 @@ class WeitestController < ApplicationController
   end
 
   def get_redpack_time
-    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    if Time.now.to_i>Redpack.where(:beaconid => beaconid).order("start_time asc")[0].start_time.to_i
-      Redpack.where(:beaconid => beaconid).order("start_time asc")[0].update(:state =>1)
+    if current_user 
+      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+      if Time.now.to_i>Redpack.where(:beaconid => beaconid).order("start_time asc")[0].start_time.to_i
+        Redpack.where(:beaconid => beaconid).order("start_time asc")[0].update(:state =>1)
+      end
+      @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
     end
-    @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
   end  
 end
