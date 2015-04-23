@@ -68,7 +68,7 @@ class Redpack < ActiveRecord::Base
     el12 = root_node.add_element "wishing"
     el12.text = current_redpack.wishing
     el4 = root_node.add_element "wxappid"
-    el4.text = 'wx456ffb04ee140d84'
+    el4.text = 'wx629a5ad4f3fc5f63'
 
     stringA="act_name="+el14.text.to_s+"&client_ip="+el13.text.to_s+"&max_value="+el10.text.to_s+"&mch_billno="+el2.text.to_s+"&mch_id="+el3.text.to_s+"&min_value="+el9.text.to_s+"&nick_name="+el5.text.to_s+"&nonce_str="+el21.text.to_s+"&re_openid="+el22.text.to_s+"&remark="+el16.text.to_s+"&send_name="+el6.text.to_s+"&total_amount="+el8.text.to_s+"&total_num="+el11.text.to_s+"&wishing="+el12.text.to_s+"&wxappid="+el4.text.to_s
     stringSignTemp=stringA+"&key=wangpeisheng1234567890leapcliffW"

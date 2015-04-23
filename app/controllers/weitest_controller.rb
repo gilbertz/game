@@ -1,9 +1,11 @@
-# ncoding: utf-8
+# encoding: utf-8
 class WeitestController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
   
-  before_filter :weixin_authorize, :only => [:o2o]
+  before_filter 
+
+  :weixin_authorize, :only => [:o2o]
 
   def result
     unless params[:material_id].blank?
@@ -373,7 +375,7 @@ class WeitestController < ApplicationController
   private
   def authorize_url(url)
     rurl = 'http://i.51self.com/users/auth/weixin/callback?rurl=' + url
-    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx456ffb04ee140d84&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
+    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx629a5ad4f3fc5f63&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
   end
 
   def check_cookie
@@ -417,10 +419,12 @@ class WeitestController < ApplicationController
   end
 
   def get_redpack_time
-    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    if Time.now.to_i>Redpack.where(:beaconid => beaconid).order("start_time asc")[0].start_time.to_i
-      Redpack.where(:beaconid => beaconid).order("start_time asc")[0].update(:state =>1)
+    if current_user 
+      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+      if Time.now.to_i>Redpack.where(:beaconid => beaconid).order("start_time asc")[0].start_time.to_i
+        Redpack.where(:beaconid => beaconid).order("start_time asc")[0].update(:state =>1)
+      end
+      @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
     end
-    @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
   end  
 end
