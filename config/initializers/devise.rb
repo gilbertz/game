@@ -257,5 +257,6 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   
-  config.omniauth :weixin, 'wx629a5ad4f3fc5f63', '843d5cb0b87561e54c644327bd297f10'
+  #config.omniauth :weixin, 'wx629a5ad4f3fc5f63', '843d5cb0b87561e54c644327bd297f10'
+  config.omniauth :weixin,  'wx456ffb04ee140d84', 'd1481d1ff0f05d0234a391cfc1c2a4b3'
 end
