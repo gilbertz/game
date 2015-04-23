@@ -23,7 +23,7 @@ class WXSHA1
 
       return shaStr
     rescue
-        return ""
+        return nil
     end
   end
 
