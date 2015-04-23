@@ -89,3 +89,5 @@ gem 'omniauth-oauth2'
 gem 'omniauth-weixin'
 gem 'devise'
 gem 'actionpack-xml_parser'
+
+gem 'qy_wechat', '~> 1.0.1'

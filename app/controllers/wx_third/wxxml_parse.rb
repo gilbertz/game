@@ -13,12 +13,7 @@ class WXXMLParse
 	 # * @return string 提取出的加密消息字符串
 	 # */
   def self.extract(xmltext)
-
-
     begin
-      xml = new
-
-
 
     end
 
@@ -39,8 +34,4 @@ class WXXMLParse
 
     return format
   end
-
-
-  puts generate("21","32","few","fw2");
-
 end
