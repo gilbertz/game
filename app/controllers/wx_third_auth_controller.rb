@@ -17,11 +17,10 @@ class WxThirdAuthController < ApplicationController
     # 解密数据
     aes_key   = SHAKE_ENCODKEY
     aes_key   = Base64.decode64("#{aes_key}=")
-    hash      = MultiXml.parse(params)['xml']
-    body_xml = OpenStruct.new(hash)
-    content   = QyWechat::Prpcrypt.decrypt(aes_key, body_xml.Encrypt, SHAKE_APPID)[0]
+    content   = QyWechat::Prpcrypt.decrypt(aes_key,xmlEncrpyPost, SHAKE_APPID)[0]
     # 解密后的数据
     decryptMsg      = MultiXml.parse(content)["xml"]
+    p decryptMsg
     Rails.logger.info decryptMsg
     if decryptMsg[:Appid] == SHAKE_APPID
       nowAppId = decryptMsg[:Appid]
