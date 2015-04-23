@@ -15,10 +15,14 @@ class WxThirdAuthController < ApplicationController
     nowAppId = wxXMLParams[:AppId]
     xmlEncrpyPost = wxXMLParams[:Encrypt]
     # 解密数据
-
-
+    aes_key   = SHAKE_ENCODKEY
+    aes_key   = Base64.decode64("#{aes_key}=")
+    hash      = MultiXml.parse(params)['xml']
+    body_xml = OpenStruct.new(hash)
+    content   = QyWechat::Prpcrypt.decrypt(aes_key, body_xml.Encrypt, SHAKE_APPID)[0]
     # 解密后的数据
-    decryptMsg = ""
+    decryptMsg      = MultiXml.parse(content)["xml"]
+    Rails.logger.info decryptMsg
     if decryptMsg[:Appid] == SHAKE_APPID
       nowAppId = decryptMsg[:Appid]
       # ticket 事件
