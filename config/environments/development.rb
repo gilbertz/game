@@ -30,3 +30,7 @@ Game::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
  
 end
+
+WX_DOMAIN = 'j.51self.com'
+WX_APPID = 'wx629a5ad4f3fc5f63'
+WX_SECRET= '843d5cb0b87561e54c644327bd297f10'

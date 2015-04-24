@@ -3,9 +3,7 @@ class WeitestController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
   
-  before_filter 
-
-  :weixin_authorize, :only => [:o2o]
+  before_filter :weixin_authorize, :only => [:o2o]
 
   def result
     unless params[:material_id].blank?
@@ -156,7 +154,7 @@ class WeitestController < ApplicationController
     @material = Material.by_hook params[:id]
     get_beacon
     get_object
-    get_redpack_time
+    #get_redpack_time
 
     #@material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzA4NTkwNTIxOQ==&mid=201004496&idx=1&sn=c3dcb0820a5c3746991de7de63429fc8#wechat_redirect'
     #@material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MzA3MDk0MzMxNQ==&mid=200586729&idx=1&sn=599156aecedbfa9317785390ddb0b448#wechat_redirect"
@@ -297,7 +295,7 @@ class WeitestController < ApplicationController
       #    r.save
       #  end
       #else
-      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => params[:score], :remark=>params[:remark])
+      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
       #end
     end
     render nothing: true
@@ -374,8 +372,8 @@ class WeitestController < ApplicationController
 
   private
   def authorize_url(url)
-    rurl = 'http://i.51self.com/users/auth/weixin/callback?rurl=' + url
-    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx629a5ad4f3fc5f63&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
+    rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
+    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
   end
 
   def check_cookie
