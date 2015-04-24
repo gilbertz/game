@@ -32,6 +32,8 @@ class WxThirdAuthController < ApplicationController
         #保存 ticket
         ticket = decryptMsg["ComponentVerifyTicket"]
         $redis.set(componentVerifyTicketKey(nowAppId), ticket)
+	
+	p "ticket is#{$redis.get(componentVerifyTicketKey(nowAppid))}"
         # 取消第三方授权事件
       elsif decryptMsg["InfoType"] == "unauthorized"
         # 取消授权的公众账号
@@ -41,6 +43,7 @@ class WxThirdAuthController < ApplicationController
       # 最终返回成功就行
       render :text => "success"
     else
+      p "error=================error=============="
       render :text => "error"
     end
   end
@@ -59,9 +62,7 @@ class WxThirdAuthController < ApplicationController
     http.use_ssl = true if getComponetAccessTokenUrl.scheme == "https"
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       http.start{
-      postData = {"component_appid"=>SHAKE_APPID ,
-          "component_appsecret"=> SHAKE_APPSECRET,
-          "component_verify_ticket"=> $redis.gets(componentVerifyTicketKey(SHAKE_APPID)) }
+      postData = {"component_appid"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> $redis.get(componentVerifyTicketKey(SHAKE_APPID)) }
 
       p "postData is #{postData}"
 
