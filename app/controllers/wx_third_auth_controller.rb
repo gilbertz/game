@@ -1,5 +1,6 @@
 require 'wx_third/wxsha1'
-
+require 'net/https'
+require 'uri'
 class WxThirdAuthController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: :componentVerifyTicket
   before_filter :valid_msg_signature, :only => :componentVerifyTicket
@@ -47,9 +48,30 @@ class WxThirdAuthController < ApplicationController
 
   #授权登陆发起页面
   def authpage
-
+    redirect_to "http://www.baidu.com/"
   end
 
+  # 发起第三方授权登陆
+  def dothirdauth
+    # 获取第三方平台令牌（component_access_token）
+    getComponetAccessTokenUrl = URI.parse("https://api.weixin.qq.com/cgi-bin/component/api_component_token")
+    http = Net::HTTP.new(getComponetAccessTokenUrl.host,getComponetAccessTokenUrl.port)
+    http.use_ssl = true if getComponetAccessTokenUrl.scheme == "https"
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.start{
+      postData = {"component_appid"=>SHAKE_APPID ,
+          "component_appsecret"=> SHAKE_APPSECRET,
+          "component_verify_ticket"=> $redis.gets(componentVerifyTicketKey(SHAKE_APPID)) }
+
+      p "postData is #{postData}"
+
+      res = http.post(getComponetAccessTokenUrl.path,nil)
+      p res
+    }
+
+    render :text => "dothirdauth"
+
+  end
 
   private
   # before_skip 过滤器  只针对 ticket 取消授权等事件
