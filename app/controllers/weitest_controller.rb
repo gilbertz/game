@@ -373,7 +373,7 @@ class WeitestController < ApplicationController
   private
   def authorize_url(url)
     rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
-    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_ID}&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
+    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
   end
 
   def check_cookie
