@@ -1,6 +1,7 @@
 require 'wx_third/wxsha1'
-require 'net/https'
+require 'net/http'
 require 'uri'
+require 'json'
 class WxThirdAuthController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: :componentVerifyTicket
   before_filter :valid_msg_signature, :only => :componentVerifyTicket
@@ -12,6 +13,8 @@ class WxThirdAuthController < ApplicationController
     # 即公众号服务的AppId。
     # 这种系统事件推送通知（现在包括推送component_verify_ticket协议和推送取消授权通知），
     # 服务开发者收到后也需进行解密，接收到后只需直接返回字符串“success”
+    p "???????????????????????????"
+   
     wxXMLParams = params["xml"]
     nowAppId = wxXMLParams["AppId"]
     xmlEncrpyPost = wxXMLParams["Encrypt"]
@@ -24,7 +27,7 @@ class WxThirdAuthController < ApplicationController
     p "========================================"
     p decryptMsg
     Rails.logger.info decryptMsg
-    if decryptMsg["AppId"] == SHAKE_APPID
+    if decryptMsg != nil
       nowAppId = decryptMsg["AppId"]
       # ticket 事件
       if decryptMsg["InfoType"] == "component_verify_ticket"
@@ -44,7 +47,7 @@ class WxThirdAuthController < ApplicationController
       render :text => "success"
     else
       p "error=================error=============="
-      render :text => "error"
+      render :text => "success"
     end
   end
 
@@ -58,22 +61,35 @@ class WxThirdAuthController < ApplicationController
   def dothirdauth
     # 获取第三方平台令牌（component_access_token）
     getComponetAccessTokenUrl = URI.parse("https://api.weixin.qq.com/cgi-bin/component/api_component_token")
-    http = Net::HTTP.new(getComponetAccessTokenUrl.host,getComponetAccessTokenUrl.port)
-    http.use_ssl = true if getComponetAccessTokenUrl.scheme == "https"
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      http.start{
-      postData = {"component_appid"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> $redis.get(componentVerifyTicketKey(SHAKE_APPID)) }
+   # http = Net::HTTP.new(getComponetAccessTokenUrl.host,getComponetAccessTokenUrl.port)
+    #http.use_ssl = true if getComponetAccessTokenUrl.scheme == "https"
+    #http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+     # http.start{
+     #postData = {"component_appid"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> $redis.get(componentVerifyTicketKey(SHAKE_APPID)) }
+      #p "postData is #{postData}"
 
-      p "postData is #{postData}"
+      #res = http.post(getComponetAccessTokenUrl.path,postData)
+   # }
 
-      res = http.post(getComponetAccessTokenUrl.path,nil)
-      p res
-    }
-
+      postData = {"appid"=>SHAKE_APPID,"component_appid"=>"wxf04f335ad44b01cc","component_AppId"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> $redis.get(componentVerifyTicketKey(SHAKE_APPID)) }
+    #postData = {:component_appid=>"111"}
+    #res = RestClient.post('https://api.weixin.qq.com/cgi-bin/component/api_component_token', postData.to_json)
+    res = send_data("https://api.weixin.qq.com/cgi-bin/component/api_component_token",postData.to_json)
+    res =  Net::HTTP.post_form(getComponetAccessTokenUrl,postData)	
+    p "===="+res.body
+    p "postData is "+postData.to_json
+    p SHAKE_APPID
     render :text => "dothirdauth"
 
   end
 
+def send_data(url,data)  
+    url = URI.parse(url)  
+    req = Net::HTTP::Post.new(url.path,{'Content-Type' => 'application/json'})  
+    req.body = data  
+    res = Net::HTTP.new(url.host,url.port).start{|http| http.request(req)}  
+    return res                                                                                                  
+end  
   private
   # before_skip 过滤器  只针对 ticket 取消授权等事件
   def valid_msg_signature
@@ -92,7 +108,7 @@ class WxThirdAuthController < ApplicationController
   end
 
   def componentVerifyTicketKey(nowAppId)
-    nowAppId<<"_ComponentVerifyTicket"
+    nowAppId + "_ComponentVerifyTicket"
   end
 
 
