@@ -278,7 +278,7 @@ class Material < ActiveRecord::Base
         "http://www.021591.com/weitest/#{self.url}"
       end
     else
-       "http://i.51self.com/#{beaconid}/gs/#{self.url}"
+       "http://#{WX_DOMAIN}/#{beaconid}/gs/#{self.url}"
     end
   end
 
