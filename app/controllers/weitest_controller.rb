@@ -295,7 +295,7 @@ class WeitestController < ApplicationController
       #    r.save
       #  end
       #else
-      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => params[:score], :remark=>params[:remark])
+      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
       #end
     end
     render nothing: true
