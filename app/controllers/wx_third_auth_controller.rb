@@ -58,7 +58,7 @@ class WxThirdAuthController < ApplicationController
     http = Net::HTTP.new(getComponetAccessTokenUrl.host,getComponetAccessTokenUrl.port)
     http.use_ssl = true if getComponetAccessTokenUrl.scheme == "https"
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    http.start{
+      http.start{
       postData = {"component_appid"=>SHAKE_APPID ,
           "component_appsecret"=> SHAKE_APPSECRET,
           "component_verify_ticket"=> $redis.gets(componentVerifyTicketKey(SHAKE_APPID)) }
