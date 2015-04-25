@@ -65,6 +65,13 @@ class WxThirdAuthController < ApplicationController
 
   #发起授权的回调方法
   def callback
+    auth_code = params["auth_code"]
+    if auth_code.nil? == false
+      #查询公众号的授权信息
+      auth_info = query_auth_info(auth_code)
+      p "auth_info = "+auth_info
+    end
+
   end
 
   # 接受 授权公众账号的事件、消息等
@@ -109,7 +116,7 @@ class WxThirdAuthController < ApplicationController
     componentAccessToken = $redis.get(component_access_token_key(SHAKE_APPID))
     if componentAccessToken.nil? == false && componentAccessToken != ""
       return componentAccessToken
-    # 不存在则直接去获取
+      # 不存在则直接去获取
     else
       # 准备数据
       postData = {"component_appid" => SHAKE_APPID, "component_appsecret" => SHAKE_APPSECRET,
@@ -121,7 +128,7 @@ class WxThirdAuthController < ApplicationController
       expiresIn = retData["expires_in"]
       if componentAccessToken != nil && componentAccessToken != ""
         $redis.set(component_access_token_key(SHAKE_APPID), componentAccessToken)
-        $redis.expire(component_access_token_key(SHAKE_APPID),expiresIn)
+        $redis.expire(component_access_token_key(SHAKE_APPID), expiresIn)
         return componentAccessToken
       end
     end
@@ -137,7 +144,7 @@ class WxThirdAuthController < ApplicationController
     if pre_auth_code.nil? == false && pre_auth_code != ""
       p "=========从redis中拿"
       return pre_auth_code
-    # 不存在则直接去获取
+      # 不存在则直接去获取
     else
       p "=========从网络中拿"
       #先拿到第三方平台令牌（component_access_token）
@@ -151,7 +158,7 @@ class WxThirdAuthController < ApplicationController
         #保存新的 pre_auth_code
         if pre_auth_code != nil && pre_auth_code != ""
           $redis.set(pre_auth_code_key(SHAKE_APPID), pre_auth_code)
-          $redis.expire(pre_auth_code_key(SHAKE_APPID),pre_auth_code)
+          $redis.expire(pre_auth_code_key(SHAKE_APPID), preAuthCodeExpiresIn)
           return pre_auth_code
         end
       end
@@ -159,6 +166,14 @@ class WxThirdAuthController < ApplicationController
 
     return nil
 
+  end
+
+
+  #查询公众号的授权信息
+  def query_auth_info(auth_code)
+    post_data = {"component_appid" => SHAKE_APPID, "authorization_code" => auth_code}
+    ret = RestClient::post("https://api.weixin.qq.com/cgi-bin/component/api_query_auth?component_access_token=#{get_component_access_token}", post_data.to_json)
+    return JSON.parser(ret.body)
   end
 
 end
