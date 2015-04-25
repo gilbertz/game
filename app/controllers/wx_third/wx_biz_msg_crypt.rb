@@ -1,7 +1,9 @@
 require File.expand_path('../wx_error_code',__FILE__)
 require File.expand_path('../wxsha1',__FILE__)
-require File.expand_path('../WXXMLParse',__FILE__)
-require File.expand_path('../WXPKCS7Encoder',__FILE__)
+require File.expand_path('../wxxml_parse',__FILE__)
+require File.expand_path('../wxpkcs7_encoder',__FILE__)
+require File.expand_path('../aes_tool',__FILE__)
+
 
 class WXBizMsgCrypt
    # /**
@@ -16,52 +18,82 @@ class WXBizMsgCrypt
       @appId = appId
   end
 
-   # /**
-	 # * 将公众平台回复用户的消息加密打包.
-	 # * <ol>
-	 # *    <li>对要发送的消息进行AES-CBC加密</li>
-  # *    <li>生成安全签名</li>
-	 # *    <li>将消息密文和安全签名打包成xml格式</li>
-  # * </ol>
+  # /**
+	 # * 对明文进行加密.
 	 # *
-	 # * @param $replyMsg string 公众平台待回复用户的消息，xml格式的字符串
-	 # * @param $timeStamp string 时间戳，可以自己生成，也可以用URL参数的timestamp
-	 # * @param $nonce string 随机串，可以自己生成，也可以用URL参数的nonce
-	 # * @param &$encryptMsg string 加密后的可以直接回复用户的密文，包括msg_signature, timestamp, nonce, encrypt的xml格式的字符串,
-	 # *                      当return返回0时有效
-	 # *
-	 # * @return int 成功0，失败返回对应的错误码
+	 # * @param text 需要加密的明文
+	 # * @return 加密后base64编码的字符串
+	 # * @throws AesException aes加密失败
 	 # */
-  def encryptMsg(replyMsg, timeStamp, nonce)
+  def encryptMsg(text)
+   begin
+     aesKey = Base64.decode(@encodingAesKey+"=")
+
+
+   rescue
+     return nil
+   end
+
+  end
+
+   # /**
+	 # * 对密文进行解密.
+	 # *
+	 # * @param text 需要解密的密文
+	 # * @return 解密得到的明文
+	 # * @throws AesException aes解密失败
+	 # */
+  def  decryptMsg(text)
+    if @encodingAesKey.length != 43
+      return nil
+    end
+
+    begin
+      aesKey = Base64.decode(@encodingAesKey+"=")
+      aes_msg = Base64.decode(postData)
+      #AES 解密
+      iv = aesKey[0,16]
+      rand_msg = AesTool.aes256_cbc_decrypt(aesKey,text,iv)
+
+
+    rescue
+      return nil
+    end
 
 
   end
 
 
 
-  # /**
-	 # * 检验消息的真实性，并且获取解密后的明文.
-	 # * <ol>
-	 # *    <li>利用收到的密文生成安全签名，进行签名验证</li>
-  # *    <li>若验证通过，则提取xml中的加密消息</li>
-	 # *    <li>对消息进行解密</li>
-  # * </ol>
-	 # *
-	 # * @param $msgSignature string 签名串，对应URL参数的msg_signature
-	 # * @param $timestamp string 时间戳 对应URL参数的timestamp
-	 # * @param $nonce string 随机串，对应URL参数的nonce
-	 # * @param $postData string 密文，对应POST请求的数据
-	 # * @param &$msg string 解密后的原文，当return返回0时有效
-	 # *
-	 # * @return int 成功0，失败返回对应的错误码
-	 # */
-  def  decryptMsg(msgSignature, timestamp, nonce, postData)
-    if @encodingAesKey.length != 43
-      return WXErrorCode.IllegalAesKey
+  # // 生成4个字节的网络字节序
+  def getNetworkBytesOrder(sourceNumber)
+    orderBytes = Array.new
+    orderBytes[3] = (sourceNumber & 0xFF)
+    orderBytes[2] = (sourceNumber >> 8 & 0xFF)
+    orderBytes[1] = (sourceNumber >> 16 & 0xFF)
+    orderBytes[0] = (sourceNumber >> 24 & 0xFF)
+    return orderBytes
+  end
+
+  # // 还原4个字节的网络字节序
+  def recoverNetworkBytesOrder(orderBytes)
+    int sourceNumber = 0;
+    for i in 0...4
+      sourceNumber <<= 8;
+      sourceNumber |= orderBytes[i] & 0xff;
     end
+    return sourceNumber
+  end
 
-    pc = WXPrpcrypt
-
+  # /**
+  # * 随机生成16位字符串
+  # * @return string 生成的字符串
+  # */
+  def getRandomStr(len=16)
+    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    newStr = ""
+    1.upto(len) { |i| newStr << chars[rand(chars.size-1)] }
+    return newStr
   end
 
 end
