@@ -64,12 +64,12 @@ class WxThirdAuthController < ApplicationController
     #http.use_ssl = true if getComponetAccessTokenUrl.scheme == "https"
     #http.verify_mode = OpenSSL::SSL::VERIFY_NONE
      # http.start{
-     #postData = {"component_appid"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> $redis.get(componentVerifyTicketKey(SHAKE_APPID)) }
+    postData = {"component_appid"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> $redis.get(componentVerifyTicketKey(SHAKE_APPID)) }
       #p "postData is #{postData}"
 
       #res = http.post(getComponetAccessTokenUrl.path,postData)
    # }
-      postData = {"appid"=>SHAKE_APPID,"component_appid"=>SHAKE_APPID,"component_AppId"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> "GRebTHtNRkcEA_A2aKwG5_EnBRpRHB5xCADX9PLabM80Aar5V5Zl9wpSjQtIWjNMxEa3zSkF0tU2os_kdFE4NQ" }
+     # postData = {"appid"=>SHAKE_APPID,"component_appid"=>SHAKE_APPID,"component_AppId"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> "GRebTHtNRkcEA_A2aKwG5_EnBRpRHB5xCADX9PLabM80Aar5V5Zl9wpSjQtIWjNMxEa3zSkF0tU2os_kdFE4NQ" }
     #postData = {:component_appid=>"111"}
     res = RestClient::post('https://api.weixin.qq.com/cgi-bin/component/api_component_token', postData.to_json)
     #res = send_data("https://api.weixin.qq.com/cgi-bin/component/api_component_token",postData.to_json)
