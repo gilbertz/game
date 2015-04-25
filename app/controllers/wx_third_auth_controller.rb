@@ -69,7 +69,7 @@ class WxThirdAuthController < ApplicationController
 
       #res = http.post(getComponetAccessTokenUrl.path,postData)
    # }
-      postData = {"appid"=>SHAKE_APPID,"component_appid"=>"wxf04f335ad44b01cc","component_AppId"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> $redis.get(componentVerifyTicketKey(SHAKE_APPID)) }
+      postData = {"appid"=>SHAKE_APPID,"component_appid"=>SHAKE_APPID,"component_AppId"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> "GRebTHtNRkcEA_A2aKwG5_EnBRpRHB5xCADX9PLabM80Aar5V5Zl9wpSjQtIWjNMxEa3zSkF0tU2os_kdFE4NQ" }
     #postData = {:component_appid=>"111"}
     res = RestClient::post('https://api.weixin.qq.com/cgi-bin/component/api_component_token', postData.to_json)
     #res = send_data("https://api.weixin.qq.com/cgi-bin/component/api_component_token",postData.to_json)
@@ -114,6 +114,9 @@ class WxThirdAuthController < ApplicationController
 
   def callback
   end
+
+  def appCallback
+  end  
 
 def send_data(url,data)  
     url = URI.parse(url)  

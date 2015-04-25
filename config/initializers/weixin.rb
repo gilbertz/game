@@ -12,7 +12,7 @@ $wxclient1 ||= WeixinAuthorize::Client.new('wx456ffb04ee140d84', 'd1481d1ff0f05d
 
 # 搭配秘书
 SHAKE_TOKEN = "shake"
-SHAKE_APPID = "wx6bfb1f6696fb34a"
+SHAKE_APPID = "wx6bfb1f6696fb34aa"
 SHAKE_APPSECRET = "0c79e1fa963cd80cc0be99b20a18faeb"
 SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
 SHAKE_DOMAIN = "http://dapeimishu.com"
