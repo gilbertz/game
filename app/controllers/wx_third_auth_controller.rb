@@ -97,7 +97,7 @@ class WxThirdAuthController < ApplicationController
         if preAuthCode.nil? == false
           componentloginpageUrl = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=#{SHAKE_APPID}&pre_auth_code=#{preAuthCode}"
           #redirectUri = URI.escape("http://j.51self.com/auth/callback")
-          redirectUri = "http://j.51self.com/auth/callback"
+          redirectUri = "#{SHAKE_DOMAIN}/auth/callback"
           componentloginpageUrl += "&redirect_uri=#{redirectUri}"
           p "url is" + componentloginpageUrl
           redirect_to componentloginpageUrl
