@@ -53,7 +53,7 @@ class WxThirdAuthController < ApplicationController
 
   #授权登陆发起页面
   def authpage
-    redirect_to "http://www.baidu.com/"
+    #render :text =>  "http://www.baidu.com/"
   end
 
   # 发起第三方授权登陆
@@ -90,16 +90,18 @@ class WxThirdAuthController < ApplicationController
     if componentAccessToken.nil? == false
         postData1 = {"component_appid" => SHAKE_APPID}
         res1 = RestClient::post("https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=#{componentAccessToken}",postData1.to_json)
-        retData1 = JSON.parser(res1)
+        retData1 = JSON.parse(res1.body)
         preAuthCode = retData1["pre_auth_code"]
         preAuthCodeExpiresIn = retData1["expires_in"]
 
         if preAuthCode.nil? == false
           componentloginpageUrl = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=#{SHAKE_APPID}&pre_auth_code=#{preAuthCode}"
-          redirectUri = "http://j.51self.com/authpage"
-          componentloginpageUrl += "&#{redirectUri}"
-
+          #redirectUri = URI.escape("http://j.51self.com/auth/callback")
+          redirectUri = "http://j.51self.com/auth/callback"
+          componentloginpageUrl += "&redirect_uri=#{redirectUri}"
+          p "url is" + componentloginpageUrl
           redirect_to componentloginpageUrl
+          return
         end
 
 
@@ -108,6 +110,9 @@ class WxThirdAuthController < ApplicationController
 
     render :text => "dothirdauth"
 
+  end
+
+  def callback
   end
 
 def send_data(url,data)  
