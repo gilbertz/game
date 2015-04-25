@@ -3,7 +3,9 @@ Game::Application.routes.draw do
   post '/' => 'wx_third_auth#componentVerifyTicket'
   get '/authpage' => 'wx_third_auth#authpage'
   get '/dothirdauth' => 'wx_third_auth#dothirdauth'
-  get '/auth/callback' => 'wx_third_auth#callback' 
+  get '/auth/callback' => 'wx_third_auth#callback'
+
+  post '/:app_id/callback' => 'wx_third_auth#appCallback'
 #  mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 
