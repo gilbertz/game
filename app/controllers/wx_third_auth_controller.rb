@@ -69,7 +69,6 @@ class WxThirdAuthController < ApplicationController
 
       #res = http.post(getComponetAccessTokenUrl.path,postData)
    # }
-
       postData = {"appid"=>SHAKE_APPID,"component_appid"=>"wxf04f335ad44b01cc","component_AppId"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> $redis.get(componentVerifyTicketKey(SHAKE_APPID)) }
     #postData = {:component_appid=>"111"}
     res = RestClient::post('https://api.weixin.qq.com/cgi-bin/component/api_component_token', postData.to_json)
@@ -78,12 +77,35 @@ class WxThirdAuthController < ApplicationController
     p "===="+res.body
     p "postData is "+postData.to_json
     p SHAKE_APPID
-    data1 = JSON.parse(res.body)
-    p data1
-    componentAccessToken = data1["component_access_token"]
-    expiresIn = data1["expires_in"]
+    retData = JSON.parse(res.body)
+    p retData
+    componentAccessToken = retData["component_access_token"]
+    expiresIn = retData["expires_in"]
     p "xxxxxx #{componentAccessToken}"
     p "xxxxxx #{expiresIn}"
+
+
+
+    # 获取预授权码  pre_auth_code
+    if componentAccessToken.nil? == false
+        postData1 = {"component_appid" => SHAKE_APPID}
+        res1 = RestClient::post("https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=#{componentAccessToken}",postData1.to_json)
+        retData1 = JSON.parser(res1)
+        preAuthCode = retData1["pre_auth_code"]
+        preAuthCodeExpiresIn = retData1["expires_in"]
+
+        if preAuthCode.nil? == false
+          componentloginpageUrl = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?component_appid=#{SHAKE_APPID}&pre_auth_code=#{preAuthCode}"
+          redirectUri = "http://j.51self.com/authpage"
+          componentloginpageUrl += "&#{redirectUri}"
+
+          redirect_to componentloginpageUrl
+        end
+
+
+    end
+
+
     render :text => "dothirdauth"
 
   end
