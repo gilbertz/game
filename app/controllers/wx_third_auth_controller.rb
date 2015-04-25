@@ -72,12 +72,18 @@ class WxThirdAuthController < ApplicationController
 
       postData = {"appid"=>SHAKE_APPID,"component_appid"=>"wxf04f335ad44b01cc","component_AppId"=>SHAKE_APPID,"component_appsecret"=> SHAKE_APPSECRET,"component_verify_ticket"=> $redis.get(componentVerifyTicketKey(SHAKE_APPID)) }
     #postData = {:component_appid=>"111"}
-    #res = RestClient.post('https://api.weixin.qq.com/cgi-bin/component/api_component_token', postData.to_json)
-    res = send_data("https://api.weixin.qq.com/cgi-bin/component/api_component_token",postData.to_json)
-    res =  Net::HTTP.post_form(getComponetAccessTokenUrl,postData)	
+    res = RestClient::post('https://api.weixin.qq.com/cgi-bin/component/api_component_token', postData.to_json)
+    #res = send_data("https://api.weixin.qq.com/cgi-bin/component/api_component_token",postData.to_json)
+    #res =  Net::HTTP.post_form(getComponetAccessTokenUrl,postData)	
     p "===="+res.body
     p "postData is "+postData.to_json
     p SHAKE_APPID
+    data1 = JSON.parse(res.body)
+    p data1
+    componentAccessToken = data1["component_access_token"]
+    expiresIn = data1["expires_in"]
+    p "xxxxxx #{componentAccessToken}"
+    p "xxxxxx #{expiresIn}"
     render :text => "dothirdauth"
 
   end
