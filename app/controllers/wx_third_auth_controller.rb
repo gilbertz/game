@@ -128,7 +128,7 @@ class WxThirdAuthController < ApplicationController
       expiresIn = retData["expires_in"]
       if componentAccessToken != nil && componentAccessToken != ""
         $redis.set(component_access_token_key(SHAKE_APPID), componentAccessToken)
-        $redis.expire(component_access_token_key(SHAKE_APPID), expiresIn)
+        $redis.expire(component_access_token_key(SHAKE_APPID), expiresIn.to_i - 60)
         return componentAccessToken
       end
     end
@@ -158,7 +158,7 @@ class WxThirdAuthController < ApplicationController
         #保存新的 pre_auth_code
         if pre_auth_code != nil && pre_auth_code != ""
           $redis.set(pre_auth_code_key(SHAKE_APPID), pre_auth_code)
-          $redis.expire(pre_auth_code_key(SHAKE_APPID), preAuthCodeExpiresIn)
+          $redis.expire(pre_auth_code_key(SHAKE_APPID), preAuthCodeExpiresIn.to_i - 60)
           return pre_auth_code
         end
       end
