@@ -30,7 +30,7 @@ gem 'jquery-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
-
+gem 'json'
 group :development do
   gem 'quiet_assets'
   gem 'rvm-capistrano'

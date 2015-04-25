@@ -14,7 +14,6 @@ class WxThirdAuthController < ApplicationController
     # 这种系统事件推送通知（现在包括推送component_verify_ticket协议和推送取消授权通知），
     # 服务开发者收到后也需进行解密，接收到后只需直接返回字符串“success”
     p "???????????????????????????"
-   
     wxXMLParams = params["xml"]
     nowAppId = wxXMLParams["AppId"]
     xmlEncrpyPost = wxXMLParams["Encrypt"]
@@ -36,7 +35,7 @@ class WxThirdAuthController < ApplicationController
         ticket = decryptMsg["ComponentVerifyTicket"]
         $redis.set(componentVerifyTicketKey(nowAppId), ticket)
 	
-	p "ticket is#{$redis.get(componentVerifyTicketKey(nowAppid))}"
+	p "ticket is#{$redis.get(componentVerifyTicketKey(nowAppId))}"
         # 取消第三方授权事件
       elsif decryptMsg["InfoType"] == "unauthorized"
         # 取消授权的公众账号
