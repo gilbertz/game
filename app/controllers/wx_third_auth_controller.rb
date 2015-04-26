@@ -69,7 +69,7 @@ class WxThirdAuthController < ApplicationController
     if auth_code.nil? == false
       #查询公众号的授权信息
       auth_info = query_auth_info(auth_code)
-      p "auth_info = "+auth_info
+      p "auth_info = "+auth_info.to_s
     end
 
   end
@@ -126,6 +126,7 @@ class WxThirdAuthController < ApplicationController
       retData = JSON.parse(res.body)
       componentAccessToken = retData["component_access_token"]
       expiresIn = retData["expires_in"]
+      p "retData"+retData.to_s
       if componentAccessToken != nil && componentAccessToken != ""
         $redis.set(component_access_token_key(SHAKE_APPID), componentAccessToken)
         $redis.expire(component_access_token_key(SHAKE_APPID), expiresIn.to_i - 60)
@@ -141,6 +142,8 @@ class WxThirdAuthController < ApplicationController
   def get_pre_auth_code
     # 如果 redis中存在预授权码
     pre_auth_code = $redis.get(pre_auth_code_key(SHAKE_APPID))
+    p "pre_auth_code is "+pre_auth_code
+    pre_auth_code = nil
     if pre_auth_code.nil? == false && pre_auth_code != ""
       p "=========从redis中拿"
       return pre_auth_code
@@ -153,6 +156,7 @@ class WxThirdAuthController < ApplicationController
         postData1 = {"component_appid" => SHAKE_APPID}
         res1 = RestClient::post("https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=#{component_access_token}", postData1.to_json)
         retData1 = JSON.parse(res1.body)
+        p "retData1"+retData1.to_s
         pre_auth_code = retData1["pre_auth_code"]
         preAuthCodeExpiresIn = retData1["expires_in"]
         #保存新的 pre_auth_code
@@ -173,7 +177,7 @@ class WxThirdAuthController < ApplicationController
   def query_auth_info(auth_code)
     post_data = {"component_appid" => SHAKE_APPID, "authorization_code" => auth_code}
     ret = RestClient::post("https://api.weixin.qq.com/cgi-bin/component/api_query_auth?component_access_token=#{get_component_access_token}", post_data.to_json)
-    return JSON.parser(ret.body)
+    return JSON.parse(ret.body)
   end
 
 end
