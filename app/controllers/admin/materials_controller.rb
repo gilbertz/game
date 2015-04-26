@@ -3,8 +3,8 @@ class Admin::MaterialsController < Admin::BaseController
   def index
     cond = "1=1"
     cond += " and category_id=#{params[:cid]}" if params[:cid]
-    cond += " and user_id = 1"
     cond += " and name like '%#{params[:q]}%'" if params[:q]
+    cond += " and rrr=#{params[:rrr]}" if params[:rrr]
     #@materials = Material.includes(:category).where(cond).order('rrr desc, id desc').page(params[:page])
   
     @materials = Material.includes(:category).where(cond).order('id desc').page(params[:page])

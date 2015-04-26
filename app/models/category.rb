@@ -5,6 +5,8 @@ class Category < ActiveRecord::Base
   belongs_to :game_type
 
   before_destroy :check_its_materials
+  before_update :check_recommended
+
   def pv
     key = "stat_pv_#{self.id}"
     $redis.get(key)
@@ -29,8 +31,13 @@ class Category < ActiveRecord::Base
      end   
   end
 
+  def check_recommended
+    false if self.materials.where(:rrr => 1).length > 0
+  end
+
   private 
   def check_its_materials
     false if self.materials.length > 0
   end
+  
 end

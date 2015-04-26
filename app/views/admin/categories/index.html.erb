@@ -16,7 +16,7 @@
     <% @categories.each do |c| %>
       <tr>
         <td><%= c.id %></td> 
-        <td><a href="/admin/materials?cid=<%= c.id %>"><%= c.name %></a></td>
+        <td><a href="/admin/materials?cid=<%= c.id %>"><%= "[o2o]" unless c.check_recommended.nil? %><%= c.name %></a></td>
         <td><%= c.pv %></td>
         <td><%= c.share_count("hy") %></td>
         <td><%= c.share_count("pyq") %></td>
@@ -40,5 +40,6 @@
     <% end %>
   </tbody>
 </table>
-<p style="color:red;">注：游戏小于0者才可删除。</p>
+<p style="color:red;">注：应永强小于0者才可删除。</p>
+<p style="color:red;">注：o2o应用的模板不可修改, 请先克隆再修改</p>
 <%= paginate @categories %>
