@@ -1,0 +1,6 @@
+<% unless @objects.blank? %>
+<option value="">无</option>
+<% @objects.each do |c| %>
+<option value="<%= c.id %>"><%= c.title %></option>
+<% end %>
+<% end %>
