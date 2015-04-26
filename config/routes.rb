@@ -5,7 +5,7 @@ Game::Application.routes.draw do
   get '/dothirdauth' => 'wx_third_auth#dothirdauth'
   get '/auth/callback' => 'wx_third_auth#callback'
 
-  post '/:app_id/callback' => 'wx_third_auth#appCallback'
+  post '/:appid/callback' => 'wx_third_auth#appCallback'
 #  mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 

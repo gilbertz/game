@@ -34,6 +34,11 @@ class WxThirdAuthController < ApplicationController
       elsif decryptMsg["InfoType"] == "unauthorized"
         # 取消授权的公众账号
         authorizerAppid = decryptMsg["AuthorizerAppid"]
+        authorizer = WxAuthorizer.find_by_authorizer_appid(authorizerAppid)
+        if authorizer.nil? == false
+          authorizer.unthorized == true
+          authorizer.update
+        end
       end
       # 最终返回成功就行
       render :text => "success"
@@ -70,12 +75,44 @@ class WxThirdAuthController < ApplicationController
       #查询公众号的授权信息
       auth_info = query_auth_info(auth_code)
       p "auth_info = "+auth_info.to_s
+      authorization_info = auth_info["authorization_info"]
+      #授权成功
+      if authorization_info.blank? == false && authorization_info.has_key?("authorizer_access_token")
+        authorizer_appid = authorization_info["authorizer_appid"]
+        authorizer_refresh_token = authorization_info["authorizer_refresh_token"]
+        expires_in = authorization_info["expires_in"]
+        # 获取授权公众账号的信息
+        authorizer_info = get_authorizer_info(authorizer_appid)
+        p "authorizer_info = #{authorizer_info.to_s}"
+        authorizer = WxAuthorizer.find_by_authorizer_appid(authorizer_appid)
+        if authorizer.blank? == false
+          # 创建一个保存
+          authorizer = WxAuthorizer.new
+        end
+        authorizer.authorizer_appid = authorizer_appid
+        authorizer.component_appid = SHAKE_APPID
+        authorizer.authorization_info = authorization_info
+        authorizer.unthorized = false
+        authorizer.authorizer_info = authorizer_info["authorizer_info"]
+        authorizer.authorizer_refresh_token = authorizer_refresh_token
+        $redis.set(authorizer_access_token_key(authorizer_appid),authorization_info["authorizer_access_token"])
+        $redis.expire(authorizer_access_token_key(authorizer_appid),expires_in.to_i - 60)
+        if authorizer_info.blank? == false
+          authorizer.qrcode_url = authorizer_info["qrcode_url"]
+        end
+
+        render :text => "授权成功"
+      end
+
+    else
+      render :text => "授权失败!"
     end
 
   end
 
   # 接受 授权公众账号的事件、消息等
   def appCallback
+    p params["appid"]
     render :text => "success"
   end
 
@@ -108,6 +145,11 @@ class WxThirdAuthController < ApplicationController
   # 保存 get_pre_auth_code 的key
   def pre_auth_code_key(nowAppId)
     nowAppId + "_pre_auth_code"
+  end
+
+  #）授权公众号的令牌 key
+  def authorizer_access_token_key(authorizer_appid)
+    authorizer_appid + "_authorizer_access_token"
   end
 
   # 获取第三方平台令牌（component_access_token）
@@ -179,5 +221,54 @@ class WxThirdAuthController < ApplicationController
     ret = RestClient::post("https://api.weixin.qq.com/cgi-bin/component/api_query_auth?component_access_token=#{get_component_access_token}", post_data.to_json)
     return JSON.parse(ret.body)
   end
+
+  #查询已授权公众账号的详细信息
+  def get_authorizer_info(authorizer_appid)
+    #先拿到第三方平台令牌（component_access_token）
+    component_access_token = get_component_access_token
+    if component_access_token.nil? == false && component_access_token != ""
+      post_data = {"component_appid"=>SHAKE_APPID,"authorizer_appid"=>authorizer_appid}
+      res = RestClient::post("https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_info?component_access_token=#{component_access_token}",post_data.to_json)
+      authorizer_info = JSON.parse(res.body)
+      return authorizer_info
+    end
+
+  end
+  
+  #获取（刷新）授权公众号的令牌
+  def get_authorizer_access_token(authorizer_appid)
+    authorizer_access_token = $redis.get(authorizer_access_token_key(authorizer_appid))
+    if authorizer_access_token.blank? == false
+      return authorizer_access_token
+    end
+    #找到改授权的公众号
+    authorizer = WxAuthorizer.find_by_sql("select * from wx_authorizers where authorizer_id=#{authorizer_appid}")
+    if authorizer_id.nil?
+      return nil
+    end
+    p "old authorizer_refresh_token = #{authorizer.authorizer_refresh_token}"
+    #先拿到第三方平台令牌（component_access_token）
+    component_access_token = get_component_access_token
+    if component_access_token.nil? == false && component_access_token != ""
+      post_data = {"component_appid"=>SHAKE_APPID,"authorizer_appid"=>authorizer_appid,"authorizer_refresh_token" => authorizer.authorizer_refresh_token}
+      res = RestClient::post("https:// api.weixin.qq.com /cgi-bin/component/api_authorizer_token?component_access_token=#{component_access_token}",post_data.to_json)
+      authorizer_info = JSON.parse(res.body)
+      authorizer_access_token = authorizer_info["authorizer_access_token"]
+      expires_in = authorizer_info["expires_in"]
+      p "new authorizer_refresh_token = #{authorizer_info["authorizer_refresh_token"]}"
+
+      if authorizer_access_token.blank? == false
+        $redis.set(authorizer_access_token_key(authorizer_appid),authorizer_access_token)
+        $redis.expire(authorizer_access_token(authorizer_appid),expires_in.to_i - 60)
+        return authorizer_access_token
+      end
+    end
+
+    return nil
+  end
+
+
+
+
 
 end
