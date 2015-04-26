@@ -26,21 +26,21 @@
   <div class="control-group">
     <label class="control-label">类别选择</label>
     <div class="controls">
-      <%= f.select :category_id, [["无", 0]] + ::Category.all.collect {|p| [ p.name, p.id ] }%>
+      <%= f.select :category_id, [["无", 0]] + ::Category.order('created_at desc').collect {|p| [ p.name, p.id ] }%>
     </div>
   </div>
 
   <div class="control-group">
     <label class="control-label">对象类型</label>
-    <div class="controls">
-       <%= f.text_field :object_type, class: "input-xxlarge" %>
+    <div class="controls" id='object_type'>
+       <%= f.select :object_type, Admin::BaseController::Object_types  %>
     </div>
   </div>
 
   <div class="control-group">
     <label class="control-label">对象ID</label>
     <div class="controls">
-       <%= f.text_field :object_id, class: "input-xxlarge" %>
+       <%= f.select :object_id, get_objects('redpack') %>
     </div>
   </div>
 
@@ -184,6 +184,7 @@
     <%= f.submit '提交', class: 'btn btn-primary', id: "tixing" %>
   </div>
 <% end %>
+
 <script type="text/javascript">
   var theImage = new Image();
   theImage.src = "<%= @material.wx_tlimg %>";
@@ -191,4 +192,16 @@
   var imageHeight = theImage.height;
   var content = imageWidth + "x" + imageHeight;
   $("span#material_size").text(content);
+
+
+   $("#material_object_type").change(function(){
+        var object_type = $(this).val();
+        alert(object_type);
+        $.get("/admin/get_objects", {object_type: object_type}, function(data){
+            alert(data);
+            $('#material_object_id').html(data);
+            //$('#material_object_id').select2();
+        });
+   }); 
+
 </script>

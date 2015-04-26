@@ -1,4 +1,7 @@
 class Burl < ActiveRecord::Base
+ def title
+   
+ end
 
  def beacon_name
    if self.beaconid

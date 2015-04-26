@@ -32,7 +32,7 @@
     <div class="control-group">
       <label class="control-label">ibeacon</label>
       <div class="controls">
-        <%= f.text_field :beaconid, required: true %>
+        <%= f.select :beaconid, Ibeacon.get_ibeacons_for_select, required: true %>    
       </div>
     </div>
 
