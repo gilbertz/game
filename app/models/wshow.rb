@@ -1,4 +1,17 @@
 class Wshow < ActiveRecord::Base
+
+  def get_link(beaconid=nil)
+    if beaconid.nil?
+      "http://#{WX_DOMAIN}/wshows/#{self.id}"
+    else
+      "http://#{WX_DOMAIN}/#{beaconid}/wshows/#{self.id}" 
+    end
+  end
+
+  def get_qr_img
+    'http://qr.liantu.com/api.php?text=' + self.get_link('shengye')
+  end
+
   def pv
     key = "wshow_pv_#{self.id}"
     $redis.get(key)
