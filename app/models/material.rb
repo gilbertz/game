@@ -306,6 +306,17 @@ class Material < ActiveRecord::Base
     'http://qr.liantu.com/api.php?text=' + self.get_link('shengye')
   end  
 
+
+  def self.get_games_for_select(user_id=nil)
+    cond = 'rrr=1'
+    if user_id
+      cond=" and user_id=#{user_id}"
+    end
+    gs = Material.where(cond).order('created_at desc').limit(50)
+    gs.map{|b|[b.name, b.id]}
+  end
+
+
   private
   def clone_self
     material = Material.new self.attributes.except!("created_at","id", "url")

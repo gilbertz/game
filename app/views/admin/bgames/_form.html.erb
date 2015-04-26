@@ -3,7 +3,7 @@
     <div class="control-group">
       <label class="control-label">game_id</label>
       <div class="controls">
-        <%= f.text_field :game_id, required: true, style: "width:500px" %>
+        <%= f.select :game_id, Material.get_games_for_select,  required: true %>
       </div>
     </div>
 
