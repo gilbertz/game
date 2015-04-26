@@ -150,6 +150,12 @@ GEM
     polyglot (0.3.5)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
+    qy_wechat (1.0.1)
+      multi_xml (>= 0.5.2)
+      nokogiri (>= 1.6.1)
+      rails (>= 3.1)
+      railties (>= 3.1)
+      roxml
     rabl (0.9.3)
       activesupport (>= 2.3.14)
     rack (1.5.2)
@@ -257,6 +263,7 @@ DEPENDENCIES
   faraday
   jbuilder (~> 1.2)
   jquery-rails
+  json
   kaminari
   mysql2 (~> 0.3.14)
   nokogiri
@@ -266,6 +273,7 @@ DEPENDENCIES
   omniauth-oauth2
   omniauth-weixin
   quiet_assets
+  qy_wechat (~> 1.0.1)
   rabl (~> 0.9.3)
   rails (= 4.0.0)
   ransack!
