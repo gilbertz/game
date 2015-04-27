@@ -101,11 +101,11 @@ class WxThirdAuthController < ApplicationController
           authorizer.qrcode_url = authorizer_info["qrcode_url"]
         end
         authorizer.save
-        render :text => "授权成功"
+        render :json => {"result"=> 0}.to_json
       end
 
     else
-      render :text => "授权失败!"
+      render :json => {"result" => 1}.to_json
     end
 
   end

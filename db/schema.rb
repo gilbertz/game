@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426163447) do
+ActiveRecord::Schema.define(version: 20150427022225) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -424,8 +424,8 @@ ActiveRecord::Schema.define(version: 20150426163447) do
     t.string   "authorizer_appid"
     t.string   "component_appid"
     t.string   "qrcode_url"
-    t.string   "authorizer_info"
-    t.string   "authorization_info"
+    t.text     "authorizer_info"
+    t.text     "authorization_info"
     t.string   "authorizer_refresh_token"
     t.boolean  "unthorized"
     t.datetime "created_at"
