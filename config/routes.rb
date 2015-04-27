@@ -116,6 +116,8 @@ Game::Application.routes.draw do
     get 'home/clear_single_cache/:id' => "home#clear_single_cache"
     
     get 'records' =>'records#index'
+
+    get 'get_objects' => 'materials#get_objects'
   
     resources :scores 
     resources :ibeacons

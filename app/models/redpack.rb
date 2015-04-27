@@ -4,6 +4,10 @@ class Redpack < ActiveRecord::Base
   require 'rexml/document'
   include REXML
 
+  def title
+    self.action_title
+  end
+
   def beacon_name
     if self.beaconid
       b = Ibeacon.find self.beaconid

@@ -1,5 +1,9 @@
 class Bgame < ActiveRecord::Base
-  def beacon_name
+ def title
+   game_name
+ end 
+
+ def beacon_name
     if self.beaconid
       b = Ibeacon.find self.beaconid
       return b.name if b

@@ -27,17 +27,17 @@ class Admin::RedpacksController < Admin::BaseController
   def create
     @redpack = Redpack.new(redpack_params)
     @redpack.save
-    respond_with(@redpack)
+    redirect_to [:admin, redpacks]
   end
 
   def update
     @redpack.update(redpack_params)
-    respond_with(@redpack)
+    redirect_to [:admin, redpacks] 
   end
 
   def destroy
     @redpack.destroy
-    respond_with(@redpack)
+    redirect_to [:admin, redpacks] 
   end
 
   private

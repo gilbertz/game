@@ -3,8 +3,8 @@ class Admin::MaterialsController < Admin::BaseController
   def index
     cond = "1=1"
     cond += " and category_id=#{params[:cid]}" if params[:cid]
-    cond += " and user_id = 1"
     cond += " and name like '%#{params[:q]}%'" if params[:q]
+    cond += " and rrr=#{params[:rrr]}" if params[:rrr]
     #@materials = Material.includes(:category).where(cond).order('rrr desc, id desc').page(params[:page])
   
     @materials = Material.includes(:category).where(cond).order('id desc').page(params[:page])
@@ -85,7 +85,17 @@ class Admin::MaterialsController < Admin::BaseController
     @material.destroy
     render nothing: true
   end
-  private
+
+
+  def get_objects
+    cond = '1=1'
+    cond = "beaconid=#{beaconid}" if params[:beaconid]
+    @objects =  params[:object_type].capitalize.constantize.where(cond).order('created_at desc').limit(20)
+
+    render :partial => "objects"
+  end
+
+private  
   def material_params
     params.require(:material).permit(:link,:object_type, :object_id, :name,:description,:category_id,:wx_appid,:wxdesc,:wx_tlimg, :thumb, :wx_url,:share_url, :wx_title, :wx_ln, :advertisement, :advertisement_1)
   end

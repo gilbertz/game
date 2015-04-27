@@ -2,6 +2,7 @@ class Admin::BaseController < ActionController::Base
   layout 'admin'
   
   # http_basic_authenticate_with :name => 'zhurun888', :password => 'zhuxiaolang'
+  Object_types = [["无",""], ["红包", "redpack"], ["卡券", "card"], ["游戏", "bgame"]]
 
   rescue_from StandardError do |exception|
     new_logger = Logger.new('log/admin_exceptions.log')
