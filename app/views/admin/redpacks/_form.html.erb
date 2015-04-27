@@ -269,7 +269,7 @@
       <td><%= t.store%></td>
       <td><%= t.state%></td>
       <td><%= t.probability%></td>
-      <td> <%= link_to '编辑', [:edit, :admin, @redpack, t]%>|<%= link_to '删除', [:admin, @redpack, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
+      <td> <%= link_to [:edit,:admin,@redpack,t], class: :e_obj do %><span class="glyphicon glyphicon-plus"></span>编辑<% end %> |<%= link_to '删除', [:admin, @redpack, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
     </tr>
     <%end%>
   </table>  
@@ -290,14 +290,14 @@
     <tr>
       <td><%= t.id %></td>
       <td><%= t.money%></td>
-      <td> <%= link_to '编辑', [:edit, :admin, @redpack, t]%>|<%= link_to '删除', [:admin, @redpack, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
+      <td> <%= link_to [:edit,:admin,@redpack,t], class: :e_obj do %><span class="glyphicon glyphicon-plus"></span>编辑<% end %> |<%= link_to '删除', [:admin, @redpack, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
     </tr>
     <%end%>
   </table>  
 </div>
 
 <div class="form-group">
-  <%= link_to  "/admin/redpacks/#{@redpack.id}/redpack_people/new", class: 'btn btn-primary btn-sm', id: 'a_obj' do %>
+  <%= link_to  "/admin/redpacks/#{@redpack.id}/redpack_people/new", class: 'btn btn-primary btn-sm', id: 'a_obj'  do %>
   <span class="glyphicon glyphicon-plus"></span>新建redpack_person
   <% end %>
 
@@ -315,11 +315,13 @@
       <td><%= t.name%></td>
       <th><%= t.time_id%></th>
       <th><%= t.value_id%></th>
-      <td> <%= link_to '编辑', [:edit, :admin, @redpack, t]%>|<%= link_to '删除', [:admin, @redpack, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
+      <td> <%= link_to [:edit,:admin,@redpack,t], class: :e_obj do %><span class="glyphicon glyphicon-plus"></span>编辑<% end %> |<%= link_to '删除', [:admin, @redpack, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
     </tr>
     <%end%>
   </table>  
 </div>
+
+
 
 
 

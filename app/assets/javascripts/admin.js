@@ -16,9 +16,9 @@
 //= require jquery.colorbox
 //= require materials
 //= require categories
-//=require jquery-1.8.3.min.js
 //=require bootstrap.min.js
 //=require bootstrap-datetimepicker.js
 //=require bootstrap-datetimepicker.zh-CN.js
+//=require shared.js
 //  require turbolinks
 

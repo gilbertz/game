@@ -1,9 +1,12 @@
-<h3 style='margin-top:0px;'><%= action_name.in?(['new','create']) ? '新建' : '编辑' %>@redpack_value</h3>
+<h3 style='margin-top:0px;text-align: center;'><%= action_name.in?(['new','create']) ? '新建' : '编辑' %>redpack_value</h3>
 <hr/ style='margin-top:0px;'>
-
+<div class="row">
+  <div class="span6 offset3">
     <%= form_for [:admin, @redpack, @redpack_value] do |f| %>
 
     <%= f.label :money %>
     <%= f.text_field :money %>
     <%= f.submit "提交", class: "btn btn-large btn-primary" %>
     <% end %>
+</div>
+</div>
