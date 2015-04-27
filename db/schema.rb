@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150425150653) do
+ActiveRecord::Schema.define(version: 20150426124202) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -306,6 +306,7 @@ ActiveRecord::Schema.define(version: 20150425150653) do
     t.string  "name"
     t.integer "time_id"
     t.integer "value_id"
+    t.integer "redpack_id"
   end
 
   create_table "redpack_times", force: true do |t|
@@ -317,6 +318,7 @@ ActiveRecord::Schema.define(version: 20150425150653) do
     t.integer  "store"
     t.integer  "state"
     t.integer  "probability"
+    t.integer  "redpack_id"
   end
 
   create_table "redpack_values", force: true do |t|

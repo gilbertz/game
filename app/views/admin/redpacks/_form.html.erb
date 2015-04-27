@@ -1,120 +1,119 @@
 <%= form_for [:admin, @redpack] do |f| %>
 
-    <div class="control-group">
-      <label class="control-label">sender_name</label>
-      <div class="controls">
-        <%= f.text_field :sender_name, required: true, style: "width:500px" %>
-      </div>
-    </div>
+<div class="control-group">
+  <label class="control-label">sender_name</label>
+  <div class="controls">
+    <%= f.text_field :sender_name, required: true, style: "width:500px" %>
+  </div>
+</div>
 
-    <div class="control-group">
-      <label class="control-label">wishing</label>
-      <div class="controls">
-        <%= f.text_field :wishing, style: "width:500px" %>
-      </div>
-    </div>
-  
-    <div class="control-group">
-      <label class="control-label">action_title</label>
-      <div class="controls">
-        <%= f.text_field :action_title %>
-      </div>
-    </div> 
+<div class="control-group">
+  <label class="control-label">wishing</label>
+  <div class="controls">
+    <%= f.text_field :wishing, style: "width:500px" %>
+  </div>
+</div>
 
-    <div class="control-group">
-      <label class="control-label">action_remark</label>
-      <div class="controls">
-        <%= f.text_field :action_remark %>
-      </div>
-    </div>
-    
+<div class="control-group">
+  <label class="control-label">action_title</label>
+  <div class="controls">
+    <%= f.text_field :action_title %>
+  </div>
+</div> 
 
-    <div class="control-group">
-      <label class="control-label">ibeacon</label>
-      <div class="controls">
-        <%= f.select :beaconid, Ibeacon.get_ibeacons_for_select, required: true %>    
-      </div>
-    </div>
+<div class="control-group">
+  <label class="control-label">action_remark</label>
+  <div class="controls">
+    <%= f.text_field :action_remark %>
+  </div>
+</div>
 
 
-    <div class="control-group">
-      <label class="control-label">store</label>
-      <div class="controls">
-        <%= f.text_field :store, required: true %>
-      </div>
-    </div>
+<div class="control-group">
+  <label class="control-label">ibeacon</label>
+  <div class="controls">
+    <%= f.select :beaconid, Ibeacon.get_ibeacons_for_select, required: true %>    
+  </div>
+</div>
 
-    <div class="control-group">
-      <label class="control-label">app id</label>
-      <div class="controls">
-        <%= f.text_field :app_id %>
-      </div>
-    </div>
-     
 
-    <div class="control-group">
-      <label class="control-label">shop_id</label>
-      <div class="controls">
-        <%= f.text_field :shop_id %>
-      </div>
-    </div>
+<div class="control-group">
+  <label class="control-label">store</label>
+  <div class="controls">
+    <%= f.text_field :store, required: true %>
+  </div>
+</div>
 
-   <div class="control-group">
-      <label class="control-label">min</label>
-      <div class="controls">
-        <%= f.text_field :min %>
-      </div>
-    </div>
+<div class="control-group">
+  <label class="control-label">app id</label>
+  <div class="controls">
+    <%= f.text_field :app_id %>
+  </div>
+</div>
 
-    <div class="control-group">
-      <label class="control-label">max</label>
-      <div class="controls">
-        <%= f.text_field :max %>
-      </div>
-    </div>
-   
-    <div class="control-group">
-      <label class="control-label">suc url</label>
-      <div class="controls">
-        <%= f.text_field :suc_url %>
-      </div>
-    </div>
 
-    <div class="control-group">
-      <label class="control-label">fail url</label>
-      <div class="controls">
-        <%= f.text_field :fail_url %>
-      </div>
-    </div>
+<div class="control-group">
+  <label class="control-label">shop_id</label>
+  <div class="controls">
+    <%= f.text_field :shop_id %>
+  </div>
+</div>
 
-    <div class="control-group">
-      <label class="control-label">amount</label>
-      <div class="controls">
-        <%= f.text_field :amount %>
-      </div>
-    </div>
+<div class="control-group">
+  <label class="control-label">min</label>
+  <div class="controls">
+    <%= f.text_field :min %>
+  </div>
+</div>
 
-    <div class="control-group">
-      <label class="control-label">probability</label>
-      <div class="controls">
-        <%= f.text_field :probability %>
-      </div>
-    </div>
-    
-    <div class="control-group">
-      <label class="control-label">each_max</label>
-      <div class="controls">
-        <%= f.text_field :each_max %>
-      </div>
-    </div>
+<div class="control-group">
+  <label class="control-label">max</label>
+  <div class="controls">
+    <%= f.text_field :max %>
+  </div>
+</div>
 
-    <div class="control-group">
-      <label class="control-label">each_num</label>
-      <div class="controls">
-        <%= f.text_field :each_num %>
-      </div>
-    </div>
->>>>>>> 120009f114089323fbee3d2209fe51a74f8e10bc
+<div class="control-group">
+  <label class="control-label">suc url</label>
+  <div class="controls">
+    <%= f.text_field :suc_url %>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label">fail url</label>
+  <div class="controls">
+    <%= f.text_field :fail_url %>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label">amount</label>
+  <div class="controls">
+    <%= f.text_field :amount %>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label">probability</label>
+  <div class="controls">
+    <%= f.text_field :probability %>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label">each_max</label>
+  <div class="controls">
+    <%= f.text_field :each_max %>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label">each_num</label>
+  <div class="controls">
+    <%= f.text_field :each_num %>
+  </div>
+</div>
 
 <div class="control-group">
   <label class="control-label">wishing</label>
