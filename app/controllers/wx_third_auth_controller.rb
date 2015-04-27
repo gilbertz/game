@@ -112,7 +112,31 @@ class WxThirdAuthController < ApplicationController
 
   # 接受 授权公众账号的事件、消息等
   def appCallback
-    p params["appid"]
+    if valid_msg_signature == false
+      render :text => "signature error"
+      return
+    end
+    p params["toappid"]
+    wxXMLParams = params["xml"]
+    to_appid = wxXMLParams["appid"]
+    # 加密过的数据
+    xmlEncrpyPost = wxXMLParams["Encrypt"]
+    # 解密数据
+    aes_key = SHAKE_ENCODKEY
+    aes_key = Base64.decode64("#{aes_key}=")
+    content = QyWechat::Prpcrypt.decrypt(aes_key, xmlEncrpyPost, SHAKE_APPID)[0]
+
+    authorizer = WxAuthorizer.find_by_authorizer_appid(to_appid)
+    p "authorizer = " + authorizer.to_s
+    # 发送消息
+
+    # 解密后的数据
+    decryptMsg = MultiXml.parse(content)["xml"]
+    if decryptMsg.nil? == false
+      p "解密后的数据" + decryptMsg.to_s
+    end
+
+
     render :text => "success"
   end
 
