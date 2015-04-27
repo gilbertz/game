@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426124202) do
+ActiveRecord::Schema.define(version: 20150427120754) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -93,6 +93,21 @@ ActiveRecord::Schema.define(version: 20150426124202) do
     t.integer  "target_id"
     t.string   "target_type"
   end
+
+  create_table "card_options", force: true do |t|
+    t.integer  "value"
+    t.integer  "store"
+    t.string   "title"
+    t.string   "img"
+    t.string   "wx_cardid"
+    t.string   "desc"
+    t.integer  "probability"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "card_id"
+  end
+
+  add_index "card_options", ["card_id"], name: "index_card_options_on_card_id", using: :btree
 
   create_table "cards", force: true do |t|
     t.integer  "beaconid"

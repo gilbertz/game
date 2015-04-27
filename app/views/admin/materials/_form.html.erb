@@ -196,9 +196,7 @@
 
    $("#material_object_type").change(function(){
         var object_type = $(this).val();
-        alert(object_type);
         $.get("/admin/get_objects", {object_type: object_type}, function(data){
-            alert(data);
             $('#material_object_id').html(data);
             //$('#material_object_id').select2();
         });

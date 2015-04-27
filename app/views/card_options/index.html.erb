@@ -1,0 +1,39 @@
+<h1>Listing card_options</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Store</th>
+      <th>Title</th>
+      <th>Img</th>
+      <th>Wx cardid</th>
+      <th>Desc</th>
+      <th>Probability</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @card_options.each do |card_option| %>
+      <tr>
+        <td><%= card_option.value %></td>
+        <td><%= card_option.store %></td>
+        <td><%= card_option.title %></td>
+        <td><%= card_option.img %></td>
+        <td><%= card_option.wx_cardid %></td>
+        <td><%= card_option.desc %></td>
+        <td><%= card_option.probability %></td>
+        <td><%= link_to 'Show', card_option %></td>
+        <td><%= link_to 'Edit', edit_card_option_path(card_option) %></td>
+        <td><%= link_to 'Destroy', card_option, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Card option', new_card_option_path %>

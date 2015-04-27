@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @card_option.value %>
+</p>
+
+<p>
+  <strong>Store:</strong>
+  <%= @card_option.store %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @card_option.title %>
+</p>
+
+<p>
+  <strong>Img:</strong>
+  <%= @card_option.img %>
+</p>
+
+<p>
+  <strong>Wx cardid:</strong>
+  <%= @card_option.wx_cardid %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @card_option.desc %>
+</p>
+
+<p>
+  <strong>Probability:</strong>
+  <%= @card_option.probability %>
+</p>
+
+<%= link_to 'Edit', edit_card_option_path(@card_option) %> |
+<%= link_to 'Back', card_options_path %>

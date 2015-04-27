@@ -57,7 +57,7 @@ gem 'rest-client'
 # gem 'unicorn'
 
 # Use Capistrano for deployment
-# gem 'capistrano', group: :development
+#gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
@@ -88,3 +88,6 @@ gem 'oauth2'
 gem 'omniauth-oauth2'
 gem 'omniauth-weixin'
 gem 'devise'
+
+gem 'mina'
+gem 'passenger'
