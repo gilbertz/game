@@ -116,7 +116,7 @@ class WxThirdAuthController < ApplicationController
       render :text => "signature error"
       return
     end
-    p params["toappid"]
+    p params["appid"]
     wxXMLParams = params["xml"]
     to_appid = wxXMLParams["appid"]
     # 加密过的数据
@@ -134,10 +134,38 @@ class WxThirdAuthController < ApplicationController
     decryptMsg = MultiXml.parse(content)["xml"]
     if decryptMsg.nil? == false
       p "解密后的数据" + decryptMsg.to_s
+      deal_msg(to_appid,decryptMsg)
     end
 
+    render :text => ""
+  end
 
-    render :text => "success"
+  # 处理消息
+  def deal_msg(appid, msg)
+    event_type = msg["MsgType"]
+    if event_type == "event"
+      deal_event_msg(appid,msg)
+    elsif event_type == "text"
+      deal_text_msg(appid,msg)
+    end
+  end
+
+  # 处理第三方的文本消息
+  def deal_text_msg(appid,text_msg)
+    # 发送给某个公众账号的---微信号
+    to_user_name = event_msg["ToUserName"]
+    # 普通微信用户的open id
+    from_user_name = event_msg["FromUserName"]
+  end
+
+  # 处理第三放的事件消息
+  def deal_event_msg(appid,event_msg)
+    # 发送给某个公众账号的---微信号
+    to_user_name = event_msg["ToUserName"]
+    # 普通微信用户的open id
+    from_user_name = event_msg["FromUserName"]
+    
+
   end
 
   private
