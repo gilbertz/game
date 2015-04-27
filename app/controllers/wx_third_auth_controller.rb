@@ -3,7 +3,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 class WxThirdAuthController < ApplicationController
-  skip_before_filter :verify_authenticity_token, only: :componentVerifyTicket
+  skip_before_filter :verify_authenticity_token#, only: :componentVerifyTicket
   before_filter :valid_msg_signature, :only => :componentVerifyTicket
 
   # 微信服务器发送给服务自身的事件推送（如取消授权通知，Ticket推送等）。
