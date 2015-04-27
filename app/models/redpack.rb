@@ -103,4 +103,28 @@ class Redpack < ActiveRecord::Base
     return redpack_rand
   end
 
+  def get_redpack_times
+    if self.id
+      RedpackTime.where(:redpack_id => self.id)
+    else
+      []
+    end
+  end
+
+    def get_redpack_values
+    if self.id
+      RedpackValue.where(:redpack_id => self.id)
+    else
+      []
+    end
+  end
+
+      def get_redpack_people
+    if self.id
+      RedpackPerson.where(:redpack_id => self.id)
+    else
+      []
+    end
+  end
+
 end

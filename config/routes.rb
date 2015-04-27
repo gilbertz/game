@@ -121,7 +121,11 @@ Game::Application.routes.draw do
     resources :ibeacons
     resources :burls
     resources :cards
-    resources :redpacks
+    resources :redpacks do
+      resources :redpack_times  
+      resources :redpack_values
+      resources :redpack_people
+    end
     resources :bgames
     resources :checks
     resources :flinks

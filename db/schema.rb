@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424003734) do
+ActiveRecord::Schema.define(version: 20150425150653) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -301,6 +301,28 @@ ActiveRecord::Schema.define(version: 20150424003734) do
   add_index "records", ["score"], name: "index_records_on_score", using: :btree
   add_index "records", ["user_id", "game_id"], name: "index_records_on_user_id_and_game_id", using: :btree
   add_index "records", ["user_id"], name: "index_records_on_user_id", using: :btree
+
+  create_table "redpack_people", force: true do |t|
+    t.string  "name"
+    t.integer "time_id"
+    t.integer "value_id"
+  end
+
+  create_table "redpack_times", force: true do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "frequency"
+    t.integer  "min"
+    t.integer  "max"
+    t.integer  "store"
+    t.integer  "state"
+    t.integer  "probability"
+  end
+
+  create_table "redpack_values", force: true do |t|
+    t.integer "money"
+    t.integer "redpack_id"
+  end
 
   create_table "redpacks", force: true do |t|
     t.integer  "beaconid"

@@ -21,6 +21,7 @@ class Admin::RedpacksController < Admin::BaseController
   end
 
   def edit
+    @redpack = Redpack.find params[:id]
   end
 
   def create

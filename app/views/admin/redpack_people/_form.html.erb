@@ -1,0 +1,15 @@
+<h3 style='margin-top:0px;'><%= action_name.in?(['new','create']) ? '新建' : '编辑' %>@redpack_person</h3>
+<hr/ style='margin-top:0px;'>
+
+    <%= form_for [:admin, @redpack, @redpack_person] do |f| %>
+
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <%= f.label :time_id %>
+    <%= f.text_field :time_id %>
+    <%= f.label :value_id %>
+    <%= f.text_field :value_id %>
+    <%= f.submit "提交", class: "btn btn-large btn-primary" %>
+    <% end %>
+
+
