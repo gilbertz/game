@@ -7,7 +7,7 @@ class CreateWxAuthorizers < ActiveRecord::Migration
       t.string :authorizer_info
       t.string :authorization_info
       t.string :authorizer_refresh_token
-      t.bool :unthorized
+      t.boolean :unthorized
 
       t.timestamps
     end

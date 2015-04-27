@@ -85,7 +85,7 @@ class WxThirdAuthController < ApplicationController
         authorizer_info = get_authorizer_info(authorizer_appid)
         p "authorizer_info = #{authorizer_info.to_s}"
         authorizer = WxAuthorizer.find_by_authorizer_appid(authorizer_appid)
-        if authorizer.blank? == false
+        if authorizer.blank?
           # 创建一个保存
           authorizer = WxAuthorizer.new
         end
@@ -100,7 +100,7 @@ class WxThirdAuthController < ApplicationController
         if authorizer_info.blank? == false
           authorizer.qrcode_url = authorizer_info["qrcode_url"]
         end
-
+        authorizer.save
         render :text => "授权成功"
       end
 
@@ -184,7 +184,7 @@ class WxThirdAuthController < ApplicationController
   def get_pre_auth_code
     # 如果 redis中存在预授权码
     pre_auth_code = $redis.get(pre_auth_code_key(SHAKE_APPID))
-    p "pre_auth_code is "+pre_auth_code
+    p "pre_auth_code is "+pre_auth_code.to_s
     pre_auth_code = nil
     if pre_auth_code.nil? == false && pre_auth_code != ""
       p "=========从redis中拿"

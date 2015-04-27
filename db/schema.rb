@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421105749) do
+ActiveRecord::Schema.define(version: 20150426163447) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -287,6 +287,7 @@ ActiveRecord::Schema.define(version: 20150421105749) do
     t.integer  "from_user_id"
     t.string   "object_type"
     t.integer  "object_id"
+    t.string   "sn"
   end
 
   add_index "records", ["beaconid", "score"], name: "index_records_on_beaconid_and_score", using: :btree
@@ -417,6 +418,18 @@ ActiveRecord::Schema.define(version: 20150421105749) do
     t.string   "thumb"
     t.string   "url"
     t.string   "title"
+  end
+
+  create_table "wx_authorizers", force: true do |t|
+    t.string   "authorizer_appid"
+    t.string   "component_appid"
+    t.string   "qrcode_url"
+    t.string   "authorizer_info"
+    t.string   "authorization_info"
+    t.string   "authorizer_refresh_token"
+    t.boolean  "unthorized"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "wx_configs", force: true do |t|
