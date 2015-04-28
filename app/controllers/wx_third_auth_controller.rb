@@ -118,7 +118,7 @@ class WxThirdAuthController < ApplicationController
     end
     p params["appid"]
     wxXMLParams = params["xml"]
-    to_appid = wxXMLParams["appid"]
+    to_appid = params["appid"]
     # 加密过的数据
     xmlEncrpyPost = wxXMLParams["Encrypt"]
     # 解密数据
@@ -135,6 +135,7 @@ class WxThirdAuthController < ApplicationController
     if decryptMsg.nil? == false
       p "解密后的数据" + decryptMsg.to_s
       deal_msg(to_appid,decryptMsg)
+
     end
 
     render :text => ""
@@ -156,6 +157,8 @@ class WxThirdAuthController < ApplicationController
     to_user_name = event_msg["ToUserName"]
     # 普通微信用户的open id
     from_user_name = event_msg["FromUserName"]
+    content = "TESTCOMPONENT_MSG_TYPE_TEXT_callback"
+
   end
 
   # 处理第三放的事件消息
@@ -164,7 +167,10 @@ class WxThirdAuthController < ApplicationController
     to_user_name = event_msg["ToUserName"]
     # 普通微信用户的open id
     from_user_name = event_msg["FromUserName"]
-    
+
+    content = event_msg["Event"] + "from_callback"
+    client = WeixinAuthorize::Client.new(appid, nil, nil)
+
 
   end
 
