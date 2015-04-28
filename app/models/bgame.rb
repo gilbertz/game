@@ -1,9 +1,13 @@
 class Bgame < ActiveRecord::Base
- def title
-   game_name
- end 
+  belongs_to :material
 
- def beacon_name
+  def cn_state; { 0 => '下线', 1 => '上线', nil => '下线' }[state] end
+
+  def title
+    game_name
+  end 
+
+  def beacon_name
     if self.beaconid
       b = Ibeacon.find self.beaconid
       return b.name if b

@@ -124,6 +124,27 @@
       </div>
     </div>
   <% end %>
+
+
+  <% if action_name == 'edit' %>
+    <% bgames = @material.bgames %>
+    <div class="control-group">
+      <label class="control-label">ibeacon</label>
+      <div class="controls" style="padding-top:4px">
+        <% bgames.each do |ib| %>
+          <%= link_to [:edit,:admin, @material,ib], class: :edit_obj do %>
+            <span class="label label-important"><%= ib.beacon_name %></span>
+          <% end %>
+          <%= link_to [:admin,ib], method: :delete,
+            class: :ajaxDel, data: {confirm: "Are you sure?"} ,remote: true  do %>
+            x&nbsp;
+          <% end %>
+        <% end %>
+        <%= link_to '添加', [:new,:admin,@material,:bgame], id: :add_obj, class: "btn btn-mini btn-success", remote: true %>
+      </div>
+    </div>
+  <% end %>
+
   <h4 style="margin-left:100px">微信</h4>
   <hr/ style="margin-top:0px">
   <div class="control-group">

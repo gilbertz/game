@@ -153,6 +153,7 @@ Game::Application.routes.draw do
       resources :images, only: :new
       resources :answers, only: :new
       resources :questions, only: :new
+      resources :bgames, only: [:new, :edit]
       member do
         get :clone
         get :update_state

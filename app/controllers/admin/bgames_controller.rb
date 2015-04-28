@@ -15,11 +15,19 @@ class Admin::BgamesController < Admin::BaseController
   end
 
   def new
-    @bgame = Bgame.new
+    if params[:material_id]
+      @game = Material.find params[:material_id]
+      @bgame = @game.bgames.new
+    else
+      @bgame = Bgame.new
+    end
     respond_with(@bgame)
   end
 
   def edit
+    if params[:material_id]
+      @game = Material.find params[:material_id]
+    end
   end
 
   def create
