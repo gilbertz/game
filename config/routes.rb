@@ -1,4 +1,6 @@
 Game::Application.routes.draw do
+  resources :card_options
+
   resources :user_scores
   post '/' => 'wx_third_auth#componentVerifyTicket'
   
@@ -122,7 +124,9 @@ Game::Application.routes.draw do
     resources :scores 
     resources :ibeacons
     resources :burls
-    resources :cards
+    resources :cards do
+      resources :card_options
+    end
     resources :redpacks do
       resources :redpack_times  
       resources :redpack_values

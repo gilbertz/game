@@ -1,4 +1,5 @@
 class Admin::CardsController < Admin::BaseController
+
   before_action :set_card, only: [:show, :edit, :update, :destroy]
 
   State = [["下线", 0], ["上线", 1]]

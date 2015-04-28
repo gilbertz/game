@@ -1,0 +1,19 @@
+<h3 style='margin-top:0px;text-align: center;'><%= action_name.in?(['new','create']) ? '新建' : '编辑' %>card option</h3>
+<hr/ style='margin-top:0px;'>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for [:admin, @card, @card_option] do |f| %>
+
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+
+    <%= f.label :img %>
+    <%= f.text_field :img %>
+
+    <%= f.label :store %>
+    <%= f.text_field :store %>
+     
+    <%= f.submit "提交", class: "btn btn-large btn-primary" %>
+    <% end %>
+</div>
+</div>

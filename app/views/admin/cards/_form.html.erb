@@ -39,7 +39,7 @@
     <div class="control-group">
       <label class="control-label">type</label>
       <div class="controls">
-        <%= f.text_field :tid %>
+        <%= f.select :tid, Card.get_types_for_select, required: true %>
       </div>
     </div>
      
@@ -79,6 +79,33 @@
         <%= f.select :state, Admin::CardsController::State, required: true %>
       </div>
     </div>
+
+    <div class="form-group">
+      <%= link_to  "/admin/cards/#{@card.id}/card_options/new", class: 'btn btn-primary btn-sm', id: 'a_obj' do %>
+        <span class="glyphicon glyphicon-plus"></span>新建card option
+      <% end %>
+
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>title</th>
+          <th>img</th>
+          <th>store</th> 
+          <th>operate</th>
+        </tr>
+        <% @card.card_options.each do |t|%>
+        <tr>
+          <td><%= t.id %></td>
+          <td><%= t.title %></td>
+          <td><%= t.img %></td>
+          <td><%= t.store %></td>
+          <td> <%= link_to [:edit,:admin,@card,t], class: :e_obj do %><span class="glyphicon glyphicon-plus"></span>编辑<% end %> |<%= link_to '删除', [:admin, @card, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
+        </tr>
+        <%end%>
+      </table>
+   </div>
+
+
 
     <div class="control-group">
       <label class="control-label"></label>
