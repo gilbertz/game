@@ -199,7 +199,7 @@ class WeitestController < ApplicationController
 
     get_beacon
     get_object 
-    get_allocation
+    #get_allocation
     if @material.category
       render 'o2o', layout: false
     end
@@ -490,4 +490,3 @@ class WeitestController < ApplicationController
     end 
   end
 end 
-end
