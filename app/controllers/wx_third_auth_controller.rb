@@ -3,7 +3,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 class WxThirdAuthController < ApplicationController
-  skip_before_filter :verify_authenticity_token, only: :componentVerifyTicket
+  skip_before_filter :verify_authenticity_token#, only: :componentVerifyTicket
   before_filter :valid_msg_signature, :only => :componentVerifyTicket
 
   # 微信服务器发送给服务自身的事件推送（如取消授权通知，Ticket推送等）。
@@ -113,6 +113,7 @@ class WxThirdAuthController < ApplicationController
   # 接受 授权公众账号的事件、消息等
   def appCallback
     if valid_msg_signature == false
+      p "valid_msg_signature is false"
       render :text => "signature error"
       return
     end
@@ -138,7 +139,7 @@ class WxThirdAuthController < ApplicationController
 
     end
 
-    render :text => ""
+    render :text => "success"
   end
 
   # 处理消息
