@@ -113,12 +113,13 @@ class WxThirdAuthController < ApplicationController
   # 接受 授权公众账号的事件、消息等
   def appCallback
     if valid_msg_signature == false
+      p "valid_msg_signature is false"
       render :text => "signature error"
       return
     end
     p params["appid"]
     wxXMLParams = params["xml"]
-    to_appid = wxXMLParams["appid"]
+    to_appid = params["appid"]
     # 加密过的数据
     xmlEncrpyPost = wxXMLParams["Encrypt"]
     # 解密数据
@@ -137,7 +138,7 @@ class WxThirdAuthController < ApplicationController
       deal_msg(to_appid,decryptMsg)
     end
 
-    render :text => ""
+    render :text => "success"
   end
 
   # 处理消息
