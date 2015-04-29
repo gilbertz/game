@@ -256,6 +256,10 @@ class WeitestController < ApplicationController
 
     get_beacon
     get_object 
+<<<<<<< HEAD
+=======
+    #get_allocation
+>>>>>>> d7fa9aac55543ad3cc9da603ab667032ff0787a6
     if @material.category
       render 'o2o', layout: false
     end
