@@ -91,3 +91,4 @@ gem 'devise'
 
 gem 'mina'
 gem 'passenger'
+gem 'sidekiq'
