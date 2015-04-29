@@ -172,10 +172,36 @@ class WxThirdAuthController < ApplicationController
     to_user_name = event_msg["ToUserName"]
     # 普通微信用户的open id
     from_user_name = event_msg["FromUserName"]
+    event = event_msg["Event"]
+    # 用户领取了卡券
+    if event == "user_get_card"
+      deal_user_get_card(appid,event_msg)
+    elsif event == "user_del_card"
+      deal_user_del_card(appid,event_msg)
+    elsif event == "user_comsume_card"
+      deal_user_comsume_card(appid,event_msg)
+    end
 
-    content = event_msg["Event"] + "from_callback"
-    client = WeixinAuthorize::Client.new(appid, nil, nil)
 
+    # content = event_msg["Event"] + "from_callback"
+    # client = WeixinAuthorize::Client.new(appid, nil, nil)
+
+
+  end
+
+
+  #用户领取了卡券事件
+  def deal_user_get_card(appid, event_msg)
+
+  end
+
+  #用户删除了卡券事件
+  def deal_user_del_card(appid, event_msg)
+
+  end
+
+  #用户使用了卡券事件 －－－》 核销
+  def deal_user_comsume_card(appid, event_msg)
 
   end
 
