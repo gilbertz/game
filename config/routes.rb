@@ -101,6 +101,7 @@ Game::Application.routes.draw do
 
   get '/gs/:id' => 'weitest#o2o'
   get '/:beaconid/gs/:id' => 'weitest#o2o'
+  get '/:beaconid/gg/:id' => 'weitest#allocation'
   get '/:beaconid/wshows/:id' => 'wshows#show'
   get '/:beaconid/home' => 'home#home' 
 
