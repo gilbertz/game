@@ -1,4 +1,6 @@
+require File.dirname(__FILE__)+'/../../lib/wxcards/wx_cards'
 class WshowsController < ApplicationController
+
   def show
     @wshow = Wshow.find params[:id]
     render layout: false
