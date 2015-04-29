@@ -10,28 +10,53 @@ module WxCards
         Store.new(cards_client)
       end
 
-      def api_ticket_expire?
-        $redis.hvals(cards_client.api_ticket_redis_key).empty?
+      def card_ticket_expire?
+        $redis.hvals(cards_client.card_ticket_redis_key).empty?
       end
 
-      def refresh_api_ticket(access_token)
-
-          set_api_ticket(access_token)
+      def js_ticket_expire?
+        $redis.hvals(cards_client.js_ticket_redis_key).empty?
       end
 
-      def api_ticket(access_token)
-        refresh_api_ticket(access_token) if api_ticket_expire?
-        $redis.get(cards_client.api_ticket_redis_key)
+      def refresh_card_ticket(access_token)
+
+          set_card_ticket(access_token)
       end
 
-      def set_api_ticket(access_token)
+      def refresh_js_ticket(access_token)
+
+        set_js_ticket(access_token)
+      end
+
+      def card_ticket(access_token)
+        refresh_card_ticket(access_token) if card_ticket_expire?
+        $redis.get(cards_client.card_ticket_redis_key)
+      end
+
+      def js_ticket(access_token)
+        refresh_js_ticket(access_token) if js_ticket_expire?
+        $redis.get(cards_client.js_ticket_redis_key)
+      end
+
+      def set_card_ticket(access_token)
         return_data = cards_client.http_get("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token =#{access_token}&type=wx_card")
         return nil if return_data["errcode"].to_i != 0
         ticket = return_data["ticket"]
         expires_in = return_data["expires_in"]
         # 保存到 redis中去
-        $redis.set(cards_client.api_ticket_redis_key,ticket)
-        $redis.expire(cards_client.api_ticket_redis_key,expires_in.to_i - 60)
+        $redis.set(cards_client.card_ticket_redis_key,ticket)
+        $redis.expire(cards_client.card_ticket_redis_key,expires_in.to_i - 60)
+      end
+
+
+      def set_js_ticket(access_token)
+        return_data = cards_client.http_get("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=#{access_token}&type=jsapi")
+        return nil if return_data["errcode"].to_i != 0
+        ticket = return_data["ticket"]
+        expires_in = return_data["expires_in"]
+        # 保存到 redis中去
+        $redis.set(cards_client.js_ticket_redis_key,ticket)
+        $redis.expire(cards_client.js_ticket_redis_key,expires_in.to_i - 60)
       end
 
     end

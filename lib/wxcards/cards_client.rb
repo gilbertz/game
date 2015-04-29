@@ -5,11 +5,13 @@ module WxCards
   class CardsClient
 
     attr_accessor :appid
-    attr_accessor :api_ticket_redis_key
+    # 一个是调用js的 ticket  一个是调用卡券的ticket
+    attr_accessor :card_ticket_redis_key,:js_ticket_redis_key
 
     def initialize(appid)
       @appid = appid
-      @api_ticket_redis_key = security_redis_key("api_ticket_#{appid}")
+      @card_ticket_redis_key = security_redis_key("api_ticket_#{appid}")
+      @js_ticket_redis_key = security_redis_key("js_ticket_#{appid}")
     end
 
 
@@ -17,20 +19,24 @@ module WxCards
       ApiTicket::Store.init_with(self)
     end
 
-    def get_api_ticket(access_token)
-      api_ticket_store.api_ticket(access_token)
+    def get_card_ticket(access_token)
+      api_ticket_store.card_ticket(access_token)
+    end
+
+    def get_js_ticket(access_token)
+      api_ticket_store.js_ticket(access_token)
     end
 
     # 获取js sdk 签名包
-    def get_api_ticket_sign_package(url)
+    def get_js_ticket_sign_package(url)
       timestamp = Time.now.to_i
       noncestr = SecureRandom.hex(16)
-      str = "jsapi_ticket=#{get_api_ticket(WxUtil.get_authorizer_access_token(@appid))}&noncestr=#{noncestr}&timestamp=#{timestamp}&url=#{url}"
+      str = "jsapi_ticket=#{get_js_ticket(WxUtil.get_authorizer_access_token(@appid))}&noncestr=#{noncestr}&timestamp=#{timestamp}&url=#{url}"
       signature = Digest::SHA1.hexdigest(str)
       {
-          "appId"     => app_id,    "nonceStr"  => noncestr,
+          "appId"     => @appid,    "nonceStr"  => noncestr,
           "timestamp" => timestamp, "url"       => url,
-          "signature" => signature, "rawString" => str
+          "signature" => signature, "rawString" => str,
       }
     end
 
