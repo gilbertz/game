@@ -34,7 +34,7 @@ class Admin::RedpackTimesController < Admin::BaseController
   end
 
   def redpack_time_params
-    params.require(:redpack_time).permit(:start_time, :end_time, :frequency, :min, :max, :store, :state, :probability)
+    params.require(:redpack_time).permit(:start_time, :end_time, :frequency, :min, :max, :store, :state, :probability, :person_num, :amount)
   end
 
 end

@@ -131,4 +131,8 @@ class Redpack < ActiveRecord::Base
     end
   end
 
+  def weixin_post_money(user,money)
+  end
+
+
 end

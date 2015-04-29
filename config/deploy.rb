@@ -63,12 +63,14 @@ task :passenger => :environment do
 end
 
 task :passenger_start => :environment do
-  queue "cd #{deploy_to}/#{current_path} && passenger start -a 0.0.0.0 -p #{ENV['port']} -d -e production --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
+  queue "source /etc/profile.d/rvm.sh" 
+  queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger start -a 0.0.0.0 -p #{ENV['port']} -d -e production --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
 end
 
 task :passenger_stop => :environment do
+  queue "source /etc/profile.d/rvm.sh" 
   quene "touch #{deploy_to}/#{current_path}/passenger.#{ENV['port']}.pid"
-  queue "cd #{deploy_to}/#{current_path} && passenger stop -p #{ENV['port']} --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
+  queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger stop -p #{ENV['port']} --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
 end
 
 

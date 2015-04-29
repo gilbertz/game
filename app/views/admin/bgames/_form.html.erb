@@ -3,8 +3,12 @@
     <div class="control-group">
       <label class="control-label">game_id</label>
       <div class="controls">
-        <%= f.select :game_id, Material.get_games_for_select,  required: true %>
-      </div>
+        <% if @game %>
+           <%= f.hidden_field :game_id %>
+        <% else %>
+          <%= f.select :game_id, Material.get_games_for_select,  required: true %>
+        <% end %>
+       </div>
     </div>
 
     <div class="control-group">

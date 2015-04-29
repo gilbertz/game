@@ -101,6 +101,8 @@
       <th>max</th>
       <th>store</th>
       <th>state</th>
+      <th>person_num</th>
+      <th>amount</th>
       <th>probability</th>
       <th>operate</th>
     </tr>
@@ -114,6 +116,8 @@
       <td><%= t.max%></td>
       <td><%= t.store%></td>
       <td><%= t.state%></td>
+      <td><%= t.person_num%></td>
+      <td><%= t.amount%></td>
       <td><%= t.probability%></td>
       <td> <%= link_to [:edit,:admin,@redpack,t], class: :e_obj do %><span class="glyphicon glyphicon-plus"></span>编辑<% end %> |<%= link_to '删除', [:admin, @redpack, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
     </tr>
@@ -130,12 +134,14 @@
     <tr>
       <th>ID</th>
       <th>money</th>
+      <th>num</th>
       <th>operate</th>
     </tr>
     <% @redpack.get_redpack_values.each do |t|%>
     <tr>
       <td><%= t.id %></td>
       <td><%= t.money%></td>
+      <td><%= t.num%></td>
       <td> <%= link_to [:edit,:admin,@redpack,t], class: :e_obj do %><span class="glyphicon glyphicon-plus"></span>编辑<% end %> |<%= link_to '删除', [:admin, @redpack, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
     </tr>
     <%end%>

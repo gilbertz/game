@@ -5,6 +5,7 @@ class Material < ActiveRecord::Base
   belongs_to :user
   has_many :images, as: :viewable, class_name: "Image", dependent: :destroy
   has_many :answers, as: :viewable, class_name: "Answer",  dependent: :destroy
+  has_many :bgames, :foreign_key => "game_id"
 
   has_many :questions
   has_many :records

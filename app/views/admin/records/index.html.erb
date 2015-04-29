@@ -8,8 +8,9 @@
     <th>user name</th>
     <th>app name</th>
     <th>score</th>
+    <th>allocation</th>
     <th>remark</th>
-    <th>created at
+    <th>created at</th>
   </tr>
 
   <% @records.each do |r| %>
@@ -19,6 +20,7 @@
     <td><%= link_to r.user_name, "/admin/records?user_id=#{r.user_id}" %></td>
     <td><%= link_to r.app_name, "/admin/records?game_id=#{r.game_id}" %></td>
     <td><%= r.score %></td>
+    <td><%= r.allocation%></td>
     <td><%= r.remark %></td>
      <td><%= r.created_at %></td>
   </tr>
