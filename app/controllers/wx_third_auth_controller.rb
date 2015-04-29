@@ -2,7 +2,7 @@ require 'wx_third/wxsha1'
 require 'net/http'
 require 'uri'
 require 'json'
-require File.expand_path('../wx_util',__FILE__)
+require File.expand_path('../wx_third/wx_util',__FILE__)
 class WxThirdAuthController < ApplicationController
   skip_before_filter :verify_authenticity_token#, only: :componentVerifyTicket
   before_filter :valid_msg_signature, :only => :componentVerifyTicket
@@ -99,8 +99,8 @@ class WxThirdAuthController < ApplicationController
         authorizer.unthorized = false
         authorizer.authorizer_info = (authorizer_info_package["authorizer_info"]).to_json
         authorizer.authorizer_refresh_token = authorizer_refresh_token
-        $redis.set(authorizer_access_token_key(authorizer_appid),authorization_info["authorizer_access_token"])
-        $redis.expire(authorizer_access_token_key(authorizer_appid),expires_in.to_i - 60)
+        $redis.set(WxUtil.authorizer_access_token_key(authorizer_appid),authorization_info["authorizer_access_token"])
+        $redis.expire(WxUtil.authorizer_access_token_key(authorizer_appid),expires_in.to_i - 60)
         if authorizer_info_package.nil? == false
           authorizer.authorization_info = (authorizer_info_package["authorization_info"]).to_json
           authorizer.qrcode_url = authorizer_info_package["authorizer_info"]["qrcode_url"]
