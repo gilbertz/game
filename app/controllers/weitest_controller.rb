@@ -394,9 +394,16 @@ class WeitestController < ApplicationController
     end
   end
 
+  def check_shake_history
+    if params[:ticket] and params[:activityid]
+      ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
+    end
+  end
+
 
   def weixin_authorize
     check_cookie
+    check_shake_history
     unless current_user
       redirect_to authorize_url(request.url)
     end
