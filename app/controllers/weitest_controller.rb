@@ -412,7 +412,7 @@ class WeitestController < ApplicationController
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
       if current_user and @object
-        rs = Record.where(:user_id => current_user.id, :game_id => @material.id)
+        rs = Record.where(:user_id => current_user.id, :game_id => @material.id).order('created_at desc')
         @record = rs[0] if rs and rs.length > 0 
       end
     end
