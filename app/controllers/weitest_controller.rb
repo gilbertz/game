@@ -424,9 +424,16 @@ class WeitestController < ApplicationController
     end
   end
 
+  def check_shake_history
+    if params[:ticket] and params[:activityid]
+      ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
+    end
+  end
+
 
   def weixin_authorize
     check_cookie
+    check_shake_history
     unless current_user
       redirect_to authorize_url(request.url)
     end
@@ -442,7 +449,7 @@ class WeitestController < ApplicationController
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
       if current_user and @object
-        rs = Record.where(:user_id => current_user.id, :game_id => @material.id)
+        rs = Record.where(:user_id => current_user.id, :game_id => @material.id).order('created_at desc')
         @record = rs[0] if rs and rs.length > 0 
       end
     end
