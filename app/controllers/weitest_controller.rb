@@ -8,56 +8,27 @@ class WeitestController < ApplicationController
   # 今天有记录 从点的人的allocation拿出一定score存储，不存allocation
   # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
   #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
-  def bus_redpack
-    score = UserScore.find_by(user_id: current_user.id).total_score 
-    Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid], score)
-    Score.create(:user_id => current_user.id, :value => -score,:from_user_id => current_user.id)
-  end 
+
 
   def bus_allocation
-    get_object
-    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    redpack_id = Redpack.find_by(:beaconid => @object.id)
-    person_num = RedpackTime.find_by(:redpack_id =>redpack_id).person_num
-    if Record.where("user_id = ? and game_id = ? and created_at >= ? and created_at < ?", current_user.id, params[:game_id], Date.today.beginning_of_day, Date.today.end_of_day).length ==0 or 1
-      min = RedpackTime.find_by(:redpack_id =>redpack_id).min
-      max = RedpackTime.find_by(:redpack_id =>redpack_id).max
-      record_allocation = rand(min..max)
-      record_score = rand((min/person_num)..(record_allocation/person_num))
-      UserAllocation.create(:user_id => current_user.id, :allocation => (record_allocation -record_score))
-      Score.create(:user_id => current_user.id, :value => record_score,:from_user_id => current_user.id)
-      Score.create(:user_id => current_user.id, :value => -record_score,:from_user_id => current_user.id)
-      Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => record_score, :allocation => record_allocation)
-      render :status => 200, json: {'info' => "今天"}
-    elsif  Record.where("user_id = ? and game_id = ? and created_at >= ? and created_at < ?", current_user.id, params[:game_id], Date.today.beginning_of_day, Date  .today.end_of_day).length ==2
+    if redpack_per_day(current_user.id, params[:game_id]) < 2
+      get_object
+      Redpack.first_allocation(current_user.id, params[:game_id], @object)
+        render :status => 200, json: {'info' => "公交车上有红包"}
+      else
+        render :status => 200, json: {'info' => "现金用完，发卡券吧"}
+      end
+    elsif  redpack_per_day(current_user.id, params[:game_id]) == 2
       render :status => 200, json: {'info' => "今天次数用完"}
     end 
   end
 
   def not_bus_allocation
-    get_object
-    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    redpack_id = Redpack.find_by(:beaconid => @object_id )
-    person_num = RedpackTime.find_by(:redpack_id =>redpack_id).person_num
-    if Record.where("user_id = ? and game_id = ? and created_at >= ? and created_at < ?", current_user.id, params[:game_id], Date.today.beginning_of_day, Date.today.end_of_day).length ==0 or 1
-      if params[:openid1]
-        au = Authentication.find_by_uid(params[:openid1])
-        from_user_id = au.user_id 
-        from_user = User.find from_user_id 
-        rand_allocation = Record.where("user_id = ? and game_id = ? and created_at >= ? and created_at < ?", from_user_id, params[:game_id], Date.today.beginning_of_day, Date.today.end_of_day).order("allocation desc")[0].allocation 
-        record_allocation = rand((rand_allocation/person_num/2)..(rand_allocation/person_num*2))  if rand_allocation > 0 
-        allocation = UserAllocation.where(:user_id => from_user_id).order("allocation desc")[0]allocation-record_allocation
-        record_allocation = allocation > 0 ? record_allocation : UserAllocation.where(:user_id => from_user_id).order("allocation desc")[0].allocation
-        record_score = rand((record_allocation/person_num/2)..(record_allocation/person_num*2))
-        UserAllocation.find_by(:user_id => from_user_id).update(:allocation =>allocation)
-        UserAllocation.create(:user_id => current_user.id, :allocation => (record_allocation -record_score)) 
-        Score.create(:user_id => current_user.id, :value => record_score,:from_user_id => current_user.id)
-        Record.create(:user_id => current_user.id, :from_user_id => from_user_id, :beaconid=> beaconid, :game_id => params[:game_id], :score => record_score, :allocation => record_allocation)
-        # record_score = record_score >100?record_score:100
-        # todo
-      end
-      render :status => 200, json: {'info' => "今天"}
-    elsif  Record.where("user_id = ? and game_id = ? and created_at >= ? and created_at < ?", current_user.id, params[:game_id], Date.today.beginning_of_day, Date  .today.end_of_day).length ==2
+    if redpack_per_day(current_user.id, params[:game_id]) ==0 or 1
+      get_object
+      Redpack.share_allocation(current_user.id, params[:openidshare], params[:game_id], @object)
+      render :status => 200, json: {'info' => "不在公交也有红包"}
+    elsif  redpack_per_day(current_user.id, params[:game_id]) ==2
       render :status => 200, json: {'info' => "今天次数用完"}
     end 
   end
@@ -256,10 +227,6 @@ class WeitestController < ApplicationController
 
     get_beacon
     get_object 
-<<<<<<< HEAD
-=======
-    #get_allocation
->>>>>>> d7fa9aac55543ad3cc9da603ab667032ff0787a6
     if @material.category
       render 'o2o', layout: false
     end
