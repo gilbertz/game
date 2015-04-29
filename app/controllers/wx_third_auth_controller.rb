@@ -102,7 +102,7 @@ class WxThirdAuthController < ApplicationController
         $redis.expire(authorizer_access_token_key(authorizer_appid),expires_in.to_i - 60)
         if authorizer_info_package.nil? == false
           authorizer.authorization_info = (authorizer_info_package["authorization_info"]).to_json
-          authorizer.qrcode_url = authorizer_info_package["qrcode_url"]
+          authorizer.qrcode_url = authorizer_info_package["authorizer_info"]["qrcode_url"]
         end
         authorizer.save
         render :json => {"result"=> 0}.to_json
