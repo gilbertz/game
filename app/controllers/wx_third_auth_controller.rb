@@ -35,9 +35,12 @@ class WxThirdAuthController < ApplicationController
         # 取消授权的公众账号
         authorizerAppid = decryptMsg["AuthorizerAppid"]
         authorizer = WxAuthorizer.find_by_authorizer_appid(authorizerAppid)
+        p authorizer
         if authorizer.nil? == false
+          p "update"
           authorizer.unthorized == true
-          authorizer.update
+          authorizer.save
+          p authorizer
         end
       end
       # 最终返回成功就行
@@ -82,23 +85,24 @@ class WxThirdAuthController < ApplicationController
         authorizer_refresh_token = authorization_info["authorizer_refresh_token"]
         expires_in = authorization_info["expires_in"]
         # 获取授权公众账号的信息
-        authorizer_info = get_authorizer_info(authorizer_appid)
-        p "authorizer_info = #{authorizer_info.to_s}"
+        authorizer_info_package = get_authorizer_info(authorizer_appid)
+        p "authorizer_info = #{authorizer_info_package.to_s}"
         authorizer = WxAuthorizer.find_by_authorizer_appid(authorizer_appid)
-        if authorizer.blank?
+        if authorizer.nil?
           # 创建一个保存
           authorizer = WxAuthorizer.new
         end
         authorizer.authorizer_appid = authorizer_appid
         authorizer.component_appid = SHAKE_APPID
-        authorizer.authorization_info = authorization_info
+        authorizer.authorization_info = authorization_info.to_json
         authorizer.unthorized = false
-        authorizer.authorizer_info = authorizer_info["authorizer_info"]
+        authorizer.authorizer_info = (authorizer_info_package["authorizer_info"]).to_json
         authorizer.authorizer_refresh_token = authorizer_refresh_token
         $redis.set(authorizer_access_token_key(authorizer_appid),authorization_info["authorizer_access_token"])
         $redis.expire(authorizer_access_token_key(authorizer_appid),expires_in.to_i - 60)
-        if authorizer_info.blank? == false
-          authorizer.qrcode_url = authorizer_info["qrcode_url"]
+        if authorizer_info_package.nil? == false
+          authorizer.authorization_info = (authorizer_info_package["authorization_info"]).to_json
+          authorizer.qrcode_url = authorizer_info_package["qrcode_url"]
         end
         authorizer.save
         render :json => {"result"=> 0}.to_json
