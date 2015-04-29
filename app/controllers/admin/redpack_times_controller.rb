@@ -10,6 +10,10 @@ class Admin::RedpackTimesController < Admin::BaseController
     @redpack = Redpack.find params[:redpack_id]
     @redpack_time = RedpackTime.new(redpack_time_params.merge(:redpack_id =>@redpack.id))
     @redpack_time.save
+    total = (@redpack_time.end_time-@redpack_time.start_time)/60/@redpack_time.frequency 
+    for i in 1..total
+      TimeAmount.create(:time => @redpack_time.start_time+@redpack_time.frequency*i*60, :amount => @redpack_time.amount, :redpack_time_id => @redpack_time.id)
+    end
     redirect_to [:edit, :admin, @redpack]
   end
 

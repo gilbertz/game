@@ -5,6 +5,34 @@ class WeitestController < ApplicationController
   
   before_filter :weixin_authorize, :only => [:o2o]
 
+  # 今天有记录 从点的人的allocation拿出一定score存储，不存allocation
+  # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
+  #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
+
+
+  def bus_allocation
+    if redpack_per_day(current_user.id, params[:game_id]) < 2
+      get_object
+      Redpack.first_allocation(current_user.id, params[:game_id], @object)
+        render :status => 200, json: {'info' => "公交车上有红包"}
+      else
+        render :status => 200, json: {'info' => "现金用完，发卡券吧"}
+      end
+    elsif  redpack_per_day(current_user.id, params[:game_id]) == 2
+      render :status => 200, json: {'info' => "今天次数用完"}
+    end 
+  end
+
+  def not_bus_allocation
+    if redpack_per_day(current_user.id, params[:game_id]) ==0 or 1
+      get_object
+      Redpack.share_allocation(current_user.id, params[:openidshare], params[:game_id], @object)
+      render :status => 200, json: {'info' => "不在公交也有红包"}
+    elsif  redpack_per_day(current_user.id, params[:game_id]) ==2
+      render :status => 200, json: {'info' => "今天次数用完"}
+    end 
+  end
+
   def result
     unless params[:material_id].blank?
 
@@ -199,7 +227,6 @@ class WeitestController < ApplicationController
 
     get_beacon
     get_object 
-    #get_allocation
     if @material.category
       render 'o2o', layout: false
     end
@@ -371,6 +398,9 @@ class WeitestController < ApplicationController
     render layout: false
   end
 
+
+
+
   private
   def authorize_url(url, scope='snsapi_base')
     rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
@@ -415,7 +445,6 @@ class WeitestController < ApplicationController
     end
   end
 
-
   def get_object
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
@@ -436,64 +465,4 @@ class WeitestController < ApplicationController
     end
   end 
 
-  # 今天有记录 从点的人的allocation拿出一定score存储，不存allocation
-  # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
-  def get_allocation
-
-    if Record.where(:user_id => current_user.id, :game_id => params[:game_id]).order("created_at desc")[0].created_at.strftime("%F")!=Time.now.strftime("%F")
-      if 1&&1 #在车上而且到时间
-        min = RedpackTime.find_by(:redpack_id =>13).min
-        max = RedpackTime.find_by(:redpack_id =>13).max
-        person_num = RedpackTime.find_by(:redpack_id =>13).person_num
-        record_allocation = rand(min..max)
-        record_score = rand((min/person_num)..(record_allocation/person_num))
-        UserAllocation.create(:user_id => current_user.id, :allocation => (record_allocation -record_score))
-        Score.create(:user_id => current_user.id, :value => record_score,:from_user_id => current_user.id)
-        #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
-        Score.create(:user_id => current_user.id, :value => -record_score,:from_user_id => current_user.id)
-        Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => @rp, :allocation => record_allocation)
-        # record_score = record_score >100?record_score:100
-        # todo
-        p record_allocation
-        p record_score
-      else #不在车上不到时间或者不到车上不到时间或者到车上不到时间
-        if params[:openid] 
-         au = Authentication.find_by_uid(params[:openid])
-         from_user_id = au.user_id 
-         from_user = User.find from_user_id 
-         rand_allocation = UserAllocation.find_by(:user_id => from_user_id).allocation
-         record_allocation = rand((rand_allocation/person_num/2)..(rand_allocation/person_num*2))
-         record_score = rand((record_allocation/person_num/2)..(record_allocation/person_num*2))
-         UserAllocation.find_by(:user_id => from_user_id).allocation -= record_allocation
-         UserAllocation.create(:user_id => current_user.id, :allocation => (record_allocation -record_score)) 
-         Score.create(:user_id => current_user.id, :value => record_score,:from_user_id => current_user.id)
-         Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => @rp, :allocation => record_allocation)
-       end
-     end
-    else #有记录
-      if 1 #在车上
-        p "已经抢过"
-        if params[:openid] 
-          au = Authentication.find_by_uid(params[:openid])
-          from_user_id = au.user_id 
-          from_user = User.find from_user_id 
-          rand_allocation = UserAllocation.find_by(:user_id => from_user_id).allocation
-          record_score = rand((rand_allocation/person_num/2)..(rand_allocation/person_num*2))
-          UserAllocation.find_by(:user_id => from_user_id).allocation -= record_allocation
-          Score.create(:user_id => current_user.id, :value => record_score,:from_user_id => current_user.id)
-          Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => @rp)
-        end
-      else #不在车上
-        au = Authentication.find_by_uid(params[:openid])
-        from_user_id = au.user_id 
-        from_user = User.find from_user_id 
-        rand_allocation = UserAllocation.find_by(:user_id => from_user_id).allocation
-        record_score = rand((rand_allocation/person_num/2)..(rand_allocation/person_num*2))
-        UserAllocation.find_by(:user_id => from_user_id).allocation -= record_allocation
-        Score.create(:user_id => current_user.id, :value => record_score,:from_user_id => current_user.id)
-        Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => @rp)    
-      end
-      render :status => 200, json: {'record_score' => record_score} unless record_score
-    end 
-  end
 end 
