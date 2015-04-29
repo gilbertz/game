@@ -38,7 +38,7 @@ class WxThirdAuthController < ApplicationController
         p authorizer
         if authorizer.nil? == false
           p "update"
-          authorizer.unthorized == true
+          authorizer.unthorized = true
           authorizer.save
           p authorizer
         end
