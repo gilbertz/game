@@ -25,7 +25,7 @@ module WxCards
     def get_api_ticket_sign_package(url)
       timestamp = Time.now.to_i
       noncestr = SecureRandom.hex(16)
-      str = "jsapi_ticket=#{}&noncestr=#{noncestr}&timestamp=#{timestamp}&url=#{url}"
+      str = "jsapi_ticket=#{get_api_ticket(WxUtil.get_authorizer_access_token(@appid))}&noncestr=#{noncestr}&timestamp=#{timestamp}&url=#{url}"
       signature = Digest::SHA1.hexdigest(str)
       {
           "appId"     => app_id,    "nonceStr"  => noncestr,
