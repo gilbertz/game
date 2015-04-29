@@ -110,8 +110,8 @@ class WxUtil
         return authorizer_access_token
       end
       #找到改授权的公众号
-      authorizer = WxAuthorizer.find_by_sql("select * from wx_authorizers where authorizer_id=#{authorizer_appid}")
-      if authorizer_id.nil?
+      authorizer = WxAuthorizer.find_by_sql("select * from wx_authorizers where id=#{authorizer_appid}")
+      if authorizer.nil?
         return nil
       end
       p "old authorizer_refresh_token = #{authorizer.authorizer_refresh_token}"
