@@ -397,7 +397,7 @@ class WeitestController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     #render :text => 'you are lucky!'
     10.times {
-      response.stream.write Time.now.to_s
+      response.stream.write "data: #{rand(100)} \n\n"
       sleep 1
     }
     response.stream.close
