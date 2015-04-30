@@ -319,15 +319,7 @@ class WeitestController < ApplicationController
         beaconid = @beacon.id if @beacon
       end
       r= Record.find_by_user_id_and_game_id(current_user.id, params[:game_id])
-      #if r and params[:score]
-      #  if r.score < params[:score].to_i
-      #    r.score = params[:score].to_i
-      #    r.beaconid = beaconid 
-      #    r.save
-      #  end
-      #else
       Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
-      #end
     end
     render nothing: true
   end
@@ -401,7 +393,10 @@ class WeitestController < ApplicationController
     render layout: false
   end
 
-
+  def broadcast
+    response.headers['Content-Type'] = 'text/event-stream'
+    render :text => 'you are lucky!'
+  end
 
 
   private

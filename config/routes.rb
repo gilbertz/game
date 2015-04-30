@@ -105,7 +105,8 @@ Game::Application.routes.draw do
   get '/:beaconid/gs/:id' => 'weitest#o2o' 
   get '/:beaconid/gg/:id' => 'weitest#allocation'
   get '/:beaconid/wshows/:id' => 'wshows#show'
-  get '/:beaconid/home' => 'home#home' 
+  get '/:beaconid/home' => 'home#home'
+  get '/:beaconid/broadcast' => 'weitest#broadcast' 
   get '/api/weixin' =>  'weixin#show',  :as=>"weixin"
   get 'api/weixin/test' =>  'weixin#test',  :as=>"weixin_test"
   post '/api/weixin' => 'weixin#create', :as=>"weixin_path"
