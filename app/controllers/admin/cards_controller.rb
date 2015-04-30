@@ -38,6 +38,13 @@ class Admin::CardsController < Admin::BaseController
     redirect_to [:admin,:cards]
   end
 
+  def clone
+    card = Card.find params[:id]
+    card.cloning(true)
+    redirect_to [:admin,:cards]
+  end
+
+
   private
     def set_card
       @card = Card.find(params[:id])

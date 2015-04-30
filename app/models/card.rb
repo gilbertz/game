@@ -11,5 +11,9 @@ class Card < ActiveRecord::Base
       return b.name if b
     end
   end
-  
+
+  def cloning(recursive=false)
+    Card.create self.attributes.except!("created_at", "id")
+  end 
+ 
 end

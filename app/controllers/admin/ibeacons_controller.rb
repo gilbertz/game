@@ -42,6 +42,13 @@ class Admin::IbeaconsController < Admin::BaseController
     redirect_to admin_ibeacons_path
   end
 
+  def clone
+    ibeacon = Ibeacon.find params[:id]
+    ibeacon.cloning(true)
+    redirect_to [:admin,:ibeacons]
+  end
+  
+
   private
     def set_ibeacon
       @ibeacon = Ibeacon.find(params[:id])
