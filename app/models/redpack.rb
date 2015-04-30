@@ -8,6 +8,9 @@ class Redpack < ActiveRecord::Base
     self.action_title
   end
 
+  def a
+  end
+
   def beacon_name
     if self.beaconid
       b = Ibeacon.find self.beaconid
@@ -18,7 +21,9 @@ class Redpack < ActiveRecord::Base
   def cloning(recursive=false)
     Redpack.create self.attributes.except!("created_at", "id")
   end
-  
+
+
+
 
   def weixin_post(user,beaconid_url)
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
@@ -139,14 +144,15 @@ class Redpack < ActiveRecord::Base
   def weixin_post_money(user,beaconid,money)
   end
 
-  def first_allocation(user_id, game_id,redpack) 
+  def self.first_allocation(user_id, game_id,redpack,beaconid) 
+    beaconid = Ibeacon.find_by(:url=>beaconid).id
     redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
     person_num = redpack_time.person_num
     time_amount = TimeAmount.find_by("time_end >? and time < ? and redpack_time_id = ? ", Time.now, Time.now, redpack_time.id)
-    if time_amount.amount> 0
+    if time_amount.amount > 0
       min = redpack_time.min
       max = redpack_time.max
-      record_allocation = time_amount > min ? rand(min..max) : min
+      record_allocation = time_amount.amount > min ? rand(min..max) : min
       record_score = rand((min/person_num)..(record_allocation/person_num))
       time_amount.update(:amount => (time_amount.amount - record_allocation))
       UserAllocation.create(:user_id => user_id, :allocation => (record_allocation -record_score), :num => (person_num - 1))
@@ -159,7 +165,7 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-  def share_allocation(user_id, openidshare , game_id, redpack)
+  def self.share_allocation(user_id, openidshare , game_id, redpack)
     redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
     person_num = redpack_time.person_num
     if openidshare
@@ -183,10 +189,11 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-  def bus_redpack(user_id, beaconid) 
+  def self.bus_redpack(user_id, beaconid) 
     score = UserScore.find_by(user_id: user_id).total_score 
     Redpack.find_by(beaconid: beaconid).weixin_post(current_user, beaconid_url, score)
     Score.create(:user_id => current_user.id, :value => -score,:from_user_id => current_user.id)
   end 
+
 
 end
