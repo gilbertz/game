@@ -107,10 +107,11 @@ class WxUtil
     def get_authorizer_access_token(authorizer_appid)
       authorizer_access_token = $redis.get(authorizer_access_token_key(authorizer_appid))
       if authorizer_access_token.blank? == false
-        return authorizer_access_token
+      #  return authorizer_access_token
       end
+      p "get_authorizer_access_token"
       #找到改授权的公众号
-      authorizer = WxAuthorizer.find_by_sql("select * from wx_authorizers where id=#{authorizer_appid}")
+      authorizer = WxAuthorizer.find_by_authorizer_appid(authorizer_appid)
       if authorizer.nil?
         return nil
       end
@@ -119,7 +120,7 @@ class WxUtil
       component_access_token = get_component_access_token
       if component_access_token.nil? == false && component_access_token != ""
         post_data = {"component_appid"=>SHAKE_APPID,"authorizer_appid"=>authorizer_appid,"authorizer_refresh_token" => authorizer.authorizer_refresh_token}
-        res = RestClient::post("https:// api.weixin.qq.com /cgi-bin/component/api_authorizer_token?component_access_token=#{component_access_token}",post_data.to_json)
+        res = RestClient::post("https://api.weixin.qq.com/cgi-bin/component/api_authorizer_token?component_access_token=#{component_access_token}",post_data.to_json)
         authorizer_info = JSON.parse(res.body)
         authorizer_access_token = authorizer_info["authorizer_access_token"]
         expires_in = authorizer_info["expires_in"]
@@ -127,7 +128,7 @@ class WxUtil
 
         if authorizer_access_token.blank? == false
           $redis.set(authorizer_access_token_key(authorizer_appid),authorizer_access_token)
-          $redis.expire(authorizer_access_token(authorizer_appid),expires_in.to_i - 60)
+          $redis.expire(authorizer_access_token_key(authorizer_appid),expires_in.to_i - 60)
           return authorizer_access_token
         end
       end

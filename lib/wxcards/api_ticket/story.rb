@@ -11,12 +11,14 @@ module WxCards
       end
 
       def card_ticket_expire?
-        $redis.hvals(cards_client.card_ticket_redis_key).empty?
+        #$redis.get(cards_client.card_ticket_redis_key) == nil
+        return true
       end
 
       def js_ticket_expire?
-        $redis.hvals(cards_client.js_ticket_redis_key).empty?
-      end
+        #$redis.get(cards_client.js_ticket_redis_key) == nil
+        return true
+       end
 
       def refresh_card_ticket(access_token)
 
@@ -39,7 +41,7 @@ module WxCards
       end
 
       def set_card_ticket(access_token)
-        return_data = cards_client.http_get("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token =#{access_token}&type=wx_card")
+        return_data = cards_client.http_get("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=#{access_token}&type=wx_card")
         return nil if return_data["errcode"].to_i != 0
         ticket = return_data["ticket"]
         expires_in = return_data["expires_in"]

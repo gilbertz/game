@@ -1,4 +1,5 @@
 require File.dirname(__FILE__)+'/../../lib/wxcards/wx_cards'
+require File.expand_path('../wx_third/wx_util',__FILE__)
 class WshowsController < ApplicationController
 
   def show
