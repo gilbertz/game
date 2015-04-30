@@ -452,11 +452,13 @@ class WeitestController < ApplicationController
     p @material 
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
-      if current_user and @object
-        rs = Record.where(:user_id => current_user.id, :game_id => @material.id).order('created_at desc')
-        @record = rs[0] if rs and rs.length > 0 
-      end
     end
+    if current_user
+      cond = '1=1'
+      cond = "beaconid = #{@beacon.id}"
+      rs = Record.where(cond).where(:user_id => current_user.id, :game_id => @material.id).order('created_at desc')
+      @record = rs[0] if rs and rs.length > 0
+    end  
   end
 
   def get_redpack_time
