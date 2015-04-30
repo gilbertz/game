@@ -45,6 +45,7 @@ Game::Application.routes.draw do
   #get '/weitest/gabrielecirulli' => 'weitest#gabrielecirulli'
   get '/weitest/wx_share' => 'weitest#wx_share'
   get '/weitest/weixin_redpack' => 'weitest#weixin_redpack', :as=>"weixin_redpack"
+  get '/weitest/weixin_check' => 'weitest#weixin_check', :as=>"weixin_check"
   get '/weitest/weixin_score' => 'weitest#weixin_score', :as=>"weixin_score"
   get '/weitest/report' => 'weitest#report',  :as=>"report"
   get '/materials/report' => 'materials#report',  :as=>"mreport" 

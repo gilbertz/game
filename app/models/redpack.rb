@@ -148,12 +148,16 @@ class Redpack < ActiveRecord::Base
       Score.create(:user_id => user_id, :value => record_score,:from_user_id => user_id)
       Score.create(:user_id => user_id, :value => -record_score,:from_user_id => user_id)
       Record.create(:user_id => user_id, :from_user_id => user_id, :beaconid=> beaconid, :game_id => game_id, :score => record_score, :allocation => record_allocation)
+      return "公交车上有红包"
+    else
+      return "已经被抢光啦，发卡券吧"
     end
+  end
 
-    def share_allocation(user_id, openidshare , game_id, redpack)
-     redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
-     person_num = redpack_time.person_num
-     if openidshare
+  def share_allocation(user_id, openidshare , game_id, redpack)
+    redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
+    person_num = redpack_time.person_num
+    if openidshare
       au = Authentication.find_by_uid(openidshare)
       from_user_id = au.user_id 
       from_user = User.find from_user_id 
@@ -172,11 +176,12 @@ class Redpack < ActiveRecord::Base
       Score.create(:user_id => user_id, :value => record_score,:from_user_id => from_user_id)
       Record.create(:user_id => user_id, :from_user_id => from_user_id, :beaconid=> beaconid, :game_id => game_id, :score => record_score, :allocation => record_allocation)
     end
-
-    def bus_redpack(user_id, beaconid) 
-      score = UserScore.find_by(user_id: user_id).total_score 
-      Redpack.find_by(beaconid: beaconid).weixin_post(current_user, beaconid_url, score)
-      Score.create(:user_id => current_user.id, :value => -score,:from_user_id => current_user.id)
-    end 
-
   end
+
+  def bus_redpack(user_id, beaconid) 
+    score = UserScore.find_by(user_id: user_id).total_score 
+    Redpack.find_by(beaconid: beaconid).weixin_post(current_user, beaconid_url, score)
+    Score.create(:user_id => current_user.id, :value => -score,:from_user_id => current_user.id)
+  end 
+
+end

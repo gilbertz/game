@@ -5,6 +5,11 @@ class WeitestController < ApplicationController
   
   before_filter :weixin_authorize, :only => [:o2o]
 
+  def weixin_check
+      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+      Check.create(user_id: current_user.id, beaconid: beaconid, game_id: params[:game_id])
+      render :status => 200, json: {'info' => "报名成功"}
+  end
   # 今天有记录 从点的人的allocation拿出一定score存储，不存allocation
   # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
   #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
@@ -13,22 +18,19 @@ class WeitestController < ApplicationController
   def bus_allocation
     if redpack_per_day(current_user.id, params[:game_id]) < 2
       get_object
-      Redpack.first_allocation(current_user.id, params[:game_id], @object)
-        render :status => 200, json: {'info' => "公交车上有红包"}
-      else
-        render :status => 200, json: {'info' => "现金用完，发卡券吧"}
-      end
-    elsif  redpack_per_day(current_user.id, params[:game_id]) == 2
+      info = Redpack.first_allocation(current_user.id, params[:game_id], @object)
+      render :status => 200, json: {'info' => info}
+    elsif redpack_per_day(current_user.id, params[:game_id]) == 2
       render :status => 200, json: {'info' => "今天次数用完"}
     end 
   end
 
   def not_bus_allocation
-    if redpack_per_day(current_user.id, params[:game_id]) ==0 or 1
+    if redpack_per_day(current_user.id, params[:game_id]) < 2
       get_object
       Redpack.share_allocation(current_user.id, params[:openidshare], params[:game_id], @object)
       render :status => 200, json: {'info' => "不在公交也有红包"}
-    elsif  redpack_per_day(current_user.id, params[:game_id]) ==2
+    elsif redpack_per_day(current_user.id, params[:game_id]) ==2
       render :status => 200, json: {'info' => "今天次数用完"}
     end 
   end
