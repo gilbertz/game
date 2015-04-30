@@ -3,6 +3,8 @@ require 'net/http'
 require 'uri'
 require 'json'
 require File.expand_path('../wx_third/wx_util',__FILE__)
+require File.expand_path('../wx_third/wx_event',__FILE__)
+require File.expand_path('../wx_third/wx_message',__FILE__)
 class WxThirdAuthController < ApplicationController
   skip_before_filter :verify_authenticity_token#, only: :componentVerifyTicket
   before_filter :valid_msg_signature, :only => :componentVerifyTicket
@@ -122,7 +124,7 @@ class WxThirdAuthController < ApplicationController
       render :text => "signature error"
       return
     end
-    p params["appid"]
+    p "appCallback: appid = #{params["appid"]}"
     wxXMLParams = params["xml"]
     to_appid = params["appid"]
     # 加密过的数据
@@ -133,19 +135,19 @@ class WxThirdAuthController < ApplicationController
     content = QyWechat::Prpcrypt.decrypt(aes_key, xmlEncrpyPost, SHAKE_APPID)[0]
 
     authorizer = WxAuthorizer.find_by_authorizer_appid(to_appid)
-    p "authorizer = " + authorizer.to_s
-    # 发送消息
+    p "appCallback: authorizer = " + authorizer.to_s
 
     # 解密后的数据
     decryptMsg = MultiXml.parse(content)["xml"]
     if decryptMsg.nil? == false
       p "解密后的数据" + decryptMsg.to_s
       deal_msg(to_appid,decryptMsg)
-
     end
-
     render :text => "success"
   end
+
+
+  private
 
   # 处理消息
   def deal_msg(appid, msg)
@@ -153,23 +155,10 @@ class WxThirdAuthController < ApplicationController
     if event_type == "event"
       WxEvent.deal_event_msg(appid,msg)
     elsif event_type == "text"
-      deal_text_msg(appid,msg)
+      WxMessage.deal_text_msg(appid,msg)
     end
   end
 
-  # 处理第三方的文本消息--->未开发
-  def deal_text_msg(appid,text_msg)
-    # 发送给某个公众账号的---微信号
-    to_user_name = event_msg["ToUserName"]
-    # 普通微信用户的open id
-    from_user_name = event_msg["FromUserName"]
-    content = "TESTCOMPONENT_MSG_TYPE_TEXT_callback"
-
-  end
-
-
-
-  private
   # before_skip 过滤器  只针对 ticket 取消授权等事件
   def valid_msg_signature
     timestamp = params["timestamp"]
@@ -184,9 +173,5 @@ class WxThirdAuthController < ApplicationController
       return false
     end
   end
-
-
-
-
 
 end
