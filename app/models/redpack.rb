@@ -18,7 +18,7 @@ class Redpack < ActiveRecord::Base
   def cloning(recursive=false)
     Redpack.create self.attributes.except!("created_at", "id")
   end
- 
+  
 
   def weixin_post(user,beaconid_url)
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
@@ -157,20 +157,12 @@ class Redpack < ActiveRecord::Base
     else
       return "已经被抢光啦，发卡券吧"
     end
-<<<<<<< HEAD
   end
 
   def share_allocation(user_id, openidshare , game_id, redpack)
     redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
     person_num = redpack_time.person_num
     if openidshare
-=======
-    
-   def share_allocation(user_id, openidshare , game_id, redpack)
-     redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
-     person_num = redpack_time.person_num
-     if openidshare
->>>>>>> 955528c747954257a158190c0f8ac5f6d1b21b13
       au = Authentication.find_by_uid(openidshare)
       from_user_id = au.user_id 
       from_user = User.find from_user_id 
