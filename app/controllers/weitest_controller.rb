@@ -395,7 +395,12 @@ class WeitestController < ApplicationController
 
   def broadcast
     response.headers['Content-Type'] = 'text/event-stream'
-    render :text => 'you are lucky!'
+    #render :text => 'you are lucky!'
+    10.times {
+      response.stream.write Time.now.to_s
+      sleep 1
+    }
+    response.stream.close
   end
 
 
