@@ -26,21 +26,21 @@
   <div class="control-group">
     <label class="control-label">类别选择</label>
     <div class="controls">
-      <%= f.select :category_id, [["无", 0]] + ::Category.all.collect {|p| [ p.name, p.id ] }%>
+      <%= f.select :category_id, [["无", 0]] + ::Category.order('created_at desc').collect {|p| [ p.name, p.id ] }%>
     </div>
   </div>
 
   <div class="control-group">
     <label class="control-label">对象类型</label>
-    <div class="controls">
-       <%= f.text_field :object_type, class: "input-xxlarge" %>
+    <div class="controls" id='object_type'>
+       <%= f.select :object_type, Admin::BaseController::Object_types  %>
     </div>
   </div>
 
   <div class="control-group">
     <label class="control-label">对象ID</label>
     <div class="controls">
-       <%= f.text_field :object_id, class: "input-xxlarge" %>
+       <%= f.select :object_id, get_objects('redpack') %>
     </div>
   </div>
 
@@ -124,6 +124,27 @@
       </div>
     </div>
   <% end %>
+
+
+  <% if action_name == 'edit' %>
+    <% bgames = @material.bgames %>
+    <div class="control-group">
+      <label class="control-label">ibeacon</label>
+      <div class="controls" style="padding-top:4px">
+        <% bgames.each do |ib| %>
+          <%= link_to [:edit,:admin, @material,ib], class: :edit_obj do %>
+            <span class="label label-important"><%= ib.beacon_name %></span>
+          <% end %>
+          <%= link_to [:admin,ib], method: :delete,
+            class: :ajaxDel, data: {confirm: "Are you sure?"} ,remote: true  do %>
+            x&nbsp;
+          <% end %>
+        <% end %>
+        <%= link_to '添加', [:new,:admin,@material,:bgame], id: :add_obj, class: "btn btn-mini btn-success", remote: true %>
+      </div>
+    </div>
+  <% end %>
+
   <h4 style="margin-left:100px">微信</h4>
   <hr/ style="margin-top:0px">
   <div class="control-group">
@@ -184,6 +205,7 @@
     <%= f.submit '提交', class: 'btn btn-primary', id: "tixing" %>
   </div>
 <% end %>
+
 <script type="text/javascript">
   var theImage = new Image();
   theImage.src = "<%= @material.wx_tlimg %>";
@@ -191,4 +213,14 @@
   var imageHeight = theImage.height;
   var content = imageWidth + "x" + imageHeight;
   $("span#material_size").text(content);
+
+
+   $("#material_object_type").change(function(){
+        var object_type = $(this).val();
+        $.get("/admin/get_objects", {object_type: object_type}, function(data){
+            $('#material_object_id').html(data);
+            //$('#material_object_id').select2();
+        });
+   }); 
+
 </script>

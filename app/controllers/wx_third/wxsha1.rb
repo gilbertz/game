@@ -26,4 +26,5 @@ class WXSHA1
     end
   end
   getSHA1("1","ew","24","efwfw");
+
 end

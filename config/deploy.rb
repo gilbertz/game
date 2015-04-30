@@ -1,34 +1,106 @@
-#$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
-require 'capistrano/ext/multistage'
-require 'rvm/capistrano'
-require 'bundler/capistrano'
-require "whenever/capistrano"
+require 'mina/bundler'
+require 'mina/rails'
+require 'mina/git'
+# require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
+require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
-#set :bundle_dir, ""
-set :stages, %w(staging production development)
-set :default_stage, "staging"
-set :rvm_ruby_string, 'ruby-2.0.0-p247@game'
-#set :rvm_type, :system
-#set :rvm_bin_path, "/usr/local/rvm/bin"
+# Basic settings:
+#   domain       - The hostname to SSH to.
+#   deploy_to    - Path to deploy into.
+#   repository   - Git repo to clone from. (needed by mina/git)
+#   branch       - Branch name to deploy. (needed by mina/git)
 
-set :whenever_command, "bundle exec whenever"
-#set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :domain, '121.42.47.121'
+set :deploy_to, '/data/www/apps'
+set :repository, 'https://leapcliff:831022@git.coding.net/leapcliff/ibeacon.git'
+set :branch, 'master'
 
-# main details
-set :application, "game"
+ENV['port'] = '8000'
 
-# server details
-default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
-set :use_sudo, false
+# For system-wide RVM install.
+set :rvm_path, '/usr/local/rvm/bin/rvm'
+
+# Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
+# They will be linked in the 'deploy:link_shared_paths' step.
+set :shared_paths, ['config/database.yml', 'log']
+
+# Optional settings:
+   set :user, 'root'    # Username in the server to SSH to.
+#   set :port, '30000'     # SSH port number.
+#   set :forward_agent, true     # SSH forward_agent.
+
+# This task is the environment that is loaded for most commands, such as
+# `mina deploy` or `mina rake`.
+task :environment do
+  # If you're using rbenv, use this to load the rbenv environment.
+  # Be sure to commit your .ruby-version or .rbenv-version to your repository.
+  #invoke :'rbenv:load'
+
+  # For those using RVM, use this to load an RVM version@gemset.
+  #invoke :'rvm:use[ruby-1.9.3-p125@default]'
+  
+  invoke :'rvm:use[ruby-2.0.0-p481@default]'
+end
+
+# Put any custom mkdir's in here for when `mina setup` is ran.
+# For Rails apps, we'll make some of the shared paths that are shared between
+# all releases.
+task :setup => :environment do
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
+
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
+
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
+  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml'."]
+end
 
 
+task :passenger => :environment do
+  invoke :passenger_stop
+  invoke :passenger_start
+end
 
-# repository
-set :scm,         :git
-set :repository,  "git@222.73.85.232:weixin_game.git"
-set :branch,      'master'
-set :keep_releases, 15
-set :deploy_via, :remote_cache
-set :repository_cache, "cached_copy"
-after "deploy", "deploy:cleanup"
+task :passenger_start => :environment do
+  queue "source /etc/profile.d/rvm.sh" 
+  queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger start -a 0.0.0.0 -p #{ENV['port']} -d -e production --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
+end
+
+task :passenger_stop => :environment do
+  queue "source /etc/profile.d/rvm.sh" 
+  quene "touch #{deploy_to}/#{current_path}/passenger.#{ENV['port']}.pid"
+  queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger stop -p #{ENV['port']} --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
+end
+
+
+desc "Deploys the current version to the server."
+task :deploy => :environment do
+  to :before_hook do
+    # Put things to run locally before ssh
+  end
+  deploy do
+    # Put things that will set up an empty directory into a fully set-up
+    # instance of your project.
+    invoke :'git:clone'
+    invoke :'deploy:link_shared_paths'
+    invoke :'bundle:install'
+    invoke :'rails:db_migrate'
+    invoke :'rails:assets_precompile'
+    invoke :'deploy:cleanup'
+    invoke :passenger
+
+    to :launch do
+      queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
+      queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
+    end
+  end
+end
+
+# For help in making your deploy script, see the Mina documentation:
+#
+#  - http://nadarei.co/mina
+#  - http://nadarei.co/mina/tasks
+#  - http://nadarei.co/mina/settings
+#  - http://nadarei.co/mina/helpers
+

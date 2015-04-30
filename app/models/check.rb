@@ -11,7 +11,9 @@ class Check < ActiveRecord::Base
   end
 
   def user_name
-    self.user.name
+    if self.user
+      self.user.name
+    end
   end
 
 end

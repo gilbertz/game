@@ -1,4 +1,6 @@
 Game::Application.routes.draw do
+  resources :card_options
+
   resources :user_scores
   post '/' => 'wx_third_auth#componentVerifyTicket'
   get '/authpage' => 'wx_third_auth#authpage'
@@ -47,6 +49,7 @@ Game::Application.routes.draw do
   #get '/weitest/gabrielecirulli' => 'weitest#gabrielecirulli'
   get '/weitest/wx_share' => 'weitest#wx_share'
   get '/weitest/weixin_redpack' => 'weitest#weixin_redpack', :as=>"weixin_redpack"
+  get '/weitest/weixin_check' => 'weitest#weixin_check', :as=>"weixin_check"
   get '/weitest/weixin_score' => 'weitest#weixin_score', :as=>"weixin_score"
   get '/weitest/report' => 'weitest#report',  :as=>"report"
   get '/materials/report' => 'materials#report',  :as=>"mreport" 
@@ -103,6 +106,7 @@ Game::Application.routes.draw do
 
   get '/gs/:id' => 'weitest#o2o'
   get '/:beaconid/gs/:id' => 'weitest#o2o'
+  get '/:beaconid/gg/:id' => 'weitest#allocation'
   get '/:beaconid/wshows/:id' => 'wshows#show'
   get '/:beaconid/home' => 'home#home' 
 
@@ -120,13 +124,35 @@ Game::Application.routes.draw do
     get 'home/clear_single_cache/:id' => "home#clear_single_cache"
     
     get 'records' =>'records#index'
+
+    get 'get_objects' => 'materials#get_objects'
   
     resources :scores 
-    resources :ibeacons
+    resources :ibeacons do
+      member do
+        get :clone
+      end
+    end
     resources :burls
-    resources :cards
-    resources :redpacks
-    resources :bgames
+    resources :cards do
+      resources :card_options
+      member do
+        get :clone 
+      end 
+    end
+    resources :redpacks do
+      resources :redpack_times  
+      resources :redpack_values
+      resources :redpack_people
+      member do
+        get :clone
+      end
+    end
+    resources :bgames do
+      member do
+        get :clone
+      end
+    end
     resources :checks
     resources :flinks
 
@@ -147,6 +173,7 @@ Game::Application.routes.draw do
       resources :images, only: :new
       resources :answers, only: :new
       resources :questions, only: :new
+      resources :bgames, only: [:new, :edit]
       member do
         get :clone
         get :update_state

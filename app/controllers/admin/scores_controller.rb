@@ -4,7 +4,11 @@ class Admin::ScoresController < Admin::BaseController
   respond_to :html
 
   def index
-    @scores = Score.all
+    cond = "1=1"
+    cond += " and beaconid=#{params[:beaconid]}" if params[:beaconid]
+    cond += " and user_id=#{params[:user_id]}" if params[:user_id]
+    cond += " and game_id=#{params[:game_id]}" if params[:game_id]
+    @scores = Score.where(cond).order('created_at desc').page(params[:page]) 
     respond_with(@scores)
   end
 

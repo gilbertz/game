@@ -5,6 +5,7 @@ class Material < ActiveRecord::Base
   belongs_to :user
   has_many :images, as: :viewable, class_name: "Image", dependent: :destroy
   has_many :answers, as: :viewable, class_name: "Answer",  dependent: :destroy
+  has_many :bgames, :foreign_key => "game_id"
 
   has_many :questions
   has_many :records
@@ -278,7 +279,7 @@ class Material < ActiveRecord::Base
         "http://www.021591.com/weitest/#{self.url}"
       end
     else
-       "http://i.51self.com/#{beaconid}/gs/#{self.url}"
+       "http://#{WX_DOMAIN}/#{beaconid}/gs/#{self.url}"
     end
   end
 
@@ -305,6 +306,17 @@ class Material < ActiveRecord::Base
   def get_qr_img
     'http://qr.liantu.com/api.php?text=' + self.get_link('shengye')
   end  
+
+
+  def self.get_games_for_select(user_id=nil)
+    cond = 'rrr=1'
+    if user_id
+      cond=" and user_id=#{user_id}"
+    end
+    gs = Material.where(cond).order('created_at desc').limit(50)
+    gs.map{|b|[b.name, b.id]}
+  end
+
 
   private
   def clone_self

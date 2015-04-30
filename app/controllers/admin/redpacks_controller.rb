@@ -21,23 +21,31 @@ class Admin::RedpacksController < Admin::BaseController
   end
 
   def edit
+    @redpack = Redpack.find params[:id]
   end
 
   def create
     @redpack = Redpack.new(redpack_params)
     @redpack.save
-    respond_with(@redpack)
+    redirect_to [:admin, :redpacks]
   end
 
   def update
     @redpack.update(redpack_params)
-    respond_with(@redpack)
+    redirect_to [:admin, :redpacks] 
   end
 
   def destroy
     @redpack.destroy
-    respond_with(@redpack)
+    redirect_to [:admin, :redpacks] 
   end
+
+  def clone
+    rp = Redpack.find params[:id]
+    rp.cloning(true)
+    redirect_to [:admin,:redpacks]
+  end
+
 
   private
     def set_redpack

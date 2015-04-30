@@ -13,4 +13,13 @@ def share_link(m, b)
   surl
 end
 
+
+def get_objects(tt, beaconid=nil)
+  cond = '1=1'
+  cond = "beaconid=#{beaconid}" if beaconid
+  obs =  tt.capitalize.constantize.where(cond).order('created_at desc').limit(20)
+  [['无', 0]] + obs.map{|ob|[ob.title, ob.id]}
+end
+
+
 end

@@ -1,9 +1,39 @@
-# ncoding: utf-8
+# encoding: utf-8
 class WeitestController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:result]
   
   before_filter :weixin_authorize, :only => [:o2o]
+
+  def weixin_check
+      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+      Check.create(user_id: current_user.id, beaconid: beaconid, game_id: params[:game_id])
+      render :status => 200, json: {'info' => "报名成功"}
+  end
+  # 今天有记录 从点的人的allocation拿出一定score存储，不存allocation
+  # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
+  #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
+
+
+  def bus_allocation
+    if redpack_per_day(current_user.id, params[:game_id]) < 2
+      get_object
+      info = Redpack.first_allocation(current_user.id, params[:game_id], @object)
+      render :status => 200, json: {'info' => info}
+    elsif redpack_per_day(current_user.id, params[:game_id]) == 2
+      render :status => 200, json: {'info' => "今天次数用完"}
+    end 
+  end
+
+  def not_bus_allocation
+    if redpack_per_day(current_user.id, params[:game_id]) < 2
+      get_object
+      Redpack.share_allocation(current_user.id, params[:openidshare], params[:game_id], @object)
+      render :status => 200, json: {'info' => "不在公交也有红包"}
+    elsif redpack_per_day(current_user.id, params[:game_id]) ==2
+      render :status => 200, json: {'info' => "今天次数用完"}
+    end 
+  end
 
   def result
     unless params[:material_id].blank?
@@ -154,6 +184,7 @@ class WeitestController < ApplicationController
     @material = Material.by_hook params[:id]
     get_beacon
     get_object
+    #get_redpack_time
 
     #@material.wx_ln = 'http://mp.weixin.qq.com/s?__biz=MzA4NTkwNTIxOQ==&mid=201004496&idx=1&sn=c3dcb0820a5c3746991de7de63429fc8#wechat_redirect'
     #@material.wx_ln = "http://mp.weixin.qq.com/s?__biz=MzA3MDk0MzMxNQ==&mid=200586729&idx=1&sn=599156aecedbfa9317785390ddb0b448#wechat_redirect"
@@ -254,7 +285,7 @@ class WeitestController < ApplicationController
     get_object
     if current_user and not @record
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      @rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid]).to_i
+      @rp = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].weixin_post(current_user, params[:beaconid]).to_i
       Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp)
       render :status => 200, json: {'rp' => @rp}
     else
@@ -294,7 +325,7 @@ class WeitestController < ApplicationController
       #    r.save
       #  end
       #else
-      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => params[:score], :remark=>params[:remark])
+      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
       #end
     end
     render nothing: true
@@ -369,10 +400,15 @@ class WeitestController < ApplicationController
     render layout: false
   end
 
+
+
+
   private
-  def authorize_url(url)
-    rurl = 'http://i.51self.com/users/auth/weixin/callback?rurl=' + url
-    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx456ffb04ee140d84&redirect_uri=#{rurl}&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect"
+  def authorize_url(url, scope='snsapi_base')
+    rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
+    scope = 'snsapi_userinfo'
+    #scope = 'snsapi_base'
+    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=#{scope}&connect_redirect=1#wechat_redirect"
   end
 
   def check_cookie
@@ -390,9 +426,16 @@ class WeitestController < ApplicationController
     end
   end
 
+  def check_shake_history
+    if params[:ticket] and params[:activityid]
+      ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
+    end
+  end
+
 
   def weixin_authorize
     check_cookie
+    check_shake_history
     unless current_user
       redirect_to authorize_url(request.url)
     end
@@ -404,15 +447,24 @@ class WeitestController < ApplicationController
     end
   end
 
-
   def get_object
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
       if current_user and @object
-        rs = Record.where(:user_id => current_user.id, :game_id => @material.id)
+        rs = Record.where(:user_id => current_user.id, :game_id => @material.id).order('created_at desc')
         @record = rs[0] if rs and rs.length > 0 
       end
     end
   end
 
-end
+  def get_redpack_time
+    if current_user 
+      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+      if Time.now.to_i>Redpack.where(:beaconid => beaconid).order("start_time asc")[0].start_time.to_i
+        Redpack.where(:beaconid => beaconid).order("start_time asc")[0].update(:state =>1)
+      end
+      @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
+    end
+  end 
+
+end 

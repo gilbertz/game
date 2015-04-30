@@ -71,7 +71,8 @@ class Image < ActiveRecord::Base
 
     photo_path = "/data/www/game/public/uploads/sucai/"
     new_str = Time.now.to_i.to_s + ((100..999).to_a.shuffle[0].to_s)
-    if file_type == "jpg" or file_type == "png"
+    #if file_type == "jpg" or file_type == "png"
+    if true
       photo_file_name = new_str + "." + file_type
       photo_file = photo_path + photo_file_name
       File.open(photo_file, "wb") { |f| f.write( bi_image ) }

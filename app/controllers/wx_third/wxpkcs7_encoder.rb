@@ -51,3 +51,25 @@ class WXPKCS7Encoder
 
   puts decode(encode("xxx32"))
 end
+
+
+
+# /**
+#  * Prpcrypt class
+#  *
+#  * 提供接收和推送给公众平台消息的加解密接口.
+#  */
+class WXPrpcrypt
+  # /**
+	 # * 随机生成16位字符串
+	 # * @return string 生成的字符串
+	 # */
+  def getRandomStr(len=16)
+    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    newStr = ""
+    1.upto(len) { |i| newStr << chars[rand(chars.size-1)] }
+    return newStr
+  end
+
+end
+
