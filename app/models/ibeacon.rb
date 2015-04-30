@@ -1,5 +1,12 @@
 class Ibeacon < ActiveRecord::Base
   belongs_to :user  
+  has_many :bgames, :foreign_key => "beaconid"
+  has_many :cards, :foreign_key => "beaconid"
+  has_many :redpacks, :foreign_key => "beaconid"
+  has_many :records, :foreign_key => "beaconid"
+  has_many :scores, :foreign_key => "beaconid"
+  has_many :user_scores, :foreign_key => "beaconid"  
+  has_many :checks, :foreign_key => "beaconid"
 
   def user_name
     self.user.name if self.user

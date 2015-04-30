@@ -1,11 +1,18 @@
 class Bgame < ActiveRecord::Base
   belongs_to :material
+  belongs_to :ibeacon
 
   def cn_state; { 0 => '下线', 1 => '上线', nil => '下线' }[state] end
 
   def title
     game_name
   end 
+
+  def get_beacon
+    if self.beaconid
+      Ibeacon.find self.beaconid
+    end
+  end
 
   def beacon_name
     if self.beaconid
@@ -26,4 +33,13 @@ class Bgame < ActiveRecord::Base
       return b.name if b
     end
   end
+
+  def game_link
+    self.get_game.get_link(self.get_beacon.url)    
+  end
+
+  def get_qr_img
+    'http://qr.liantu.com/api.php?text=' + self.game_link
+  end
+
 end

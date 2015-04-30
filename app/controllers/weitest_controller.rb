@@ -453,7 +453,7 @@ class WeitestController < ApplicationController
     end
     if current_user
       cond = '1=1'
-      cond = "beaconid = #{@beacon.id}"
+      cond = "beaconid = #{@beacon.id}" if @beacon
       rs = Record.where(cond).where(:user_id => current_user.id, :game_id => @material.id).order('created_at desc')
       @record = rs[0] if rs and rs.length > 0
     end  

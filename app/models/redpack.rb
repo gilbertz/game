@@ -3,6 +3,9 @@ class Redpack < ActiveRecord::Base
   require 'uri'
   require 'rexml/document'
   include REXML
+  
+  belongs_to :ibeacon
+
 
   def title
     self.action_title
