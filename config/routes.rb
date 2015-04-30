@@ -123,17 +123,31 @@ Game::Application.routes.draw do
     get 'get_objects' => 'materials#get_objects'
   
     resources :scores 
-    resources :ibeacons
+    resources :ibeacons do
+      member do
+        get :clone
+      end
+    end
     resources :burls
     resources :cards do
       resources :card_options
+      member do
+        get :clone 
+      end 
     end
     resources :redpacks do
       resources :redpack_times  
       resources :redpack_values
       resources :redpack_people
+      member do
+        get :clone
+      end
     end
-    resources :bgames
+    resources :bgames do
+      member do
+        get :clone
+      end
+    end
     resources :checks
     resources :flinks
 

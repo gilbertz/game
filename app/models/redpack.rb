@@ -15,6 +15,11 @@ class Redpack < ActiveRecord::Base
     end
   end
 
+  def cloning(recursive=false)
+    Redpack.create self.attributes.except!("created_at", "id")
+  end
+ 
+
   def weixin_post(user,beaconid_url)
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
     http = Net::HTTP.new(uri.host, uri.port)
@@ -149,8 +154,8 @@ class Redpack < ActiveRecord::Base
       Score.create(:user_id => user_id, :value => -record_score,:from_user_id => user_id)
       Record.create(:user_id => user_id, :from_user_id => user_id, :beaconid=> beaconid, :game_id => game_id, :score => record_score, :allocation => record_allocation)
     end
-
-    def share_allocation(user_id, openidshare , game_id, redpack)
+    
+   def share_allocation(user_id, openidshare , game_id, redpack)
      redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
      person_num = redpack_time.person_num
      if openidshare

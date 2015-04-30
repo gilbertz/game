@@ -14,4 +14,8 @@ class Ibeacon < ActiveRecord::Base
     ibs.map{|b|[b.name, b.id]}
   end
 
+  def cloning(recursive=false)
+    Ibeacon.create self.attributes.except!("created_at", "id")
+  end
+
 end

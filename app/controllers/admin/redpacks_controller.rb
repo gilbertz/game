@@ -40,6 +40,13 @@ class Admin::RedpacksController < Admin::BaseController
     redirect_to [:admin, :redpacks] 
   end
 
+  def clone
+    rp = Redpack.find params[:id]
+    rp.cloning(true)
+    redirect_to [:admin,:redpacks]
+  end
+
+
   private
     def set_redpack
       @redpack = Redpack.find(params[:id])

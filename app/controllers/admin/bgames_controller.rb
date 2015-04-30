@@ -46,6 +46,13 @@ class Admin::BgamesController < Admin::BaseController
     redirect_to [:admin, :bgames]
   end
 
+  def clone
+    bgame = Bgame.find params[:id]
+    bgame.cloning(true)
+    redirect_to [:admin,:bgames]
+  end
+
+
   private
     def set_bgame
       @bgame = Bgame.find(params[:id])
