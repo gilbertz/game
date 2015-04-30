@@ -14,23 +14,23 @@ class WeitestController < ApplicationController
   # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
   #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
 
-
   def bus_allocation
-    if redpack_per_day(current_user.id, params[:game_id]) < 2
+    if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
+      @material = Material.find_by(id: params[:game_id]) 
       get_object
-      info = Redpack.first_allocation(current_user.id, params[:game_id], @object)
+      info = Redpack.first_allocation(current_user.id, params[:game_id], @object,params[:beaconid])
       render :status => 200, json: {'info' => info}
-    elsif redpack_per_day(current_user.id, params[:game_id]) == 2
+    elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 2
       render :status => 200, json: {'info' => "今天次数用完"}
     end 
   end
 
   def not_bus_allocation
-    if redpack_per_day(current_user.id, params[:game_id]) < 2
+    if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
       get_object
       Redpack.share_allocation(current_user.id, params[:openidshare], params[:game_id], @object)
       render :status => 200, json: {'info' => "不在公交也有红包"}
-    elsif redpack_per_day(current_user.id, params[:game_id]) ==2
+    elsif Record.redpack_per_day(current_user.id, params[:game_id]) ==2
       render :status => 200, json: {'info' => "今天次数用完"}
     end 
   end
@@ -229,6 +229,7 @@ class WeitestController < ApplicationController
 
     get_beacon
     get_object 
+    get_time_amount_time
     if @material.category
       render 'o2o', layout: false
     end
@@ -448,6 +449,7 @@ class WeitestController < ApplicationController
   end
 
   def get_object
+    p @material 
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
     end
@@ -468,5 +470,11 @@ class WeitestController < ApplicationController
       @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
     end
   end 
+
+  def get_time_amount_time
+    get_object
+    redpack_time = RedpackTime.find_by(:redpack_id =>@object.id)
+    @time = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0].time
+  end
 
 end 
