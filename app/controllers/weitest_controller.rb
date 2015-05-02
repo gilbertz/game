@@ -229,7 +229,7 @@ class WeitestController < ApplicationController
 
     get_beacon
     get_object 
-    get_time_amount_time
+    #get_time_amount_time
     if @material.category
       render 'o2o', layout: false
     end
