@@ -6,8 +6,12 @@ end
 
 
 def share_link(m, b)
-  surl = m.get_o2o_url(b)
-  if params[:openid] and current_user
+  unless m.share_url.blank?
+    surl = m.get_o2o_url(b)
+  else
+    surl = m.share_url
+  end
+  if m.social_share? and current_user
     surl += "?openid=#{current_user.get_openid}"
   end
   surl

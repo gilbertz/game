@@ -317,6 +317,13 @@ class Material < ActiveRecord::Base
     gs.map{|b|[b.name, b.id]}
   end
 
+  def social_share?
+    if self.category and  self.category.game_type_id == 15
+      return true
+    end
+    return false
+  end
+
 
   private
   def clone_self
