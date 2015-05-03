@@ -1,6 +1,4 @@
 Game::Application.routes.draw do
-  resources :card_options
-
   resources :user_scores
   post '/' => 'wx_third_auth#componentVerifyTicket'
   
@@ -130,6 +128,7 @@ Game::Application.routes.draw do
         get :clone
       end
     end
+    resources :merchants
     resources :burls
     resources :cards do
       resources :card_options

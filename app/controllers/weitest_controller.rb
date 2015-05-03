@@ -395,11 +395,12 @@ class WeitestController < ApplicationController
 
   def broadcast
     response.headers['Content-Type'] = 'text/event-stream'
-    #render :text => 'you are lucky!'
-    10.times {
-      response.stream.write "data: #{rand(100)} \n\n"
-      sleep 1
-    }
+    get_beacon
+    #@beacon = Ibeacon.find_by(:url => 'lcxggg')
+    @beacon.records.order('created_at desc').limit(3).sample(1).each do |r|
+       response.stream.write "data: #{r.to_s} \n\n"
+       sleep 1
+    end
     response.stream.close
   end
 

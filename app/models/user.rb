@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :redpacks
   has_many :images
   has_many :user_scores
+  has_many :merchants
 
   before_create :make_password
 

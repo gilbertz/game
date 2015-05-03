@@ -8,6 +8,15 @@ class Ibeacon < ActiveRecord::Base
   has_many :user_scores, :foreign_key => "beaconid"  
   has_many :checks, :foreign_key => "beaconid"
 
+  before_validation :auto_url
+
+  def auto_url
+    if self.url.blank?
+      self.url=Devise.friendly_token[0, 20]+User.maximum('id').to_s
+    end
+  end
+
+
   def user_name
     self.user.name if self.user
   end
