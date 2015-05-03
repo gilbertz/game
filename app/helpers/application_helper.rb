@@ -6,7 +6,7 @@ end
 
 
 def share_link(m, b)
-  unless m.share_url.blank?
+  if m.share_url.blank?
     surl = m.get_o2o_url(b)
   else
     surl = m.share_url
