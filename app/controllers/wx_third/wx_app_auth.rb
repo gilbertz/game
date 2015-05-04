@@ -18,7 +18,9 @@ module WxAppAuth
     res = RestClient::get(url)
     ret = JSON.parse(res.body)
 
-    p "get_app_auth_info == #{ret.to_s}"
+#    p "get_app_auth_info == #{ret.to_s}"
+
+    return ret
   end
 
 

@@ -24,13 +24,16 @@ class WxAppAuthController < ApplicationController
     else
       appid = params["appid"]
       app_auth_info = get_app_auth_info(appid,code)
-
+      p app_auth_info
       openid = app_auth_info["openid"]
       scope = app_auth_info["scope"]
+      p scope
+      p "openid = #{openid}"
       # 非静默授权 查询用户的信息保存下来
       if scope == "snsapi_userinfo"
         access_token = app_auth_info["access_token"]
         Thread.new do
+         p "*******************************"
           user_info = get_user_info(openid,access_token)
           p "user_info = #{user_info}"
         end
