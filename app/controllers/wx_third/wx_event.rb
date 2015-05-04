@@ -12,13 +12,13 @@ class WxEvent
       create_time = event_msg["CreateTime"].to_s
       p "from_user_name = #{from_user_name}  create_time = #{create_time}"
       #判重处理
-      if UniqueKeyUtil.exitsUnique?("#{from_user_name}#{create_time}") == true
-	p "uniqueKeyUtil exit"      
-	return
+      if UniqueKeyUtil.exitsUnique?("#{from_user_name}_#{create_time}") == true
+	      p "uniqueKeyUtil exit"
+	      return
       end
-      UniqueKeyUtil.setUnique("#{from_user_name}#{create_time}")
+      UniqueKeyUtil.setUnique("#{from_user_name}_#{create_time}")
      
-     p "==================begin event"
+     p "==================begin event============"
 
       begin
         # 用户领取了卡券
