@@ -476,7 +476,9 @@ class WeitestController < ApplicationController
   def get_time_amount_time
     get_object
     redpack_time = RedpackTime.where(:redpack_id =>@object.id).order("start_time desc")[0]
+    if redpack_time
     @time = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0].time
+  end
   end
 
 end 
