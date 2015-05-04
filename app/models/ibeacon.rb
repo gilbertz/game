@@ -17,7 +17,7 @@ class Ibeacon < ActiveRecord::Base
   end
   
   def get_merchant
-    m = Merchant.find_by_beaconid( :beaconid => self.id )
+    m = Merchant.find_by( :beaconid => self.id )
     m = Merchant.find 1 unless m
     m
   end

@@ -24,17 +24,21 @@ class Redpack < ActiveRecord::Base
 
 
   def weixin_post(user,beaconid_url)
+    beacon = Ibeacon.find_by_url(beaconid_url)
+    return unless beacon
+    m = beacon.get_merchant    
+
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == "https"  # enable SSL/TLS
-    http.cert =OpenSSL::X509::Certificate.new(File.read("weixin_pay/cert/apiclient_cert.pem"))
-    http.key =OpenSSL::PKey::RSA.new(File.read("weixin_pay/cert/apiclient_key.pem"), '1229344702')# key and password
+    http.cert =OpenSSL::X509::Certificate.new(File.read(m.certificate))
+    http.key =OpenSSL::PKey::RSA.new(File.read(m.rsa), m.rsa_key)# key and password
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE #这个也很重要
 
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
 
-    request.body = array_xml(user,beaconid_url)
+    request.body = array_xml(user,beaconid_url, m)
     response = http.start do |http|
       ret = http.request(request)
       puts request.body
@@ -46,7 +50,7 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-  def array_xml(user,beaconid_url)
+  def array_xml(user,beaconid_url, m)
     current_redpack = get_current_redpack(beaconid_url)
     money = get_redpack_rand(beaconid_url)
     doc = Document.new"<xml/>"
@@ -58,9 +62,9 @@ class Redpack < ActiveRecord::Base
     el10 = root_node.add_element "max_value"
     el10.text = money
     el2 = root_node.add_element "mch_billno"
-    el2.text = '1233034702'+Time.new.strftime("%Y%d%m").to_s+rand(9999999999).to_s
+    el2.text = m.mch_id.to_s + Time.new.strftime("%Y%d%m").to_s+rand(9999999999).to_s
     el3 = root_node.add_element "mch_id"
-    el3.text = '1233034702'
+    el3.text = m.mch_id.to_s
     el9 = root_node.add_element "min_value"
     el9.text = money
     el5 = root_node.add_element "nick_name"
@@ -80,10 +84,10 @@ class Redpack < ActiveRecord::Base
     el12 = root_node.add_element "wishing"
     el12.text = current_redpack.wishing
     el4 = root_node.add_element "wxappid"
-    el4.text = WX_APPID
+    el4.text = m.wxappid
 
     stringA="act_name="+el14.text.to_s+"&client_ip="+el13.text.to_s+"&max_value="+el10.text.to_s+"&mch_billno="+el2.text.to_s+"&mch_id="+el3.text.to_s+"&min_value="+el9.text.to_s+"&nick_name="+el5.text.to_s+"&nonce_str="+el21.text.to_s+"&re_openid="+el22.text.to_s+"&remark="+el16.text.to_s+"&send_name="+el6.text.to_s+"&total_amount="+el8.text.to_s+"&total_num="+el11.text.to_s+"&wishing="+el12.text.to_s+"&wxappid="+el4.text.to_s
-    stringSignTemp=stringA+"&key=wangpeisheng1234567890leapcliffW"
+    stringSignTemp=stringA+"&key=" + m.key
     puts stringSignTemp
     sign=Digest::MD5.hexdigest(stringSignTemp).upcase
     el1 = root_node.add_element "sign"
