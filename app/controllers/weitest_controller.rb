@@ -305,7 +305,7 @@ class WeitestController < ApplicationController
         if au
           s.from_user_id = au.user_id
           f_value = rand(100) 
-          Score.new(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
+          Score.create(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
         end
       end
       s.save
