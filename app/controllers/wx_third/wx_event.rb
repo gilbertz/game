@@ -18,7 +18,7 @@ class WxEvent
  #     end
   #    UniqueKeyUtil.setUnique("#{from_user_name}#{create_time}")
      
-     p "==================begin event"
+     p "==================begin event============"
 
       begin
         # 用户领取了卡券
