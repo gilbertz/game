@@ -41,6 +41,7 @@ class WxAppAuthController < ApplicationController
       end
 
       redirect_to dispatch_url(appid,openid)
+      return
 
     end
 
