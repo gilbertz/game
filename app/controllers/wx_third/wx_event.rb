@@ -1,4 +1,4 @@
-require File.expand_path('../wx_third/wx_util',__FILE__)
+require File.expand_path('../wx_util',__FILE__)
 class WxEvent
 
   class << self

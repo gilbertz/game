@@ -185,6 +185,18 @@ class WxThirdAuthController < ApplicationController
       card_info = WxUtil.query_card_detail(authorizer_appid,card_id)
      if card_info
        p "card_info : #{card_info.to_s}"
+       card = Card.find_by_cardid(card_id)
+       if card.nil?
+         card = Card.new
+       end
+       card.cardid = card_id
+       card.wx_authorizer_id = authorizer_appid
+       card.appid = authorizer_appid
+       card.detail_info = card_info
+
+       card.save
+
+
      end
    end
 
