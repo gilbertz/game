@@ -1,8 +1,12 @@
 Game::Application.routes.draw do
   resources :user_scores
   post '/' => 'wx_third_auth#componentVerifyTicket'
-  
-  mount WeixinRailsMiddleware::Engine, at: "/"
+  get '/authpage' => 'wx_third_auth#authpage'
+  get '/dothirdauth' => 'wx_third_auth#dothirdauth'
+  get '/auth/callback' => 'wx_third_auth#callback'
+
+  post '/:appid/callback' => 'wx_third_auth#appCallback'
+#  mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 
   # The priority is based upon order of creation: first created -> highest priority.

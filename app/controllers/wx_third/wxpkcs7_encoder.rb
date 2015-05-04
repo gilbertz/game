@@ -1,5 +1,4 @@
-#require './wx_error_code'
-
+require File.expand_path('../wx_error_code',__FILE__)
 # /**
 # * PKCS7Encoder class
 # *
@@ -7,8 +6,7 @@
 # */
 class WXPKCS7Encoder
 
-  @@block_size = 70
-
+  @@block_size = 32
    # /**
 	 # * 对需要加密的明文进行填充补位
 	 # * @param $text 需要进行填充补位操作的明文
@@ -45,7 +43,6 @@ class WXPKCS7Encoder
     if pad < 1 || pad > @@block_size
       pad = 0
     end
-
     return text[0,text.length - pad];
   end
 
@@ -54,6 +51,7 @@ class WXPKCS7Encoder
 
   puts decode(encode("xxx32"))
 end
+
 
 
 # /**
@@ -74,3 +72,4 @@ class WXPrpcrypt
   end
 
 end
+

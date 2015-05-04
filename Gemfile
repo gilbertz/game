@@ -30,7 +30,7 @@ gem 'jquery-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
-
+gem 'json'
 group :development do
   gem 'quiet_assets'
   gem 'rvm-capistrano'
@@ -89,6 +89,12 @@ gem 'omniauth-oauth2'
 gem 'omniauth-weixin'
 gem 'devise'
 
+gem 'actionpack-xml_parser'
+
+gem 'qy_wechat', '~> 1.0.1'
+
+
 gem 'mina'
 gem 'passenger'
 gem 'sidekiq'
+

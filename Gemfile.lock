@@ -25,6 +25,8 @@ GEM
       actionpack (>= 4.0.0, < 5.0)
     actionpack-page_caching (1.0.2)
       actionpack (>= 4.0.0, < 5)
+    actionpack-xml_parser (1.0.2)
+      actionpack (>= 4.0.0, < 5)
     activemodel (4.0.0)
       activesupport (= 4.0.0)
       builder (~> 3.1.0)
@@ -159,6 +161,12 @@ GEM
     polyglot (0.3.5)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
+    qy_wechat (1.0.1)
+      multi_xml (>= 0.5.2)
+      nokogiri (>= 1.6.1)
+      rails (>= 3.1)
+      railties (>= 3.1)
+      roxml
     rabl (0.9.3)
       activesupport (>= 2.3.14)
     rack (1.5.2)
@@ -268,6 +276,7 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
+  actionpack-xml_parser
   bcrypt-ruby
   coffee-rails (~> 4.0.0)
   devise
@@ -275,6 +284,7 @@ DEPENDENCIES
   faraday
   jbuilder (~> 1.2)
   jquery-rails
+  json
   kaminari
   mina
   mysql2 (~> 0.3.14)
@@ -286,6 +296,7 @@ DEPENDENCIES
   omniauth-weixin
   passenger
   quiet_assets
+  qy_wechat (~> 1.0.1)
   rabl (~> 0.9.3)
   rails (= 4.0.0)
   ransack!

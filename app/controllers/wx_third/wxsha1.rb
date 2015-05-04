@@ -1,3 +1,4 @@
+require File.expand_path('../wx_error_code',__FILE__)
 require 'digest/sha2'
 # /**
 #  * SHA1 class
@@ -19,14 +20,11 @@ class WXSHA1
       str = array.join()
       # 用拼接好的字符串进行 sha1加密f
       shaStr = Digest::SHA1.hexdigest(str)
-
       return shaStr
     rescue
-        return ""
+        return nil
     end
   end
-
-
   getSHA1("1","ew","24","efwfw");
 
 end
