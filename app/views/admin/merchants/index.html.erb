@@ -1,0 +1,41 @@
+<% unless @merchants.blank? %>
+
+<table class="table">
+
+  <tr>
+    <th>ID</th>
+    <th>name</th>
+    <th>ibeacon</th>
+    <th>user</th>
+    <th>State</th>
+    <th>mch_id</th>
+    <th>wxappid</th>
+    <th>key</th>
+    <th>certificate</th>
+    <th>rsa</th>
+    <th>rsa_key</th>
+    <th>level</th>
+    <th>money</th>
+    <th>Operate</th>
+  </tr>
+
+  <% @merchants.each do |merchant| %>
+  <tr>
+    <td><%= merchant.id %></td>
+    <td><%= merchant.name %></td>
+    <td><%= merchant.beacon_name %></td>
+    <td><%= merchant.user_name %></td>
+    <td><%= merchant.state %></td>
+    <td><%= merchant.mch_id %></td>
+    <td><%= merchant.wxappid %></td>
+    <td><%= merchant.key %></td>
+    <td><%= merchant.certificate  %></td> 
+    <td><%= merchant.rsa %></td>
+    <td><%= merchant.rsa_key %></td>
+    <td><%= merchant.level %></td>
+    <td><%= merchant.money %></td>
+    <td><%= link_to "Edit", edit_admin_merchant_path(merchant) %> | <%= link_to "delete", admin_merchant_path(merchant), :method => :delete, confirm: "确认删除?" %></td>
+  </tr>
+  <% end %>
+</table>
+<% end %>

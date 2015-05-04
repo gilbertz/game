@@ -11,14 +11,13 @@
     <th>url</th>
     <th>provider</th>
     <th>uid</th>
-    <th>url</th> 
     <th>Operate</th>
   </tr>
 
   <% @ibeacons.each do |ibeacon| %>
   <tr>
     <td><%= ibeacon.id %></td>
-    <td><%= ibeacon.name %></td>
+    <td><%= link_to ibeacon.name, "/weitest/1325180350?beaconid=#{ibeacon.url}" %></td>
     <td><%= ibeacon.user_name %></td>
     <td><%= ibeacon.remark %></td>
     <td><%= ibeacon.state %></td>

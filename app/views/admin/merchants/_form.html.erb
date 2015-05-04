@@ -1,0 +1,95 @@
+<%= form_for [:admin, @merchant] do |f| %>
+     
+    <div class="control-group">
+      <label class="control-label">name</label>
+      <div class="controls">
+        <%= f.text_field :name, required: true, style: "width:500px" %>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <label class="control-label">user</label>
+      <div class="controls">
+        <%= f.text_field :user_id, required: true, style: "width:500px" %>
+      </div>
+    </div>
+
+    
+    <div class="control-group">
+      <label class="control-label">ibeacon</label>
+      <div class="controls">
+        <%= f.select :beaconid, Ibeacon.get_ibeacons_for_select, required: true %>    
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <label class="control-label">mch_id</label>
+      <div class="controls">
+        <%= f.text_field :mch_id %>
+      </div>
+    </div>
+     
+    
+    <div class="control-group">
+      <label class="control-label">wxappid</label>
+      <div class="controls">
+        <%= f.text_field :wxappid %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">key</label>
+      <div class="controls">
+        <%= f.text_field :key %>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <label class="control-label">certificate</label>
+      <div class="controls">
+        <%= f.text_field :certificate %>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <label class="control-label">rsa</label>
+      <div class="controls">
+        <%= f.text_field :rsa %>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <label class="control-label">rsa_key</label>
+      <div class="controls">
+        <%= f.text_field :wxappid %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">level</label>
+      <div class="controls">
+        <%= f.text_field :level %>
+      </div>
+    </div>
+    
+
+    <div class="control-group">
+      <label class="control-label">State</label>
+      <div class="controls">
+        <%= f.select :state, Admin::IbeaconsController::State, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <%= f.submit %>
+      </div>
+    </div>
+
+<% end %>

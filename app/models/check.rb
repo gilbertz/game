@@ -1,5 +1,6 @@
 class Check < ActiveRecord::Base
   belongs_to :user
+  belongs_to :ibeacon
   
   def beacon_name
     if self.beaconid

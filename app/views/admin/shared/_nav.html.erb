@@ -27,13 +27,10 @@
           <li class="<%= controller_name.in?(['ibeacons']) ? 'active' : '' %>">
             <%= link_to 'ibeacon管理', [:admin,:ibeacons] %>
           </li>
-
-
-          <!--
-          <li class="<%= controller_name.in?(['burls']) ? 'active' : '' %>">
-            <%= link_to 'burl管理', [:admin, :burls] %>
+          
+          <li class="<%= controller_name.in?(['merchants']) ? 'active' : '' %>">
+            <%= link_to '商户管理', [:admin, :merchants] %>
           </li>
-          -->
 
           <li class="<%= controller_name.in?(['cards']) ? 'active' : '' %>">
             <%= link_to '卡券管理', [:admin, :cards] %>
