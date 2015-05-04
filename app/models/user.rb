@@ -41,6 +41,11 @@ class User < ActiveRecord::Base
     return user if user && user.authenticate?(pwd)
   end
 
+  def self.by_openid(openid)
+    au = Authentication.find_by_uid(openid)
+    au.user if au 
+  end
+
   def authenticate?(pwd)
     self.encrypt_pwd == generate_encrypt_pwd(pwd)
   end
