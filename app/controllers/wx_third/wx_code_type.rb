@@ -1,0 +1,18 @@
+module WxCodeType
+
+  # 文本
+  CODE_TYPE_TEXT = "CODE_TYPE_TEXT"
+
+  #一维 码
+  CODE_TYPE_BARCODE = "CODE_TYPE_BARCODE"
+
+  # 二维码
+  CODE_TYPE_QRCODE = "CODE_TYPE_QRCODE"
+
+  #二维码无 code 显示
+  CODE_TYPE_ONLY_QRCODE = "CODE_TYPE_ONLY_QRCODE"
+
+  # 一维码无 code 显示
+  CODE_TYPE_ONLY_BARCODE = "CODE_TYPE_ONLY_BARCODE"
+
+end

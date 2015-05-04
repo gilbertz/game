@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504035551) do
+ActiveRecord::Schema.define(version: 20150504093848) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -109,6 +109,20 @@ ActiveRecord::Schema.define(version: 20150504035551) do
 
   add_index "card_options", ["card_id"], name: "index_card_options_on_card_id", using: :btree
 
+  create_table "card_records", force: true do |t|
+    t.string   "card_id"
+    t.string   "appid"
+    t.string   "event"
+    t.datetime "event_time"
+    t.string   "from_user_name"
+    t.string   "is_give_by_friend"
+    t.string   "user_card_code"
+    t.string   "outer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "old_user_card_code"
+  end
+
   create_table "cards", force: true do |t|
     t.integer  "beaconid"
     t.string   "shop_id"
@@ -126,6 +140,10 @@ ActiveRecord::Schema.define(version: 20150504035551) do
     t.integer  "state"
     t.string   "wx_authorizer_id"
     t.text     "detail_info"
+    t.string   "card_type"
+    t.string   "code_type"
+    t.integer  "total_quantity"
+    t.string   "status"
   end
 
   create_table "categories", force: true do |t|
@@ -282,7 +300,17 @@ ActiveRecord::Schema.define(version: 20150504035551) do
     t.string   "rsa_key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "state"
+    t.integer  "level"
+    t.integer  "money"
+    t.integer  "user_id"
+    t.integer  "beaconid"
   end
+
+  add_index "merchants", ["beaconid"], name: "index_merchants_on_beaconid", using: :btree
+  add_index "merchants", ["level"], name: "index_merchants_on_level", using: :btree
+  add_index "merchants", ["user_id"], name: "index_merchants_on_user_id", using: :btree
 
   create_table "question_answers", force: true do |t|
     t.integer "question_id",              null: false

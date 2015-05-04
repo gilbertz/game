@@ -35,41 +35,29 @@ class WxEvent
     #卡券审核通过
     def deal_card_pass_check(appid,event_msg)
       card_id = event_msg["CardId"]
-      card_info = WxUtil.query_card_detail(appid,card_id)
-      if card_info
-        card = Card.find_by_cardid(card_id)
-        if card.nil?
-          card = Card.new
-        end
-        card.cardid = card_id
-        card.appid = appid
-        card.wx_authorizer_id = appid
-        card.detail_info = card_info.to_json
-
-        card.save
-
-      end
-
+      WxUtil.save_card_info(appid,card_id)
     end
     #卡券审核未通过
     def deal_card_not_pass_check(appid,event_msg)
-
+      card_id = event_msg["CardId"]
+      WxUtil.save_card_info(appid,card_id)
     end
 
     #用户领取了卡券事件
     def deal_user_get_card(appid, event_msg)
-
+      WxUtil.save_card_record(appid,event_msg)
     end
 
     #用户删除了卡券事件
     def deal_user_del_card(appid, event_msg)
-
+      WxUtil.save_card_record(appid,event_msg)
     end
 
     #用户使用了卡券事件 －－－》 核销
     def deal_user_comsume_card(appid, event_msg)
-
+      WxUtil.save_card_record(appid,event_msg)
     end
+
 
   end
 
