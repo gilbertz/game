@@ -12,11 +12,11 @@ class WxEvent
       create_time = event_msg["CreateTime"].to_s
       p "from_user_name = #{from_user_name}  create_time = #{create_time}"
       #判重处理
-      if UniqueKeyUtil.exitsUnique?("#{from_user_name}#{create_time}") == true
+#      if UniqueKeyUtil.exitsUnique?("#{from_user_name}#{create_time}") == true
 	p "uniqueKeyUtil exit"      
-	return
-      end
-      UniqueKeyUtil.setUnique("#{from_user_name}#{create_time}")
+	#return
+ #     end
+  #    UniqueKeyUtil.setUnique("#{from_user_name}#{create_time}")
      
      p "==================begin event"
 
@@ -30,8 +30,6 @@ class WxEvent
         elsif event == "user_comsume_card"
           deal_user_comsume_card(appid,event_msg)
         end
-          # content = event_msg["Event"] + "from_callback"
-          # client = WeixinAuthorize::Client.new(appid, nil, nil)
       rescue
 
       ensure
