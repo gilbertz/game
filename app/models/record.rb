@@ -25,7 +25,18 @@ class Record < ActiveRecord::Base
     end
   end
   
-  def redpack_per_day(user_id, game_id)
+  def self.redpack_per_day(user_id, game_id)
     Record.where("user_id = ? and game_id = ? and created_at >= ? and created_at < ?", user_id, game_id, Date.today.beginning_of_day, Date.today.end_of_day).length
   end
+
+ 
+  def to_s
+    remark = self.remark
+    if remark.blank? and self.score.to_i > 0
+      remark = "领到红包#{self.score.to_f/100}元"
+    end
+    self.user_name + remark 
+  end
+  
+
 end

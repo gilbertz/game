@@ -40,9 +40,9 @@ private
     wx_config = WxConfig.find 1
     @set_wx_ad = wx_config.wx_ad
 
-    if params[:openid]
+    if params[:token]
       unless current_user
-        au = Authentication.find_by_uid( params[:openid] )
+        au = Authentication.find_by_uid( params[:token] )
         user = User.find au.user_id if au
         sign_in user
       end

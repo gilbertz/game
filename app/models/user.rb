@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :redpacks
   has_many :images
   has_many :user_scores
+  has_many :merchants
 
   before_create :make_password
 
@@ -38,6 +39,11 @@ class User < ActiveRecord::Base
   def self.auth(name, pwd)
     user = self.find_by_name(name.to_s)                                                         
     return user if user && user.authenticate?(pwd)
+  end
+
+  def self.by_openid(openid)
+    au = Authentication.find_by_uid(openid)
+    au.user if au 
   end
 
   def authenticate?(pwd)

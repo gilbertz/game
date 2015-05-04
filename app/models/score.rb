@@ -1,5 +1,6 @@
 class Score < ActiveRecord::Base
   belongs_to :user
+  belongs_to :ibeacon
 
   after_create do
     self.user.update_user_score(self.beaconid)
