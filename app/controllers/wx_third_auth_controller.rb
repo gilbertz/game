@@ -192,11 +192,8 @@ class WxThirdAuthController < ApplicationController
        card.cardid = card_id
        card.wx_authorizer_id = authorizer_appid
        card.appid = authorizer_appid
-       card.detail_info = card_info
-
+       card.detail_info = card_info.to_json
        card.save
-
-
      end
    end
 

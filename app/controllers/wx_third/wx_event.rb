@@ -44,7 +44,7 @@ class WxEvent
         card.cardid = card_id
         card.appid = appid
         card.wx_authorizer_id = appid
-        card.detail_info = card_info
+        card.detail_info = card_info.to_json
 
         card.save
 
