@@ -31,8 +31,8 @@ class Redpack < ActiveRecord::Base
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == "https"  # enable SSL/TLS
-    http.cert =OpenSSL::X509::Certificate.new(File.read(m.cert))
-    http.key =OpenSSL::PKey::RSA.new(File.read(m.cert), m.mch_id)# key and password
+    http.cert =OpenSSL::X509::Certificate.new(File.read(m.certificate))
+    http.key =OpenSSL::PKey::RSA.new(File.read(m.rsa), m.rsa_key)# key and password
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE #这个也很重要
 
     request = Net::HTTP::Post.new(uri)
@@ -62,9 +62,9 @@ class Redpack < ActiveRecord::Base
     el10 = root_node.add_element "max_value"
     el10.text = money
     el2 = root_node.add_element "mch_billno"
-    el2.text = m.mch_id + Time.new.strftime("%Y%d%m").to_s+rand(9999999999).to_s
+    el2.text = m.mch_id.to_s + Time.new.strftime("%Y%d%m").to_s+rand(9999999999).to_s
     el3 = root_node.add_element "mch_id"
-    el3.text = m.mch_id
+    el3.text = m.mch_id.to_s
     el9 = root_node.add_element "min_value"
     el9.text = money
     el5 = root_node.add_element "nick_name"
