@@ -302,7 +302,11 @@ class WeitestController < ApplicationController
       s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => value)
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
-        s.from_user_id = au.user_id if au
+        if au
+          s.from_user_id = au.user_id
+          f_value = rand(100) 
+          Score.new(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
+        end
       end
       s.save
       render :status => 200, json: {'value' => s.value }
