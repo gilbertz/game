@@ -107,7 +107,11 @@ class WxThirdAuthController < ApplicationController
           authorizer.authorization_info = (authorizer_info_package["authorization_info"]).to_json
           authorizer.qrcode_url = authorizer_info_package["authorizer_info"]["qrcode_url"]
         end
-        authorizer.save
+        flag = authorizer.save
+        # 处理卡券
+        if flag
+            Thread.new {  deal_card(authorizer_appid) }
+        end
         render :json => {"result"=> 0}.to_json
       end
 
@@ -172,6 +176,18 @@ class WxThirdAuthController < ApplicationController
     else
       return false
     end
+  end
+
+  def deal_card(authorizer_appid)
+   card_id_arr =  WxUtil.query_wx_cards(authorizer_appid)
+   p card_id_arr.to_s
+   for card_id in card_id_arr
+      card_info = WxUtil.query_card_detail(authorizer_appid,card_id)
+     if card_info
+       p "card_info : #{card_info.to_s}"
+     end
+   end
+
   end
 
 end

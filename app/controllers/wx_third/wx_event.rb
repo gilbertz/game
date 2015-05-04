@@ -1,3 +1,4 @@
+require File.expand_path('../wx_third/wx_util',__FILE__)
 class WxEvent
 
   class << self
@@ -24,12 +25,30 @@ class WxEvent
           # content = event_msg["Event"] + "from_callback"
           # client = WeixinAuthorize::Client.new(appid, nil, nil)
       rescue
+
+      ensure
+          UniqueKeyUtil.delUnique("#{from_user_name}#{create_time}")
       end
-      UniqueKeyUtil.delUnique("#{from_user_name}#{create_time}")
+
     end
 
     #卡券审核通过
     def deal_card_pass_check(appid,event_msg)
+      card_id = event_msg["CardId"]
+      card_info = WxUtil.query_card_detail(appid,card_id)
+      if card_info
+        card = Card.find_by_cardid(card_id)
+        if card.nil?
+          card = Card.new
+        end
+        card.cardid = card_id
+        card.appid = appid
+        card.wx_authorizer_id = appid
+        card.detail_info = card_info
+
+        card.save
+
+      end
 
     end
     #卡券审核未通过
