@@ -28,7 +28,7 @@ class WeitestController < ApplicationController
   def not_bus_allocation
     if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
       get_object
-      Redpack.share_allocation(current_user.id, params[:openidshare], params[:game_id], @object)
+      Redpack.share_allocation(current_user.id, params[:openid], params[:game_id], @object)
       render :status => 200, json: {'info' => "不在公交也有红包"}
     elsif Record.redpack_per_day(current_user.id, params[:game_id]) ==2
       render :status => 200, json: {'info' => "今天次数用完"}
@@ -229,7 +229,7 @@ class WeitestController < ApplicationController
 
     get_beacon
     get_object 
-    #get_time_amount_time
+    get_time_amount_time
     if @material.category
       render 'o2o', layout: false
     end
@@ -475,7 +475,7 @@ class WeitestController < ApplicationController
 
   def get_time_amount_time
     get_object
-    redpack_time = RedpackTime.find_by(:redpack_id =>@object.id)
+    redpack_time = RedpackTime.where(:redpack_id =>@object.id).order("start_time desc")[0]
     @time = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0].time
   end
 

@@ -11,9 +11,6 @@ class Redpack < ActiveRecord::Base
     self.action_title
   end
 
-  def a
-  end
-
   def beacon_name
     if self.beaconid
       b = Ibeacon.find self.beaconid
@@ -24,8 +21,6 @@ class Redpack < ActiveRecord::Base
   def cloning(recursive=false)
     Redpack.create self.attributes.except!("created_at", "id")
   end
-
-
 
 
   def weixin_post(user,beaconid_url)
@@ -149,9 +144,9 @@ class Redpack < ActiveRecord::Base
 
   def self.first_allocation(user_id, game_id,redpack,beaconid) 
     beaconid = Ibeacon.find_by(:url=>beaconid).id
-    redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
+    redpack_time = RedpackTime.where(:redpack_id =>redpack.id).order("start_time desc")[0]
     person_num = redpack_time.person_num
-    time_amount = TimeAmount.find_by("time_end >? and time < ? and redpack_time_id = ? ", Time.now, Time.now, redpack_time.id)
+    time_amount = TimeAmount.find_by("time_end > ? and time < ? and redpack_time_id = ? ", Time.now, Time.now, redpack_time.id)
     if time_amount.amount > 0
       min = redpack_time.min
       max = redpack_time.max
@@ -162,7 +157,7 @@ class Redpack < ActiveRecord::Base
       Score.create(:user_id => user_id, :value => record_score,:from_user_id => user_id)
       Score.create(:user_id => user_id, :value => -record_score,:from_user_id => user_id)
       Record.create(:user_id => user_id, :from_user_id => user_id, :beaconid=> beaconid, :game_id => game_id, :score => record_score, :allocation => record_allocation)
-      return "公交车上有红包"
+      return record_score
     else
       return "已经被抢光啦，发卡券吧"
     end
