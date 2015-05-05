@@ -34,6 +34,7 @@ class WxAppAuthController < ApplicationController
     else
       appid = params["appid"]
       rurl = params["rurl"]
+      p "appid = #{appid} and rurl = #{rurl}"
       app_auth_info = get_app_auth_info(appid,code)
       p app_auth_info
       openid = app_auth_info["openid"]
