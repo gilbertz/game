@@ -3,10 +3,20 @@ class WxAppAuthController < ApplicationController
 
   include WxAppAuth
 
+  def sign_in_or_redirect
+    if params[:rurl]
+      sign_in @user
+      redirect_to params[:rurl]
+    else
+      sign_in_and_redirect @user
+    end
+  end
+
   def launch
     appid = params["appid"]
+    rul = params["rurl"]
     if appid
-      redirect_to authurl(appid)
+      redirect_to authurl(appid,rurl)
       return
     end
 
@@ -23,6 +33,7 @@ class WxAppAuthController < ApplicationController
       return
     else
       appid = params["appid"]
+      rurl = params["rurl"]
       app_auth_info = get_app_auth_info(appid,code)
       p app_auth_info
       openid = app_auth_info["openid"]
@@ -69,13 +80,15 @@ class WxAppAuthController < ApplicationController
         authentication = Authentication.find_by_uid(openid)
         if authentication
           p "找到了======"
+          user = User.find_by_id(authentication.user_id)
         else
           p "没有找到  开启授权"
-          redirect_to authurl(appid,"snsapi_userinfo")
+          redirect_to authurl(appid,rurl,"snsapi_userinfo")
           return
         end
       end
-      redirect_to dispatch_url(appid,openid)
+      sign_in user
+      redirect_to dispatch_url(appid,openid,rurl)
       return
 
     end
@@ -85,9 +98,8 @@ class WxAppAuthController < ApplicationController
 
 
 
-  def dispatch_url(appid,openid)
-    "http://www.baidu.com"
-
+  def dispatch_url(appid,openid,rurl)
+    rurl
   end
 
 end

@@ -3,10 +3,10 @@ module WxAppAuth
 
   STATE = "dapeimishu"
 
- def authurl(appid,scope="snsapi_base")
+ def authurl(appid,rurl,scope="snsapi_base")
    # snsapi_userinfo
 
-   redirect_uri = "#{SHAKE_DOMAIN}/wx_app_auth/callback"
+   redirect_uri = "#{SHAKE_DOMAIN}/wx_app_auth/callback?rurl=#{rurl}"
    auth_url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{appid}&redirect_uri=#{redirect_uri}&response_type=code&scope=#{scope}&state=#{STATE}&component_appid=#{SHAKE_APPID}#wechat_redirect"
  end
 

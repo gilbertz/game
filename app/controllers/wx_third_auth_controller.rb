@@ -17,6 +17,11 @@ class WxThirdAuthController < ApplicationController
   def componentVerifyTicket
     wxXMLParams = params["xml"]
     nowAppId = wxXMLParams["AppId"]
+    # 防止 ticket窜改
+    if nowAppId != SHAKE_APPID
+      render :text => "success"
+      return
+    end
     # 加密过的数据
     xmlEncrpyPost = wxXMLParams["Encrypt"]
     # 解密数据
