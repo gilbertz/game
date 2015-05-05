@@ -38,18 +38,28 @@ class WxAppAuthController < ApplicationController
           p "user_info = #{user_info}"
          authentication = Authentication.find_by_uid(openid)
          if authentication == nil
-            authentication = Authentication.new
+            #创建一个user
+           user = User.new
+           user.name = user_info["nickname"]
+           user.sex = user_info["sex"].to_i
+           user.city = user_info["city"]
+           user.country = user_info["country"]
+           user.province = user_info["province"]
+           user.profile_img_url = user_info["headimgurl"]
+           user.save
+          authentication = Authentication.new
          end
+         authentication.user_id = user.id
          authentication.uid = user_info["openid"]
          authentication.appid = appid
          authentication.access_token = access_token
-          authentication.unionid = user_info["unionid"]
-          authentication.provider = "weixin"
-          authentication.sex = user_info["sex"].to_s
-          authentication.city = user_info["city"]
-          authentication.province = user_info["province"]
-         authentication.expires_at = Time.now.to_i + app_auth_info["expires_in"].to_i - 200
-          authentication.save
+         authentication.unionid = user_info["unionid"]
+         authentication.provider = "weixin"
+         authentication.sex = user_info["sex"].to_s
+         authentication.city = user_info["city"]
+         authentication.province = user_info["province"]
+         authentication.expires_at = Time.now.to_i + app_auth_info["expires_in"].to_i - 100
+         authentication.save
 
           p "authentication = #{authentication}"
         end
@@ -65,7 +75,6 @@ class WxAppAuthController < ApplicationController
           return
         end
       end
-
       redirect_to dispatch_url(appid,openid)
       return
 
