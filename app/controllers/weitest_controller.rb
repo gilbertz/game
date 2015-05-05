@@ -486,8 +486,9 @@ end
 
   def get_time_amount_time
     get_object
-    redpack_time = RedpackTime.where(:redpack_id =>@object.id).order("start_time desc")[0]
-    if redpack_time
+    redpack_times = RedpackTime.where(:redpack_id =>@object.id).order("start_time desc")
+    if redpack_times and redpack_times.length > 0
+      redpack_time = redpack_times[0]
       time_amount = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
       if time_amount 
         @time = time_amount.time
