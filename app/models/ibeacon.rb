@@ -15,7 +15,12 @@ class Ibeacon < ActiveRecord::Base
       self.url=Devise.friendly_token[0, 20]+User.maximum('id').to_s
     end
   end
-
+  
+  def get_merchant
+    m = Merchant.find_by( :beaconid => self.id )
+    m = Merchant.find 1 unless m
+    m
+  end
 
   def user_name
     self.user.name if self.user

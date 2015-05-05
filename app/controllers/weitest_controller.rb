@@ -6,9 +6,9 @@ class WeitestController < ApplicationController
   before_filter :weixin_authorize, :only => [:o2o]
 
   def weixin_check
-      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      Check.create(user_id: current_user.id, beaconid: beaconid, game_id: params[:game_id])
-      render :status => 200, json: {'info' => "报名成功"}
+    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+    Check.create(user_id: current_user.id, beaconid: beaconid, game_id: params[:game_id])
+    render :status => 200, json: {'info' => "报名成功"}
   end
   # 今天有记录 从点的人的allocation拿出一定score存储，不存allocation
   # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
@@ -28,7 +28,7 @@ class WeitestController < ApplicationController
   def not_bus_allocation
     if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
       get_object
-      Redpack.share_allocation(current_user.id, params[:openidshare], params[:game_id], @object)
+      Redpack.share_allocation(current_user.id, params[:openid], params[:game_id], @object)
       render :status => 200, json: {'info' => "不在公交也有红包"}
     elsif Record.redpack_per_day(current_user.id, params[:game_id]) ==2
       render :status => 200, json: {'info' => "今天次数用完"}
@@ -229,7 +229,7 @@ class WeitestController < ApplicationController
 
     get_beacon
     get_object 
-    #get_time_amount_time
+    get_time_amount_time
     if @material.category
       render 'o2o', layout: false
     end
@@ -302,7 +302,11 @@ class WeitestController < ApplicationController
       s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => value)
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
-        s.from_user_id = au.user_id if au
+        if au
+          s.from_user_id = au.user_id
+          f_value = rand(100) 
+          Score.create(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
+        end
       end
       s.save
       render :status => 200, json: {'value' => s.value }
@@ -399,17 +403,17 @@ class WeitestController < ApplicationController
     get_beacon
     #@beacon = Ibeacon.find_by(:url => 'lcxggg')
     @beacon.records.order('created_at desc').limit(3).sample(1).each do |r|
-       response.stream.write "data: #{r.to_s} \n\n"
-       sleep 1
-    end
-    response.stream.close
-  end
+     response.stream.write "data: #{r.to_s} \n\n"
+     sleep 1
+   end
+   response.stream.close
+ end
 
 
-  private
-  def authorize_url(url, scope='snsapi_base')
-    rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
-    scope = 'snsapi_userinfo'
+ private
+ def authorize_url(url, scope='snsapi_base')
+  rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
+  scope = 'snsapi_userinfo'
     #scope = 'snsapi_base'
     "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=#{scope}&connect_redirect=1#wechat_redirect"
   end
@@ -475,8 +479,13 @@ class WeitestController < ApplicationController
 
   def get_time_amount_time
     get_object
-    redpack_time = RedpackTime.find_by(:redpack_id =>@object.id)
-    @time = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0].time
+    redpack_time = RedpackTime.where(:redpack_id =>@object.id).order("start_time desc")[0]
+    if redpack_time
+      time_amount = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
+      if time_amount 
+        @time = time_amount.time
+      end
+    end
   end
 
 end 

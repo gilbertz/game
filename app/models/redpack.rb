@@ -11,9 +11,6 @@ class Redpack < ActiveRecord::Base
     self.action_title
   end
 
-  def a
-  end
-
   def beacon_name
     if self.beaconid
       b = Ibeacon.find self.beaconid
@@ -26,20 +23,22 @@ class Redpack < ActiveRecord::Base
   end
 
 
-
-
   def weixin_post(user,beaconid_url)
+    beacon = Ibeacon.find_by_url(beaconid_url)
+    return unless beacon
+    m = beacon.get_merchant    
+
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == "https"  # enable SSL/TLS
-    http.cert =OpenSSL::X509::Certificate.new(File.read("weixin_pay/cert/apiclient_cert.pem"))
-    http.key =OpenSSL::PKey::RSA.new(File.read("weixin_pay/cert/apiclient_key.pem"), '1229344702')# key and password
+    http.cert =OpenSSL::X509::Certificate.new(File.read(m.certificate))
+    http.key =OpenSSL::PKey::RSA.new(File.read(m.rsa), m.rsa_key)# key and password
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE #这个也很重要
 
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
 
-    request.body = array_xml(user,beaconid_url)
+    request.body = array_xml(user,beaconid_url, m)
     response = http.start do |http|
       ret = http.request(request)
       puts request.body
@@ -51,7 +50,7 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-  def array_xml(user,beaconid_url)
+  def array_xml(user,beaconid_url, m)
     current_redpack = get_current_redpack(beaconid_url)
     money = get_redpack_rand(beaconid_url)
     doc = Document.new"<xml/>"
@@ -63,9 +62,9 @@ class Redpack < ActiveRecord::Base
     el10 = root_node.add_element "max_value"
     el10.text = money
     el2 = root_node.add_element "mch_billno"
-    el2.text = '1233034702'+Time.new.strftime("%Y%d%m").to_s+rand(9999999999).to_s
+    el2.text = m.mch_id.to_s + Time.new.strftime("%Y%d%m").to_s+rand(9999999999).to_s
     el3 = root_node.add_element "mch_id"
-    el3.text = '1233034702'
+    el3.text = m.mch_id.to_s
     el9 = root_node.add_element "min_value"
     el9.text = money
     el5 = root_node.add_element "nick_name"
@@ -85,10 +84,10 @@ class Redpack < ActiveRecord::Base
     el12 = root_node.add_element "wishing"
     el12.text = current_redpack.wishing
     el4 = root_node.add_element "wxappid"
-    el4.text = WX_APPID
+    el4.text = m.wxappid
 
     stringA="act_name="+el14.text.to_s+"&client_ip="+el13.text.to_s+"&max_value="+el10.text.to_s+"&mch_billno="+el2.text.to_s+"&mch_id="+el3.text.to_s+"&min_value="+el9.text.to_s+"&nick_name="+el5.text.to_s+"&nonce_str="+el21.text.to_s+"&re_openid="+el22.text.to_s+"&remark="+el16.text.to_s+"&send_name="+el6.text.to_s+"&total_amount="+el8.text.to_s+"&total_num="+el11.text.to_s+"&wishing="+el12.text.to_s+"&wxappid="+el4.text.to_s
-    stringSignTemp=stringA+"&key=wangpeisheng1234567890leapcliffW"
+    stringSignTemp=stringA+"&key=" + m.key
     puts stringSignTemp
     sign=Digest::MD5.hexdigest(stringSignTemp).upcase
     el1 = root_node.add_element "sign"
@@ -149,9 +148,9 @@ class Redpack < ActiveRecord::Base
 
   def self.first_allocation(user_id, game_id,redpack,beaconid) 
     beaconid = Ibeacon.find_by(:url=>beaconid).id
-    redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
+    redpack_time = RedpackTime.where(:redpack_id =>redpack.id).order("start_time desc")[0]
     person_num = redpack_time.person_num
-    time_amount = TimeAmount.find_by("time_end >? and time < ? and redpack_time_id = ? ", Time.now, Time.now, redpack_time.id)
+    time_amount = TimeAmount.find_by("time_end > ? and time < ? and redpack_time_id = ? ", Time.now, Time.now, redpack_time.id)
     if time_amount.amount > 0
       min = redpack_time.min
       max = redpack_time.max
@@ -162,7 +161,7 @@ class Redpack < ActiveRecord::Base
       Score.create(:user_id => user_id, :value => record_score,:from_user_id => user_id)
       Score.create(:user_id => user_id, :value => -record_score,:from_user_id => user_id)
       Record.create(:user_id => user_id, :from_user_id => user_id, :beaconid=> beaconid, :game_id => game_id, :score => record_score, :allocation => record_allocation)
-      return "公交车上有红包"
+      return record_score
     else
       return "已经被抢光啦，发卡券吧"
     end

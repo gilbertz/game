@@ -10,26 +10,26 @@ class Bgame < ActiveRecord::Base
 
   def get_beacon
     if self.beaconid
-      Ibeacon.find self.beaconid
+      Ibeacon.find_by_id self.beaconid
     end
   end
 
   def beacon_name
     if self.beaconid
-      b = Ibeacon.find self.beaconid
+      b = Ibeacon.find_by_id self.beaconid
       return b.name if b
     end
   end
 
   def get_game
     if self.game_id
-      Material.find self.game_id
+      Material.find_by_id self.game_id
     end
   end
 
   def game_name
     if self.game_id
-      b = Material.find self.game_id
+      b = Material.find_by_id self.game_id
       return b.name if b
     end
   end
