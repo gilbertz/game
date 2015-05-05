@@ -136,5 +136,97 @@ class WxUtil
       end
       return nil
     end
+
+
+    #查询授权公众账号的卡券列表
+    def query_wx_cards(appid)
+      post_data = {"offset"=>0,"count"=>50}
+      url = "https://api.weixin.qq.com/card/batchget?access_token=#{get_authorizer_access_token(appid)}"
+      res = RestClient::post(url,post_data.to_json)
+      info = JSON.parse(res.body)
+      if info["errcode"].to_i == 0
+        return info["card_id_list"]
+      end
+      return Array.new
+    end
+
+    #查询卡券详情
+    def query_card_detail(appid, card_id)
+      post_data = {"card_id"=>card_id}
+      url = "https://api.weixin.qq.com/card/get?access_token=#{get_authorizer_access_token(appid)}"
+      res = RestClient::post(url,post_data.to_json)
+      info = JSON.parse(res.body)
+      if info["errcode"].to_i == 0
+        return info["card"]
+      end
+      return nil
+    end
+
+    #调用查询 code 接口可获取 code 的有效性(非自定义 code)
+    # 该 code 对应的用户 openid、卡券有效期等信息。
+    #自定义 code(use_custom_code 为 true)的卡券调用接口时
+    # post 数据中需包含 card_id,非自定义 code 不需上报。
+    def query_code_info(appid, code)
+      post_data = {"code"=>code}
+      url = "https://api.weixin.qq.com/card/code/get?access_token=#{get_authorizer_access_token(appid)}"
+      res = RestClient::post(url,post_data.to_json)
+      info = JSON.parse(res.body)
+      if info["errcode"].to_i == 0
+        return info
+      end
+    end
+
+    # 根据card_id保存 卡券信息
+    def save_card_info(appid,card_id)
+      card_info = query_card_detail(authorizer_appid,card_id)
+      if card_info
+        p "card_info : #{card_info.to_s}"
+        card = Card.find_by_cardid(card_id)
+        if card.nil?
+          card = Card.new
+        end
+        card.cardid = card_id
+        card.wx_authorizer_id = authorizer_appid
+        card.appid = authorizer_appid
+
+        detail_info =  card_info["card_info"]
+        card.detail_info = detail_info.to_json
+        card_type = detail_info["card_type"]
+        card.card_type = card_type
+
+        base_info = detail_info[card_type.downcase]["base_info"]
+        card.code_type = base_info["code_type"]
+        card.title = base_info["title"]
+        card.sub_title = base_info["sub_title"]
+        card.desc = base_info["description"]
+        card.status = base_info["status"]
+        card.store = base_info["sku"]["quantity"]
+        card.total_quantity =  base_info["sku"]["total_quantity"]
+        card.save
+      end
+
+    end
+
+
+    # 保存卡券纪录
+    def save_card_record(appid,event_msg)
+      if event_msg.nil?
+        return
+      end
+      card_id = event_msg["CardId"]
+      card_recode = CardRecord.new
+      card_recode.appid = appid
+      card_recode.card_id = card_id
+      card_recode.event = event_msg["Event"]
+      card_recode.is_give_by_friend = event_msg["IsGiveByFriend"]
+      card_recode.user_card_code = event_msg["UserCardCode"]
+      card_recode.outer_id = event_msg["OuterId"]
+      card_recode.old_user_card_code = event_msg["OldUserCardCode"]
+      card_recode.event_time = Time.at((event_msg["CreateTime"]).to_i)
+      card_recode.save
+
+      p "card_recode = #{card_recode.to_s}"
+    end
+
   end
 end

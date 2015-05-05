@@ -2,11 +2,11 @@ class UniqueKeyUtil
 
   class << self
     def exitsUnique?(key)
-      $redis.exits(key)
+      $redis.get(key) != nil
     end
 
     def setUnique(key)
-      if isUnique?(key) == false
+      if exitsUnique?(key) == false
         $redis.set(key,1)
       end
     end
