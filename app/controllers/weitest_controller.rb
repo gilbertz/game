@@ -484,6 +484,7 @@ class WeitestController < ApplicationController
       time_amount = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
       if time_amount 
         @time = time_amount.time
+        @amount = time_amount.amount
       end
     end
   end
