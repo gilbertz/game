@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504182831) do
+ActiveRecord::Schema.define(version: 20150505113556) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -232,6 +232,7 @@ ActiveRecord::Schema.define(version: 20150504182831) do
     t.datetime "updated_at"
     t.string   "provider"
     t.string   "uid"
+    t.integer  "merchant_id"
   end
 
   add_index "ibeacons", ["uid"], name: "index_ibeacons_on_uid", length: {"uid"=>191}, using: :btree

@@ -3,18 +3,9 @@ class WxAppAuthController < ApplicationController
 
   include WxAppAuth
 
-  def sign_in_or_redirect
-    if params[:rurl]
-      sign_in @user
-      redirect_to params[:rurl]
-    else
-      sign_in_and_redirect @user
-    end
-  end
-
   def launch
     appid = params["appid"]
-    rul = params["rurl"]
+    rurl = params["rurl"]
     if appid
       redirect_to authurl(appid,rurl)
       return
@@ -42,6 +33,7 @@ class WxAppAuthController < ApplicationController
       p scope
       p "openid = #{openid}"
       # 非静默授权 查询用户的信息保存下来
+      user = nil
       if scope == "snsapi_userinfo"
         access_token = app_auth_info["access_token"]
         Thread.new do
@@ -49,10 +41,12 @@ class WxAppAuthController < ApplicationController
           user_info = get_user_info(openid,access_token)
           p "user_info = #{user_info}"
          authentication = Authentication.find_by_uid(openid)
-         if authentication == nil
+         unless authentication
             #创建一个user
            user = User.new
            user.name = user_info["nickname"]
+           user.email = "fk"+Devise.friendly_token[0,20]+"@yaoshengyi.com"
+           user.password = Devise.friendly_token[0,12]
            user.sex = user_info["sex"].to_i
            user.city = user_info["city"]
            user.country = user_info["country"]
