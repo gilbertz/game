@@ -1,5 +1,11 @@
 class Merchant < ActiveRecord::Base
   belongs_to :user
+
+  def self.get_merchants_for_select
+    cond = '1=1'
+    ms = Merchant.where(cond).limit(50)
+    ms.map{|b|[b.name, b.id]}
+  end
   
   def beacon_name
     if self.beaconid

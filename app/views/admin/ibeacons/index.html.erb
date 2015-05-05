@@ -5,6 +5,7 @@
   <tr>
     <th>ID</th>
     <th>name</th>
+    <th>merchant name</th>
     <th>user</th>
     <th>remark</th>
     <th>State</th>
@@ -18,6 +19,7 @@
   <tr>
     <td><%= ibeacon.id %></td>
     <td><%= link_to ibeacon.name, "/weitest/1325180350?beaconid=#{ibeacon.url}" %></td>
+    <td><%= ibeacon.merchant_name %></td>
     <td><%= ibeacon.user_name %></td>
     <td><%= ibeacon.remark %></td>
     <td><%= ibeacon.state %></td>

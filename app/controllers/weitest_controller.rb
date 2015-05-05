@@ -413,6 +413,9 @@ class WeitestController < ApplicationController
  private
  def authorize_url(url)
   appid = "wx456ffb04ee140d84"
+  if params[:beaconid]
+    appid = @beacon.get_merchant.wxappid
+  end
   "http://dapeimishu.com/#{appid}/launch?rurl=" + url
   
   #rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url

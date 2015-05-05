@@ -21,15 +21,14 @@
       </div>
     </div>
 
-
-    <!--
+    
     <div class="control-group">
-      <label class="control-label">url</label>
+      <label class="control-label">merchant</label>
       <div class="controls">
-        <%= f.text_field :url, required: true %>
+        <%= f.select :merchant_id, Merchant.get_merchants_for_select %>
       </div>
     </div>
-    -->
+    
 
     <div class="control-group">
       <label class="control-label">provider</label>
