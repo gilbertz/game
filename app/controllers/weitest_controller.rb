@@ -413,17 +413,16 @@ class WeitestController < ApplicationController
 
  private
  def authorize_url(url)
-  get_beacon
-  appid = "wx456ffb04ee140d84"
-  if params[:beaconid]
-    appid = @beacon.get_merchant.wxappid
-  end
-  "http://dapeimishu.com/#{appid}/launch?rurl=" + url
+  #get_beacon
+  #appid = "wx456ffb04ee140d84"
+  #if params[:beaconid]
+  #  appid = @beacon.get_merchant.wxappid
+  #end
+  #"http://dapeimishu.com/#{appid}/launch?rurl=" + url
   
-  #rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
-  #scope = 'snsapi_userinfo'
-  #scope = 'snsapi_base'
-  #"https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=#{scope}&connect_redirect=1#wechat_redirect"
+  rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
+  scope = 'snsapi_userinfo'
+  "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=#{scope}&connect_redirect=1#wechat_redirect"
 end
 
   def check_cookie
