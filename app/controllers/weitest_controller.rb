@@ -21,7 +21,8 @@ class WeitestController < ApplicationController
       info = Redpack.first_allocation(current_user.id, params[:game_id], @object,params[:beaconid])
       render :status => 200, json: {'info' => info}
     elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 2
-      render :status => 200, json: {'info' => "今天次数用完"}
+      info = 0
+      render :status => 200, json: {'info' => info}
     end 
   end
 
