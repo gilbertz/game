@@ -17,6 +17,11 @@ class WxThirdAuthController < ApplicationController
   def componentVerifyTicket
     wxXMLParams = params["xml"]
     nowAppId = wxXMLParams["AppId"]
+    # 防止 ticket窜改
+    if nowAppId != SHAKE_APPID
+      render :text => "success"
+      return
+    end
     # 加密过的数据
     xmlEncrpyPost = wxXMLParams["Encrypt"]
     # 解密数据
@@ -107,7 +112,11 @@ class WxThirdAuthController < ApplicationController
           authorizer.authorization_info = (authorizer_info_package["authorization_info"]).to_json
           authorizer.qrcode_url = authorizer_info_package["authorizer_info"]["qrcode_url"]
         end
-        authorizer.save
+        flag = authorizer.save
+        # 处理卡券
+        if flag
+            Thread.new {  deal_card(authorizer_appid) }
+        end
         render :json => {"result"=> 0}.to_json
       end
 
@@ -172,6 +181,15 @@ class WxThirdAuthController < ApplicationController
     else
       return false
     end
+  end
+
+  def deal_card(authorizer_appid)
+   card_id_arr =  WxUtil.query_wx_cards(authorizer_appid)
+   p card_id_arr.to_s
+   for card_id in card_id_arr
+     WxUtil.save_card_info(appid,card_id)
+   end
+
   end
 
 end

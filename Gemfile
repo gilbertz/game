@@ -7,7 +7,7 @@ gem 'rails', '4.0.0'
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.3.14"
 
-gem "ransack", github: "activerecord-hackery/ransack"
+# gem "ransack", github: "activerecord-hackery/ransack"
 gem 'squeel'
 gem 'kaminari'
 # Use SCSS for stylesheets

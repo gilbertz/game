@@ -55,6 +55,6 @@ class Admin::IbeaconsController < Admin::BaseController
     end
 
     def ibeacon_params
-      params.require(:ibeacon).permit(:name, :user_id, :state, :remark, :url, :provider, :uid)
+      params.require(:ibeacon).permit(:name, :user_id, :merchant_id, :state, :remark, :url, :provider, :uid)
     end
 end

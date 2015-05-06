@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150429062415) do
+ActiveRecord::Schema.define(version: 20150506073337) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -56,6 +56,10 @@ ActiveRecord::Schema.define(version: 20150429062415) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "unionid"
+    t.string   "appid"
+    t.string   "city"
+    t.string   "province"
+    t.string   "sex"
   end
 
   add_index "authentications", ["unionid"], name: "index_authentications_on_unionid", using: :btree
@@ -94,6 +98,35 @@ ActiveRecord::Schema.define(version: 20150429062415) do
     t.string   "target_type"
   end
 
+  create_table "card_options", force: true do |t|
+    t.integer  "value"
+    t.integer  "store"
+    t.string   "title"
+    t.string   "img"
+    t.string   "wx_cardid"
+    t.string   "desc"
+    t.integer  "probability"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "card_id"
+  end
+
+  add_index "card_options", ["card_id"], name: "index_card_options_on_card_id", using: :btree
+
+  create_table "card_records", force: true do |t|
+    t.string   "card_id"
+    t.string   "appid"
+    t.string   "event"
+    t.datetime "event_time"
+    t.string   "from_user_name"
+    t.string   "is_give_by_friend"
+    t.string   "user_card_code"
+    t.string   "outer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "old_user_card_code"
+  end
+
   create_table "cards", force: true do |t|
     t.integer  "beaconid"
     t.string   "shop_id"
@@ -110,6 +143,11 @@ ActiveRecord::Schema.define(version: 20150429062415) do
     t.datetime "updated_at"
     t.integer  "state"
     t.string   "wx_authorizer_id"
+    t.text     "detail_info"
+    t.string   "card_type"
+    t.string   "code_type"
+    t.integer  "total_quantity"
+    t.string   "status"
   end
 
   create_table "categories", force: true do |t|
@@ -139,6 +177,7 @@ ActiveRecord::Schema.define(version: 20150429062415) do
     t.float    "lat"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "game_id"
   end
 
   create_table "domains", force: true do |t|
@@ -193,6 +232,7 @@ ActiveRecord::Schema.define(version: 20150429062415) do
     t.datetime "updated_at"
     t.string   "provider"
     t.string   "uid"
+    t.integer  "merchant_id"
   end
 
   add_index "ibeacons", ["uid"], name: "index_ibeacons_on_uid", length: {"uid"=>191}, using: :btree
@@ -256,6 +296,46 @@ ActiveRecord::Schema.define(version: 20150429062415) do
   add_index "materials", ["state"], name: "index_materials_on_state", using: :btree
   add_index "materials", ["user_id"], name: "index_materials_on_user_id", using: :btree
 
+  create_table "merchants", force: true do |t|
+    t.integer  "mch_id"
+    t.string   "wxappid"
+    t.string   "key"
+    t.string   "certificate"
+    t.string   "rsa"
+    t.string   "rsa_key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "state"
+    t.integer  "level"
+    t.integer  "money"
+    t.integer  "user_id"
+    t.integer  "beaconid"
+    t.string   "party_id"
+  end
+
+  add_index "merchants", ["beaconid"], name: "index_merchants_on_beaconid", using: :btree
+  add_index "merchants", ["level"], name: "index_merchants_on_level", using: :btree
+  add_index "merchants", ["user_id"], name: "index_merchants_on_user_id", using: :btree
+
+  create_table "parties", force: true do |t|
+    t.string   "party_identifier"
+    t.string   "openid"
+    t.string   "name"
+    t.string   "sex"
+    t.string   "province"
+    t.string   "city"
+    t.string   "country"
+    t.string   "headimgurl"
+    t.text     "privilege"
+    t.string   "unionid"
+    t.string   "provide"
+    t.string   "refresh_access_token"
+    t.string   "access_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "question_answers", force: true do |t|
     t.integer "question_id",              null: false
     t.string  "answer",                   null: false
@@ -289,6 +369,7 @@ ActiveRecord::Schema.define(version: 20150429062415) do
     t.string   "object_type"
     t.integer  "object_id"
     t.string   "sn"
+    t.integer  "allocation"
     t.string   "card_id"
   end
 
@@ -303,6 +384,33 @@ ActiveRecord::Schema.define(version: 20150429062415) do
   add_index "records", ["score"], name: "index_records_on_score", using: :btree
   add_index "records", ["user_id", "game_id"], name: "index_records_on_user_id_and_game_id", using: :btree
   add_index "records", ["user_id"], name: "index_records_on_user_id", using: :btree
+
+  create_table "redpack_people", force: true do |t|
+    t.string  "name"
+    t.integer "time_id"
+    t.integer "value_id"
+    t.integer "redpack_id"
+  end
+
+  create_table "redpack_times", force: true do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "frequency"
+    t.integer  "min"
+    t.integer  "max"
+    t.integer  "store"
+    t.integer  "state"
+    t.integer  "probability"
+    t.integer  "redpack_id"
+    t.integer  "person_num"
+    t.integer  "amount"
+  end
+
+  create_table "redpack_values", force: true do |t|
+    t.integer "money"
+    t.integer "redpack_id"
+    t.integer "num"
+  end
 
   create_table "redpacks", force: true do |t|
     t.integer  "beaconid"
@@ -340,6 +448,31 @@ ActiveRecord::Schema.define(version: 20150429062415) do
     t.datetime "updated_at"
     t.integer  "game_id"
     t.integer  "state"
+  end
+
+  create_table "shake_records", force: true do |t|
+    t.string   "request_url"
+    t.integer  "activityid"
+    t.string   "ticket"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "time_amounts", force: true do |t|
+    t.datetime "time"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "redpack_time_id"
+    t.datetime "time_end"
+  end
+
+  create_table "user_allocations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "allocation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "num"
   end
 
   create_table "user_scores", force: true do |t|
@@ -432,6 +565,7 @@ ActiveRecord::Schema.define(version: 20150429062415) do
     t.boolean  "unthorized"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "party_id"
   end
 
   create_table "wx_configs", force: true do |t|

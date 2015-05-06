@@ -21,7 +21,8 @@ class WeitestController < ApplicationController
       info = Redpack.first_allocation(current_user.id, params[:game_id], @object,params[:beaconid])
       render :status => 200, json: {'info' => info}
     elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 2
-      render :status => 200, json: {'info' => "今天次数用完"}
+      info = 0
+      render :status => 200, json: {'info' => info}
     end 
   end
 
@@ -411,12 +412,18 @@ class WeitestController < ApplicationController
 
 
  private
- def authorize_url(url, scope='snsapi_base')
+ def authorize_url(url)
+  #get_beacon
+  #appid = "wx456ffb04ee140d84"
+  #if params[:beaconid]
+  #  appid = @beacon.get_merchant.wxappid
+  #end
+  #"http://dapeimishu.com/#{appid}/launch?rurl=" + url
+  
   rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
   scope = 'snsapi_userinfo'
-    #scope = 'snsapi_base'
-    "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=#{scope}&connect_redirect=1#wechat_redirect"
-  end
+  "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=#{scope}&connect_redirect=1#wechat_redirect"
+end
 
   def check_cookie
     if true
@@ -479,11 +486,13 @@ class WeitestController < ApplicationController
 
   def get_time_amount_time
     get_object
-    redpack_time = RedpackTime.where(:redpack_id =>@object.id).order("start_time desc")[0]
-    if redpack_time
+    redpack_times = RedpackTime.where(:redpack_id =>@object.id).order("start_time desc")
+    if redpack_times and redpack_times.length > 0
+      redpack_time = redpack_times[0]
       time_amount = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
       if time_amount 
         @time = time_amount.time
+        @amount = time_amount.amount
       end
     end
   end
