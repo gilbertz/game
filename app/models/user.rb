@@ -84,6 +84,10 @@ class User < ActiveRecord::Base
     us.save
   end
 
+  def my_rs
+     
+  end
+
 
   private
   def make_password
