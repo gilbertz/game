@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505113556) do
+ActiveRecord::Schema.define(version: 20150506073337) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -311,11 +311,30 @@ ActiveRecord::Schema.define(version: 20150505113556) do
     t.integer  "money"
     t.integer  "user_id"
     t.integer  "beaconid"
+    t.string   "party_id"
   end
 
   add_index "merchants", ["beaconid"], name: "index_merchants_on_beaconid", using: :btree
   add_index "merchants", ["level"], name: "index_merchants_on_level", using: :btree
   add_index "merchants", ["user_id"], name: "index_merchants_on_user_id", using: :btree
+
+  create_table "parties", force: true do |t|
+    t.string   "party_identifier"
+    t.string   "openid"
+    t.string   "name"
+    t.string   "sex"
+    t.string   "province"
+    t.string   "city"
+    t.string   "country"
+    t.string   "headimgurl"
+    t.text     "privilege"
+    t.string   "unionid"
+    t.string   "provide"
+    t.string   "refresh_access_token"
+    t.string   "access_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "question_answers", force: true do |t|
     t.integer "question_id",              null: false
@@ -546,6 +565,7 @@ ActiveRecord::Schema.define(version: 20150505113556) do
     t.boolean  "unthorized"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "party_id"
   end
 
   create_table "wx_configs", force: true do |t|
