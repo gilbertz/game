@@ -4,9 +4,14 @@ class WebLoginController < ApplicationController
   include WebLogin
 
   def login
-    appid = WEB_APPID
-    rurl = params["rurl"]
-    redirect_to web_auth_url(appid,rurl)
+    # appid = WEB_APPID
+    # rurl = params["rurl"]
+    # redirect_to web_auth_url(appid,rurl)
+
+
+    $wxclient.send_text_custom("oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4","www.dapeimishu.com/")
+
+
   end
 
 
