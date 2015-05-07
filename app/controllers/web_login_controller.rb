@@ -25,6 +25,7 @@ class WebLoginController < ApplicationController
         "color"=>"#173177"
     }})
 
+    $wxclient.send_text_custom("oNnqbt3JTnBKj1E6uwbD3jfGc_tY","1245")
     redirect_to "http://www.dapeimishu.com/"
   end
 
