@@ -50,6 +50,7 @@ class WebLoginController < ApplicationController
 
           if flag
             redirect_to rurl
+            return
           end
 
         end
