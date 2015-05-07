@@ -11,9 +11,21 @@ class WebLoginController < ApplicationController
     # appid = WEB_APPID
     # rurl = params["rurl"]
     # redirect_to web_auth_url(appid,rurl)
-    access_token = WxUtil.get_authorizer_access_token("wx456ffb04ee140d84")
-    p "access_token = #{access_token}"
-    redirect_to generate_qr(access_token)
+
+
+
+    # access_token = WxUtil.get_authorizer_access_token("wx456ffb04ee140d84")
+    # p "access_token = #{access_token}"
+    # redirect_to generate_qr(access_token)
+
+
+    $wxclient.send_template_msg("oNnqbt3JTnBKj1E6uwbD3jfGc_tY", template_id, "http://www.dapeimishu.com/", "#FF0000",  "data"=>{
+        "first"=> {
+        "value"=>"恭喜你购买成功！",
+        "color"=>"#173177"
+    }})
+
+    redirect_to "http://www.dapeimishu.com/"
   end
 
 
