@@ -3,6 +3,7 @@ require File.expand_path('../qrcode_scene_type',__FILE__)
 
 module WxQrcode
   include QrcodeType
+  include QrcodeSceneType
   def generate_qr(access_token,appid= WX_APPID,is_tempoart = true)
     if access_token.blank?
       return nil
