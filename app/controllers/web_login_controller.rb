@@ -19,7 +19,7 @@ class WebLoginController < ApplicationController
     # redirect_to generate_qr(access_token)
 
 
-    $wxclient.send_template_msg("oNnqbt3JTnBKj1E6uwbD3jfGc_tY", template_id, "http://www.dapeimishu.com/", "#FF0000",  "data"=>{
+    $wxclient.send_template_msg("oNnqbt3JTnBKj1E6uwbD3jfGc_tY", "1-DZpzUOCJ-Es-QLgSS0mu83fZ-O9w6iWm0hZKSq8G8", "http://www.dapeimishu.com/", "#FF0000",  "data"=>{
         "first"=> {
         "value"=>"恭喜你购买成功！",
         "color"=>"#173177"
