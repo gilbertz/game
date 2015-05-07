@@ -1,4 +1,5 @@
 require File.expand_path('../wx_util',__FILE__)
+require File.expand_path('../qrcode_scene_type',__FILE__)
 class WxEvent
 
   class << self
@@ -68,9 +69,28 @@ class WxEvent
 
     # 二维码扫描
     def deal_qrcode_scan(appid,event_msg)
-
+        from_user_name = event_msg["FromUserName"]
+        ticket = event_msg["Ticket"]
+        qrcode = Qrcode.find_by_ticket(ticket)
+        if qrcode && qrcode.scaner == nil
+          qrcode.scaner = from_user_name
+          qrcode.save
+        end
     end
 
+    #  关注公众账号
+    def deal_user_subscribe(appid,event_msg)
+      from_user_name = event_msg["FromUserName"]
+      ticket = event_msg["Ticket"]
+      # 如果是扫描二维码 关注公众账号
+      if  ticket != nil
+        qrcode = Qrcode.find_by_ticket(ticket)
+        if qrcode && qrcode.scaner == nil
+          qrcode.scaner = from_user_name
+          qrcode.save
+        end
+      end
+    end
 
   end
 

@@ -1,6 +1,8 @@
 Game::Application.routes.draw do
+  get "qrcode/query_scaner"
   get "web_login/login"
   get "web_login/callback"
+  get "web_login/qr_login"
   resources :user_scores
   post '/' => 'wx_third_auth#componentVerifyTicket'
   get '/authpage' => 'wx_third_auth#authpage'

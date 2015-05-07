@@ -7,16 +7,21 @@ class WebLoginController < ApplicationController
   include WebLogin
   include WxQrcode
 
+  # 传统 微信 web第三方登陆
   def login
-    # appid = WEB_APPID
-    # rurl = params["rurl"]
-    # redirect_to web_auth_url(appid,rurl)
+    appid = WEB_APPID
+    rurl = params["rurl"]
+    redirect_to web_auth_url(appid,rurl)
 
+  end
 
+  #扫描二维码登陆
+  def qr_login
 
     access_token = WxUtil.get_authorizer_access_token("wx456ffb04ee140d84")
     p "access_token = #{access_token}"
-    redirect_to generate_qr("wx456ffb04ee140d84",access_token)
+    qrcode = generate_qr(access_token)
+    redirect_to qrcode.qrcode_url
 
     # $wxclient.send_text_custom("oNnqbt3JTnBKj1E6uwbD3jfGc_tY","1245")
     # $wxclient.send_template_msg("oNnqbt3JTnBKj1E6uwbD3jfGc_tY", "1-DZpzUOCJ-Es-QLgSS0mu83fZ-O9w6iWm0hZKSq8G8", "http://www.dapeimishu.com/", "#FF0000",  "data"=>{
@@ -32,9 +37,7 @@ class WebLoginController < ApplicationController
     # p ret
     # redirect_to $wxclient.qr_code_url(ret.result["ticket"])
 
-
   end
-
 
   def callback
     p "callback #{params.to_s}"
