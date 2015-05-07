@@ -29,6 +29,8 @@ class WxEvent
           deal_user_del_card(appid,event_msg)
         elsif event == "user_comsume_card"
           deal_user_comsume_card(appid,event_msg)
+        elsif event == "SCAN"
+          deal_qrcode_scan(appid,event_msg)
         end
       rescue
 
@@ -62,6 +64,11 @@ class WxEvent
     #用户使用了卡券事件 －－－》 核销
     def deal_user_comsume_card(appid, event_msg)
       WxUtil.save_card_record(appid,event_msg)
+    end
+
+    # 二维码扫描
+    def deal_qrcode_scan(appid,event_msg)
+
     end
 
 
