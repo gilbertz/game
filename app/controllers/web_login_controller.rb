@@ -13,8 +13,7 @@ class WebLoginController < ApplicationController
     # redirect_to web_auth_url(appid,rurl)
     access_token = WxUtil.get_authorizer_access_token("wx456ffb04ee140d84")
     p "access_token = #{access_token}"
-    generate_qr(access_token)
-    redirect_to "http://www.baidu.com"
+    redirect_to generate_qr(access_token)
   end
 
 
