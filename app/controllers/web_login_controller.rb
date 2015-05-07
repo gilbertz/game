@@ -49,7 +49,7 @@ class WebLoginController < ApplicationController
 
 
           if flag
-            rediect_to rurl
+            redirect_to rurl
           end
 
         end
