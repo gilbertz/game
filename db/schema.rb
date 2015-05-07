@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150507125932) do
+ActiveRecord::Schema.define(version: 20150507140504) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -347,7 +347,7 @@ ActiveRecord::Schema.define(version: 20150507125932) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "provide"
-    t.string   "qrcode_url"
+    t.text     "qrcode_url"
     t.string   "scaner"
     t.string   "scene_type"
   end

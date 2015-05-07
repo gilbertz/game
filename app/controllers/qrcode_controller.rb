@@ -1,4 +1,4 @@
-require File.expand_path('../qrcode_scene_type',__FILE__)
+require File.expand_path('../wx_third/qrcode_scene_type',__FILE__)
 class QrcodeController < ApplicationController
 
   include QrcodeSceneType
