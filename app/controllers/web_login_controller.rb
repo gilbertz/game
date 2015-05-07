@@ -29,7 +29,8 @@ class WebLoginController < ApplicationController
 
 
     ret = $wxclient.create_qr_scene(123)
-    redirect_to $wxclient.qr_code_url(ret["ticket"])
+    p ret
+    redirect_to $wxclient.qr_code_url(ret)
 
 
   end
