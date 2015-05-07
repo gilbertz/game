@@ -1,12 +1,17 @@
 require File.expand_path('../wx_third/web_login',__FILE__)
+require File.expand_path('../wx_third/wx_qrcode',__FILE__)
+require File.expand_path('../wx_third/wx_util',__FILE__)
+
 
 class WebLoginController < ApplicationController
   include WebLogin
+  include WxQrcode
 
   def login
-    appid = WEB_APPID
-    rurl = params["rurl"]
-    redirect_to web_auth_url(appid,rurl)
+    # appid = WEB_APPID
+    # rurl = params["rurl"]
+    # redirect_to web_auth_url(appid,rurl)
+    redirect_to generate_qr(WxUtil.get_authorizer_access_token(SHAKE_APPID))
   end
 
 
