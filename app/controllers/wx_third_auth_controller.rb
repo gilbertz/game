@@ -117,11 +117,11 @@ class WxThirdAuthController < ApplicationController
         if flag
             Thread.new {  deal_card(authorizer_appid) }
         end
-        render :json => {"result"=> 0}.to_json
+        render :json => {"result"=> "success"}.to_json
       end
 
     else
-      render :json => {"result" => 1}.to_json
+      render :json => {"result" => "failure"}.to_json
     end
 
   end
