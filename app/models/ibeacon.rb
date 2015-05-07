@@ -43,7 +43,7 @@ class Ibeacon < ActiveRecord::Base
   end
 
   def cloning(recursive=false)
-    Ibeacon.create self.attributes.except!("created_at", "id")
+    Ibeacon.create self.attributes.except!("created_at", "id", "url")
   end
 
 end
