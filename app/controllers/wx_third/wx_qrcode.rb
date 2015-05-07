@@ -4,7 +4,6 @@ module WxQrcode
     if access_token.blank?
       return nil
     end
-
     post_data = nil
     if is_tempoart
       post_data = {"expire_seconds"=> 604800, "action_name"=> "QR_SCENE", "action_info"=> {"scene"=> {"scene_id"=> 123}}}
