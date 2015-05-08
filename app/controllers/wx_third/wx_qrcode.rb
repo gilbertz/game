@@ -36,6 +36,7 @@ module WxQrcode
       qrcode.scene_id = scene_id
       qrcode.qrcode_url = qrcode_url(ret["ticket"])
       qrcode.scene_type = LOGIN_SCENE
+      qrcode.expire_at = expire_at
       qrcode.save
       return qrcode
     end
