@@ -16,6 +16,7 @@ module WxQrcode
     if is_tempoart
       action_name = QR_SCENE
       expire_at = Time.now + 1800
+      p "expire_at = #{expire_at}"
       post_data = {"expire_seconds"=> 1800, "action_name"=> "QR_SCENE", "action_info"=> {"scene"=> {"scene_id"=> scene_id}}}
     else
       action_name = QR_LIMIT_SCENE
