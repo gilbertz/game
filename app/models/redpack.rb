@@ -219,58 +219,56 @@ class Redpack < ActiveRecord::Base
       result_hongbao = {:id => 0, :money => result[0]}
       $redis.lpush("hongbaolist",result_hongbao.to_json)
       p $redis.lrange("hongbaolist",0,-1)
-      return result_hongbao
+      return $redis.lrange("hongbaolist",0,-1)
     else
-    average = total/count
+      average = total/count
 
-    a = average - min
-    b = max - average
+      a = average - min
+      b = max - average
 
-    range1 = (average - min) ** 2
-    range2 = (max - average) ** 2
+      range1 = (average - min) ** 2
+      range2 = (max - average) ** 2
 
-    for i in 0..(result.length-1)
-      if (next_long(min,max) > average)
-        temp = min + x_random(min,average)
-        result[i] = temp
-        total -= temp
-      else
-        temp = max - x_random(average,max)
-        result[i] = temp
-        total -= temp
-      end
-    end
-
-    while (total > 0)
       for i in 0..(result.length-1)
-
-        if total > 0 && result[i] < max 
-          result[i] += 1
-          total -= 1
+        if (next_long(min,max) > average)
+          temp = min + x_random(min,average)
+          result[i] = temp
+          total -= temp
+        else
+          temp = max - x_random(average,max)
+          result[i] = temp
+          total -= temp
         end
       end
-    end
 
-    while (total < 0)
-      for i in 0..(result.length-1)
-        if total < 0 && result[i] > min
-          result[i] -= 1
-          total += 1
+      while (total > 0)
+        for i in 0..(result.length-1)
+
+          if total > 0 && result[i] < max 
+            result[i] += 1
+            total -= 1
+          end
         end
       end
-    end
 
-    for i in 0..(result.length-1)
-      result_hongbao = {:id => i, :money => result[i]}
-      $redis.lpush("hongbaolist",result_hongbao.to_json)
-    end
-    p $redis.lrange("hongbaolist",0,-1)
+      while (total < 0)
+        for i in 0..(result.length-1)
+          if total < 0 && result[i] > min
+            result[i] -= 1
+            total += 1
+          end
+        end
+      end
+
+      for i in 0..(result.length-1)
+        result_hongbao = {:id => i, :money => result[i]}
+        $redis.lpush("hongbaolist",result_hongbao.to_json)
+      end
+      p $redis.lrange("hongbaolist",0,-1)
     # return result
-    return result_hongbao
-    end
-    
-
+    return $redis.lrange("hongbaolist",0,-1)
   end
+end
 
   # def self.ge
     
@@ -292,6 +290,7 @@ class Redpack < ActiveRecord::Base
       p $redis.hget("hongBaoConsumedMap",user_id)
       $redis.lpush("hongBaoConsumedList",hongbao)
       p $redis.lrange("hongBaoConsumedList",0,-1)
+      return hongbao 
     end
   end
 

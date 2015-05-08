@@ -6,13 +6,13 @@ class WeitestController < ApplicationController
   before_filter :weixin_authorize, :only => [:o2o]
 
   def test_generate
-    Redpack.generate(params[:total].to_i,params[:count].to_i,params[:max].to_i,params[:min].to_i)
-    render :status => 200, json: {'info' => "test_generate"}
+    result_hongbao = Redpack.generate(params[:total].to_i,params[:count].to_i,params[:max].to_i,params[:min].to_i)
+    render :status => 200, json: {'info' => result_hongbao}
   end
 
   def test_seed_redpack
-    Redpack.test(params[:id])
-    render :status => 200, json: {'info' => "test_seed_redpack"}
+    hongbao = Redpack.test(params[:id])
+    render :status => 200, json: {'info' => hongbao}
   end
 
   def weixin_check
