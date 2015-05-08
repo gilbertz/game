@@ -32,6 +32,8 @@ class WxEvent
           deal_user_comsume_card(appid,event_msg)
         elsif event == "SCAN"
           deal_qrcode_scan(appid,event_msg)
+        elsif event == "subscribe"
+          deal_user_subscribe(appid,event_msg)
         end
       rescue
 
