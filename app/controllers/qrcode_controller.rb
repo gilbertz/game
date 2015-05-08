@@ -16,18 +16,16 @@ class QrcodeController < ApplicationController
 
     # oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4
     if @scaner
-       $wxclient.send_text_custom("oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4","1245")
-      $wxclient.send_template_msg("oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4", "1-DZpzUOCJ-Es-QLgSS0mu83fZ-O9w6iWm0hZKSq8G8", "http://www.dapeimishu.com/", "#FF0000",  "data"=>{
-          "first"=> {
-          "value"=>"恭喜你购买成功！",
-          "color"=>"#173177"
-      }})
 
-
-
-
-      redirect_to "http://www.baidu.com"
     end
 
+    $wxclient.send_text_custom("oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4","1245")
+    $wxclient.send_template_msg("oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4", "1-DZpzUOCJ-Es-QLgSS0mu83fZ-O9w6iWm0hZKSq8G8", "http://www.dapeimishu.com/", "#FF0000",  "data"=>{
+        "first"=> {
+            "value"=>"恭喜你购买成功！",
+            "color"=>"#173177"
+        }})
+
+    redirect_to "http://www.baidu.com"
   end
 end
