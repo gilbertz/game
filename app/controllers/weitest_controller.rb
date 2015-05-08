@@ -532,9 +532,9 @@ end
           p hongbao["user_id"]
           user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
           if user_allocaiton 
-            user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => (person_num - 1))
+            user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => person_num)
           else
-            UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => (person_num - 1))
+            UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => person_num)
           end
           Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
           Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :allocation => hongbao["money"])
