@@ -1,14 +1,33 @@
 require File.expand_path('../wx_third/web_login',__FILE__)
+require File.expand_path('../wx_third/wx_qrcode',__FILE__)
+require File.expand_path('../wx_third/wx_util',__FILE__)
+
 
 class WebLoginController < ApplicationController
   include WebLogin
+  include WxQrcode
 
+  # 传统 微信 web第三方登陆
   def login
     appid = WEB_APPID
     rurl = params["rurl"]
     redirect_to web_auth_url(appid,rurl)
+
   end
 
+  #扫描二维码登陆
+  def qr_login
+
+    access_token = WxUtil.get_authorizer_access_token("wx456ffb04ee140d84")
+    p "access_token = #{access_token}"
+    qrcode = generate_qr(access_token)
+    redirect_to qrcode.qrcode_url
+
+    # ret = $wxclient.create_qr_scene(123)
+    # p ret
+    # redirect_to $wxclient.qr_code_url(ret.result["ticket"])
+
+  end
 
   def callback
     p "callback #{params.to_s}"
@@ -49,7 +68,8 @@ class WebLoginController < ApplicationController
 
 
           if flag
-            rediect_to rurl
+            redirect_to rurl
+            return
           end
 
         end
