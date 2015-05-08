@@ -55,6 +55,30 @@
     </div>
   </div>
 
+   <div class="form-group">
+      <%= link_to  "/admin/categories/#{@category.id}/code_blocks/new", class: 'btn btn-primary btn-sm', id: 'a_obj' do %>
+        <span class="glyphicon glyphicon-plus"></span>新建code block
+      <% end %>
+
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>code</th>
+          <th>operate</th>
+        </tr>
+        <% @category.code_blocks.each do |t|%>
+        <tr>
+          <td><%= t.id %></td>
+          <td><%= t.code %></td>
+          <td> <%= link_to [:edit,:admin,@category,t], class: :e_obj do %><span class="glyphicon glyphicon-plus"></span>编辑<% end %> |<%= link_to '删除', [:admin, @category, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
+        </tr>
+        <%end%>
+      </table>
+   </div>
+
+
+
+
     <div class="control-group">
       <label class="control-label">游戏类型</label>
       <div class="controls">
