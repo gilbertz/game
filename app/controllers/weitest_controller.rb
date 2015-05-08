@@ -5,10 +5,14 @@ class WeitestController < ApplicationController
   
   before_filter :weixin_authorize, :only => [:o2o]
 
+  def test_generate
+    Redpack.generate(params[:total].to_i,params[:count].to_i,params[:max].to_i,params[:min].to_i)
+    render :status => 200, json: {'info' => "test_generate"}
+  end
+
   def test_seed_redpack
-    Redpack.generate(100000,500,600,150)
     Redpack.test(params[:id])
-    render :status => 200, json: {'info' => "ok"}
+    render :status => 200, json: {'info' => "test_seed_redpack"}
   end
 
   def weixin_check
@@ -513,17 +517,16 @@ end
       max = redpack_time.max
       person_num = redpack_time.person_num
       time_amount = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
-      p time_amount.time
+      # p time_amount.time
         @time = time_amount.time
         # @amount = time_amount.amount
       @amount = Check.where("state = ? and beaconid = ? and created_at <= ? and created_at >= ?", 1 , beaconid, Time.now,(Time.now - 24*3600) ).length
-      @amount = @amount > 400 ? 400 : @amount
+      @amount = @amount > redpack_time.amount ? redpack_time.amount : @amount
       time_amount.update(amount: @amount)
-      p @amount
+      # p @amount
 
       if $redis.llen("hongBaoConsumedList") != 0
-        p "ssss"
-        p $redis.lrange("hongBaoConsumedList",0,-1)
+        # p $redis.lrange("hongBaoConsumedList",0,-1)
         for i in 0..($redis.llen("hongBaoConsumedList")-1)
           hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
           p hongbao["user_id"]
@@ -535,12 +538,12 @@ end
           end
           Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
           Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :allocation => hongbao["money"])
-          p "consume"
+          # p "consume"
         end
       end
-      p @time
+      # p @time
       if @time > Time.now && @time < (Time.now + 10*60) && time_amount.state == 1
-        p "produce"
+        # p "produce"
         Redpack.generate(@amount * 100, @amount / 2,max,min)
         time_amount.update(state: 0)
       end
