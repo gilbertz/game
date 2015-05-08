@@ -218,7 +218,7 @@ class Redpack < ActiveRecord::Base
       result[0] = min
       result_hongbao = {:id => 0, :money => result[0]}
       $redis.lpush("hongbaolist",result_hongbao.to_json)
-      p $redis.lrange("hongbaolist",0,-1)
+      #p $redis.lrange("hongbaolist",0,-1)
       return $redis.lrange("hongbaolist",0,-1)
     else
       average = total/count
@@ -264,7 +264,7 @@ class Redpack < ActiveRecord::Base
         result_hongbao = {:id => i, :money => result[i]}
         $redis.lpush("hongbaolist",result_hongbao.to_json)
       end
-      p $redis.lrange("hongbaolist",0,-1)
+      #p $redis.lrange("hongbaolist",0,-1)
     # return result
     return $redis.lrange("hongbaolist",0,-1)
   end
@@ -281,15 +281,15 @@ end
 
   def self.test(user_id)
     if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
-      p $redis.hget("hongBaoConsumedMap",user_id)
+      #p $redis.hget("hongBaoConsumedMap",user_id)
       return nil 
     else
       hongbao = JSON.parse($redis.rpop("hongbaolist"))
       hongbao.merge!({:user_id => user_id})
       $redis.hset("hongBaoConsumedMap",user_id,user_id)
-      p $redis.hget("hongBaoConsumedMap",user_id)
+      #p $redis.hget("hongBaoConsumedMap",user_id)
       $redis.lpush("hongBaoConsumedList",hongbao)
-      p $redis.lrange("hongBaoConsumedList",0,-1)
+      #p $redis.lrange("hongBaoConsumedList",0,-1)
       return hongbao 
     end
   end
@@ -314,17 +314,17 @@ end
     # end
     beaconid = Ibeacon.find_by(:url=>beaconid).id
     if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
-      p $redis.hget("hongBaoConsumedMap",user_id)
+      #p $redis.hget("hongBaoConsumedMap",user_id)
       return 0 
     else
       hongbao = JSON.parse($redis.rpop("hongbaolist"))
-      p hongbao
+      #p hongbao
       hongbao.merge!({:user_id => user_id})
-      p $redis.lrange("hongbaolist",0,-1)
+      #p $redis.lrange("hongbaolist",0,-1)
       $redis.hset("hongBaoConsumedMap",user_id,user_id)
-      p $redis.hget("hongBaoConsumedMap",user_id)
+      #p $redis.hget("hongBaoConsumedMap",user_id)
       $redis.lpush("hongBaoConsumedList",hongbao.to_json)
-      p $redis.lrange("hongBaoConsumedList",0,-1)
+      #p $redis.lrange("hongBaoConsumedList",0,-1)
       Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id).update(:state => 0)
       return hongbao["money"]
     end
