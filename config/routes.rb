@@ -175,6 +175,7 @@ Game::Application.routes.draw do
     resources :users
     resources :session
     resources :categories do
+      resources :code_blocks
       member do
         get :clone
       end

@@ -1,6 +1,7 @@
 class Category < ActiveRecord::Base
   has_many :images, as: :viewable, class_name: "Image"
   has_many :materials, class_name: "Material" 
+  has_many :code_blocks
 
   belongs_to :game_type
 
