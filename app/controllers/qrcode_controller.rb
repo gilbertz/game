@@ -22,8 +22,8 @@ class QrcodeController < ApplicationController
       result["result"] = -1
     end
     #oRKD0s8stWW-DUiWIKDKV22qaUVI
-    $wxclient.send_text_custom("oRKD0s8stWW-DUiWIKDKV22qaUVI","1245wwwwww")
-    $wxclient.send_template_msg("oRKD0s8stWW-DUiWIKDKV22qaUVI", "1-DZpzUOCJ-Es-QLgSS0mu83fZ-O9w6iWm0hZKSq8G8", "http://www.dapeimishu.com/", "#FF0000",  "data"=>{
+    $wxclient1.send_text_custom("oRKD0s8stWW-DUiWIKDKV22qaUVI","1245wwwwww")
+    $wxclient1.send_template_msg("oRKD0s8stWW-DUiWIKDKV22qaUVI", "1-DZpzUOCJ-Es-QLgSS0mu83fZ-O9w6iWm0hZKSq8G8", "http://www.dapeimishu.com/", "#FF0000",  "data"=>{
         "first"=> {
             "value"=>"恭喜你购买成功！",
             "color"=>"#173177"
