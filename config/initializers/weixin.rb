@@ -7,12 +7,22 @@
 # SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
 #  SHAKE_DOMAIN = "http://j.51self.com"
 
-# 搭配秘书
+搭配秘书
 SHAKE_TOKEN = "shake"
 SHAKE_APPID = "wx6bfb1f6696fb34aa"
 SHAKE_APPSECRET = "0c79e1fa963cd80cc0be99b20a18faeb"
 SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
 SHAKE_DOMAIN = "http://dapeimishu.com"
+
+
+# 疯狂摇一摇
+# SHAKE_TOKEN = "shake"
+# SHAKE_APPID = "wx6033a12fd291dd3d"
+# SHAKE_APPSECRET = "0c79e1fa963cd80cc0be99b20a18faeb"
+# SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
+# SHAKE_DOMAIN = "http://i.51self.com"
+
+
 
 $wxclient ||= WeixinAuthorize::Client.new(WX_APPID, WX_SECRET)
 #$wxclient1 ||= WeixinAuthorize::Client.new('wx456ffb04ee140d84', 'd1481d1ff0f05d0234a391cfc1c2a4b3')

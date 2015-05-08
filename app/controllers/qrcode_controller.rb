@@ -6,6 +6,7 @@ class QrcodeController < ApplicationController
   def query_scaner
     @scaner = nil
     ticket = params["ticket"]
+    result = Hash.new
     if ticket
       qrcode = Qrcode.find_by_ticket(ticket)
 
@@ -13,12 +14,13 @@ class QrcodeController < ApplicationController
         @scaner = qrcode.scaner
       end
     end
-
     # oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4
     if @scaner
-
+      result["result"] = 0
+      result["openid"] = @scaner
+    else
+      result["result"] = -1
     end
-
     $wxclient.send_text_custom("oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4","1245wwwwww")
     # $wxclient.send_template_msg("oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4", "1-DZpzUOCJ-Es-QLgSS0mu83fZ-O9w6iWm0hZKSq8G8", "http://www.dapeimishu.com/", "#FF0000",  "data"=>{
     #     "first"=> {
@@ -26,6 +28,6 @@ class QrcodeController < ApplicationController
     #         "color"=>"#173177"
     #     }})
 
-    redirect_to "http://www.baidu.com"
+    redirect_to :json => result.to_json
   end
 end
