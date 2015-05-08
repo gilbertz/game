@@ -34,6 +34,8 @@ class WxEvent
           deal_qrcode_scan(appid,event_msg)
         elsif event == "subscribe"
           deal_user_subscribe(appid,event_msg)
+        elsif event == "unsubscribe"
+          deal_user_unsubscribe(appid,event_msg)
         end
       rescue
 
@@ -92,6 +94,18 @@ class WxEvent
           qrcode.save
         end
       end
+    end
+
+
+    #  取消关注公众账号
+    def deal_user_unsubscribe(appid,event_msg)
+      from_user_name = event_msg["FromUserName"]
+      authentication = Authentication.find_by_user_id(from_user_name)
+      if authentication != nil
+        authentication.unsubscribe = false
+        authentication.save
+      end
+
     end
 
   end
