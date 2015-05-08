@@ -53,6 +53,7 @@ Game::Application.routes.draw do
   get '/weitest/wx_share' => 'weitest#wx_share'
   get '/weitest/weixin_redpack' => 'weitest#weixin_redpack', :as=>"weixin_redpack"
   get '/weitest/weixin_bus_allocation' => 'weitest#bus_allocation', :as=>'bus_allocation'
+  get '/weitest/weixin_seed_redpack' => 'weitest#seed_redpack', :as=>'seed_redpack'
   get '/weitest/weixin_check' => 'weitest#weixin_check', :as=>"weixin_check"
   get '/weitest/weixin_score' => 'weitest#weixin_score', :as=>"weixin_score"
   get '/weitest/report' => 'weitest#report',  :as=>"report"
@@ -109,8 +110,8 @@ Game::Application.routes.draw do
   get '/s/:sid/:id' => "weitest#show"
 
   get '/gs/:id' => 'weitest#o2o'
+  get '/gg/:id' => 'weitest#test_seed_redpack'
   get '/:beaconid/gs/:id' => 'weitest#o2o' 
-  get '/:beaconid/gg/:id' => 'weitest#allocation'
   get '/:beaconid/wshows/:id' => 'wshows#show'
   get '/:beaconid/home' => 'home#home'
   get '/:beaconid/broadcast' => 'weitest#broadcast' 

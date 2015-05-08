@@ -5,22 +5,40 @@ class WeitestController < ApplicationController
   
   before_filter :weixin_authorize, :only => [:o2o]
 
+  def test_seed_redpack
+    Redpack.generate(100000,500,600,150)
+    Redpack.test(params[:id])
+    render :status => 200, json: {'info' => "ok"}
+  end
+
   def weixin_check
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    Check.create(user_id: current_user.id, beaconid: beaconid, game_id: params[:game_id])
+    Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id])
     render :status => 200, json: {'info' => "报名成功"}
   end
   # 今天有记录 从点的人的allocation拿出一定score存储，不存allocation
   # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
   #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
 
+  def seed_redpack
+    if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
+      @material = Material.find_by(id: params[:game_id]) 
+      get_object
+      info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object,params[:beaconid])
+      render :status => 200, json: {'info' => info}
+    elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
+      info = 0
+      render :status => 200, json: {'info' => info}
+    end 
+  end
+
   def bus_allocation
-    if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
+    if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
       @material = Material.find_by(id: params[:game_id]) 
       get_object
       info = Redpack.first_allocation(current_user.id, params[:game_id], @object,params[:beaconid])
       render :status => 200, json: {'info' => info}
-    elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 2
+    elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       info = 0
       render :status => 200, json: {'info' => info}
     end 
@@ -487,12 +505,44 @@ end
   def get_time_amount_time
     get_object
     redpack_times = RedpackTime.where(:redpack_id =>@object.id).order("start_time desc")
+    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+
     if redpack_times and redpack_times.length > 0
       redpack_time = redpack_times[0]
+      min = redpack_time.min
+      max = redpack_time.max
+      person_num = redpack_time.person_num
       time_amount = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
-      if time_amount 
+      p time_amount.time
         @time = time_amount.time
-        @amount = time_amount.amount
+        # @amount = time_amount.amount
+      @amount = Check.where("state = ? and beaconid = ? and created_at <= ? and created_at >= ?", 1 , beaconid, Time.now,(Time.now - 24*3600) ).length
+      @amount = @amount > 400 ? 400 : @amount
+      time_amount.update(amount: @amount)
+      p @amount
+
+      if $redis.llen("hongBaoConsumedList") != 0
+        p "ssss"
+        p $redis.lrange("hongBaoConsumedList",0,-1)
+        for i in 0..($redis.llen("hongBaoConsumedList")-1)
+          hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
+          p hongbao["user_id"]
+          user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
+          if user_allocaiton 
+            user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => (person_num - 1))
+          else
+            UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => (person_num - 1))
+          end
+          Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
+          Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :allocation => hongbao["money"])
+          p "consume"
+        end
+      end
+      p @time
+      if @time > Time.now && @time < (Time.now + 10*60) && time_amount.state == 1
+        p "produce"
+        Redpack.generate(@amount * 100, @amount / 2,max,min)
+        time_amount.update(state: 0)
       end
     end
   end
