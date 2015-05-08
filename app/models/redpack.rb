@@ -197,5 +197,138 @@ class Redpack < ActiveRecord::Base
     Score.create(:user_id => current_user.id, :value => -score,:from_user_id => current_user.id)
   end 
 
+  def self.x_random(min,max)
+    return (rand((max-min) ** 2) ** (1.0/2)).to_i
+  end
+
+  def self.next_long(min,max)
+    return rand(max-min+1) + min
+  end
+
+  def self.generate(total,count,max,min)
+
+    $redis.del("hongbaolist")
+    $redis.del("hongBaoConsumedMap")
+    $redis.del("hongBaoConsumedList")
+
+    result = Array.new(count)
+    result_hongbao = Array.new(0)
+    if total < min
+      min = total
+      result[0] = min
+      result_hongbao = {:id => 0, :money => result[0]}
+      $redis.lpush("hongbaolist",result_hongbao.to_json)
+      p $redis.lrange("hongbaolist",0,-1)
+      return result_hongbao
+    else
+    average = total/count
+
+    a = average - min
+    b = max - average
+
+    range1 = (average - min) ** 2
+    range2 = (max - average) ** 2
+
+    for i in 0..(result.length-1)
+      if (next_long(min,max) > average)
+        temp = min + x_random(min,average)
+        result[i] = temp
+        total -= temp
+      else
+        temp = max - x_random(average,max)
+        result[i] = temp
+        total -= temp
+      end
+    end
+
+    while (total > 0)
+      for i in 0..(result.length-1)
+
+        if total > 0 && result[i] < max 
+          result[i] += 1
+          total -= 1
+        end
+      end
+    end
+
+    while (total < 0)
+      for i in 0..(result.length-1)
+        if total < 0 && result[i] > min
+          result[i] -= 1
+          total += 1
+        end
+      end
+    end
+
+    for i in 0..(result.length-1)
+      result_hongbao = {:id => i, :money => result[i]}
+      $redis.lpush("hongbaolist",result_hongbao.to_json)
+    end
+    p $redis.lrange("hongbaolist",0,-1)
+    # return result
+    return result_hongbao
+    end
+    
+
+  end
+
+  # def self.ge
+    
+  #   generate(500,2.5,600,150)
+  # #   $redis.script(try_get_hongbao_script)
+  # #    for i in 0..9
+  # #   p $redis.eval(tryGetHongBaoScript, 4, "hongBaoList", "hongBaoConsumedList", "hongBaoConsumedMap", i); 
+  # # end
+  # end
+
+  def self.test(user_id)
+    if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
+      p $redis.hget("hongBaoConsumedMap",user_id)
+      return nil 
+    else
+      hongbao = JSON.parse($redis.rpop("hongbaolist"))
+      hongbao.merge!({:user_id => user_id})
+      $redis.hset("hongBaoConsumedMap",user_id,user_id)
+      p $redis.hget("hongBaoConsumedMap",user_id)
+      $redis.lpush("hongBaoConsumedList",hongbao)
+      p $redis.lrange("hongBaoConsumedList",0,-1)
+    end
+  end
+
+  def self.gain_seed_redpack(user_id, game_id,redpack,beaconid) 
+    # hongbao =  Hash.new
+    # if $redis.llen("hongbaolist") == 0
+    #   for i in 0..(llen("hongBaoConsumedMap")-1)
+    #     beaconid = Ibeacon.find_by(:url=>beaconid).id
+    #     redpack_time = RedpackTime.where(:redpack_id =>redpack.id).order("start_time desc")[0]
+    #     person_num = redpack_time.person_num
+    #     user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
+    #     if user_allocaiton 
+    #       user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => (person_num - 1))
+    #     else
+    #       UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => (person_num - 1))
+    #     end
+    #     Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
+    #     Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => game_id, :score => hongbao["money"], :allocation => hongbao["money"])
+    #     p "yongwanle"
+    #   end 
+    # end
+    beaconid = Ibeacon.find_by(:url=>beaconid).id
+    if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
+      p $redis.hget("hongBaoConsumedMap",user_id)
+      return 0 
+    else
+      hongbao = JSON.parse($redis.rpop("hongbaolist"))
+      p hongbao
+      hongbao.merge!({:user_id => user_id})
+      p $redis.lrange("hongbaolist",0,-1)
+      $redis.hset("hongBaoConsumedMap",user_id,user_id)
+      p $redis.hget("hongBaoConsumedMap",user_id)
+      $redis.lpush("hongBaoConsumedList",hongbao.to_json)
+      p $redis.lrange("hongBaoConsumedList",0,-1)
+      Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id).update(:state => 0)
+      return hongbao["money"]
+    end
+  end
 
 end
