@@ -12,6 +12,21 @@ class Record < ActiveRecord::Base
     end
   end
 
+
+  def get_beacon
+    if self.beaconid
+      Ibeacon.find_by_id self.beaconid
+    end 
+  end
+  
+
+  def get_game
+    if self.game_id
+       Material.find_by_id self.game_id
+    end
+  end
+
+
   def user_name
     self.user.name
   end
@@ -38,5 +53,14 @@ class Record < ActiveRecord::Base
     self.user_name + remark 
   end
   
+ 
+ def game_link
+    self.get_game.get_link(self.get_beacon.url)
+  end
+
+  def get_qr_img
+    'http://qr.liantu.com/api.php?text=' + self.game_link
+  end
+
 
 end

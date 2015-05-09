@@ -7,6 +7,7 @@
     <th>ibeacon </th>
     <th>user name</th>
     <th>app name</th>
+    <th>qr</th>
     <th>score</th>
     <th>allocation</th>
     <th>remark</th>
@@ -19,6 +20,7 @@
     <td><%= link_to r.beacon_name, "/admin/records?beaconid=#{r.beaconid}" %></td>
     <td><%= link_to r.user_name, "/admin/records?user_id=#{r.user_id}" %></td>
     <td><%= link_to r.app_name, "/admin/records?game_id=#{r.game_id}" %></td>
+    <td><img src="<%= r.get_qr_img %>" width='100px'></td>
     <td><%= r.score %></td>
     <td><%= r.allocation%></td>
     <td><%= r.remark %></td>
