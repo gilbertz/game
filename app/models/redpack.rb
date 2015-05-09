@@ -1,4 +1,5 @@
 class Redpack < ActiveRecord::Base
+  
   require 'net/https'
   require 'uri'
   require 'rexml/document'
@@ -280,10 +281,10 @@ end
   # end
 
   def self.test(user_id)
-    if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
-      #p $redis.hget("hongBaoConsumedMap",user_id)
-      return nil 
-    else
+    # if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
+    #   p $redis.hget("hongBaoConsumedMap",user_id)
+    #   return nil 
+    # else
       hongbao = JSON.parse($redis.rpop("hongbaolist"))
       hongbao.merge!({:user_id => user_id})
       $redis.hset("hongBaoConsumedMap",user_id,user_id)
@@ -291,7 +292,7 @@ end
       $redis.lpush("hongBaoConsumedList",hongbao)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
       return hongbao 
-    end
+    # end
   end
 
   def self.gain_seed_redpack(user_id, game_id,redpack,beaconid) 
