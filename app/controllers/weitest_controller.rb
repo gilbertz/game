@@ -508,6 +508,7 @@ end
 
   def get_time_amount_time
     get_object
+    return unless @object
     redpack_times = RedpackTime.where(:redpack_id =>@object.id).order("start_time desc")
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
 
