@@ -327,6 +327,7 @@ end
       $redis.lpush("hongBaoConsumedList",hongbao.to_json)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
       Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id).update(:state => 0)
+      Record.create(:user_id => user_id, :from_user_id => user_id, :beaconid=> beaconid, :game_id => game_id, :score => hongbao["money"], :object_type=>'Redpack', :object_id => redpack.id)
       return hongbao["money"]
     end
   end
