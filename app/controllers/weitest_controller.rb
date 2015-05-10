@@ -309,8 +309,9 @@ class WeitestController < ApplicationController
     get_object
     if current_user and not @record
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      @rp = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].weixin_post(current_user, params[:beaconid]).to_i
-      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp)
+      rp = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0]
+      @rp = rp.weixin_post(current_user, params[:beaconid]).to_i
+      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => @rp.id)
       render :status => 200, json: {'rp' => @rp}
     else
       render :status => 200, json: {'result' => 'not current_user or record' }
@@ -424,7 +425,6 @@ class WeitestController < ApplicationController
   def broadcast
     response.headers['Content-Type'] = 'text/event-stream'
     get_beacon
-    #@beacon = Ibeacon.find_by(:url => 'lcxggg')
     @beacon.records.order('created_at desc').limit(3).sample(1).each do |r|
      response.stream.write "data: #{r.to_s} \n\n"
      sleep 1
