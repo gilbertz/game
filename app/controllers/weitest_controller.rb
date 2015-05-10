@@ -328,7 +328,11 @@ class WeitestController < ApplicationController
         au = Authentication.find_by_uid( params[:openid] )
         if au
           s.from_user_id = au.user_id
-          f_value = rand(100) 
+          f_value = rand(100)
+          if params[:beaconid] == 'dgbs'
+            r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
+            f_value = (r.score/2 < 100)?100:r.score/2 if r
+          end
           Score.create(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
         end
       end

@@ -19,6 +19,14 @@ class Score < ActiveRecord::Base
     end
   end
 
+
+  def from_user_name
+    if self.from_user_id
+      User.find_by_id(self.from_user_id).name
+    end
+  end
+
+
   def app_name
     if self.game_id
       m = Material.find_by_id self.game_id
