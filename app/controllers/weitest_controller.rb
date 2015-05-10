@@ -484,7 +484,6 @@ end
   end
 
   def get_object
-    p @material 
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
     end
