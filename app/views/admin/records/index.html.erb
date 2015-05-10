@@ -11,6 +11,8 @@
     <th>score</th>
     <th>allocation</th>
     <th>remark</th>
+    <th>object type</th>
+    <th>object id</th>
     <th>created at</th>
   </tr>
 
@@ -24,7 +26,9 @@
     <td><%= r.score %></td>
     <td><%= r.allocation%></td>
     <td><%= r.remark %></td>
-     <td><%= r.created_at %></td>
+    <td><%= r.object_type %></td>
+    <td><%= r.object_id %></td>
+    <td><%= r.created_at %></td>
   </tr>
   <% end %>
 </table>
