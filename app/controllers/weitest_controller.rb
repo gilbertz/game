@@ -309,8 +309,9 @@ class WeitestController < ApplicationController
     get_object
     if current_user and not @record
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      @rp = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].weixin_post(current_user, params[:beaconid]).to_i
-      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp)
+      rp = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0]
+      @rp = rp.weixin_post(current_user, params[:beaconid]).to_i
+      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => @rp.id)
       render :status => 200, json: {'rp' => @rp}
     else
       render :status => 200, json: {'result' => 'not current_user or record' }
@@ -327,7 +328,11 @@ class WeitestController < ApplicationController
         au = Authentication.find_by_uid( params[:openid] )
         if au
           s.from_user_id = au.user_id
-          f_value = rand(100) 
+          f_value = rand(100)
+          if params[:beaconid] == 'dgbs'
+            r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
+            f_value = (r.score/2 < 100)?100:r.score/2 if r
+          end
           Score.create(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
         end
       end
@@ -424,7 +429,6 @@ class WeitestController < ApplicationController
   def broadcast
     response.headers['Content-Type'] = 'text/event-stream'
     get_beacon
-    #@beacon = Ibeacon.find_by(:url => 'lcxggg')
     @beacon.records.order('created_at desc').limit(3).sample(1).each do |r|
      response.stream.write "data: #{r.to_s} \n\n"
      sleep 1
@@ -435,16 +439,16 @@ class WeitestController < ApplicationController
 
  private
  def authorize_url(url)
-  get_beacon
-  appid = "wx456ffb04ee140d84"
-  if params[:beaconid]
-    appid = @beacon.get_merchant.wxappid
-  end
-  "http://#{WX_DOMAIN}/#{appid}/launch?rurl=" + url
+  #get_beacon
+  #appid = "wx456ffb04ee140d84"
+  #if params[:beaconid]
+  #  appid = @beacon.get_merchant.wxappid
+  #end
+  #"http://#{WX_DOMAIN}/#{appid}/launch?rurl=" + url
   
-  #rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
-  #scope = 'snsapi_userinfo'
-  #"https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=#{scope}&connect_redirect=1#wechat_redirect"
+  rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
+  scope = 'snsapi_userinfo'
+  "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=#{scope}&connect_redirect=1#wechat_redirect"
 end
 
   def check_cookie
@@ -484,7 +488,6 @@ end
   end
 
   def get_object
-    p @material 
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
     end
