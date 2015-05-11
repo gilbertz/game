@@ -27,3 +27,13 @@ end
 
 
 # Learn more: http://github.com/javan/whenever
+
+
+every '8,18,28,38,48,58 * * * *' do
+          rake "redpack:notice_redpack_begin"
+end
+
+
+every '9,19,29,39,49,59 * * * *' do
+          rake "redpack:generate_redpack"
+end

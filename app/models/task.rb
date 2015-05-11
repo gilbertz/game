@@ -8,13 +8,13 @@ class Task < ActiveRecord::Base
   def task_des
     para = self.param_format
     para_des = ""
-    if self.task_type == TaskType::REDPACK
+#    if self.task_type == TaskType::REDPACK
 
-    elsif self.task_des == TaskType::REDPACK_BEGIN_NOTICE
+ #   elsif self.task_des == TaskType::REDPACK_BEGIN_NOTICE
 
-    end
+    #end
     des = "\nevery '#{self.time_format}' do
-          rake \"#{self.service_name}#{para_des}\""
+          rake \"#{self.service_name}#{para_des}\"\nend"
 
     # self.time_format = '0 0 27-31 * *'
     # self.service_name = 'redpack:generate_redpack'
@@ -36,7 +36,7 @@ class Task < ActiveRecord::Base
 
   def write_to_crontab
     file_path = "#{Rails.root}/config/schedule.rb"
-    file = File.open(filePath,"a+")
+    file = File.open(file_path,"a+")
     if file
       file.syswrite(task_des)
 
