@@ -28,7 +28,7 @@ class Record < ActiveRecord::Base
 
 
   def user_name
-    self.user.name
+    self.user.name if self.user
   end
 
   def app_name
