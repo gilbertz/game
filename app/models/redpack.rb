@@ -331,13 +331,13 @@ end
       #p $redis.hget("hongBaoConsumedMap",user_id)
       $redis.lpush("hongBaoConsumedList",hongbao.to_json)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
-
       
       check = Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id)
       check.update(:state => 0) if check
-      Record.create(:user_id => user_id, :from_user_id => user_id, :beaconid=> beaconid, :game_id => game_id, :score => hongbao["money"], :object_type=>'Redpack', :object_id => redpack.id)
+
       user = User.find user_id
       user.incr_social(beaconid, 3)
+
       return hongbao["money"]
       else
       return 0

@@ -348,8 +348,8 @@ class WeitestController < ApplicationController
               au.decr_social
               if au.social_score == 0
                 rp = Redpack.where(beaconid: beaconid, state: 1).order("start_time desc")[0]
-                @rp = rp.weixin_post(current_user, params[:beaconid], f_value)
-                Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)            
+                @rp = rp.weixin_post(au, params[:beaconid], f_value)
+                Record.create(:user_id => au.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)            
               end
             else
               f_value = 0
