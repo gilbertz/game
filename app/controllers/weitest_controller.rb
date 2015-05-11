@@ -465,10 +465,10 @@ class WeitestController < ApplicationController
    
    # msg = msg.merge(:amount => fake_amount)
 
-   redpack_time = RedpackTime.get_redpack_time(@object.id)
-   return unless redpack_time
-   beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-   @amount = TimeAmount.get_amount(redpack_time,beaconid,@object.id)
+
+   get_object
+   return unless @object
+   @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
    fake_amount = @amount + 10000
    
    msg = msg.merge(:amount => fake_amount/100)
@@ -553,20 +553,15 @@ end
 def get_time_amount_time
   get_object
   return unless @object
-  redpack_time = RedpackTime.get_redpack_time(@object.id)
-  return unless redpack_time
-
-  beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-  @amount = TimeAmount.get_amount(redpack_time,beaconid)
+  @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
     # p @amount 
-    @time_amount = TimeAmount.get_time_amount(redpack_time)
+    @time_amount = TimeAmount.get_time_amount(@object.id)
     # p time_amount.time
     @time = @time_amount.time
     # @amount = time_amount.amount
     # fake amount 
     @fake_amount = @amount + 10000
-    @fake_amount = @fake_amount > redpack_time.amount ? redpack_time.amount : @fake_amount
-
+    redpack_time = RedpackTime.get_redpack_time(@object.id)
     min = redpack_time.min
     max = redpack_time.max
     person_num = redpack_time.person_num
