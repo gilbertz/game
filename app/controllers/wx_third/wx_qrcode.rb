@@ -2,7 +2,10 @@ require File.expand_path('../qrcode_type',__FILE__)
 require File.expand_path('../qrcode_scene_type',__FILE__)
 
 module WxQrcode
+
   include QrcodeSceneType
+  include QrcodeType
+
   def generate_qr(access_token,appid= WX_APPID,is_tempoart = true)
     if access_token.blank?
       return nil
@@ -44,5 +47,8 @@ module WxQrcode
 
   end
 
+  def qrcode_url(ticket)
+    "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=#{ticket}"
+  end
 
 end
