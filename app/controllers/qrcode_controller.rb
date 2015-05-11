@@ -11,8 +11,8 @@ class QrcodeController < ApplicationController
     if ticket != nil
       qrcode = Qrcode.find_by_ticket(ticket)
 
-      p "qrcode #{qrcode}"
-      if qrcode && qrcode.expire_at.to_i < Time.now.to_i && qrcode.scene_type == LOGIN_SCENE
+      p "qrcode #{qrcode.to_json}"
+      if qrcode && qrcode.expire_at.to_i >= Time.now.to_i && qrcode.scene_type == LOGIN_SCENE
         @scaner = qrcode.scaner
       end
     end
