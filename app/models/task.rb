@@ -14,7 +14,7 @@ class Task < ActiveRecord::Base
 
     end
 
-    self.time_format = 9,19,29,39,49,59 15,16,17,18,19,20,21,22,23 11,12 5 2015 
+    self.time_format = 9,19,29,39,49,59,15,16,17,18,19,20,21,22,23,11,12,5,2015 
     self.service_name = redpack::generate_redpack 
     total = 40000
     count = 200
