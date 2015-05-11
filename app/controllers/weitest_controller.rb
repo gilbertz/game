@@ -525,6 +525,11 @@ end
         @time = time_amount.time
         # @amount = time_amount.amount
       @amount = Check.where("state = ? and beaconid = ? and created_at <= ? and created_at >= ?", 1 , beaconid, Time.now,(Time.now - 24*3600) ).length
+      # fake amount 
+      @fake_amount = @amount*100 + 10000
+      @fake_amount = @fake_amount > redpack_time.amount ? redpack_time.amount : @fake_amount
+
+      @amount = @amount*100
       @amount = @amount > redpack_time.amount ? redpack_time.amount : @amount
       time_amount.update(amount: @amount)
       # p @amount
@@ -533,7 +538,7 @@ end
         # p $redis.lrange("hongBaoConsumedList",0,-1)
         for i in 0..($redis.llen("hongBaoConsumedList")-1)
           hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
-          p hongbao["user_id"]
+          # p hongbao["user_id"]
           user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
           if user_allocaiton 
             user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => person_num)

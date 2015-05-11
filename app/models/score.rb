@@ -22,7 +22,8 @@ class Score < ActiveRecord::Base
 
   def from_user_name
     if self.from_user_id
-      User.find_by_id(self.from_user_id).name
+      fu = User.find_by_id(self.from_user_id)
+      return fu.name if fu
     end
   end
 

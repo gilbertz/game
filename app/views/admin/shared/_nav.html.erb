@@ -55,7 +55,12 @@
 
           <li class="<%= controller_name.in?(['scores']) ? 'active' : '' %>">
             <%= link_to '积分管理', [:admin,:scores] %>
-          </li>  
+          </li>
+
+   
+          <li class="<%= controller_name.in?(['messages']) ? 'active' : '' %>">
+            <%= link_to '消息管理', [:admin, :messages] %>
+          </li> 
           
 
           <li class="<%= controller_name.in?(['images']) ? 'active' : ''%>">

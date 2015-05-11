@@ -135,7 +135,8 @@ Game::Application.routes.draw do
     get 'records' =>'records#index'
 
     get 'get_objects' => 'materials#get_objects'
-  
+ 
+    resources :messages 
     resources :scores 
     resources :ibeacons do
       member do
