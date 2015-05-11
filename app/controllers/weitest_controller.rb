@@ -17,12 +17,12 @@ class WeitestController < ApplicationController
 
   def weixin_check
     if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
-    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id])
-    render :status => 200, json: {'info' => 1}
+      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+      Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id])
+      render :status => 200, json: {'info' => 1}
     else Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       # 今天次数用完了
-    render :status => 200, json: {'info' => 0}
+      render :status => 200, json: {'info' => 0}
     end 
   end
   # 今天有记录 从点的人的allocation拿出一定score存储，不存allocation
@@ -458,13 +458,21 @@ class WeitestController < ApplicationController
     end 
     @beacon.records.order('created_at desc').limit(3).sample(1).each do |r|
       msgs << {:content => r.to_s, :type => 'text'}
-   end
-   msg = msgs.sample(1)[0]
+    end
+    msg = msgs.sample(1)[0]
+
+   # amount = Check.where("state = ? and beaconid = ? and created_at <= ? and created_at >= ?", 1 , @beacon.id, Time.now,(Time.now - 24*3600) ).length
+   # fake_amount = amount + 10000
    
-   amount = Check.where("state = ? and beaconid = ? and created_at <= ? and created_at >= ?", 1 , @beacon.id, Time.now,(Time.now - 24*3600) ).length
-   fake_amount = amount + 100
+   # msg = msg.merge(:amount => fake_amount)
+
+   redpack_time = RedpackTime.get_redpack_time(@object.id)
+   return unless redpack_time
+   beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+   @amount = TimeAmount.get_amount(redpack_time,beaconid,@object.id)
+   fake_amount = @amount + 10000
    
-   msg = msg.merge(:amount => fake_amount)
+   msg = msg.merge(:amount => fake_amount/100)
    response.stream.write "data: #{msg.to_json} \n\n"
    sleep 5
    response.stream.close
@@ -485,72 +493,72 @@ class WeitestController < ApplicationController
   "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{WX_APPID}&redirect_uri=#{rurl}&response_type=code&scope=#{scope}&connect_redirect=1#wechat_redirect"
 end
 
-  def check_cookie
-    if true
-      unless current_user
-        if cookies.signed[:remember_me].present?
-          user = User.find_by_rememberme_token cookies.signed[:remember_me]
-          if user && user.rememberme_token == cookies.signed[:remember_me]
-            session[:admin_user_id] = user.id
-            current_user = user
-            User.current_user = current_user
-          end
+def check_cookie
+  if true
+    unless current_user
+      if cookies.signed[:remember_me].present?
+        user = User.find_by_rememberme_token cookies.signed[:remember_me]
+        if user && user.rememberme_token == cookies.signed[:remember_me]
+          session[:admin_user_id] = user.id
+          current_user = user
+          User.current_user = current_user
         end
       end
     end
   end
+end
 
-  def check_shake_history
-    if params[:ticket] and params[:activityid]
-      ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
-    end
+def check_shake_history
+  if params[:ticket] and params[:activityid]
+    ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
   end
+end
 
 
-  def weixin_authorize
-    check_cookie
-    check_shake_history
-    unless current_user
-      redirect_to authorize_url(request.url)
-    end
+def weixin_authorize
+  check_cookie
+  check_shake_history
+  unless current_user
+    redirect_to authorize_url(request.url)
   end
+end
 
-  def get_beacon
-    if params[:beaconid]
-      @beacon = Ibeacon.find_by_url params[:beaconid]
-    end
+def get_beacon
+  if params[:beaconid]
+    @beacon = Ibeacon.find_by_url params[:beaconid]
   end
+end
 
-  def get_object
-    if not @material.object_type.blank? and @material.object_id
-      @object = @material.object_type.capitalize.constantize.find @material.object_id
-    end
-    if current_user
-      cond = '1=1'
-      cond = "beaconid = #{@beacon.id}" if @beacon
-      rs = Record.where(cond).where(:user_id => current_user.id, :game_id => @material.id).order('created_at desc')
-      @record = rs[0] if rs and rs.length > 0
-    end  
+def get_object
+  if not @material.object_type.blank? and @material.object_id
+    @object = @material.object_type.capitalize.constantize.find @material.object_id
   end
+  if current_user
+    cond = '1=1'
+    cond = "beaconid = #{@beacon.id}" if @beacon
+    rs = Record.where(cond).where(:user_id => current_user.id, :game_id => @material.id).order('created_at desc')
+    @record = rs[0] if rs and rs.length > 0
+  end  
+end
 
-  def get_redpack_time
-    if current_user 
-      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      if Time.now.to_i>Redpack.where(:beaconid => beaconid).order("start_time asc")[0].start_time.to_i
-        Redpack.where(:beaconid => beaconid).order("start_time asc")[0].update(:state =>1)
-      end
-      @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
-    end
-  end 
-
-  def get_time_amount_time
-    get_object
-    return unless @object
-    redpack_time = RedpackTime.get_redpack_time(@object.id)
-    return unless redpack_time
-
+def get_redpack_time
+  if current_user 
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    @amount = TimeAmount.get_amount(redpack_time,beaconid)
+    if Time.now.to_i>Redpack.where(:beaconid => beaconid).order("start_time asc")[0].start_time.to_i
+      Redpack.where(:beaconid => beaconid).order("start_time asc")[0].update(:state =>1)
+    end
+    @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
+  end
+end 
+
+def get_time_amount_time
+  get_object
+  return unless @object
+  redpack_time = RedpackTime.get_redpack_time(@object.id)
+  return unless redpack_time
+
+  beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+  @amount = TimeAmount.get_amount(redpack_time,beaconid)
     # p @amount 
     @time_amount = TimeAmount.get_time_amount(redpack_time)
     # p time_amount.time
@@ -567,18 +575,18 @@ end
       # p @amount
 
       if $redis.llen("hongBaoConsumedList") != 0
-         p $redis.lrange("hongBaoConsumedList",0,-1)
-        for i in 0..($redis.llen("hongBaoConsumedList")-1)
-          hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
-          user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
-          if user_allocaiton 
-            user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => person_num)
-          else
-            UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => person_num)
-          end
-          Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
-          Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => @object.id)
-          Redpack.find(@object.id).weixin_post(hongbao["user_id"],params[:beaconid],hongbao["money"])
+       p $redis.lrange("hongBaoConsumedList",0,-1)
+       for i in 0..($redis.llen("hongBaoConsumedList")-1)
+        hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
+        user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
+        if user_allocaiton 
+          user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => person_num)
+        else
+          UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => person_num)
+        end
+        Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
+        Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => @object.id)
+        Redpack.find(@object.id).weixin_post(hongbao["user_id"],params[:beaconid],hongbao["money"])
           # p "consume"
         end
       end
