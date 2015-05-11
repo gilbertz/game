@@ -2,6 +2,7 @@ require File.expand_path('../wx_third/qrcode_scene_type',__FILE__)
 class QrcodeController < ApplicationController
 
   include QrcodeSceneType
+  include WxQrcode
 
   def query_scaner
     @scaner = nil
@@ -30,4 +31,16 @@ class QrcodeController < ApplicationController
     $wxclient1.send_template_msg("oNnqbt_LiqkMXMrzHEawO-G9r8Vo", "hMQm4-BGvNX-XIRQnfb_MG3EP6AFCDEFJ0gPrBX7oeg", "http://www.dapeimishu.com/", "#FF0000", data)
     render :json => result.to_json
   end
+
+
+
+  def qrcode
+    qrcode = generate_qr
+
+
+
+  end
+
+
+
 end
