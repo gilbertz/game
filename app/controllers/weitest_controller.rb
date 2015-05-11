@@ -39,6 +39,7 @@ class WeitestController < ApplicationController
         # 抢完了
         render :status => 200, json: {'info' => info}
       else
+      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info)
         render :status => 200, json: {'info' => info}
       end
     elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
@@ -584,7 +585,7 @@ def get_time_amount_time
         end
         Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
         Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => @object.id)
-        Redpack.find(@object.id).weixin_post(hongbao["user_id"],params[:beaconid],hongbao["money"])
+        # Redpack.find(@object.id).weixin_post(hongbao["user_id"],params[:beaconid],hongbao["money"])
           # p "consume"
         end
       end
