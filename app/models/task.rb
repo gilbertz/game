@@ -12,6 +12,14 @@ class Task < ActiveRecord::Base
     elsif self.task_des == REDPACK_BEGIN_NOTICE
 
     end
+    self.time_format = 9,19,29,39,49,59 15,16,17,18,19,20,21,22,23 11,12 5 2015 
+    self.service_name = redpack::generate_redpack 
+    total = 40000
+    count = 200
+    max = 600
+    min = 150
+    para_des = [total,count,max,min]
+
     des = "\nevery '#{self.time_format}' do
           rake \"#{self.service_name}#{para_des}\""
 
