@@ -24,7 +24,7 @@ class Redpack < ActiveRecord::Base
   end
 
 
-  def weixin_post(user,beaconid_url)
+  def weixin_post(user,beaconid_url,  money=nil)
     beacon = Ibeacon.find_by_url(beaconid_url)
     return unless beacon
     m = beacon.get_merchant    
@@ -39,7 +39,7 @@ class Redpack < ActiveRecord::Base
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
 
-    request.body = array_xml(user,beaconid_url, m)
+    request.body = array_xml(user,beaconid_url, m, money)
     response = http.start do |http|
       ret = http.request(request)
       puts request.body
@@ -51,9 +51,9 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-  def array_xml(user,beaconid_url, m)
+  def array_xml(user,beaconid_url, m, money=nil)
     current_redpack = get_current_redpack(beaconid_url)
-    money = get_redpack_rand(beaconid_url)
+    money = get_redpack_rand(beaconid_url) unless money
     doc = Document.new"<xml/>"
     root_node = doc.root
     el14 = root_node.add_element "act_name"
@@ -142,9 +142,6 @@ class Redpack < ActiveRecord::Base
     else
       []
     end
-  end
-
-  def weixin_post_money(user,beaconid,money)
   end
 
   def self.first_allocation(user_id, game_id,redpack,beaconid) 
@@ -338,6 +335,8 @@ end
       check = Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id)
       check.update(:state => 0) if check
       Record.create(:user_id => user_id, :from_user_id => user_id, :beaconid=> beaconid, :game_id => game_id, :score => hongbao["money"], :object_type=>'Redpack', :object_id => redpack.id)
+      user = User.find user_id
+      user.incr_social(beaconid, 3)
       return hongbao["money"]
       else
       return 0
