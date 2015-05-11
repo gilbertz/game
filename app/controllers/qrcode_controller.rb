@@ -11,6 +11,7 @@ class QrcodeController < ApplicationController
     if ticket
       qrcode = Qrcode.find_by_ticket(ticket)
 
+      p "qrcode #{qrcode}"
       if qrcode && qrcode.expire_at.to_i < Time.now.to_i && qrcode.scene_type == LOGIN_SCENE
         @scaner = qrcode.scaner
       end
@@ -19,27 +20,21 @@ class QrcodeController < ApplicationController
     if @scaner
       result["result"] = 0
       result["openid"] = @scaner
+      $wxclient.send_text_custom(@scaner,"你已经成功登陆疯狂摇一摇")
+
     else
       result["result"] = -1
     end
     #oRKD0s8stWW-DUiWIKDKV22qaUVI
+
     $wxclient.send_text_custom("oRKD0s8stWW-DUiWIKDKV22qaUVI","1245wwwwww")
 
     $wxclient1.send_text_custom("oNnqbt_LiqkMXMrzHEawO-G9r8Vo","1245wwwwww")
-
     data = {first:{value:"活动即将开始",color:"#173177"},keyword1:{value:"chentao",color:"#173177"},keyword2:{value:"德高巴士活动",color:"#173177"},keyword3:{value:"2014年9月16日",color:"#173177"}}
     $wxclient1.send_template_msg("oNnqbt_LiqkMXMrzHEawO-G9r8Vo", "hMQm4-BGvNX-XIRQnfb_MG3EP6AFCDEFJ0gPrBX7oeg", "http://www.dapeimishu.com/", "#FF0000", data)
     render :json => result.to_json
   end
 
-
-
-  def qrcode
-    qrcode = generate_qr
-
-
-
-  end
 
 
 
