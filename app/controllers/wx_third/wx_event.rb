@@ -89,7 +89,7 @@ class WxEvent
       # 如果是扫描二维码 关注公众账号
       if  ticket != nil
         qrcode = Qrcode.find_by_ticket(ticket)
-        if qrcode && qrcode.scaner == nil
+        if qrcode != nil  && qrcode.scaner == nil
           qrcode.scaner = from_user_name
           qrcode.save
         end

@@ -1,15 +1,3 @@
-
-require 'devise'
-require File.expand_path('../../../config/initializers/redis',__FILE__)
-#require File.expand_path('../../../config/environments/development',__FILE__)
-require File.expand_path('../../../config/environments/production',__FILE__)
-require File.expand_path('../../../config/initializers/weixin',__FILE__)
-require File.expand_path('../../../app/models/ibeacon',__FILE__)
-require File.expand_path('../../../app/models/check',__FILE__)
-require File.expand_path('../../../app/models/user',__FILE__)
-require File.expand_path('../../../app/models/merchant',__FILE__)
-
-
 namespace :redpack do
 
   desc "生成红包"
