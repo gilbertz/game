@@ -16,12 +16,12 @@ namespace :redpack do
     puts 'notice_redpack_begin'
     $wxclient.send_text_custom("oRKD0s8stWW-DUiWIKDKV22qaUVI","1245wwwwww")
 
-    ibeacon_arr = Ibeacon.find_all_by_name("德高巴士")
-    ibeacon_ids = []
-    ibeacon_arr.each do |ibeacon|
-      ibeacon_ids.push(ibeacon.id)
-    end
-    checks = Check.find_by_sql("select * from checks where state = 1 ")
+    # ibeacon_arr = Ibeacon.find_all_by_name("德高巴士")
+    # ibeacon_ids = []
+    # ibeacon_arr.each do |ibeacon|
+    #   ibeacon_ids.push(ibeacon.id)
+    # end
+    checks = Check.find_by_sql("select * from checks where state = 1 and beaconid in (select id from ibeacons where name = '德高巴士')")
     if checks
       checks.each do |check|
         if check.state == 1 && (check.last_notice_time == nil || Time.now.to_i - check.last_notice_time.to_i > 20 * 3600)
