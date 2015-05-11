@@ -1,7 +1,7 @@
 class Task < ActiveRecord::Base
 
   validates :name,
-            :presence     => true,
+            :presence     => true
 
 
 
@@ -15,6 +15,30 @@ class Task < ActiveRecord::Base
     end
     des = "\nevery '#{self.time_format}' do
           rake \"#{self.service_name}#{para_des}\""
+
+    self.time_format = 9,19,29,39,49,59,15,16,17,18,19,20,21,22,23,11,12,5,2015 
+    self.service_name = redpack::generate_redpack 
+    total = 40000
+    count = 200
+    max = 600
+    min = 150
+    para_des = [total,count,max,min]
+    # self.time_format = 0 0 27-31 * *
+    # self.service_name = redpack:generate_redpack
+
+    # redpack_time = RedpackTime.get_redpack_time(5) 
+    # min = redpack_time.min
+    # max = redpack_time.max
+    # beaconid = Ibeacon.find_by(:url=> 'dgbs').id
+    # amount = TimeAmount.get_amount(redpack_time,beaconid)
+    # total = amount
+    # count = amount/200
+
+    # para_des = [total,count,max,min]
+
+    des = "\nevery '#{self.time_format}' do
+          rake \"#{self.service_name}#{para_des}\""
+
   end
 
 

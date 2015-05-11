@@ -88,6 +88,23 @@ class User < ActiveRecord::Base
      
   end
 
+  def incr_social(beaconid, incr=1)
+    key = "social_#{self.user_id}_#{beaconid}"
+    value = 0
+    value = $redis.get(key) if $redis.get(key) 
+    $redis.set(key, value + incr)
+  end
+
+  def decr_social(beaconid)
+    key = "social_#{self.user_id}_#{beaconid}"
+    $redis.decr(key)
+  end
+
+  def social_value
+    key = "social_#{self.user_id}_#{beaconid}"
+    $redis.get key    
+  end
+  
 
   private
   def make_password

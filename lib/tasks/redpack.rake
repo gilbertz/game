@@ -13,9 +13,11 @@ require File.expand_path('../../../app/models/merchant',__FILE__)
 namespace :redpack do
 
   desc "生成红包"
-  task :generate_redpack,[:naem,:o,:p] do |t,args|
+  task :generate_redpack,[:total,:count,:max,:min] do |t,args|
 
      puts 'generate_redpack'
+     Redpack.generate(args[:total],args[:count],args[:max],args[:min])
+
 
   end
 
