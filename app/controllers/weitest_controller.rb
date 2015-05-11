@@ -567,7 +567,7 @@ def get_time_amount_time
     min = redpack_time.min
     max = redpack_time.max
     person_num = redpack_time.person_num
-    beaconid = Ibeacon.find_by(:url=>beaconid).id
+    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
 
       # p @amount
 
