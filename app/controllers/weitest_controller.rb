@@ -341,9 +341,9 @@ class WeitestController < ApplicationController
         if au
           s.from_user_id = au.user_id
           from_user = User.find s.from_user_id
-          f_value = rand(100)
+          f_value = 100+rand(100)
           if params[:beaconid] == 'dgbs'
-            if form_user.social_value > 0
+            if from_user.social_value > 0
               r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
               f_value = (r.score/2 < 100)?100:r.score/2 if r
               from_user.decr_social
