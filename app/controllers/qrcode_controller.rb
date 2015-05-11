@@ -8,7 +8,7 @@ class QrcodeController < ApplicationController
     @scaner = nil
     ticket = params["ticket"]
     result = Hash.new
-    if ticket
+    if ticket != nil
       qrcode = Qrcode.find_by_ticket(ticket)
 
       p "qrcode #{qrcode}"
