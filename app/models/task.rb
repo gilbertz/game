@@ -13,6 +13,8 @@ class Task < ActiveRecord::Base
     elsif self.task_des == REDPACK_BEGIN_NOTICE
 
     end
+    des = "\nevery '#{self.time_format}' do
+          rake \"#{self.service_name}#{para_des}\""
 
     # self.time_format = '0 0 27-31 * *'
     # self.service_name = 'redpack:generate_redpack'
