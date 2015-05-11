@@ -20,14 +20,14 @@ namespace :redpack do
 
     puts 'notice_redpack_begin'
     $wxclient.send_text_custom("oRKD0s8stWW-DUiWIKDKV22qaUVI","1245wwwwww")
-    data = {first:{value:"您好,你参加的德高巴士抢红包活动即将开始",color:"#173177"},keyword1:{value:"chentao",color:"#173177"},keyword2:{value:"德高巴士抢红包,爱上摇一摇",color:"#173177"},keyword3:{value:"马上开始",color:"#173177"},keyword4:{value:"此时此地",color:"#173177"}}
-    $wxclient1.send_template_msg("oNnqbt_LiqkMXMrzHEawO-G9r8Vo", "hMQm4-BGvNX-XIRQnfb_MG3EP6AFCDEFJ0gPrBX7oeg", "http://www.dapeimishu.com/", "#FF0000", data)
 
-    checks = Check.find(:conditions=>"state = 1")
+    checks = Check.find(:conditions=>"state = 1 and ")
     if checks
       checks.each do |check|
-
-
+        user = User.find(check.user_id)
+        user_name = user.name
+        data = {first:{value:"您好,你参加的德高巴士抢红包活动即将开始",color:"#173177"},keyword1:{value:user_name,color:"#173177"},keyword2:{value:"德高巴士抢红包,爱上摇一摇",color:"#173177"},keyword3:{value:"马上开始",color:"#173177"},keyword4:{value:"此时此地",color:"#173177"}}
+        $wxclient1.send_template_msg("oNnqbt_LiqkMXMrzHEawO-G9r8Vo", "hMQm4-BGvNX-XIRQnfb_MG3EP6AFCDEFJ0gPrBX7oeg", "http://www.dapeimishu.com/", "#FF0000", data)
 
       end
 
