@@ -1,0 +1,55 @@
+<%= form_for [:admin, @message] do |f| %>
+
+    <div class="control-group">
+      <label class="control-label">ibeacon id</label>
+      <div class="controls">
+        <%= f.select :beaconid, Ibeacon.get_ibeacons_for_select, required: true %>    
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">content</label>
+      <div class="controls">
+        <%= f.text_field :content %>
+      </div>
+    </div>
+    
+     <div class="control-group">
+      <label class="control-label">start time</label>
+      <div class="controls">
+        <%= f.text_field :start_time %>
+      </div>
+    </div>
+
+
+     <div class="control-group">
+      <label class="control-label">end time</label>
+      <div class="controls">
+        <%= f.text_field :end_time %>
+      </div>
+    </div>
+
+
+     <div class="control-group">
+      <label class="control-label">count</label>
+      <div class="controls">
+        <%= f.text_field :count %>
+      </div>
+    </div>
+ 
+
+    <div class="control-group">
+      <label class="control-label">State</label>
+      <div class="controls">
+        <%= f.select :state, Admin::BgamesController::State, required: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <%= f.submit %>
+      </div>
+    </div>
+
+<% end %>
