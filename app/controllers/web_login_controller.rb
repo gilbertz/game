@@ -21,7 +21,7 @@ class WebLoginController < ApplicationController
     access_token = WxUtil.get_authorizer_access_token("wx456ffb04ee140d84")
     p "access_token = #{access_token}"
     qrcode = generate_qr(access_token)
-    
+
     render :json => qrcode.to_json
   end
 
