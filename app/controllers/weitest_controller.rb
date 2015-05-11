@@ -343,7 +343,7 @@ class WeitestController < ApplicationController
           from_user = User.find s.from_user_id
           f_value = 100+rand(100)
           if params[:beaconid] == 'dgbs'
-            @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.user_id) 
+            @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.id) 
             if not @score and from_user.social_value(beaconid) > 0
               r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
               f_value = (r.score/2 < 100)?100:r.score/2 if r
@@ -452,6 +452,7 @@ class WeitestController < ApplicationController
 
   def broadcast
     response.headers['Content-Type'] = 'text/event-stream'
+    @material = Material.find params[:game_id]
     get_beacon
     msgs = []
     if @beacon.get_message
