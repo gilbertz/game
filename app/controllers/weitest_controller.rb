@@ -535,6 +535,8 @@ end
     get_object
     return unless @object
     redpack_time = RedpackTime.get_redpack_time(@object.id)
+    return unless redpack_time
+
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
     @amount = TimeAmount.get_amount(redpack_time,beaconid)
     # p @amount 
