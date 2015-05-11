@@ -465,6 +465,7 @@ class WeitestController < ApplicationController
    
    msg = msg.merge(:amount => fake_amount)
    response.stream.write "data: #{msg.to_json} \n\n"
+   sleep 5
    response.stream.close
  end
 
