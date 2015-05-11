@@ -343,11 +343,11 @@ class WeitestController < ApplicationController
           from_user = User.find s.from_user_id
           f_value = 100+rand(100)
           if params[:beaconid] == 'dgbs'
-            if from_user.social_value > 0
+            if from_user.social_value(beaconid) > 0
               r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
               f_value = (r.score/2 < 100)?100:r.score/2 if r
               from_user.decr_social
-              if from_user.social_score == 0
+              if from_user.social_value(beaconid) == 0
                 rp = Redpack.where(beaconid: beaconid, state: 1).order("start_time desc")[0]
                 @rp = rp.weixin_post(au, params[:beaconid], f_value)
                 Record.create(:user_id => au.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)            
