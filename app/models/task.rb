@@ -13,8 +13,10 @@ class Task < ActiveRecord::Base
     elsif self.task_des == REDPACK_BEGIN_NOTICE
 
     end
+
     # self.time_format = '0 0 27-31 * *'
     # self.service_name = 'redpack:generate_redpack'
+
 
     # redpack_time = RedpackTime.get_redpack_time(5) 
     # min = redpack_time.min
