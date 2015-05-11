@@ -47,5 +47,8 @@ module WxQrcode
 
   end
 
+  def qrcode_url(ticket)
+    "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=#{ticket}"
+  end
 
 end
