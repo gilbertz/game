@@ -21,12 +21,8 @@ class WebLoginController < ApplicationController
     access_token = WxUtil.get_authorizer_access_token("wx456ffb04ee140d84")
     p "access_token = #{access_token}"
     qrcode = generate_qr(access_token)
-    redirect_to qrcode.qrcode_url
-
-    # ret = $wxclient.create_qr_scene(123)
-    # p ret
-    # redirect_to $wxclient.qr_code_url(ret.result["ticket"])
-
+    
+    render :json => qrcode.to_json
   end
 
   def callback
