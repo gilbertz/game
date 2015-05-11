@@ -576,13 +576,13 @@ end
             UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => person_num)
           end
           Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
-
           Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => @object.id)
+          Redpack.find(@object.id).weixin_post(hongbao["user_id"],params[:beaconid],hongbao["money"])
           # p "consume"
         end
       end
       # # p @time
-      if @time > Time.now && @time < (Time.now + 10*60) && @time_amount.state == 1
+      if @time > Time.now && @time < (Time.now + 1*60) && @time_amount.state == 1
         # p "produce"
         Redpack.generate(@amount, @amount /200,max,min)
         @time_amount.update(state: 0)
