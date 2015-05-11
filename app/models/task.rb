@@ -13,8 +13,8 @@ class Task < ActiveRecord::Base
     elsif self.task_des == REDPACK_BEGIN_NOTICE
 
     end
-    # self.time_format = 0 0 27-31 * *
-    # self.service_name = redpack:generate_redpack
+    # self.time_format = '0 0 27-31 * *'
+    # self.service_name = 'redpack:generate_redpack'
 
     # redpack_time = RedpackTime.get_redpack_time(5) 
     # min = redpack_time.min
@@ -23,9 +23,7 @@ class Task < ActiveRecord::Base
     # amount = TimeAmount.get_amount(redpack_time,beaconid)
     # total = amount
     # count = amount/200
-
     # para_des = [total,count,max,min]
-
     des = "\nevery '#{self.time_format}' do
           rake \"#{self.service_name}#{para_des}\""
 

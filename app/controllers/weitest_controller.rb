@@ -581,7 +581,7 @@ end
         end
       end
       # # p @time
-      if @time > Time.now && @time < (Time.now + 10*60) && @time_amount.state == 1
+      if @time > Time.now && @time < (Time.now + 1*60) && @time_amount.state == 1
         # p "produce"
         Redpack.generate(@amount, @amount /200,max,min)
         @time_amount.update(state: 0)
