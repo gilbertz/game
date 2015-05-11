@@ -10,6 +10,9 @@ class WebLoginController < ApplicationController
 
   # 传统 微信 web第三方登陆
   def login
+
+   t = Task.find(1)
+   t.write_to_crontab
     appid = WEB_APPID
     rurl = params["rurl"]
     redirect_to web_auth_url(appid,rurl)

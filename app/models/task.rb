@@ -1,6 +1,7 @@
 class Task < ActiveRecord::Base
 
-  validates :name,
+  include TaskType
+  validates :service_name,
             :presence     => true
 
 
