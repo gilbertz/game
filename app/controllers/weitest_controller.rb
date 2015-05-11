@@ -348,7 +348,7 @@ class WeitestController < ApplicationController
             if not @score and from_user.social_value(beaconid) > 0
               r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
               f_value = (r.score/2 < 100)?100:r.score/2 if r
-              from_user.decr_social
+              from_user.decr_social(beaconid)
               if from_user.social_value(beaconid) == 0
                 rp = Redpack.where(beaconid: beaconid, state: 1).order("start_time desc")[0]
                 @rp = rp.weixin_post(au, params[:beaconid], f_value)
