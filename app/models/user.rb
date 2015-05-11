@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
     $redis.decr(key)
   end
 
-  def social_value
+  def social_value(beaconid)
     key = "social_#{self.id}_#{beaconid}"
     $redis.get key    
   end

@@ -343,11 +343,11 @@ class WeitestController < ApplicationController
           from_user = User.find s.from_user_id
           f_value = 100+rand(100)
           if params[:beaconid] == 'dgbs'
-            if from_user.social_value > 0
+            if from_user.social_value(beaconid) > 0
               r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
               f_value = (r.score/2 < 100)?100:r.score/2 if r
               from_user.decr_social
-              if from_user.social_score == 0
+              if from_user.social_value(beaconid) == 0
                 rp = Redpack.where(beaconid: beaconid, state: 1).order("start_time desc")[0]
                 @rp = rp.weixin_post(au, params[:beaconid], f_value)
                 Record.create(:user_id => au.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)            
@@ -466,10 +466,10 @@ class WeitestController < ApplicationController
    
    # msg = msg.merge(:amount => fake_amount)
 
-   redpack_time = RedpackTime.get_redpack_time(@object.id)
-   return unless redpack_time
-   beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-   @amount = TimeAmount.get_amount(redpack_time,beaconid,@object.id)
+
+   get_object
+   return unless @object
+   @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
    fake_amount = @amount + 10000
    
    msg = msg.merge(:amount => fake_amount/100)
@@ -554,20 +554,15 @@ end
 def get_time_amount_time
   get_object
   return unless @object
-  redpack_time = RedpackTime.get_redpack_time(@object.id)
-  return unless redpack_time
-
-  beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-  @amount = TimeAmount.get_amount(redpack_time,beaconid)
+  @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
     # p @amount 
-    @time_amount = TimeAmount.get_time_amount(redpack_time)
+    @time_amount = TimeAmount.get_time_amount(@object.id)
     # p time_amount.time
     @time = @time_amount.time
     # @amount = time_amount.amount
     # fake amount 
     @fake_amount = @amount + 10000
-    @fake_amount = @fake_amount > redpack_time.amount ? redpack_time.amount : @fake_amount
-
+    redpack_time = RedpackTime.get_redpack_time(@object.id)
     min = redpack_time.min
     max = redpack_time.max
     person_num = redpack_time.person_num
