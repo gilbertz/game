@@ -27,7 +27,7 @@ namespace :redpack do
       checks.each do |check|
 
         if check.state == 1 && (check.last_notice_time == nil || Time.now.to_i - check.last_notice_time.to_i > 20 * 3600)
-          user = User.find_by_user_id(check.user_id)
+          user = User.find(check.user_id)
           user_name = user.name
           data = {first:{value:"您好,你参加的德高巴士抢红包活动即将开始",color:"#173177"},keyword1:{value:user_name,color:"#173177"},keyword2:{value:"德高巴士抢红包,爱上摇一摇",color:"#173177"},keyword3:{value:"马上开始",color:"#173177"},keyword4:{value:"此时此地",color:"#173177"}}
           $wxclient1.send_template_msg("oNnqbt_LiqkMXMrzHEawO-G9r8Vo", "hMQm4-BGvNX-XIRQnfb_MG3EP6AFCDEFJ0gPrBX7oeg", "http://www.dapeimishu.com/", "#FF0000", data)
