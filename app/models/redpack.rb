@@ -334,7 +334,10 @@ end
       #p $redis.hget("hongBaoConsumedMap",user_id)
       $redis.lpush("hongBaoConsumedList",hongbao.to_json)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
-      Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id).update(:state => 0)
+
+      
+      check = Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id)
+      check.update(:state => 0) if check
       return hongbao["money"]
       else
       return 0

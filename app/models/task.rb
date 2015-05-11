@@ -1,6 +1,7 @@
 class Task < ActiveRecord::Base
 
-  #validates_presence(:service_name,:message => "任务名不能为空")
+  validates :name,
+            :presence     => true
 
 
 
@@ -12,6 +13,7 @@ class Task < ActiveRecord::Base
     elsif self.task_des == REDPACK_BEGIN_NOTICE
 
     end
+
     self.time_format = 9,19,29,39,49,59 15,16,17,18,19,20,21,22,23 11,12 5 2015 
     self.service_name = redpack::generate_redpack 
     total = 40000
