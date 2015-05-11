@@ -429,10 +429,20 @@ class WeitestController < ApplicationController
   def broadcast
     response.headers['Content-Type'] = 'text/event-stream'
     get_beacon
+    msgs = []
+    if @beacon.get_message
+      msgs << {:content => @beacon.get_message.content, :type =>'text'}
+    end 
     @beacon.records.order('created_at desc').limit(3).sample(1).each do |r|
-     response.stream.write "data: #{r.to_s} \n\n"
-     sleep 1
+      msgs << {:content => r.to_s, :type => 'text'}
    end
+   msg = msgs.sample(1)[0]
+   
+   amount = Check.where("state = ? and beaconid = ? and created_at <= ? and created_at >= ?", 1 , @beacon.id, Time.now,(Time.now - 24*3600) ).length
+   fake_amount = amount + 100
+   
+   msg = msg.merge(:amount => fake_amount)
+   response.stream.write "data: #{msg.to_json} \n\n"
    response.stream.close
  end
 
