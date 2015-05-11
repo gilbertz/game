@@ -1,7 +1,9 @@
 
 require File.expand_path('../../../config/initializers/redis',__FILE__)
-require File.expand_path('../../../config/initializers/weixin',__FILE__)
 require File.expand_path('../../../config/environments/development',__FILE__)
+require File.expand_path('../../../config/environments/production',__FILE__)
+require File.expand_path('../../../config/initializers/weixin',__FILE__)
+
 
 namespace :redpack do
 
