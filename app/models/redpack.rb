@@ -265,7 +265,7 @@ class Redpack < ActiveRecord::Base
         result_hongbao = {:id => i, :money => result[i]}
         $redis.lpush("hongbaolist",result_hongbao.to_json)
       end
-      #p $redis.lrange("hongbaolist",0,-1)
+      p $redis.lrange("hongbaolist",0,-1)
     # return result
     return $redis.lrange("hongbaolist",0,-1)
   end
@@ -281,18 +281,24 @@ end
   # end
 
   def self.test(user_id)
-    # if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
-    #   p $redis.hget("hongBaoConsumedMap",user_id)
-    #   return nil 
-    # else
-      hongbao = JSON.parse($redis.rpop("hongbaolist"))
+    if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
+      p $redis.hget("hongBaoConsumedMap",user_id)
+      return nil 
+    else
+      hongbao = $redis.rpop("hongbaolist")
+      if hongbao
+      hongbao = JSON.parse(hongbao)
       hongbao.merge!({:user_id => user_id})
       $redis.hset("hongBaoConsumedMap",user_id,user_id)
       #p $redis.hget("hongBaoConsumedMap",user_id)
-      $redis.lpush("hongBaoConsumedList",hongbao)
+      $redis.lpush("hongBaoConsumedList",hongbao.to_json)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
       return hongbao 
-    # end
+      else
+      return 0
+      end
+
+    end
   end
 
   def self.gain_seed_redpack(user_id, game_id,redpack,beaconid) 
@@ -318,7 +324,9 @@ end
       #p $redis.hget("hongBaoConsumedMap",user_id)
       return 0 
     else
-      hongbao = JSON.parse($redis.rpop("hongbaolist"))
+      hongbao = $redis.rpop("hongbaolist")
+      if hongbao
+      hongbao = JSON.parse(hongbao)
       #p hongbao
       hongbao.merge!({:user_id => user_id})
       #p $redis.lrange("hongbaolist",0,-1)
@@ -329,6 +337,9 @@ end
       Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id).update(:state => 0)
       Record.create(:user_id => user_id, :from_user_id => user_id, :beaconid=> beaconid, :game_id => game_id, :score => hongbao["money"], :object_type=>'Redpack', :object_id => redpack.id)
       return hongbao["money"]
+      else
+      return 0
+      end
     end
   end
 
