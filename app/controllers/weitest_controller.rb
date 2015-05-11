@@ -564,7 +564,8 @@ end
             UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => person_num)
           end
           Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
-          Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :allocation => hongbao["money"])
+
+          Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => @object.id)
           # p "consume"
         end
       end
