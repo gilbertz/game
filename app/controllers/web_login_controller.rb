@@ -4,6 +4,7 @@ require File.expand_path('../wx_third/wx_util',__FILE__)
 
 
 class WebLoginController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   include WebLogin
   include WxQrcode
 
@@ -17,11 +18,12 @@ class WebLoginController < ApplicationController
 
   #扫描二维码登陆
   def qr_login
-
+    p params
     access_token = WxUtil.get_authorizer_access_token("wx456ffb04ee140d84")
     p "access_token = #{access_token}"
     qrcode = generate_qr(access_token)
-    render :json => {"ticket"=> qrcode.ticket,"qrcode_url"=>qrcode.qrcode_url}.to_json
+ #   jsoncallback = params["jsoncallback"]
+    render :json =>  {"ticket"=> qrcode.ticket,"qrcode_url"=>qrcode.qrcode_url}.to_json
   end
 
   def callback
