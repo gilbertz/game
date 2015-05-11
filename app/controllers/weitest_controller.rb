@@ -343,7 +343,8 @@ class WeitestController < ApplicationController
           from_user = User.find s.from_user_id
           f_value = 100+rand(100)
           if params[:beaconid] == 'dgbs'
-            if from_user.social_value(beaconid) > 0
+            @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.id) 
+            if not @score and from_user.social_value(beaconid) > 0
               r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
               f_value = (r.score/2 < 100)?100:r.score/2 if r
               from_user.decr_social
@@ -451,6 +452,7 @@ class WeitestController < ApplicationController
 
   def broadcast
     response.headers['Content-Type'] = 'text/event-stream'
+    @material = Material.find params[:game_id]
     get_beacon
     msgs = []
     if @beacon.get_message
@@ -566,6 +568,7 @@ def get_time_amount_time
     min = redpack_time.min
     max = redpack_time.max
     person_num = redpack_time.person_num
+    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
 
       # p @amount
 
