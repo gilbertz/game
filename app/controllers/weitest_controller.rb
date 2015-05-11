@@ -347,7 +347,9 @@ class WeitestController < ApplicationController
               f_value = (r.score/2 < 100)?100:r.score/2 if r
               au.decr_social
               if au.social_score == 0
-                rp.weixin_post(current_user, params[:beaconid], f_value)
+                rp = Redpack.where(beaconid: beaconid, state: 1).order("start_time desc")[0]
+                @rp = rp.weixin_post(current_user, params[:beaconid], f_value)
+                Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)            
               end
             else
               f_value = 0
@@ -573,7 +575,8 @@ end
             UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => person_num)
           end
           Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
-          Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :allocation => hongbao["money"])
+
+          Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => @object.id)
           # p "consume"
         end
       end
