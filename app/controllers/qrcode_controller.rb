@@ -1,4 +1,6 @@
 require File.expand_path('../wx_third/qrcode_scene_type',__FILE__)
+require File.expand_path('../wx_third/wx_qrcode',__FILE__)
+
 class QrcodeController < ApplicationController
   skip_before_filter :verify_authenticity_token
   include QrcodeSceneType

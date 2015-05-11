@@ -1,6 +1,6 @@
 class Task < ActiveRecord::Base
 
-  validates_presence(:service_name,:message => "任务名不能为空")
+  #validates_presence(:service_name,:message => "任务名不能为空")
 
 
 
