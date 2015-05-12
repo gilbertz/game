@@ -556,7 +556,8 @@ def get_time_amount_time
     @time_amount = TimeAmount.get_time_amount(@object.id)
     # p time_amount.time
     return unless @time_amount
-    @time = @time_amount.time
+    @end_time = @time_amount.time
+    @now_time = Time.now
     # @amount = time_amount.amount
     # fake amount 
     @fake_amount = @amount + 10000
@@ -585,7 +586,7 @@ def get_time_amount_time
         end
       end
       # # p @time
-      if @time > Time.now && @time < (Time.now + 10*60) && @time_amount.state == 1
+      if @end_time > @now_time && @end_time < (@now_time + 10*60) && @time_amount.state == 1
         # p "produce"
         Redpack.generate(@amount, @amount /200,max,min)
         @time_amount.update(state: 0)
