@@ -28,14 +28,24 @@ class WeitestController < ApplicationController
   # 今天有记录 从点的人的allocation拿出一定score存储，不存allocation
   # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
   #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
+  def social_redpack
+    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+    total_score = UserScore.find_by("user_id = ? and beaconid = ?", current_user.id,beaconid).total_score  
+    if(total_score > 100 )
+     total_score = total_score > 300 ? 300 : total_score
+     Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
+     UserScore.find_by("user_id = ? and beaconid = ?", current_user.id,beaconid).update(:total_score => 0) 
+     Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => -total_score, :object_type=> 'social_redpack', :object_id => @object.id)
+   end
+ end
 
-  def seed_redpack
+   def seed_redpack
     if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
       @material = Material.find_by(id: params[:game_id]) 
       get_object
       info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object,params[:beaconid])
       Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
-        render :status => 200, json: {'info' => info}
+      render :status => 200, json: {'info' => info}
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       info = 0
       # 今天次数用完了
@@ -560,7 +570,7 @@ def get_time_amount_time
     @now_time = Time.now
     # @amount = time_amount.amount
     # fake amount 
-    @fake_amount = @amount + 10000
+    @fake_amount = (@amount + 10000)/100  
     redpack_time = RedpackTime.get_redpack_time(@object.id)
     min = redpack_time.min
     max = redpack_time.max
@@ -585,12 +595,12 @@ def get_time_amount_time
           # p "consume"
         end
       end
-      # # p @time
-      if @end_time > @now_time && @end_time < (@now_time + 10*60) && @time_amount.state == 1
-        # p "produce"
-        Redpack.generate(@amount, @amount /200,max,min)
-        @time_amount.update(state: 0)
-      end
+      # # # p @time
+      # if @end_time > @now_time && @end_time < (@now_time + 10*60) && @time_amount.state == 1
+      #   # p "produce"
+      #   Redpack.generate(@amount, @amount /200,max,min)
+      #   @time_amount.update(state: 0)
+      # end
     # end
   end
 
