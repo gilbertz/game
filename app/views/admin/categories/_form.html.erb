@@ -67,7 +67,7 @@
           <th>created_at</th>
           <th>operate</th>
         </tr>
-        <% @category.code_blocks.each do |t|%>
+        <% @category.code_blocks.order('created_at desc').each do |t|%>
         <tr>
           <td><%= t.id %></td>
           <td><%= t.name %></td>
