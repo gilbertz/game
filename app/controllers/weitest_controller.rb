@@ -335,8 +335,8 @@ class WeitestController < ApplicationController
     @material = Material.by_hook params[:game_id]
     if current_user
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      value = 100+rand(100)
-      s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => value)
+      #value = 100+rand(100)
+      #s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => value)
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
         if au
@@ -361,7 +361,7 @@ class WeitestController < ApplicationController
           Score.create(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
         end
       end
-      s.save
+      #s.save
       render :status => 200, json: {'value' => s.value }
     else
       render :status => 200, json: {'result' => 'not current_user or score' }
