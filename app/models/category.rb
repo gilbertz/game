@@ -7,6 +7,7 @@ class Category < ActiveRecord::Base
 
   before_destroy :check_its_materials
   before_update :check_recommended
+  before_update :reversion
 
   def pv
     key = "stat_pv_#{self.id}"
@@ -32,11 +33,17 @@ class Category < ActiveRecord::Base
      end   
   end
 
+
   def check_recommended
     false if self.materials.where(:rrr => 1).length > 0
   end
+  
+  private
 
-  private 
+  def reversion
+    self.code_blocks.create(:name=>'代码自动备份', :code => self.html, :state => 0)
+  end
+ 
   def check_its_materials
     false if self.materials.length > 0
   end

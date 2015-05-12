@@ -20,7 +20,7 @@ class WeitestController < ApplicationController
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
       Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id])
       render :status => 200, json: {'info' => 1}
-    else Record.redpack_per_day(current_user.id, params[:game_id]) == 3
+    else #Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       # 今天次数用完了
       render :status => 200, json: {'info' => 0}
     end 
@@ -42,7 +42,7 @@ class WeitestController < ApplicationController
       Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info)
         render :status => 200, json: {'info' => info}
       end
-    elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
+    else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       info = 0
       # 今天次数用完了
       render :status => 200, json: {'info' => info}
@@ -335,8 +335,8 @@ class WeitestController < ApplicationController
     @material = Material.by_hook params[:game_id]
     if current_user
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      value = 100+rand(100)
-      s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => value)
+      #value = 100+rand(100)
+      #s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => value)
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
         if au
@@ -348,10 +348,10 @@ class WeitestController < ApplicationController
             if not @score and from_user.social_value(beaconid) > 0
               r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
               f_value = (r.score/2 < 100)?100:r.score/2 if r
-              from_user.decr_social
+              from_user.decr_social(beaconid)
               if from_user.social_value(beaconid) == 0
                 rp = Redpack.where(beaconid: beaconid, state: 1).order("start_time desc")[0]
-                @rp = rp.weixin_post(au, params[:beaconid], f_value)
+                @rp = rp.weixin_post(from_user, params[:beaconid], f_value)
                 Record.create(:user_id => au.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)            
               end
             else
@@ -361,7 +361,7 @@ class WeitestController < ApplicationController
           Score.create(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
         end
       end
-      s.save
+      #s.save
       render :status => 200, json: {'value' => s.value }
     else
       render :status => 200, json: {'result' => 'not current_user or score' }
@@ -561,6 +561,7 @@ def get_time_amount_time
     # p @amount 
     @time_amount = TimeAmount.get_time_amount(@object.id)
     # p time_amount.time
+    return unless @time_amount
     @time = @time_amount.time
     # @amount = time_amount.amount
     # fake amount 
