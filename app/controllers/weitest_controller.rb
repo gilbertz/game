@@ -7,12 +7,12 @@ class WeitestController < ApplicationController
 
   def test_generate
     result_hongbao = Redpack.generate(params[:total].to_i,params[:count].to_i,params[:max].to_i,params[:min].to_i)
-    render :status => 200, json: {'info' => result_hongbao}
+    render :status => 200, json: result_hongbao
   end
 
   def test_seed_redpack
     hongbao = Redpack.test(params[:id])
-    render :status => 200, json: {'info' => hongbao}
+    render :status => 200, json: hongbao
   end
 
   def weixin_check
@@ -34,14 +34,8 @@ class WeitestController < ApplicationController
       @material = Material.find_by(id: params[:game_id]) 
       get_object
       info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object,params[:beaconid])
-      if info == nil
-        info = 0
-        # 抢完了
+      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
         render :status => 200, json: {'info' => info}
-      else
-      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info)
-        render :status => 200, json: {'info' => info}
-      end
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       info = 0
       # 今天次数用完了
@@ -335,8 +329,8 @@ class WeitestController < ApplicationController
     @material = Material.by_hook params[:game_id]
     if current_user
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      value = 100+rand(100)
-      s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => value)
+      #value = 100+rand(100)
+      #s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => value)
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
         if au
@@ -361,7 +355,7 @@ class WeitestController < ApplicationController
           Score.create(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
         end
       end
-      s.save
+      #s.save
       render :status => 200, json: {'value' => s.value }
     else
       render :status => 200, json: {'result' => 'not current_user or score' }
@@ -562,7 +556,8 @@ def get_time_amount_time
     @time_amount = TimeAmount.get_time_amount(@object.id)
     # p time_amount.time
     return unless @time_amount
-    @time = @time_amount.time
+    @end_time = @time_amount.time
+    @now_time = Time.now
     # @amount = time_amount.amount
     # fake amount 
     @fake_amount = @amount + 10000
@@ -591,7 +586,7 @@ def get_time_amount_time
         end
       end
       # # p @time
-      if @time > Time.now && @time < (Time.now + 1*60) && @time_amount.state == 1
+      if @end_time > @now_time && @end_time < (@now_time + 10*60) && @time_amount.state == 1
         # p "produce"
         Redpack.generate(@amount, @amount /200,max,min)
         @time_amount.update(state: 0)

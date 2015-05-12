@@ -280,7 +280,7 @@ end
   def self.test(user_id)
     if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
       p $redis.hget("hongBaoConsumedMap",user_id)
-      return nil 
+      return nil
     else
       hongbao = $redis.rpop("hongbaolist")
       if hongbao
@@ -292,7 +292,7 @@ end
       #p $redis.lrange("hongBaoConsumedList",0,-1)
       return hongbao 
       else
-      return 0
+      return nil
       end
 
     end
