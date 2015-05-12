@@ -7,12 +7,12 @@ class WeitestController < ApplicationController
 
   def test_generate
     result_hongbao = Redpack.generate(params[:total].to_i,params[:count].to_i,params[:max].to_i,params[:min].to_i)
-    render :status => 200, json: {'info' => result_hongbao}
+    render :status => 200, json: result_hongbao
   end
 
   def test_seed_redpack
     hongbao = Redpack.test(params[:id])
-    render :status => 200, json: {'info' => hongbao}
+    render :status => 200, json: hongbao
   end
 
   def weixin_check
@@ -34,14 +34,8 @@ class WeitestController < ApplicationController
       @material = Material.find_by(id: params[:game_id]) 
       get_object
       info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object,params[:beaconid])
-      if info == nil
-        info = 0
-        # 抢完了
+      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
         render :status => 200, json: {'info' => info}
-      else
-      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info)
-        render :status => 200, json: {'info' => info}
-      end
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       info = 0
       # 今天次数用完了
@@ -591,7 +585,7 @@ def get_time_amount_time
         end
       end
       # # p @time
-      if @time > Time.now && @time < (Time.now + 1*60) && @time_amount.state == 1
+      if @time > Time.now && @time < (Time.now + 10*60) && @time_amount.state == 1
         # p "produce"
         Redpack.generate(@amount, @amount /200,max,min)
         @time_amount.update(state: 0)
