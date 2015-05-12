@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511110115) do
+ActiveRecord::Schema.define(version: 20150512025923) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(version: 20150511110115) do
     t.integer  "state"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "domains", force: true do |t|
