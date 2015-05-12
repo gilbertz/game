@@ -20,7 +20,7 @@ class WeitestController < ApplicationController
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
       Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id])
       render :status => 200, json: {'info' => 1}
-    else Record.redpack_per_day(current_user.id, params[:game_id]) == 3
+    else #Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       # 今天次数用完了
       render :status => 200, json: {'info' => 0}
     end 
@@ -42,7 +42,7 @@ class WeitestController < ApplicationController
       Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info)
         render :status => 200, json: {'info' => info}
       end
-    elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
+    else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       info = 0
       # 今天次数用完了
       render :status => 200, json: {'info' => info}
