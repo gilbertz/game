@@ -561,6 +561,7 @@ def get_time_amount_time
     # p @amount 
     @time_amount = TimeAmount.get_time_amount(@object.id)
     # p time_amount.time
+    return unless @time_amount
     @time = @time_amount.time
     # @amount = time_amount.amount
     # fake amount 
