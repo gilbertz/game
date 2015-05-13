@@ -11,6 +11,8 @@ class WebLoginController < ApplicationController
   # 传统 微信 web第三方登陆
   def login
 
+    AuthenticationUserWork.perform_async("www","wfww")
+
    t = Task.find(1)
    t.write_to_crontab
     appid = WEB_APPID

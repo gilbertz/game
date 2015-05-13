@@ -113,9 +113,10 @@ class WxThirdAuthController < ApplicationController
           authorizer.qrcode_url = authorizer_info_package["authorizer_info"]["qrcode_url"]
         end
         flag = authorizer.save
-        # 处理卡券
+        # 处理卡券 及 获取用户列表
         if flag
             Thread.new {  deal_card(authorizer_appid) }
+
         end
         render :json => {"result"=> "success"}.to_json
       end
