@@ -442,6 +442,8 @@ ActiveRecord::Schema.define(version: 20150512052104) do
     t.integer  "redpack_id"
     t.integer  "person_num"
     t.integer  "amount"
+    t.integer  "average"
+    t.integer  "remain"
   end
 
   create_table "redpack_values", force: true do |t|
