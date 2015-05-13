@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513093408) do
+ActiveRecord::Schema.define(version: 20150513155231) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20150513093408) do
     t.string   "sex"
     t.boolean  "unsubscribe"
     t.string   "isfollow"
+    t.string   "groupid"
   end
 
   add_index "authentications", ["unionid"], name: "index_authentications_on_unionid", using: :btree

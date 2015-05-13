@@ -228,5 +228,87 @@ class WxUtil
       p "card_recode = #{card_recode.to_s}"
     end
 
+    #获取某个公众账号的用户列表信息
+    def get_user_openid_list(appid,openid_list,next_openid)
+      if openid_list
+        openid_list = []
+      end
+      url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=#{get_authorizer_access_token(appid)}&next_openid=#{next_openid}"
+      res = RestClient::get(url)
+      info = JSON.parse(res.body)
+      if info == nil || info["total"] == nil || info["total"].to_i <= 0
+        return
+      else
+        if info["total"].to_i <  10000
+        openid_list << info["data"]["openid"]
+        return
+        else
+          now_next_openid = info["next_openid"]
+          get_user_openid_list(appid,openid_list,now_next_openid)
+        end
+      end
+    end
+
+    def save_users(appid)
+      openid_list = []
+      get_user_openid_list(appid,openid_list,nil)
+      openid_list.each do |p|
+        authentication = Authentication.find_by_uid(p)
+        if authentication
+          authentication.isfollow = "1"
+          authentication.save
+        else
+          info = user_info(get_authorizer_access_token(appid),p)
+          save_user(appid,info)
+        end
+
+      end
+
+    end
+
+
+
+    def user_info(access_token,openid)
+      if access_token == nil || openid == nil
+        return
+      end
+      url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=#{access_token}&openid=#{openid}&lang=zh_CN"
+      res = RestClient::get(url)
+      JSON.prase(res.body)
+    end
+
+    def save_user(appid,user_info)
+      if user_info == nil || user_info["openid"] == nil
+        return
+      end
+      authentication = Authentication.find_by_uid(openid)
+      unless authentication
+        #创建一个user
+        user = User.new
+        user.name = user_info["nickname"]
+        user.email = "fk"+Devise.friendly_token[0,20]+"@yaoshengyi.com"
+        user.password = Devise.friendly_token[0,12]
+        user.sex = user_info["sex"].to_i
+        user.city = user_info["city"]
+        user.country = user_info["country"]
+        user.province = user_info["province"]
+        user.profile_img_url = user_info["headimgurl"]
+        user.save
+        authentication = Authentication.new
+      end
+      authentication.user_id = user.id
+      authentication.uid = user_info["openid"]
+      authentication.appid = appid
+      authentication.unionid = user_info["unionid"]
+      authentication.provider = "weixin"
+      authentication.sex = user_info["sex"].to_s
+      authentication.city = user_info["city"]
+      authentication.province = user_info["province"]
+      authentication.isfollow = "1"
+      authentication.groupid = user_info["groupid"]
+      authentication.save
+    end
+
+
   end
 end
