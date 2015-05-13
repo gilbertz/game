@@ -563,13 +563,10 @@ end
 
 def get_time_amount_time
   get_object
-  p "hh"
   return unless @object
-  p "dd"
   @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
     # p @amount 
     @time_amount = TimeAmount.get_time_amount(@object.id)
-     p @time_amount.time
     return unless @time_amount
     @end_time = @time_amount.time
     @now_time = Time.now
@@ -585,7 +582,6 @@ def get_time_amount_time
       # p @amount
 
       if $redis.llen("hongBaoConsumedList") != 0
-       p $redis.lrange("hongBaoConsumedList",0,-1)
        for i in 0..($redis.llen("hongBaoConsumedList")-1)
         hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
         user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
@@ -601,8 +597,6 @@ def get_time_amount_time
         end
       end
       # # # p @time
-      p @end_time
-      p @now_time
       if @end_time > @now_time && @end_time < (@now_time + 10*60) && @time_amount.state == 1
         # p "produce"
         Redpack.generate(@amount, @amount /200,max,min)
