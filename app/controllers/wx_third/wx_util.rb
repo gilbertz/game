@@ -281,7 +281,7 @@ class WxUtil
       if user_info == nil || user_info["openid"] == nil
         return
       end
-      authentication = Authentication.find_by_uid(openid)
+      authentication = Authentication.find_by_uid(user_info["openid"])
       unless authentication
         #创建一个user
         user = User.new
