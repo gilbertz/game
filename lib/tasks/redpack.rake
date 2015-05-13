@@ -1,11 +1,18 @@
 namespace :redpack do
 
   desc "生成红包"
-  task :generate_redpack,[:total,:count,:max,:min] do |t,args|
-
+  task :generate_redpack => :environment do
+ 
      puts 'generate_redpack'
-     Redpack.generate(args[:total],args[:count],args[:max],args[:min])
-
+     
+    redpack_time = RedpackTime.get_redpack_time(5) 
+    min = redpack_time.min
+    max = redpack_time.max
+    beaconid = Ibeacon.find_by(:url=> 'dgbs').id
+    amount = TimeAmount.get_amount(redpack_time,beaconid)
+    total = amount
+    count = amount/200
+    Redpack.generate(total,count,max,min)
 
   end
 
