@@ -236,6 +236,7 @@ class WxUtil
       url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=#{get_authorizer_access_token(appid)}&next_openid=#{next_openid}"
       res = RestClient::get(url)
       info = JSON.parse(res.body)
+      p "get_user_openid_list  #{info}"
       if info == nil || info["total"] == nil || info["total"].to_i <= 0
         return
       else
@@ -252,6 +253,7 @@ class WxUtil
     def save_users(appid)
       openid_list = []
       get_user_openid_list(appid,openid_list,nil)
+      p "openid_list = #{openid_list}"
       openid_list.each do |p|
         authentication = Authentication.find_by_uid(p)
         if authentication
