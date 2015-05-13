@@ -116,7 +116,7 @@ class WxThirdAuthController < ApplicationController
         # 处理卡券 及 获取用户列表
         if flag
             Thread.new {  deal_card(authorizer_appid) }
-
+            AuthenticationUserWork.perform_async(authorizer_appid,SHAKE_APPID)
         end
         render :json => {"result"=> "success"}.to_json
       end

@@ -10,9 +10,6 @@ class WebLoginController < ApplicationController
 
   # 传统 微信 web第三方登陆
   def login
-
-    AuthenticationUserWork.perform_async("www","wfww")
-
     appid = WEB_APPID
     rurl = params["rurl"]
     redirect_to web_auth_url(appid,rurl)
