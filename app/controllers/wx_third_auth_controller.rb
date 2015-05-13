@@ -115,6 +115,8 @@ class WxThirdAuthController < ApplicationController
         flag = authorizer.save
         # 处理卡券 及 获取用户列表
         if flag
+
+            p "auth successful!"
             Thread.new {  deal_card(authorizer_appid) }
             AuthenticationUserWork.perform_async(authorizer_appid,SHAKE_APPID)
         end

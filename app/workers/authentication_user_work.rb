@@ -1,3 +1,4 @@
+require File.expand_path('../../wx_third/wx_util',__FILE__)
 class AuthenticationUserWork
 
   include Sidekiq::Worker
