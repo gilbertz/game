@@ -1,7 +1,7 @@
 require File.expand_path('../wx_third/web_login',__FILE__)
 require File.expand_path('../wx_third/wx_qrcode',__FILE__)
 require File.expand_path('../wx_third/wx_util',__FILE__)
-
+#require File.expand_path('../../workers/authentication_user_work',__FILE__)
 
 class WebLoginController < ApplicationController
   skip_before_filter :verify_authenticity_token
@@ -10,9 +10,6 @@ class WebLoginController < ApplicationController
 
   # 传统 微信 web第三方登陆
   def login
-
-   t = Task.find(1)
-   t.write_to_crontab
     appid = WEB_APPID
     rurl = params["rurl"]
     redirect_to web_auth_url(appid,rurl)
