@@ -8,7 +8,8 @@
       <th>朋友圈分享</th>
       <th>当前游戏</th>
       <th width="5%">游戏</th>
-      <th width="17%">创建时间</th>
+      <th width="12"%">更新时间</th>
+      <th width="12%">创建时间</th>
       <th width="13%">操作</th>
     </tr>
   </thead>
@@ -30,6 +31,7 @@
             <%= c.materials.length %> 
           </span> 
         </td>
+        <td><%= c.updated_at.to_local %></td>
         <td><%= c.created_at.to_local %></td>
         <td> 
           <%= link_to '编辑', [:edit,:admin,c] %> |
