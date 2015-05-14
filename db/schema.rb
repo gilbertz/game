@@ -409,8 +409,8 @@ ActiveRecord::Schema.define(version: 20150513155231) do
     t.string   "object_type"
     t.integer  "object_id"
     t.string   "sn"
-    t.integer  "allocation"
     t.string   "card_id"
+    t.integer  "allocation"
   end
 
   add_index "records", ["beaconid", "score"], name: "index_records_on_beaconid_and_score", using: :btree
