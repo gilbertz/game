@@ -98,3 +98,6 @@ gem 'mina'
 gem 'passenger'
 gem 'sidekiq'
 
+
+gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
+

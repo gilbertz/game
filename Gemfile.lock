@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/getsentry/raven-ruby.git
+  revision: 5d0939eb323a0d9711075cd8761562d855ef3640
+  specs:
+    sentry-raven (0.13.2)
+      certifi
+      faraday (>= 0.7.6)
+
 GEM
   remote: http://ruby.taobao.org/
   specs:
@@ -50,6 +58,7 @@ GEM
       mime-types (>= 1.16)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    certifi (14.5.14)
     chronic (0.10.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -294,6 +303,7 @@ DEPENDENCIES
   rvm-capistrano
   sass-rails (~> 4.0.0)
   sdoc
+  sentry-raven!
   sidekiq
   sqlite3
   squeel

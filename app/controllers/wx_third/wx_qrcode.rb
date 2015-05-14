@@ -3,8 +3,8 @@ require File.expand_path('../qrcode_scene_type',__FILE__)
 
 module WxQrcode
 
-  include QrcodeSceneType
-  include QrcodeType
+  # include QrcodeSceneType
+  # include QrcodeType
 
   def generate_qr(access_token,appid= WX_APPID,is_tempoart = true)
     if access_token.blank?
@@ -16,12 +16,12 @@ module WxQrcode
     expire_at = nil
     scene_id = Time.new.to_i
     if is_tempoart
-      action_name = QR_SCENE
+      action_name = QrcodeType::QR_SCENE
       expire_at = Time.now + 1800
       p "expire_at = #{expire_at}"
       post_data = {"expire_seconds"=> 1800, "action_name"=> "QR_SCENE", "action_info"=> {"scene"=> {"scene_id"=> scene_id}}}
     else
-      action_name = QR_LIMIT_SCENE
+      action_name = QrcodeType::QR_LIMIT_SCENE
       post_data = {"action_name"=> "QR_LIMIT_SCENE", "action_info" => {"scene" => {"scene_id"=> scene_id}}}
     end
 
@@ -37,7 +37,7 @@ module WxQrcode
       qrcode.provide = "weixin"
       qrcode.scene_id = scene_id
       qrcode.qrcode_url = qrcode_url(ret["ticket"])
-      qrcode.scene_type = LOGIN_SCENE
+      qrcode.scene_type = QrcodeSceneType::LOGIN_SCENE
       qrcode.expire_at = expire_at
       qrcode.save
       return qrcode

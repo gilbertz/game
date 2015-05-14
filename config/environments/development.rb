@@ -34,3 +34,6 @@ end
 WX_DOMAIN = 'j.51self.com'
 WX_APPID = 'wx629a5ad4f3fc5f63'
 WX_SECRET= '843d5cb0b87561e54c644327bd297f10'
+
+
+REDIS_HOST = 'localhost'
