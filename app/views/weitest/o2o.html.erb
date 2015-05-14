@@ -243,4 +243,9 @@ share_api();
    
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
 
+    <script>
+      ajax = new XMLHttpRequest();
+      ajax.open('GET', '/weitest/report?beaconid=<%= params[:beaconid] %>&game_id=<%= @material.id %>&remark=到此一游', true);
+      ajax.send(null);          
+    </script>
 </html>
