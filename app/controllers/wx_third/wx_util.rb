@@ -287,6 +287,7 @@ class WxUtil
         return
       end
       p "user info = #{user_info}"
+      user = nil
       authentication = Authentication.find_by_uid(user_info["openid"])
       unless authentication
         #创建一个user
@@ -301,8 +302,8 @@ class WxUtil
         user.profile_img_url = user_info["headimgurl"]
         user.save
         authentication = Authentication.new
+        authentication.user_id = user.id
       end
-      authentication.user_id = user.id
       authentication.uid = user_info["openid"]
       authentication.appid = appid
       authentication.unionid = user_info["unionid"]

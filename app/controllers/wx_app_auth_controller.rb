@@ -54,8 +54,9 @@ class WxAppAuthController < ApplicationController
            user.profile_img_url = user_info["headimgurl"]
            user.save
           authentication = Authentication.new
+          authentication.user_id = user.id
          end
-         authentication.user_id = user.id
+
          authentication.uid = user_info["openid"]
          authentication.appid = appid
          authentication.access_token = access_token

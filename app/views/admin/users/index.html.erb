@@ -1,7 +1,10 @@
 <table class="table table-bordered">  
   <thead>
     <tr class="well">
+      <th>ID</th>
       <th>名字</th>
+      <th>活动</th>
+      <th>积分</th>
       <th width="17%">创建时间</th>
       <th width="10%">操作</th>
     </tr>
@@ -9,7 +12,10 @@
   <body>
     <% @users.each do |u| %>
       <tr>
+        <td><%= u.id %></td>
         <td><%= u.name %></td>
+        <td><%= link_to '活动', "/admin/records?user_id=#{u.id}" %></td>
+        <td><%= link_to '积分', "/admin/scores?user_id=#{u.id}"%></td>
         <td><%= u.created_at.to_local %></td>
         <td> 
           <%= link_to '编辑', '#' %> |
