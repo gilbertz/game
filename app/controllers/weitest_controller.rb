@@ -341,15 +341,13 @@ class WeitestController < ApplicationController
   def weixin_score
     @material = Material.by_hook params[:game_id]
     if current_user
+      f_value = rand(100)
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      #value = 100+rand(100)
-      #s = Score.new(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => value)
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
         if au
-          s.from_user_id = au.user_id
-          from_user = User.find s.from_user_id
-          f_value = 100+rand(100)
+          from_user_id = au.user_id
+          from_user = User.find from_user_id
           if params[:beaconid] == 'dgbs'
             @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.id) 
             if not @score and from_user.social_value(beaconid) > 0
@@ -368,8 +366,7 @@ class WeitestController < ApplicationController
           Score.create(:user_id =>au.user_id, :from_user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :value => f_value)
         end
       end
-      #s.save
-      render :status => 200, json: {'value' => s.value }
+      render :status => 200, json: {'value' => f_value }
     else
       render :status => 200, json: {'result' => 'not current_user or score' }
     end
