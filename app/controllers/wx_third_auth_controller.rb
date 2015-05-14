@@ -120,8 +120,9 @@ class WxThirdAuthController < ApplicationController
 	    #WxUtil.save_users(authorizer_appid)
             Thread.new {  deal_card(authorizer_appid)
  			  p "this is new thread!"
-                          WxUtil.save_users(authorizer_appid)
-			}
+            $redis.set("h",1)
+           WxUtil.save_users(authorizer_appid)
+            }
             #AuthenticationUserWork.perform_async(authorizer_appid,SHAKE_APPID)
         end
         render :json => {"result"=> "success"}.to_json
