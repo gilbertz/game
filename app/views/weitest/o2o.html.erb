@@ -243,4 +243,9 @@ share_api();
    
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
 
+    <script>
+      var url="/weitest/report?beaconid=<%= params[:beaconid] %>&game_id=<%= @material.id %>&remark=浏览"
+      var img = new Image();
+      img.src = url;
+    </script>
 </html>

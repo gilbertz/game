@@ -85,7 +85,7 @@ Game::Application.configure do
 end
 
 
-WX_DOMAIN = 'i.51self.com'
+WX_DOMAIN = 'wx.yaoshengyi.com'
 WX_APPID = 'wx456ffb04ee140d84'
 WX_SECRET= 'd1481d1ff0f05d0234a391cfc1c2a4b3'
 
