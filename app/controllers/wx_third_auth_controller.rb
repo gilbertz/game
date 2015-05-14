@@ -115,15 +115,14 @@ class WxThirdAuthController < ApplicationController
         flag = authorizer.save
         # 处理卡券 及 获取用户列表
         if flag
-
             p "auth successful!"
-	    #WxUtil.save_users(authorizer_appid)
-            Thread.new {  deal_card(authorizer_appid)
- 			  p "this is new thread!"
-            $redis.set("h",1)
-           # WxUtil.save_users(authorizer_appid)
-            }
-            AuthenticationUserWork.perform_async(authorizer_appid,SHAKE_APPID)
+            Thread.new do
+              deal_card(authorizer_appid)
+              p "this is new thread!"
+              $redis.set("h",102)
+              WxUtil.save_users(authorizer_appid)
+            end
+            # AuthenticationUserWork.perform_async(authorizer_appid,SHAKE_APPID)
         end
         render :json => {"result"=> "success"}.to_json
       end
