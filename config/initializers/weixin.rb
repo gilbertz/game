@@ -8,11 +8,11 @@
 #  SHAKE_DOMAIN = "http://j.51self.com"
 
 #搭配秘书
-SHAKE_TOKEN = "shake"
-SHAKE_APPID = "wx6bfb1f6696fb34aa"
-SHAKE_APPSECRET = "0c79e1fa963cd80cc0be99b20a18faeb"
-SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
-SHAKE_DOMAIN = "http://dapeimishu.com"
+#SHAKE_TOKEN = "shake"
+#SHAKE_APPID = "wx6bfb1f6696fb34aa"
+#SHAKE_APPSECRET = "0c79e1fa963cd80cc0be99b20a18faeb"
+#SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
+#SHAKE_DOMAIN = "http://dapeimishu.com"
 
 
 # 疯狂摇一摇
@@ -21,6 +21,13 @@ SHAKE_DOMAIN = "http://dapeimishu.com"
 # SHAKE_APPSECRET = "0c79e1fa963cd80cc0be99b20a18faeb"
 # SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
 # SHAKE_DOMAIN = "http://i.51self.com"
+
+#摇生意
+SHAKE_TOKEN = "shake"
+SHAKE_APPID = "wxc7765ff7bcb38464"
+SHAKE_APPSECRET = "0c79e1fa963cd80cc0be99b20a18faeb"
+SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
+SHAKE_DOMAIN = "http://wx.yaoshengyi.com"
 
 
 $wxclient ||= WeixinAuthorize::Client.new(WX_APPID, WX_SECRET)
