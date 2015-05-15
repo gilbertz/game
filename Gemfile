@@ -102,5 +102,4 @@ gem 'mina-sidekiq'
 
 gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
 
-gem 'sinatra', :require => nil
 

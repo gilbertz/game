@@ -3,6 +3,10 @@ Game::Application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 
+  authenticate :user do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   get "qrcode/query_scaner"
   get "web_login/login"
   get "web_login/callback"
