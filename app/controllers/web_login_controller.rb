@@ -23,7 +23,12 @@ class WebLoginController < ApplicationController
     p "access_token = #{access_token}"
     qrcode = generate_qr(access_token)
  #   jsoncallback = params["jsoncallback"]
-    render :json =>  {"ticket"=> qrcode.ticket,"qrcode_url"=>qrcode.qrcode_url}.to_json
+    if qrcode != nil
+      render :json =>  {"result" => 0,"ticket"=> qrcode.ticket,"qrcode_url"=>qrcode.qrcode_url}.to_json
+    else
+      render :json =>  {"result" => -1}.to_json
+    end
+
   end
 
   def callback
