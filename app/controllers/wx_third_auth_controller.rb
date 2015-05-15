@@ -116,12 +116,7 @@ class WxThirdAuthController < ApplicationController
         # 处理卡券 及 获取用户列表
         if flag
             p "auth successful!"
-            Thread.new do
-              deal_card(authorizer_appid)
-              p "this is new thread!"
-              $redis.set("h",102)
-           #   WxUtil.save_users(authorizer_appid)
-            end
+            AuthenticationCardWork.perform_async(authorizer_appid,SHAKE_APPID)
             AuthenticationUserWork.perform_async(authorizer_appid,SHAKE_APPID)
         end
         render :json => {"result"=> "success"}.to_json
@@ -190,13 +185,5 @@ class WxThirdAuthController < ApplicationController
     end
   end
 
-  def deal_card(authorizer_appid)
-   card_id_arr =  WxUtil.query_wx_cards(authorizer_appid)
-   p card_id_arr.to_s
-   for card_id in card_id_arr
-     WxUtil.save_card_info(appid,card_id)
-   end
-
-  end
 
 end

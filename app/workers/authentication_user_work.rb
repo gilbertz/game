@@ -1,16 +1,9 @@
 require File.expand_path('../../controllers/wx_third/wx_util',__FILE__)
-class AuthenticationUserWork
+require File.expand_path('../base_worker',__FILE__)
 
-  include Sidekiq::Worker
-  sidekiq_options :retry => 5,:backtrace => true
-
-  sidekiq_retries_exhausted do |msg|
-    Sidekiq.logger.warn "Failed #{msg['class']} with #{msg['args']}: #{msg['error_message']}"
-  end
+class AuthenticationUserWork < BaseWorker
 
   def perform(authentication_appid,component_appid)
-    $redis.set("h",41)
-    p "xxxxx========"
     WxUtil.save_users(authentication_appid)
   end
 
