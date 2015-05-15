@@ -10,10 +10,11 @@ namespace :redpack do
     max = redpack_time.max
     beaconid = Ibeacon.find_by(:url=> 'dgbs').id
     amount = TimeAmount.get_amount(redpack_time,beaconid)
-    total = amount
-    count = amount/200
-    Redpack.generate(total,count,max,min)
-
+    if amount != nil
+      total = amount
+      count = amount/200
+      Redpack.generate(total,count,max,min)
+    end
   end
 
 

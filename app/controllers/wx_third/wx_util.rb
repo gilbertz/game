@@ -137,6 +137,7 @@ class WxUtil
       return nil
     end
 
+
     def deal_card(authorizer_appid)
       card_id_arr =  query_wx_cards(authorizer_appid)
       p card_id_arr.to_s
