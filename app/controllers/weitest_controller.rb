@@ -33,7 +33,7 @@ class WeitestController < ApplicationController
     get_object
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
     total_score = UserScore.find_by("user_id = ? and beaconid = ?", current_user.id,beaconid).total_score  
-    if(total_score > 100)
+    if(total_score >= 100)
      total_score = total_score > 300 ? 300 : total_score
      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
      UserScore.find_by("user_id = ? and beaconid = ?", current_user.id,beaconid).update(:total_score => 0) 
@@ -594,11 +594,11 @@ def get_time_amount_time
         end
       end
       # # # p @time
-      if @end_time > @now_time && @end_time < (@now_time + 10*60) && @time_amount.state == 1
-        # p "produce"
-        Redpack.generate(@amount, @amount /200,max,min)
-        @time_amount.update(state: 0)
-      end
+      # if @end_time > @now_time && @end_time < (@now_time + 10*60) && @time_amount.state == 1
+      #   # p "produce"
+      #   Redpack.generate(@amount, @amount /200,max,min)
+      #   @time_amount.update(state: 0)
+      # end
     # end
   end
 

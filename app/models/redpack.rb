@@ -317,6 +317,9 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
     #   end 
     # end
     beaconid = Ibeacon.find_by(:url=>beaconid).id
+    check = Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id)
+      check.update(:state => 0) if check
+      
     if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
       #p $redis.hget("hongBaoConsumedMap",user_id)
       return 0 
@@ -332,8 +335,7 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
       $redis.lpush("hongBaoConsumedList",hongbao.to_json)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
       
-      check = Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id)
-      check.update(:state => 0) if check
+
 
       user = User.find user_id
       user.incr_social(beaconid, 3)
