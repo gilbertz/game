@@ -1,5 +1,5 @@
 class Redpack < ActiveRecord::Base
-  
+
   require 'net/https'
   require 'uri'
   require 'rexml/document'
@@ -263,13 +263,13 @@ class Redpack < ActiveRecord::Base
         $redis.lpush("hongbaolist",result_hongbao.to_json)
       end
       p $redis.lrange("hongbaolist",0,-1)
-    # return result
-    return $redis.lrange("hongbaolist",0,-1)
+      # return result
+      return $redis.lrange("hongbaolist",0,-1)
+    end
   end
-end
 
   # def self.ge
-    
+
   #   generate(500,2.5,600,150)
   # #   $redis.script(try_get_hongbao_script)
   # #    for i in 0..9
@@ -284,21 +284,21 @@ end
     else
       hongbao = $redis.rpop("hongbaolist")
       if hongbao
-      hongbao = JSON.parse(hongbao)
-      hongbao.merge!({:user_id => user_id})
-      $redis.hset("hongBaoConsumedMap",user_id,user_id)
+        hongbao = JSON.parse(hongbao)
+        hongbao.merge!({:user_id => user_id})
+        $redis.hset("hongBaoConsumedMap",user_id,user_id)
       #p $redis.hget("hongBaoConsumedMap",user_id)
       $redis.lpush("hongBaoConsumedList",hongbao.to_json)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
       return hongbao 
-      else
+    else
       return nil
-      end
-
     end
-  end
 
-  def self.gain_seed_redpack(user_id, game_id,redpack,beaconid) 
+  end
+end
+
+def self.gain_seed_redpack(user_id, game_id,redpack,beaconid) 
     # hongbao =  Hash.new
     # if $redis.llen("hongbaolist") == 0
     #   for i in 0..(llen("hongBaoConsumedMap")-1)
@@ -323,7 +323,7 @@ end
     else
       hongbao = $redis.rpop("hongbaolist")
       if hongbao
-      hongbao = JSON.parse(hongbao)
+        hongbao = JSON.parse(hongbao)
       #p hongbao
       hongbao.merge!({:user_id => user_id})
       #p $redis.lrange("hongbaolist",0,-1)
@@ -339,10 +339,10 @@ end
       user.incr_social(beaconid, 3)
 
       return hongbao["money"]
-      else
+    else
       return 0
-      end
     end
   end
+end
 
 end
