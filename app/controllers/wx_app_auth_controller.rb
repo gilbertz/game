@@ -36,7 +36,7 @@ class WxAppAuthController < ApplicationController
       user = nil
       if scope == "snsapi_userinfo"
         access_token = app_auth_info["access_token"]
-        Thread.new do
+        # Thread.new do
          p "*******************************"
           user_info = get_user_info(openid,access_token)
           p "user_info = #{user_info}"
@@ -69,7 +69,7 @@ class WxAppAuthController < ApplicationController
          authentication.save
 
           p "authentication = #{authentication}"
-        end
+        # end
        # 静默授权
       elsif scope == "snsapi_base"
         #通过openid 在本地找用户 没有找到则启动非静默授权
