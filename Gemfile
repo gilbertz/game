@@ -97,7 +97,9 @@ gem 'qy_wechat', '~> 1.0.1'
 gem 'mina'
 gem 'passenger'
 gem 'sidekiq'
+gem 'mina-sidekiq'
 
 
 gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
 
+gem 'sinatra', :require => nil

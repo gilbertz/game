@@ -138,6 +138,14 @@ class WxUtil
     end
 
 
+    def deal_card(authorizer_appid)
+      card_id_arr =  query_wx_cards(authorizer_appid)
+      p card_id_arr.to_s
+      for card_id in card_id_arr
+        save_card_info(appid,card_id)
+      end
+    end
+
     #查询授权公众账号的卡券列表
     def query_wx_cards(appid)
       post_data = {"offset"=>0,"count"=>50}

@@ -10,3 +10,5 @@ end
 Sidekiq.configure_client do |config|
   config.redis = {:url => "redis://#{redis_host}:6379/12", :namespace => 'sidekiq'}
 end
+
+Sidekiq.default_worker_options = { 'backtrace' => true }
