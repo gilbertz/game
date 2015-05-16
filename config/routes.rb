@@ -1,5 +1,5 @@
 Game::Application.routes.draw do
-  
+
   require "sidekiq/web"
   mount Sidekiq::Web => '/sidekiq'
   get "qrcode/query_scaner"
@@ -17,7 +17,9 @@ Game::Application.routes.draw do
   get '/:appid/launch' => 'wx_app_auth#launch'
   get '/wx_app_auth/callback' => 'wx_app_auth#callback'
 
-#  mount WeixinRailsMiddleware::Engine, at: "/"
+  
+  mount Yaoshengyi::RedpackAPI => '/'
+  #mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -139,7 +141,7 @@ Game::Application.routes.draw do
     get 'records' =>'records#index'
 
     get 'get_objects' => 'materials#get_objects'
- 
+
     resources :messages 
     resources :scores 
     resources :ibeacons do
