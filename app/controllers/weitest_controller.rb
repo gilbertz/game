@@ -24,8 +24,9 @@ class WeitestController < ApplicationController
     total_score = UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beaconid).total_score  
     if(total_score >= 100)
      total_score = total_score > 300 ? 300 : total_score
+     beaconid = @beacon.id
      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
-     UserScore.find_by("user_id = ? and beaconid = ?", current_user.id,beaconid).update(:total_score => 0) 
+     UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beaconid).update(:total_score => 0) 
      Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => -total_score, :object_type=> 'social_redpack', :object_id => @object.id)
      current_user.mark_scores(beaconid, @material.id)
    end
