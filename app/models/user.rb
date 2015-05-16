@@ -106,9 +106,27 @@ class User < ActiveRecord::Base
   end
  
   def get_record(beaconid, game_id) 
-    Record.where(:user_id => self.id, :beaconid=>beaconid, :game_id => game_id).order('created_at desc').first
+    self.get_records(beaconid, game_id).first
   end
  
+  def get_records(beaconid, game_id)
+    Record.where(:user_id => self.id, :beaconid=>beaconid, :game_id => game_id).order('created_at desc')
+  end
+
+  def get_score(beaconid, game_id)
+    self.get_scores(beaconid, game_id).first
+  end
+
+  def get_scores(beaconid, game_id)
+    Score.where(:user_id => self.id, :beaconid=>beaconid, :game_id => game_id).order('created_at desc')
+  end
+
+  def mark_scores(beaconid, game_id)
+    self.get_scores(beaconid, game_id).each do |s|
+      s.update(:state => 1)
+    end
+  end
+
   private
   def make_password
     self.salt = generate_salt
