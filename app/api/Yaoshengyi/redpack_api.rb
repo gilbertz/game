@@ -25,7 +25,5 @@ module Yaoshengyi
         $redis.lrange("hongbaolist",0,-1).length
       end
     end
-
-    
   end
 end
