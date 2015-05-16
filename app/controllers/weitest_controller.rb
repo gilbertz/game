@@ -24,6 +24,7 @@ class WeitestController < ApplicationController
      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
      UserScore.find_by("user_id = ? and beaconid = ?", current_user.id,beaconid).update(:total_score => 0) 
      Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => -total_score, :object_type=> 'social_redpack', :object_id => @object.id)
+     current_user.mark_scores(beaconid, @material.id)
    end
    render :status => 200, json: {'info' => total_score}
  end
@@ -62,26 +63,9 @@ class WeitestController < ApplicationController
 
   #caches_page :show
   def show
-    @is_weixin = true
-    @is_stat = true
-
     @material.wx_ln = 'http://51self.com/weitest/1203611402'
-
-    @game_url = @material.url
-    hook = Hook.find_all_by_material_id(@material.id).last
-    if hook
-      @game_url = hook.url
-      @material.url = @game_url 
-    end 
-
-
     if @material.category
       unless @material.category.game_type_id >= 12
-        @base_category = Category.find(9)
-        @topn = @material.get_top(10)
-        if current_user
-          @myrank = @material.get_rank(current_user.id)
-        end
         render layout: false
       else
         render 'show_new', layout: false
