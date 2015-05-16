@@ -52,8 +52,6 @@ class WeitestController < ApplicationController
 
   def bus_allocation
     if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
-      @material = Material.find_by(id: params[:game_id]) 
-      get_object
       info = Redpack.first_allocation(current_user.id, params[:game_id], @object,params[:beaconid])
       render :status => 200, json: {'info' => info}
     elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
@@ -64,7 +62,6 @@ class WeitestController < ApplicationController
 
   def not_bus_allocation
     if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
-      get_object
       Redpack.share_allocation(current_user.id, params[:openid], params[:game_id], @object)
       render :status => 200, json: {'info' => "不在公交也有红包"}
     elsif Record.redpack_per_day(current_user.id, params[:game_id]) ==2
@@ -106,7 +103,6 @@ class WeitestController < ApplicationController
 
 
   def o2o
-    get_time_amount_time
     if @material.category
       render 'o2o', layout: false
     end
@@ -294,7 +290,6 @@ class WeitestController < ApplicationController
  end
 
 
-
  def authorize_url(url)
   appid = "wx456ffb04ee140d84"
   if params[:beaconid]
@@ -347,14 +342,13 @@ def get_beacon
 end
 
 def get_object
-  if not @material.object_type.blank? and @material.object_id
-    @object = @material.object_type.capitalize.constantize.find @material.object_id
+  if @material
+    if not @material.object_type.blank? and @material.object_id
+      @object = @material.object_type.capitalize.constantize.find @material.object_id
+    end
+    @record = current_user.get_record(@beaconid, @material.id) if current_user
+    get_time_amount_time if @object.instance_of?(Redpack)
   end
-  @record = current_user.get_record(@beaconid) if current_user
-    cond = '1=1'
-    cond = "beaconid = #{@beacon.id}" if @beacon
-    rs = Record.where(cond).where(:user_id => current_user.id, :game_id => @material.id).order('created_at desc')
-    @record = rs[0] if rs and rs.length > 0
 end
 
 def get_redpack_time
