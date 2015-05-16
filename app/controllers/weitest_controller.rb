@@ -20,7 +20,8 @@ class WeitestController < ApplicationController
   # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
   #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
   def social_redpack
-    total_score = UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, @beacon.id).total_score  
+    beaconid = @beacon.id
+    total_score = UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beaconid).total_score  
     if(total_score >= 100)
      total_score = total_score > 300 ? 300 : total_score
      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
