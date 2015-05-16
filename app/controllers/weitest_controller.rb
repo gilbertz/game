@@ -16,7 +16,7 @@ class WeitestController < ApplicationController
   end
 
   def weixin_check
-    if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
+    if Check.check_per_day(current_user.id,params[:game_id])<3
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
       Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id])
       render :status => 200, json: {'info' => 1}
@@ -569,7 +569,7 @@ def get_time_amount_time
     @now_time = Time.now
     # @amount = time_amount.amount
     # fake amount 
-    @fake_amount = (@amount + 10000)/100  
+    @fake_amount = (@amount + 100000)/100  
     redpack_time = RedpackTime.get_redpack_time(@object.id)
     min = redpack_time.min
     max = redpack_time.max
