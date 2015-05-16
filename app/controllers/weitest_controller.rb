@@ -256,17 +256,17 @@ class WeitestController < ApplicationController
     return unless @object
     @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
     fake_amount = @amount + 10000
-   
+
     msg = msg.merge(:amount => fake_amount/100)
     response.stream.write "data: #{msg.to_json} \n\n"
     sleep 1
     response.stream.close
- end
+  end
 
 
- private
- 
- def pre
+  private
+
+  def pre
    get_material
    get_beacon
    get_object
@@ -346,45 +346,31 @@ end
 
 def get_time_amount_time
   return unless @object
+  beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+  @check_today = Check.check_today(current_user.id)
   @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
-    # p @amount 
-    @time_amount = TimeAmount.get_time_amount(@object.id)
-    return unless @time_amount
-    @end_time = @time_amount.time
-    @now_time = Time.now
-    # @amount = time_amount.amount
-    # fake amount 
-    @fake_amount = (@amount + 100000)/100  
-    redpack_time = RedpackTime.get_redpack_time(@object.id)
-    min = redpack_time.min
-    max = redpack_time.max
-    person_num = redpack_time.person_num
-    beaconid = @beacon.id
+  @time_amount = TimeAmount.get_time_amount(@object.id)
+  return unless @time_amount
+  @end_time = @time_amount.time
+  @now_time = Time.now
+  @fake_amount = (@amount + 100000)/100  
+  person_num = redpack_time.person_num
 
-      # p @amount
+  beaconid = @beacon.id
 
-      if $redis.llen("hongBaoConsumedList") != 0
-       for i in 0..($redis.llen("hongBaoConsumedList")-1)
-        hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
-        user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
-        if user_allocaiton 
-          user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => person_num)
-        else
-          UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => person_num)
-        end
-        #Score.create(:user_id => hongbao["user_id"], :value => hongbao["money"],:from_user_id => hongbao["user_id"])
-        Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => @object.id)
-        # Redpack.find(@object.id).weixin_post(hongbao["user_id"],params[:beaconid],hongbao["money"])
-          # p "consume"
-        end
-      end
-      # # # p @time
-      # if @end_time > @now_time && @end_time < (@now_time + 10*60) && @time_amount.state == 1
-      #   # p "produce"
-      #   Redpack.generate(@amount, @amount /200,max,min)
-      #   @time_amount.update(state: 0)
-      # end
-    # end
+  if $redis.llen("hongBaoConsumedList") != 0
+   for i in 0..($redis.llen("hongBaoConsumedList")-1)
+    hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
+    user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
+    if user_allocaiton 
+      user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => person_num)
+    else
+      UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => person_num)
+    end
+    Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => @object.id)
+
   end
+end
+end
 
 end 
