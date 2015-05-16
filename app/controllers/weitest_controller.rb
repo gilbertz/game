@@ -72,26 +72,9 @@ class WeitestController < ApplicationController
 
   #caches_page :show
   def show
-    @is_weixin = true
-    @is_stat = true
-
     @material.wx_ln = 'http://51self.com/weitest/1203611402'
-
-    @game_url = @material.url
-    hook = Hook.find_all_by_material_id(@material.id).last
-    if hook
-      @game_url = hook.url
-      @material.url = @game_url 
-    end 
-
-
     if @material.category
       unless @material.category.game_type_id >= 12
-        @base_category = Category.find(9)
-        @topn = @material.get_top(10)
-        if current_user
-          @myrank = @material.get_rank(current_user.id)
-        end
         render layout: false
       else
         render 'show_new', layout: false
