@@ -24,6 +24,10 @@ module Yaoshengyi
       get '/show_generate' do
         $redis.lrange("hongbaolist",0,-1).length
       end
+
+      get '/show_consume' do
+        $redis.lrange("hongBaoConsumedList",0,-1).length
+      end
     end
   end
 end

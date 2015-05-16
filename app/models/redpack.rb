@@ -298,6 +298,21 @@ class Redpack < ActiveRecord::Base
   end
 end
 
+def self.distribute_seed_redpack(beacon_id,redpack_id,game_id)
+  if $redis.llen("hongBaoConsumedList") != 0
+   for i in 0..($redis.llen("hongBaoConsumedList")-1)
+    hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
+    user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
+    if user_allocaiton 
+      user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]))
+    else
+      UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"])
+    end
+    Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beacon_id, :game_id => game_id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => redpack_id)
+  end
+end
+end
+
 def self.gain_seed_redpack(user_id, game_id,redpack,beaconid) 
     # hongbao =  Hash.new
     # if $redis.llen("hongbaolist") == 0
@@ -316,7 +331,8 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
     #     p "yongwanle"
     #   end 
     # end
-    beaconid = Ibeacon.find_by(:url=>beaconid).id
+
+      
     if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
       #p $redis.hget("hongBaoConsumedMap",user_id)
       return 0 
@@ -332,8 +348,7 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
       $redis.lpush("hongBaoConsumedList",hongbao.to_json)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
       
-      check = Check.find_by(user_id: user_id, beaconid: beaconid,state: 1,game_id: game_id)
-      check.update(:state => 0) if check
+
 
       user = User.find user_id
       user.incr_social(beaconid, 3)
@@ -344,5 +359,5 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
     end
   end
 end
-
 end
+
