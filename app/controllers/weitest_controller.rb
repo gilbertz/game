@@ -318,6 +318,7 @@ end
 
 def get_beacon
   @beacon = Ibeacon.find_by_url params[:beaconid] if params[:beaconid]
+  @beacon = Ibeacon.find(1) unless @beacon
 end
 
 def get_object
