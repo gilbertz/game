@@ -104,8 +104,11 @@ class User < ActiveRecord::Base
     key = "social_#{self.id}_#{beaconid}"
     $redis.get(key).to_i 
   end
-  
-
+ 
+  def get_record(beaconid, game_id) 
+    Record.where(:user_id => self.id, :beaconid=>beaconid, :game_id => game_id).order('created_at desc').first
+  end
+ 
   private
   def make_password
     self.salt = generate_salt
