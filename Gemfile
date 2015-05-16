@@ -107,3 +107,12 @@ gem 'sinatra'
 gem 'grape'
 gem 'grape-entity'
 
+
+#根据时间操作数据库的好东西
+# Post.by_year(2013)                           # all posts in 2013
+# Post.before(Date.today)                      # all posts for before today
+# Post.yesterday                               # all posts in 2013
+# Post.between_times(Time.zone.now - 3.hours,  # all posts in last 3 hours
+#                    Time.zone.now)
+# @post.next                                   # next post after a given post
+gem 'by_star', :git => "git://github.com/radar/by_star"
