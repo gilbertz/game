@@ -17,4 +17,8 @@ class Check < ActiveRecord::Base
     end
   end
 
+  def self.check_per_day(user_id,game_id)
+     Check.where("user_id = ? and game_id = ? and created_at < ? and created_at > ?" , user_id, game_id, Date.today.beginning_of_day, Date.today.end_of_day).length
+  end
+
 end
