@@ -17,7 +17,7 @@ Game::Application.routes.draw do
   get '/:appid/launch' => 'wx_app_auth#launch'
   get '/wx_app_auth/callback' => 'wx_app_auth#callback'
 
-  #mount RedpackAPI => '/'
+  mount Yaoshengyi::RedpackAPI => '/'
   #mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
 
