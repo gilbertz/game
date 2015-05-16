@@ -1,4 +1,4 @@
-
+module Yaoshengyi
   class RedpackAPI < Grape::API
     prefix       'api'
     version      'v1'
@@ -26,3 +26,4 @@
       end
     end
   end
+end
