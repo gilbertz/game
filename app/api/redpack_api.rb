@@ -1,4 +1,4 @@
-module Yaoshengyi
+
   class RedpackAPI < Grape::API
     prefix       'api'
     version      'v1'
@@ -25,7 +25,4 @@ module Yaoshengyi
         $redis.lrange("hongbaolist",0,-1).length
       end
     end
-
-    
   end
-end
