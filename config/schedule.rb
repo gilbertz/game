@@ -38,9 +38,10 @@ end
 #           rake "redpack:generate_redpack"
 # end
 
-
 every 1.minute do
-          rake "redpack:generate_redpack"
+          rake "redpack:generate_test_redpack"
 end
+
+
 
 

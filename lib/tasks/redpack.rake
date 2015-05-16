@@ -15,6 +15,7 @@ namespace :redpack do
       count = amount/200
       Redpack.generate(total,count,max,min)
     end
+  end
 
   desc "生成测试红包"
 
@@ -25,6 +26,7 @@ namespace :redpack do
     redpack_time = RedpackTime.get_redpack_time(5) 
     min = redpack_time.min
     max = redpack_time.max
+    redpack_time.update(:remain => 1)
 
     amount = 2000000
       if amount != nil
@@ -32,7 +34,6 @@ namespace :redpack do
       count = amount/200
       Redpack.generate(total,count,max,min)
     end
-end
   end
 
 

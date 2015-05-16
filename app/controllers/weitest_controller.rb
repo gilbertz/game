@@ -4,7 +4,9 @@ class WeitestController < ApplicationController
   before_filter :weixin_authorize, :only => [:o2o]
 
   def weixin_check
+
     if Check.check_per_day(current_user.id,params[:game_id])<3
+      p Check.check_per_day(current_user.id,params[:game_id])
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
       Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id])
       render :status => 200, json: {'info' => 1}
@@ -30,7 +32,10 @@ class WeitestController < ApplicationController
  end
 
  def seed_redpack
-   if Check.check_per_day(current_user.id,params[:game_id])<3
+   if Check.check_per_day(current_user.id,params[:game_id]) <= 3
+      beaconid = @beacon.id
+    check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
+      check.update(:state => 0) if check
     info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object,params[:beaconid])
     # Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
     render :status => 200, json: {'info' => info}
@@ -334,6 +339,6 @@ def get_time_amount
   @now_time = Time.now
   @fake_amount = (@amount + 100000)/100  
   beaconid = @beacon.id
-  Redpack.distribute_seed_redpack(beaconid,@object.id)
+  Redpack.distribute_seed_redpack(beaconid,@object.id,@material.id)
 end
 end
