@@ -273,6 +273,7 @@ class WeitestController < ApplicationController
     get_beacon
     get_object 
     get_time_amount_time
+
     if @material.category
       render 'o2o', layout: false
     end
@@ -561,6 +562,8 @@ end
 def get_time_amount_time
   get_object
   return unless @object
+  beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+  @check_today = Check.check_today(current_user.id)
   @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
     # p @amount 
     @time_amount = TimeAmount.get_time_amount(@object.id)
@@ -570,11 +573,10 @@ def get_time_amount_time
     # @amount = time_amount.amount
     # fake amount 
     @fake_amount = (@amount + 100000)/100  
-    redpack_time = RedpackTime.get_redpack_time(@object.id)
-    min = redpack_time.min
-    max = redpack_time.max
+    # redpack_time = RedpackTime.get_redpack_time(@object.id)
+    # min = redpack_time.min
+    # max = redpack_time.max
     person_num = redpack_time.person_num
-    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
 
       # p @amount
 
