@@ -1,7 +1,7 @@
 # encoding: utf-8
 class WeitestController < ApplicationController
-  before_filter :pre
   before_filter :weixin_authorize, :only => [:o2o]
+  before_filter :pre
 
   def weixin_check
 
@@ -38,7 +38,7 @@ class WeitestController < ApplicationController
       beaconid = @beacon.id
     check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
       check.update(:state => 0) if check
-    info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object,params[:beaconid])
+    info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
     # Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
     render :status => 200, json: {'info' => info}
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
@@ -274,6 +274,7 @@ class WeitestController < ApplicationController
  def authorize_url(url)
   appid = "wx456ffb04ee140d84"
   if params[:beaconid]
+    get_beacon
     appid = @beacon.get_merchant.wxappid
   end
   "http://#{WX_DOMAIN}/#{appid}/launch?rurl=" + url
