@@ -60,8 +60,8 @@ class HomeController < ApplicationController
 
   def ibeacon
     @ibeacon = Ibeacon.find_by_url( params[:url] )
-    burls = Burl.where(:beaconid => @ibeacon.id).where(:state => 1)
-    burl = burls.sample(1)[0]
+    burls = Burl.where(:beaconid => @ibeacon.id).where(:state => 1) if @ibeacon
+    burl = burls.sample(1)[0] if burls
     redirect_to burl.url    
   end
 

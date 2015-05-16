@@ -1,0 +1,1 @@
+$(document).ready(function(){$(this).on("ajax:success","a.delCategory",function(e,t){return"ok"===t.msg?$(this).parents("tr").remove():alert("\u4e0d\u80fd\u5220\u9664\uff0c\u8bf7\u68c0\u67e5\uff01"),!1})});
