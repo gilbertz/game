@@ -16,7 +16,23 @@ namespace :redpack do
       Redpack.generate(total,count,max,min)
     end
 
+  desc "生成测试红包"
 
+  task :generate_test_redpack => :environment do
+ 
+     puts 'generate_redpack'
+     
+    redpack_time = RedpackTime.get_redpack_time(5) 
+    min = redpack_time.min
+    max = redpack_time.max
+
+    amount = 2000000
+      if amount != nil
+      total = amount
+      count = amount/200
+      Redpack.generate(total,count,max,min)
+    end
+end
   end
 
 

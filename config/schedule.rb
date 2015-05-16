@@ -34,7 +34,12 @@ every '8,18,28,38,48,58 * * * *' do
 end
 
 
-every '9,19,29,39,49,59 * * * *' do
+# every '9,19,29,39,49,59 * * * *' do
+#           rake "redpack:generate_redpack"
+# end
+
+
+every 1.minute do
           rake "redpack:generate_redpack"
 end
 

@@ -3,16 +3,6 @@ class WeitestController < ApplicationController
   before_filter :pre
   before_filter :weixin_authorize, :only => [:o2o]
 
-  def test_generate
-    result_hongbao = Redpack.generate(params[:total].to_i,params[:count].to_i,params[:max].to_i,params[:min].to_i)
-    render :status => 200, json: result_hongbao
-  end
-
-  def test_seed_redpack
-    hongbao = Redpack.test(params[:id])
-    render :status => 200, json: hongbao
-  end
-
   def weixin_check
     if Check.check_per_day(current_user.id,params[:game_id])<3
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
@@ -39,9 +29,9 @@ class WeitestController < ApplicationController
  end
 
  def seed_redpack
-  if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
+   if Check.check_per_day(current_user.id,params[:game_id])<3
     info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object,params[:beaconid])
-    Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
+    # Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
     render :status => 200, json: {'info' => info}
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       info = 0
@@ -272,7 +262,7 @@ class WeitestController < ApplicationController
 
     return unless @object
     @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
-    fake_amount = @amount + 10000
+    fake_amount = @amount + 100000
 
     msg = msg.merge(:amount => fake_amount/100)
     response.stream.write "data: #{msg.to_json} \n\n"
@@ -287,7 +277,7 @@ class WeitestController < ApplicationController
    get_material
    get_beacon
    get_object
- end
+  end
 
 
  def authorize_url(url)
@@ -347,47 +337,19 @@ def get_object
       @object = @material.object_type.capitalize.constantize.find @material.object_id
     end
     @record = current_user.get_record(@beaconid, @material.id) if current_user
-    get_time_amount_time if @object.instance_of?(Redpack)
+    get_time_amount if @object.instance_of?(Redpack)
   end
 end
 
-def get_redpack_time
-  if current_user 
-    beaconid = @beacon.id
-    if Time.now.to_i>Redpack.where(:beaconid => beaconid).order("start_time asc")[0].start_time.to_i
-      Redpack.where(:beaconid => beaconid).order("start_time asc")[0].update(:state =>1)
-    end
-    @store = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0].store
-  end
-end 
-
-def get_time_amount_time
-  return unless @object
-  beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+def get_time_amount
   @check_today = Check.check_today(current_user.id)
   @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
-  @time_amount = TimeAmount.get_time_amount(@object.id)
+  @time_amount = TimeAmount.get_time(@object.id)
   return unless @time_amount
   @end_time = @time_amount.time
   @now_time = Time.now
   @fake_amount = (@amount + 100000)/100  
-  person_num = redpack_time.person_num
-
   beaconid = @beacon.id
-
-  if $redis.llen("hongBaoConsumedList") != 0
-   for i in 0..($redis.llen("hongBaoConsumedList")-1)
-    hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
-    user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
-    if user_allocaiton 
-      user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]), :num => person_num)
-    else
-      UserAllocation.create(:user_id => hongbao["user_id"], :allocation => hongbao["money"], :num => person_num)
-    end
-    Record.create(:user_id => hongbao["user_id"], :from_user_id => hongbao["user_id"], :beaconid=> beaconid, :game_id => @material.id, :score => hongbao["money"], :object_type=> 'Redpack', :object_id => @object.id)
-
-  end
+  Redpack.distribute_seed_redpack(beaconid,@object.id)
 end
 end
-
-end 
