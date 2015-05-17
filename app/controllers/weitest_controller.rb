@@ -177,11 +177,19 @@ class WeitestController < ApplicationController
 
   def report
     if current_user
-      r= Record.find_by_user_id_and_game_id(current_user.id, params[:game_id])
       Record.create(:user_id => current_user.id, :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
     end
     render nothing: true
   end
+  
+  
+  def uv
+    if current_user
+      Uv.create(:user_id => current_user.id, :beaconid=>@beacon.id, :game_id => params[:game_id], :remark=>params[:remark])
+    end
+    render nothing: true
+  end
+
 
   def score
     if current_user
@@ -332,7 +340,7 @@ def get_object
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
     end
-    @record = current_user.get_record(@beaconid, @material.id) if current_user
+    @record = current_user.get_record(@beacon.id, @material.id) if current_user
     get_time_amount if @object.instance_of?(Redpack)
   end
 end
