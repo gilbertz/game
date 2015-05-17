@@ -1,6 +1,5 @@
 module Yaoshengyi
   module Entities
-
     class CardOption < Grape::Entity
       expose :title
       expose :img
@@ -20,14 +19,13 @@ module Yaoshengyi
     format       :json
 
     desc "Return a card."
-      params do
-        requires :id, type: Integer, desc: "card id."
-      end
-      route_param :id do
-        get do
-          Card.find(params[:id])
-        end
+    params do
+      requires :id, type: Integer, desc: "card id."
+    end
+    route_param :id do
+      get do
+        Card.find(params[:id])
       end
     end
-  end
+ end
 end
