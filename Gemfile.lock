@@ -119,6 +119,9 @@ GEM
     grape-entity (0.4.5)
       activesupport
       multi_json (>= 1.3.2)
+    grape-swagger (0.10.1)
+      grape (>= 0.8.0)
+      grape-entity
     hashie (3.4.0)
     highline (1.7.1)
     hike (1.2.3)
@@ -324,12 +327,14 @@ DEPENDENCIES
   actionpack-xml_parser
   bcrypt-ruby
   by_star!
+  chronic
   coffee-rails (~> 4.0.0)
   devise
   em-http-request
   faraday
   grape
   grape-entity
+  grape-swagger
   jbuilder (~> 1.2)
   jquery-rails
   json
