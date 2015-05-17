@@ -31,7 +31,7 @@ class Card < ActiveRecord::Base
     card_options.each do |co|
       range += co.store
       if n < range
-        Record.create(:user_id => uid, :game_id =>gid, :beaconid => bid, :score => co.value, :remark => co.title, :object_type => 'Card', :object_id => self.id)
+        Record.create(:user_id => uid, :game_id =>gid, :beaconid => bid, :score => co.id, :remark => co.title, :object_type => 'Card', :object_id => self.id)
         co.store -= 1
         co.save
         return co
