@@ -67,6 +67,7 @@ Game::Application.routes.draw do
   get '/weitest/weixin_check' => 'weitest#weixin_check', :as=>"weixin_check"
   get '/weitest/weixin_score' => 'weitest#weixin_score', :as=>"weixin_score"
   get '/weitest/report' => 'weitest#report',  :as=>"report"
+  get '/weitest/uv' => 'weitest#uv',  :as=>"uv"
   get '/materials/report' => 'materials#report',  :as=>"mreport" 
   get '/weitest/stat' => 'weitest#stat',  :as=>"stat"
   get '/weitest/click_stat' => 'weitest#click_stat',  :as=>"weitest_stat"
