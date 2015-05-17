@@ -90,7 +90,9 @@
           <th>ID</th>
           <th>title</th>
           <th>img</th>
-          <th>store</th> 
+          <th>value</th>  
+          <th>store</th>
+          <th>type</th>
           <th>operate</th>
         </tr>
         <% @card.card_options.each do |t|%>
@@ -98,7 +100,9 @@
           <td><%= t.id %></td>
           <td><%= t.title %></td>
           <td><%= t.img %></td>
+          <td><%= t.value %></td>
           <td><%= t.store %></td>
+          <td><%= t.get_type %></td>
           <td> <%= link_to [:edit,:admin,@card,t], class: :e_obj do %><span class="glyphicon glyphicon-plus"></span>编辑<% end %> |<%= link_to '删除', [:admin, @card, t], :title=>"删除",:method=>"delete", :confirm=>"确定删除吗?" %></td>
         </tr>
         <%end%>

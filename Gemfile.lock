@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/radar/by_star
+  revision: 42c5583dc6f802cf4a629a4fb83d34de58aefa26
+  specs:
+    by_star (2.2.1)
+      activesupport
+
+GIT
   remote: https://github.com/getsentry/raven-ruby.git
   revision: 5d0939eb323a0d9711075cd8761562d855ef3640
   specs:
@@ -316,6 +323,7 @@ DEPENDENCIES
   actionpack-page_caching
   actionpack-xml_parser
   bcrypt-ruby
+  by_star!
   coffee-rails (~> 4.0.0)
   devise
   em-http-request
