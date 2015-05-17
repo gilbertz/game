@@ -340,7 +340,7 @@ def get_object
     if not @material.object_type.blank? and @material.object_id
       @object = @material.object_type.capitalize.constantize.find @material.object_id
     end
-    @record = current_user.get_record(@beaconid, @material.id) if current_user
+    @record = current_user.get_record(@beacon.id, @material.id) if current_user
     get_time_amount if @object.instance_of?(Redpack)
   end
 end
