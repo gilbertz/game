@@ -21,6 +21,10 @@ class Card < ActiveRecord::Base
     Card.create self.attributes.except!("created_at", "id")
   end
 
+  def get_store(tid)
+    cos = self.card_options.where(:group_id => tid)
+    cos.sum{|co|co.store}
+  end
 
   def lottery(tid, uid, gid, bid)
     card_options = self.card_options.where(:group_id => tid)
@@ -34,6 +38,9 @@ class Card < ActiveRecord::Base
         Record.create(:user_id => uid, :game_id =>gid, :beaconid => bid, :score => co.id, :remark => co.title, :object_type => 'Card', :object_id => self.id)
         co.store -= 1
         co.save
+        if co.group_id == 5
+          co.send_redpack(uid, gid, bid)
+        end
         return co
       end
     end   
