@@ -22,6 +22,12 @@ if Rails.env.development?
   SHAKE_APPSECRET = "0c79e1fa963cd80cc0be99b20a18faeb"
   SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
   SHAKE_DOMAIN = "http://dapeimishu.com"
+
+
+  WX_DOMAIN = 'i.51self.com'
+  WX_APPID = 'wx456ffb04ee140d84'
+  WX_SECRET= 'd1481d1ff0f05d0234a391cfc1c2a4b3'
+
 else
   #摇生意
   SHAKE_TOKEN = "shake"
@@ -29,6 +35,12 @@ else
   SHAKE_APPSECRET = "0c79e1fa963cd80cc0be99b20a18faeb"
   SHAKE_ENCODKEY = "abcdefgh1234567890abcdefgh123456789abcdefgh"
   SHAKE_DOMAIN = "http://wx.yaoshengyi.com"
+
+
+  WX_DOMAIN = 'wx.yaoshengyi.com'
+  WX_APPID = 'wx456ffb04ee140d84'
+  WX_SECRET= 'd1481d1ff0f05d0234a391cfc1c2a4b3'
+
 end
 
 

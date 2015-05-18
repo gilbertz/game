@@ -84,11 +84,3 @@ Game::Application.configure do
   config.assets.debug = true
   # config.active_record.migration_error = :page_load
 end
-
-
-
-REDIS_HOST = 'localhost'
-
-WX_DOMAIN = 'i.51self.com'
-WX_APPID = 'wx456ffb04ee140d84'
-WX_SECRET= 'd1481d1ff0f05d0234a391cfc1c2a4b3'
