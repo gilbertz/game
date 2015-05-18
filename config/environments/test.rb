@@ -34,6 +34,3 @@ Game::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 end
-
-# redis 的地址
-REDIS_HOST = '121.42.47.121'
