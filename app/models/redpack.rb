@@ -211,7 +211,8 @@ class Redpack < ActiveRecord::Base
 
     result = Array.new(count)
     result_hongbao = Array.new(0)
-    if total < min
+    if total = 0
+    elsif  total < min
       min = total
       result[0] = min
       result_hongbao = {:id => 0, :money => result[0]}
