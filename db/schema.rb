@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518075253) do
+ActiveRecord::Schema.define(version: 20150518095355) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -356,6 +356,10 @@ ActiveRecord::Schema.define(version: 20150518075253) do
     t.string   "attach"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "pay_type"
+    t.string   "trade_type"
+    t.string   "openid"
+    t.integer  "party_id"
   end
 
   create_table "parties", force: true do |t|

@@ -8,7 +8,7 @@ class WeitestController < ApplicationController
     if Check.check_per_day(current_user.id,params[:game_id])<3
       p Check.check_per_day(current_user.id,params[:game_id])
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id])
+      Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id]) unless Check.find(user_id:current_user.id, beaconid:beaconid, state:1, game_id: params[:game_id])
       render :status => 200, json: {'info' => 1}
     else #Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       # 今天次数用完了
@@ -143,7 +143,7 @@ class WeitestController < ApplicationController
 
   def weixin_score
     if current_user
-      f_value = rand(100)
+      f_value = 0
       beaconid = @beacon.id
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
@@ -267,7 +267,7 @@ class WeitestController < ApplicationController
     fake_amount = @amount + 100000
 
     msg = msg.merge(:amount => fake_amount/100)
-    msg_count = current_user.msg_count
+    msg_count = current_user.msg_count(@beacon.id)
     msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count})
     response.stream.write "data: #{msg.to_json} \n\n"
     sleep 1

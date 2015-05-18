@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
   end
 
   def total_score(beaconid)
-    self.get_user_score(beaconid).total_score
+    self.get_user_score(beaconid).total_score.to_i
   end
 
 
@@ -133,7 +133,9 @@ class User < ActiveRecord::Base
   end
 
   def msg_count(beaconid)
-    (self.total_score(beaconid) > 0).to_i  + self.social_value(beaconid)
+    count = self.social_value(beaconid).to_i
+    count += 1 if self.total_score(beaconid) > 0
+    count
   end
 
 

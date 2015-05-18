@@ -19,9 +19,14 @@ module API
           Redpack.test(params[:id])
         end
 
+        desc "show_generate_length"
+        get '/show_generate_length' do
+          $redis.lrange("hongbaolist",0,-1).length
+        end
+
         desc "show_generate"
         get '/show_generate' do
-          $redis.lrange("hongbaolist",0,-1).length
+          $redis.lrange("hongbaolist",0,-1)
         end
 
         get '/show_consume' do
