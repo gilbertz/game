@@ -8,6 +8,7 @@ class CardOption < ActiveRecord::Base
 
   def send_redpack(uid, gid, bid)
     if self.group_id == 5
+     user = User.find(uid)
      beacon = Ibeacon.find_by_id(bid)
      rp = beacon.redpacks[0]
      rp_val = rp.weixin_post(user, beacon.url, self.value * 100)
