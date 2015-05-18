@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517152508) do
+ActiveRecord::Schema.define(version: 20150518075253) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -343,6 +343,21 @@ ActiveRecord::Schema.define(version: 20150517152508) do
     t.datetime "updated_at"
   end
 
+  create_table "orders", force: true do |t|
+    t.string   "appid"
+    t.string   "mch_id"
+    t.string   "device_info"
+    t.string   "product_id"
+    t.string   "out_trade_no"
+    t.string   "fee_type"
+    t.string   "total_fee"
+    t.string   "time_start"
+    t.string   "time_expire"
+    t.string   "attach"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "parties", force: true do |t|
     t.string   "party_identifier"
     t.string   "openid"
@@ -357,6 +372,15 @@ ActiveRecord::Schema.define(version: 20150517152508) do
     t.string   "provide"
     t.string   "refresh_access_token"
     t.string   "access_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", force: true do |t|
+    t.string   "name"
+    t.string   "body"
+    t.string   "detail"
+    t.decimal  "price",      precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -575,7 +599,7 @@ ActiveRecord::Schema.define(version: 20150517152508) do
     t.integer  "user_id"
     t.integer  "beaconid"
     t.integer  "game_id"
-    t.string   "remark"
+    t.string   "remak"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
