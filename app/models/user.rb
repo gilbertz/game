@@ -106,7 +106,7 @@ class User < ActiveRecord::Base
   end
  
   def get_record(beaconid, game_id) 
-    self.get_records(beaconid, game_id).first
+    self.get_records(beaconid, game_id).last
   end
  
   def get_records(beaconid, game_id)
@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
   end
 
   def get_score(beaconid, game_id)
-    self.get_scores(beaconid, game_id).first
+    self.get_scores(beaconid, game_id).last
   end
 
   def get_scores(beaconid, game_id)
