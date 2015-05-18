@@ -106,6 +106,7 @@ gem 'sinatra'
 ## RESTful API Engine
 gem 'grape'
 gem 'grape-entity'
+gem 'grape-swagger'
 
 
 #根据时间操作数据库的好东西
@@ -115,4 +116,5 @@ gem 'grape-entity'
 # Post.between_times(Time.zone.now - 3.hours,  # all posts in last 3 hours
 #                    Time.zone.now)
 # @post.next                                   # next post after a given post
+gem 'chronic'
 gem 'by_star', :git => "git://github.com/radar/by_star"
