@@ -11,7 +11,7 @@ class CardOption < ActiveRecord::Base
      beacon = Ibeacon.find_by_id(bid)
      rp = beacon.redpacks[0]
      rp_val = rp.weixin_post(user, beacon.url, self.value * 100)
-     Record.create(:user_id => uid, :beaconid=>bid, :game_id => gid, :score =>rp_val, :object_type=>'Redpack', :object_id => rp.id) 
+     Record.create(:user_id => uid, :beaconid=>bid, :game_id => gid, :score =>rp_val, :remark=>'现金红包', :object_type=>'Redpack', :object_id => rp.id) 
     end
   end
 
