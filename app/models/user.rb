@@ -121,11 +121,21 @@ class User < ActiveRecord::Base
     Score.where(:user_id => self.id, :beaconid=>beaconid, :game_id => game_id).order('created_at desc')
   end
 
+  def get_beacon_scores(beaconid)
+    Score.where(:user_id => self.id, :beaconid=>beaconid).order('created_at desc')
+  end
+  
+
   def mark_scores(beaconid, game_id)
-    self.get_scores(beaconid, game_id).each do |s|
+    self.get_beacon_scores(beaconid).each do |s|
       s.update(:state => 1)
     end
   end
+
+  def msg_count(beaconid)
+    (self.total_score(beaconid) > 0).to_i  + self.social_value(beaconid)
+  end
+
 
   private
   def make_password
