@@ -288,7 +288,7 @@ class WeitestController < ApplicationController
     get_beacon
     appid = @beacon.get_merchant.wxappid
   end
-  "http://#{WX_DOMAIN}/#{appid}/launch?rurl=" + url
+  "http://#{request.domain}/#{appid}/launch?rurl=" + url
   
   #rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
   #scope = 'snsapi_userinfo'
@@ -318,7 +318,7 @@ end
 
 
 def weixin_authorize
-  check_cookie
+  #check_cookie
   check_shake_history
   unless current_user
     redirect_to authorize_url(request.url)
