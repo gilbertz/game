@@ -8,7 +8,6 @@ module API
     format :json
 
     mount API::RedPack::RedpackAPI
-
     mount API::Cards::CardAPI
 
 

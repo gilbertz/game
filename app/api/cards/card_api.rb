@@ -2,18 +2,18 @@ module API
 
   module Cards
 
-    module Entities
-      class CardOption < Grape::Entity
-        expose :title
-        expose :img
-        expose :store
-      end
-
-      class Card < Grape::Entity
-        expose :title
-        expose :card_options, using: API::CardOption
-      end
-    end
+    # module Entities
+    #   class CardOption < Grape::Entity
+    #     expose :title
+    #     expose :img
+    #     expose :store
+    #   end
+    #
+    #   class Card < Grape::Entity
+    #     expose :title
+    #     expose :card_options, using: API::CardOption
+    #   end
+    # end
 
     class CardAPI < Grape::API
       version      'v1'
