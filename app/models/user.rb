@@ -137,6 +137,11 @@ class User < ActiveRecord::Base
   end
 
 
+  def get_party_id
+    party = Party.find_by_openid(self.get_openid)
+    return party.id  if party
+  end
+
   private
   def make_password
     self.salt = generate_salt

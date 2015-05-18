@@ -19,6 +19,7 @@ module API
           optional :pay_type,type:Integer,default:0,values:[0,1],desc:"支付类型,0代表微信支付,1代表支付宝支付"
           optional :attach_info,type:Hash,desc:"选择的商品附加属性"
           optional :device_info,type:String,default:"WEB",values:["WEB","JS","APP"],desc:"发起支付的方式"
+          optional :trade_type,type:String,default:"NATIVE",values:['JSAPI','NATIVE','APP','WAP'],desc:"支付的来源类型"
         end
         post :generate do
           pay_type = params["pay_type"]
@@ -33,10 +34,15 @@ module API
           order.device_info = params["device_info"]
           order.product_id = params["product_id"]
           order.out_trade_no = out_trade_no
-          order.fee_type = "yuan"
+          order.fee_type = "CNY"
           order.total_fee = (amount * product.price).to_s
-          order.time_start = Time.now.strftime("yyyymmddHHMMSS")
+          order.time_start = Time.now.to_local.strftime("yyyyMMddHHmmss")
           order.attach = params["attach_info"].to_json if params["attach_info"]
+          order.party_id = current_user.get_party_id
+          order.trade_type = params["trade_type"]
+          if order.trade_type == "JSAPI"
+            order.openid = current_user.get_openid
+          end
           if order.save
             {"result" => "0","order_id"=>order.id}
           else

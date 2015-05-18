@@ -1,5 +1,6 @@
 class Party < ActiveRecord::Base
   has_one :vip
+  has_many :orders
 
 
   def is_vip?
