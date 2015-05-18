@@ -15,6 +15,9 @@
 
     <%= f.label :store %>
     <%= f.text_field :store %>
+
+    <%= f.label :类型 %>
+    <%= f.select :group_id, Card.get_types_for_select, required: true %>
      
     <%= f.submit "提交", class: "btn btn-large btn-primary" %>
     <% end %>

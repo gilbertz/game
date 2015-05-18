@@ -49,6 +49,6 @@ class Admin::CardOptionsController < Admin::BaseController
     end
 
     def card_option_params
-      params.require(:card_option).permit(:value, :store, :title, :img, :wx_cardid, :desc, :probability)
+      params.require(:card_option).permit(:value, :store, :title, :img, :group_id, :wx_cardid, :desc, :probability)
     end
 end

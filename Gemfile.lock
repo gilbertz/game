@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/radar/by_star
+  revision: 42c5583dc6f802cf4a629a4fb83d34de58aefa26
+  specs:
+    by_star (2.2.1)
+      activesupport
+
+GIT
   remote: https://github.com/getsentry/raven-ruby.git
   revision: 5d0939eb323a0d9711075cd8761562d855ef3640
   specs:
@@ -112,6 +119,9 @@ GEM
     grape-entity (0.4.5)
       activesupport
       multi_json (>= 1.3.2)
+    grape-swagger (0.10.1)
+      grape (>= 0.8.0)
+      grape-entity
     hashie (3.4.0)
     highline (1.7.1)
     hike (1.2.3)
@@ -316,12 +326,15 @@ DEPENDENCIES
   actionpack-page_caching
   actionpack-xml_parser
   bcrypt-ruby
+  by_star!
+  chronic
   coffee-rails (~> 4.0.0)
   devise
   em-http-request
   faraday
   grape
   grape-entity
+  grape-swagger
   jbuilder (~> 1.2)
   jquery-rails
   json
