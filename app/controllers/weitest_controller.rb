@@ -267,7 +267,7 @@ class WeitestController < ApplicationController
     fake_amount = @amount + 100000
 
     msg = msg.merge(:amount => fake_amount/100)
-    msg_count = current_user.msg_count
+    msg_count = current_user.msg_count(@beacon.id)
     msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count})
     response.stream.write "data: #{msg.to_json} \n\n"
     sleep 1
