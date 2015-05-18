@@ -22,9 +22,11 @@ class Check < ActiveRecord::Base
   end
 
   def self.check_today(user_id)
-     Check.find_by("user_id = ? and state = ? and created_at >= ? and created_at <= ?", user_id, 1, Date.today.beginning_of_day,Date.today.end_of_day )
+     Check.find_by("user_id = ? and state = ? and created_at >= ? and created_at <= ?", user_id, 1, Date.today.beginning_of_day,Date.today.end_of_day)
   end
   def self.check_three(user_id,game_id)
-      Check.where("user_id = ? and game_id = ? and created_at >= ? and created_at <= ?" , user_id, game_id, Date.today.beginning_of_day, Date.today.end_of_day).length
+      if a = Check.where("user_id = ? and game_id = ? and created_at >= ? and created_at <= ?" , user_id, game_id, Date.today.beginning_of_day, Date.today.end_of_day)
+        a.length
+      end
   end
 end
