@@ -267,6 +267,8 @@ class WeitestController < ApplicationController
     fake_amount = @amount + 100000
 
     msg = msg.merge(:amount => fake_amount/100)
+    msg_count = current_user.msg_count
+    msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count})
     response.stream.write "data: #{msg.to_json} \n\n"
     sleep 1
     response.stream.close
@@ -288,7 +290,7 @@ class WeitestController < ApplicationController
     get_beacon
     appid = @beacon.get_merchant.wxappid
   end
-  "http://#{request.domain}/#{appid}/launch?rurl=" + url
+  "http://#{WX_DOMAIN}/#{appid}/launch?rurl=" + url
   
   #rurl = "http://#{WX_DOMAIN}/users/auth/weixin/callback?rurl=" + url
   #scope = 'snsapi_userinfo'
