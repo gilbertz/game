@@ -142,7 +142,7 @@ class WxUtil
       card_id_arr =  query_wx_cards(authorizer_appid)
       p card_id_arr.to_s
       for card_id in card_id_arr
-        save_card_info(appid,card_id)
+        save_card_info(authorizer_appid,card_id)
       end
     end
 
