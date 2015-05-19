@@ -603,7 +603,7 @@ ActiveRecord::Schema.define(version: 20150518095355) do
     t.integer  "user_id"
     t.integer  "beaconid"
     t.integer  "game_id"
-    t.string   "remak"
+    t.string   "remark"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
