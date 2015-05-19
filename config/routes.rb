@@ -184,6 +184,7 @@ Game::Application.routes.draw do
 
     resources :users
     resources :session
+    resources :code_blocks
     resources :categories do
       resources :code_blocks
       member do

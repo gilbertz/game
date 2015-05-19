@@ -19,7 +19,7 @@ class Admin::CodeBlocksController < Admin::BaseController
   end
 
   def edit
-    @category = Category.find params[:category_id]
+    @category = Category.find params[:category_id] if params[:category_id]
     @code_block = CodeBlock.find(params[:id])
     render partial: 'form'
   end
@@ -32,7 +32,7 @@ class Admin::CodeBlocksController < Admin::BaseController
  end
 
   def update
-    @category = Category.find params[:category_id]
+    @category = Category.find params[:category_id] if params[:category_id]
     @code_block.update(code_block_params)
     redirect_to [:edit, :admin, @category]
   end

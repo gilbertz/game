@@ -1,0 +1,5 @@
+# 微信支付需要的参数
+WX_PAY_APPID = "wx456ffb04ee140d84"
+WX_PAY_MCHID = "1233034702"
+WX_PAY_KEY = "wangpeisheng1234567890leapcliffW"
+WX_PAY_APPSECRET = ""
