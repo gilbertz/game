@@ -17,12 +17,12 @@ class Check < ActiveRecord::Base
     end
   end
 
-  def self.check_per_day(user_id,game_id)
-     Check.where("user_id = ? and game_id = ? and created_at >= ? and created_at <= ?" , user_id, game_id, Date.today.beginning_of_day, Date.today.end_of_day).length
+  def self.check_per_day(user_id,game_id,beacon_id)
+     Check.where("user_id = ? and game_id = ? and beaconid =? and created_at >= ? and created_at <= ?" , user_id, game_id, beacon_id, Date.today.beginning_of_day, Date.today.end_of_day).length
   end
 
-  def  self.check_state(user_id,game_id)
-    Check.where("user_id = ? and game_id = ? and state = ? and created_at >= ? and created_at <= ?",user_id, game_id, 1 ,Date.today.beginning_of_day, Date.today.end_of_day).length
+  def  self.check_state(user_id,game_id,beacon_id)
+    Check.where("user_id = ? and game_id = ? and beaconid = ? and state = ? and created_at >= ? and created_at <= ?",user_id, game_id, beacon_id, 1 ,Date.today.beginning_of_day, Date.today.end_of_day).length
   end
 
   def self.check_today(user_id)

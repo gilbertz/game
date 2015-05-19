@@ -4,11 +4,11 @@ class WeitestController < ApplicationController
   before_filter :pre
 
   def weixin_check
-
-    if Check.check_per_day(current_user.id,params[:game_id])<3
+    beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
+    if Check.check_per_day(current_user.id,params[:game_id],beaconid)<3
       #p Check.check_per_day(current_user.id,params[:game_id])
-      beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id]) unless Check.check_state(current_user.id, params[:game_id]) > 0
+      
+      Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id]) unless Check.check_state(current_user.id, params[:game_id], beaconid) > 0
       render :status => 200, json: {'info' => 1}
     else #Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       # 今天次数用完了
