@@ -8,8 +8,7 @@ class WeitestController < ApplicationController
     if Check.check_per_day(current_user.id,params[:game_id])<3
       #p Check.check_per_day(current_user.id,params[:game_id])
       beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-      #Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id]) unless Check.find(user_id: current_user.id, beaconid: beaconid, state:1, game_id: params[:game_id])
-      Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id]) if current_user.checked?(params[:game_id], beaconid) 
+      Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id]) unless Check.check_state(current_user.id, params[:game_id]) > 0
       render :status => 200, json: {'info' => 1}
     else #Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       # 今天次数用完了
@@ -42,8 +41,7 @@ class WeitestController < ApplicationController
     check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
     check.update(:state => 0) if check
     info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
-
-    # Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
+    Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
     render :status => 200, json: {'info' => info}
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       info = 0
@@ -89,7 +87,11 @@ class WeitestController < ApplicationController
 
   def o2o
     if @material.category
-      render 'o2o', layout: false
+      if params[:debug]
+        render 'o2o1', layout: false   
+      else
+        render 'o2o', layout: false
+      end
     end
   end
 
@@ -154,13 +156,13 @@ class WeitestController < ApplicationController
           if params[:beaconid] == 'dgbs'
             @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.id) 
             if not @score and from_user.social_value(beaconid) > 0
-              r = Record.find_by(:beaconid=>beaconid, :user_id =>au.user_id)
+              r = Record.where(:beaconid=>beaconid, :user_id =>au.user_id, :game_id =>params[:game_id]).order('created_at desc')[0]
               f_value = (r.score/2 < 100)?100:r.score/2 if r
               from_user.decr_social(beaconid)
               if from_user.social_value(beaconid) == 0
                 rp = Redpack.where(beaconid: beaconid, state: 1).order("start_time desc")[0]
-                @rp = rp.weixin_post(from_user, params[:beaconid], f_value)
-                Record.create(:user_id => from_user_id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)            
+                @rp = rp.weixin_post(from_user, params[:beaconid], r.score)
+                Record.create(:user_id => from_user_id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'f_redpack', :object_id => rp.id)            
               end
             else
               f_value = 0
@@ -269,7 +271,8 @@ class WeitestController < ApplicationController
 
     msg = msg.merge(:amount => fake_amount/100)
     msg_count = current_user.msg_count(@beacon.id)
-    msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count})
+    checked = current_user.checked?(@material.id, @beacon.id)? 1:0
+    msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count, :checked => checked})
     response.stream.write "data: #{msg.to_json} \n\n"
     sleep 1
     response.stream.close

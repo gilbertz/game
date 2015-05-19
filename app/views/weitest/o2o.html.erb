@@ -43,6 +43,7 @@
     nonceStr:  "<%= sign_package['nonceStr'] %>",
     signature: "<%= sign_package['signature'] %>",
     jsApiList: [
+      'hideMenuItems',
       'onMenuShareTimeline',
       'onMenuShareAppMessage',
       'onMenuShareQQ',
@@ -106,6 +107,11 @@ function share_api(){
         // 用户取消分享后执行的回调函数
       }
     });
+
+    wx.hideMenuItems({
+      menuList: ["menuItem:share:timeline"]
+    });
+
   });
 
 }

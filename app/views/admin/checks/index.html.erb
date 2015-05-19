@@ -9,6 +9,7 @@
     <th>State</th>
     <th>lng</th>
     <th>lat</th>
+    <th>created time</th>
     <th>Operate</th>
   </tr>
 
@@ -20,6 +21,7 @@
     <td><%= check.state %></td>
     <td><%= check.lng %></td>
     <td><%= check.lat %></td>
+    <td><%= check.created_at %></td>
     <td><%= link_to "Edit", edit_admin_check_path(check) %> | <%= link_to "delete", admin_check_path(check), :method => :delete, confirm: "确认删除?" %></td>
   </tr>
   <% end %>

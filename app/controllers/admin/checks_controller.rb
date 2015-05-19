@@ -4,7 +4,7 @@ class Admin::ChecksController < Admin::BaseController
   respond_to :html
 
   def index
-    @checks = Check.all
+    @checks = Check.order('created_at desc')
     respond_with(@checks)
   end
 
