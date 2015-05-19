@@ -20,4 +20,7 @@ class Merchant < ActiveRecord::Base
     self.user.name
   end
 
+
+  
+
 end

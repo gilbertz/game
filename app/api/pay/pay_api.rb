@@ -9,9 +9,6 @@ module API
           param_hash = Hash.new
           stamp = time_stamp
           str = nonce_str
-          sort_params = [order.appid, timestamp, nonce, encrypt_msg].sort.join
-          current_signature = Digest::SHA1.hexdigest(sort_params)
-          sign = ""
           product = Product.find_by_id(order.product_id)
           param_hash["appid"]= order.appid
           param_hash["mch_id"] = order.mch_id
@@ -27,10 +24,9 @@ module API
           param_hash["time_start"] = order.time_start
           param_hash["time_expire"] = order.time_expire
           param_hash["trade_type"] = order.trade_type
-          param_hash["product_id"] = order.product_id
+          param_hash["product_id"] = order.product_id.to_s
           param_hash["trade_type"] = order.trade_type
           param_hash["openid"] = order.openid
-
           if order.trade_type == "Native"
             #本机ip地址
             param_hash["spbill_create_ip"] = IPSocket.getaddress(Socket.gethostname)
@@ -39,8 +35,12 @@ module API
             param_hash["spbill_create_ip"] =  request.remote_ip
           end
           param_hash["notify_url"] = "http://#{request.domain}/api/v1/pay/callback"
-
+          param_hash["sign"] = get_sign(product.body,order.device_info,str)
+          return param_hash
          end
+
+
+        def
 
         def time_stamp
           Time.now.to_local.to_i.to_s
@@ -51,6 +51,12 @@ module API
           newStr = ""
           1.upto(len) { |i| newStr << chars[rand(chars.size-1)] }
           return newStr
+        end
+
+        def get_sign(body,device_info,nonce)
+          stringA = "appid=#{WX_PAY_APPID}&body=#{body}&device_info=#{device_info}&mch_id=#{WX_PAY_MCHID}&nonce_str=#{nonce}"
+          stringSignTemp = "#{stringA}&key=#{WX_PAY_KEY}"
+          sign = Digest::MD5.hexdigest(stringSignTemp).upcase
         end
       end
 
@@ -65,7 +71,8 @@ module API
           # 如果是微信支付
           if order.pay_type == 0
             request_url = "https://api.mch.weixin.qq.com/pay/unifiedorder"
-
+            param_hash = generate_wx_pay_param(order)
+            xml_str = param_hash.to_xml_str
 
 
 
