@@ -34,7 +34,7 @@ class Admin::RedpackValuesController < Admin::BaseController
   end
 
   def redpack_value_params
-    params.require(:redpack_value).permit(:money)
+    params.require(:redpack_value).permit(:money, :num)
   end
 
 end

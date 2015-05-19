@@ -263,12 +263,19 @@ class Redpack < ActiveRecord::Base
         result_hongbao = {:id => i, :money => result[i]}
         $redis.lpush("hongbaolist",result_hongbao.to_json)
       end
-      p $redis.lrange("hongbaolist",0,-1)
+
+      # p $redis.lrange("hongbaolist",0,-1)
       # return result
       return $redis.lrange("hongbaolist",0,-1)
     end
   end
 
+  def add_redpack_value(redpack_id)
+    if  RedpackValue.where(redpack_id: redpack_id)
+      
+    end
+
+  end
   # def self.ge
 
   #   generate(500,2.5,600,150)
