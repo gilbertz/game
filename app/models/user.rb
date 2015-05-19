@@ -138,6 +138,10 @@ class User < ActiveRecord::Base
     count
   end
 
+  def checked?(gid, bid)
+     Check.find_by(user_id: self.id, beaconid: bid, state:1, game_id: gid)
+  end
+
 
   private
   def make_password
