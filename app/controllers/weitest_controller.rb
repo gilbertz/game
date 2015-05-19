@@ -42,8 +42,7 @@ class WeitestController < ApplicationController
     check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
     check.update(:state => 0) if check
     info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
-
-    # Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
+    Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
     render :status => 200, json: {'info' => info}
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       info = 0
@@ -89,7 +88,11 @@ class WeitestController < ApplicationController
 
   def o2o
     if @material.category
-      render 'o2o', layout: false
+      if params[:debug]
+        render 'o2o1', layout: false   
+      else
+        render 'o2o', layout: false
+      end
     end
   end
 
