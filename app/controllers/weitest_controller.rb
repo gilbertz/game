@@ -269,10 +269,15 @@ class WeitestController < ApplicationController
     @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
     fake_amount = @amount + 100000
 
+    @time_amount = TimeAmount.get_time(@object.id)
+    return unless @time_amount
+    end_time = @time_amount.time
+    now_time = Time.now
+
     msg = msg.merge(:amount => fake_amount/100)
     msg_count = current_user.msg_count(@beacon.id)
     checked = Check.check_state(current_user.id, params[:game_id], beaconid)  > 0 ? 1:0
-    msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count, :checked => checked})
+    msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count, :checked => checked}, :end_time => end_time, :now_time => now_time)
     response.stream.write "data: #{msg.to_json} \n\n"
     sleep 1
     response.stream.close
@@ -355,10 +360,6 @@ def get_time_amount
   @check_today = Check.check_today(current_user.id)
   @check_three = Check.check_three(current_user.id, @material.id)
   @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
-  @time_amount = TimeAmount.get_time(@object.id)
-  return unless @time_amount
-  @end_time = @time_amount.time
-  @now_time = Time.now
   @fake_amount = (@amount + 100000)/100  
   beaconid = @beacon.id
   Redpack.distribute_seed_redpack(beaconid,@object.id,@material.id)
