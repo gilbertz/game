@@ -276,8 +276,9 @@ class WeitestController < ApplicationController
 
     msg = msg.merge(:amount => fake_amount/100)
     msg_count = current_user.msg_count(@beacon.id)
+    beaconid = @beacon.id
     checked = Check.check_state(current_user.id, params[:game_id], beaconid)  > 0 ? 1:0
-    msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count, :checked => checked}, :end_time => end_time, :now_time => now_time)
+    msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count, :checked => checked, :end_time => end_time, :now_time => now_time})
     response.stream.write "data: #{msg.to_json} \n\n"
     sleep 1
     response.stream.close
