@@ -274,11 +274,15 @@ class WeitestController < ApplicationController
     end_time = @time_amount.time
     now_time = Time.now
 
+    check_today = Check.check_today(current_user.id)
+    check_three = Check.check_three(current_user.id, @material.id)
+    total_score = current_user.total_score(@beacon.id)
+
     msg = msg.merge(:amount => fake_amount/100)
     msg_count = current_user.msg_count(@beacon.id)
     beaconid = @beacon.id
     checked = Check.check_state(current_user.id, params[:game_id], beaconid)  > 0 ? 1:0
-    msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count, :checked => checked, :end_time => end_time, :now_time => now_time})
+    msg = msg.merge({:amount => fake_amount/100, :msg_count => msg_count, :checked => checked, :end_time => end_time, :now_time => now_time, :check_today => check_today, :check_three => check_three, :total_score => total_score})
     response.stream.write "data: #{msg.to_json} \n\n"
     sleep 1
     response.stream.close
