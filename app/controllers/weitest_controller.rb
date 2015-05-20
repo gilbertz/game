@@ -359,6 +359,10 @@ end
 def get_time_amount
   @check_today = Check.check_today(current_user.id)
   @check_three = Check.check_three(current_user.id, @material.id)
+  @time_amount = TimeAmount.get_time(@object.id)
+  return unless @time_amount
+  @end_time = @time_amount.time
+  @now_time = Time.now
   @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
   @fake_amount = (@amount + 100000)/100  
   beaconid = @beacon.id
