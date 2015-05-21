@@ -159,7 +159,7 @@ class WeitestController < ApplicationController
               r = Record.where(:beaconid=>beaconid, :user_id =>au.user_id, :object_type => 'Redpack', :feedback => nil).order('created_at desc')[0]
               f_value = (r.score/2 < 100)?100:r.score/2 if r
               from_user.decr_social(beaconid)
-              if from_user.social_value(beaconid) == 0
+              if from_user.social_value(beaconid) % 3 == 0
                 rp = @beacon.redpacks[0]
                 @rp = rp.weixin_post(from_user, params[:beaconid], f_value)
                 r.feedback = 1

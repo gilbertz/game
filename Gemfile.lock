@@ -5,14 +5,6 @@ GIT
     by_star (2.2.1)
       activesupport
 
-GIT
-  remote: https://github.com/getsentry/raven-ruby.git
-  revision: 5d0939eb323a0d9711075cd8761562d855ef3640
-  specs:
-    sentry-raven (0.13.2)
-      certifi
-      faraday (>= 0.7.6)
-
 GEM
   remote: http://ruby.taobao.org/
   specs:
@@ -69,7 +61,6 @@ GEM
       mime-types (>= 1.16)
     celluloid (0.16.0)
       timers (~> 4.0.0)
-    certifi (14.5.14)
     chronic (0.10.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -250,6 +241,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    sentry-raven (0.13.3)
+      faraday (>= 0.7.6)
     sidekiq (3.3.4)
       celluloid (>= 0.16.0)
       connection_pool (>= 2.1.1)
@@ -359,7 +352,7 @@ DEPENDENCIES
   rvm-capistrano
   sass-rails (~> 4.0.0)
   sdoc
-  sentry-raven!
+  sentry-raven
   sidekiq
   sinatra
   sqlite3
