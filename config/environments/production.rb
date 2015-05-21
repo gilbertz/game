@@ -51,7 +51,7 @@ Game::Application.configure do
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
-  config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}-#{Date.today.to_s}.log", "daily")
+  #config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}-#{Date.today.to_s}.log", "daily")
   config.log_level = :info
 
   # Use a different cache store in production.
