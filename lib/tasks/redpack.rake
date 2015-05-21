@@ -22,11 +22,11 @@ namespace :redpack do
  
     puts 'generate_ditui_redpack'
      
-    redpack_time = RedpackTime.get_redpack_time(20) 
+    redpack_time = RedpackTime.get_redpack_time(12) 
     min = redpack_time.min
     max = redpack_time.max
 
-    amount = TimeAmount.get_amount(20,'dgbs')
+    amount = 2000000
     if amount != nil
       total = amount
       count = amount/200
