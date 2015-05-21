@@ -3,13 +3,30 @@ namespace :redpack do
   desc "生成红包"
   task :generate_redpack => :environment do
  
-     puts 'generate_redpack'
+    puts 'generate_redpack'
      
     redpack_time = RedpackTime.get_redpack_time(5) 
     min = redpack_time.min
     max = redpack_time.max
 
     amount = TimeAmount.get_amount(5,'dgbs')
+    if amount != nil
+      total = amount
+      count = amount/200
+      Redpack.generate(total,count,max,min)
+    end
+  end
+
+  desc "生成地推红包"
+  task :generate_ditui_redpack => :environment do
+ 
+    puts 'generate_ditui_redpack'
+     
+    redpack_time = RedpackTime.get_redpack_time(20) 
+    min = redpack_time.min
+    max = redpack_time.max
+
+    amount = TimeAmount.get_amount(20,'dgbs')
     if amount != nil
       total = amount
       count = amount/200
