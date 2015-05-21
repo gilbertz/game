@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518095355) do
+ActiveRecord::Schema.define(version: 20150521064539) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -440,6 +440,7 @@ ActiveRecord::Schema.define(version: 20150518095355) do
     t.string   "sn"
     t.integer  "allocation"
     t.string   "card_id"
+    t.integer  "feedback"
   end
 
   add_index "records", ["beaconid", "score"], name: "index_records_on_beaconid_and_score", using: :btree
