@@ -274,8 +274,8 @@ class WeitestController < ApplicationController
     end_time = @time_amount.time
     now_time = Time.now
 
-    check_today = Check.check_today(current_user.id)
-    check_three = Check.check_three(current_user.id, @material.id)
+    check_today = Check.check_today(current_user.id,@material.id,@beacon.id)
+    check_three = Check.check_three(current_user.id, @material.id,@beacon.id)
     total_score = current_user.total_score(@beacon.id)
 
     msg = msg.merge(:amount => fake_amount/100)
@@ -362,8 +362,9 @@ def get_object
 end
 
 def get_time_amount
-  @check_today = Check.check_today(current_user.id)
-  @check_three = Check.check_three(current_user.id, @material.id)
+  beaconid = @beacon.id
+  @check_today = Check.check_today(current_user.id,@material.id,@beacon.id)
+  @check_three = Check.check_three(current_user.id,@material.id,@beacon.id)
   @time_amount = TimeAmount.get_time(@object.id)
   return unless @time_amount
   @end_time = @time_amount.time
