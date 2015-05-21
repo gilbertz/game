@@ -21,6 +21,10 @@ every 1.day, :at => '14:10' do
   rake "convert:sync_redis"
 end
 
+every '59 23 * * * ' do
+   rake "cutlog:cut"
+end
+
 # every '0 0 27-31 * *' do
 #   rake "redpack:generate_redpack"
 # end
