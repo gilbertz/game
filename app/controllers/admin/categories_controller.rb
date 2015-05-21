@@ -52,7 +52,7 @@ class Admin::CategoriesController < Admin::BaseController
 
   private
   def category_params
-    params.require(:category).permit(:name,:meta,:js,:css,:html,:re_js,:re_css,:re_html, :wx_js, :material_type, :game_type_id, :use_wxjs)
+    params.require(:category).permit(:name,:meta,:js,:css,:html,:re_js,:re_css,:re_html, :wx_js, :material_type, :game_type_id, :use_wxjs, :hide_pyq)
   end
 
   def expire_material(category)

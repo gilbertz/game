@@ -32,6 +32,14 @@ module API
         get '/show_consume' do
           $redis.lrange("hongBaoConsumedList",0,-1).length
         end
+
+        desc "delete_redpack"
+        get '/delete_redpack' do
+        $redis.del("hongbaolist")
+        $redis.del("hongBaoConsumedMap")
+        $redis.del("hongBaoConsumedList")
+        end
+
       end
     end
   end

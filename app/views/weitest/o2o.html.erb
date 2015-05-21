@@ -108,9 +108,11 @@ function share_api(){
       }
     });
 
-    wx.hideMenuItems({
-      menuList: ["menuItem:share:timeline"]
-    });
+    <% if @category.hide_pyq %>
+      wx.hideMenuItems({
+        menuList: ["menuItem:share:timeline", "menuItem:copyUrl", "menuItem:favorite", "menuItem:share:qq", "menuItem:openWithSafari","menuItem:openWithQQBrowser"]
+      });
+    <% end %>
 
   });
 

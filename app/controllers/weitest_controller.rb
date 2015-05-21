@@ -259,13 +259,14 @@ class WeitestController < ApplicationController
   def broadcast
     response.headers['Content-Type'] = 'text/event-stream'
     msgs = []
+    msg = {}
     if @beacon.get_message
       msgs << {:content => @beacon.get_message.content, :type =>'text'}
     end 
     @beacon.records.where('score > 0').order('created_at desc').limit(3).sample(1).each do |r|
       msgs << {:content => r.to_s, :type => 'text'}
     end
-    msg = msgs.sample(1)[0]
+    msg = msgs.sample(1)[0] if msgs.length > 0
 
     return unless @object
     @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
