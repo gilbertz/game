@@ -13,7 +13,7 @@ namespace :redpack do
     if amount != nil
       total = amount
       count = amount/200
-      Redpack.generate(total,count,max,min)
+      Redpack.generate(total,count,max,min, 5)
     end
   end
 
@@ -30,7 +30,7 @@ namespace :redpack do
     if amount != nil
       total = amount
       count = amount/200
-      Redpack.generate(total,count,max,min)
+      Redpack.generate(total,count,max,min,12)
     end
   end
 
@@ -65,7 +65,7 @@ namespace :redpack do
             authentication = Authentication.find_by_user_id(user.id)
             if authentication
               user_name = user.name
-              data = {first:{value:"您好,你参加的德高巴士抢红包活动即将开始",color:"#173177"},keyword1:{value:user_name,color:"#173177"},keyword2:{value:"德高巴士抢红包,爱上摇一摇",color:"#173177"},keyword3:{value:"马上开始",color:"#173177"},keyword4:{value:"此时此地",color:"#173177"}}
+              data = {first:{value:"您好,你参加的德高巴士抢红包活动即将开始",color:"#173177"},keyword1:{value:user_name,color:"#173177"},keyword2:{value:"德高巴士抢红包,巴士摇一摇",color:"#173177"},keyword3:{value:"马上开始",color:"#173177"},keyword4:{value:"此时此地",color:"#173177"}}
               $wxclient1.send_template_msg(authentication.uid, "hMQm4-BGvNX-XIRQnfb_MG3EP6AFCDEFJ0gPrBX7oeg", "http://i.51self.com/dgbs/gs/1340208226", "#FF0000", data)
               check.last_notice_time = Time.now
               check.save

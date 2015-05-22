@@ -152,10 +152,10 @@ class Redpack < ActiveRecord::Base
     return rand(max-min+1) + min
   end
 
-  def self.generate(total,count,max,min)
-    $redis.del("hongbaolist")
-    $redis.del("hongBaoConsumedMap")
-    $redis.del("hongBaoConsumedList")
+  def self.generate(total,count,max,min, rp_id)
+    $redis.del("hongbaolist_#{rp_id}")
+    $redis.del("hongBaoConsumedMap_#{rp_id}")
+    $redis.del("hongBaoConsumedList_#{rp_id}")
 
     result = Array.new(count)
     result_hongbao = Array.new(0)
@@ -164,9 +164,9 @@ class Redpack < ActiveRecord::Base
       min = total
       result[0] = min
       result_hongbao = {:id => 0, :money => result[0]}
-      $redis.lpush("hongbaolist",result_hongbao.to_json)
+      $redis.lpush("hongbaolist_#{rp_id}",result_hongbao.to_json)
       #p $redis.lrange("hongbaolist",0,-1)
-      return $redis.lrange("hongbaolist",0,-1)
+      return $redis.lrange("hongbaolist_#{rp_id}",0,-1)
     else
       average = total/count
 
@@ -209,12 +209,12 @@ class Redpack < ActiveRecord::Base
 
       for i in 0..(result.length-1)
         result_hongbao = {:id => i, :money => result[i]}
-        $redis.lpush("hongbaolist",result_hongbao.to_json)
+        $redis.lpush("hongbaolist_#{rp_id}",result_hongbao.to_json)
       end
 
       # p $redis.lrange("hongbaolist",0,-1)
       # return result
-      return $redis.lrange("hongbaolist",0,-1)
+      return $redis.lrange("hongbaolist_#{rp_id}",0,-1)
     end
   end
 
@@ -233,18 +233,18 @@ class Redpack < ActiveRecord::Base
   # # end
   # end
 
-  def self.test(user_id)
-    if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
-      p $redis.hget("hongBaoConsumedMap",user_id)
+  def self.test(user_id, rp_id)
+    if $redis.hexists("hongBaoConsumedMap_#{rp_id}" , user_id) == true 
+      p $redis.hget("hongBaoConsumedMap_#{rp_id}",user_id)
       return nil
     else
-      hongbao = $redis.rpop("hongbaolist")
+      hongbao = $redis.rpop("hongbaolist_#{rp_id}")
       if hongbao
         hongbao = JSON.parse(hongbao)
         hongbao.merge!({:user_id => user_id})
-        $redis.hset("hongBaoConsumedMap",user_id,user_id)
+        $redis.hset("hongBaoConsumedMap_#{rp_id}",user_id,user_id)
       #p $redis.hget("hongBaoConsumedMap",user_id)
-      $redis.lpush("hongBaoConsumedList",hongbao.to_json)
+      $redis.lpush("hongBaoConsumedList_#{rp_id}",hongbao.to_json)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
       return hongbao 
     else
@@ -255,9 +255,9 @@ class Redpack < ActiveRecord::Base
 end
 
 def self.distribute_seed_redpack(beacon_id,redpack_id,game_id)
-  if $redis.llen("hongBaoConsumedList") != 0
-   for i in 0..($redis.llen("hongBaoConsumedList")-1)
-    hongbao = JSON.parse($redis.rpop("hongBaoConsumedList"))
+  if $redis.llen("hongBaoConsumedList_#{redpack_id}") != 0
+   for i in 0..($redis.llen("hongBaoConsumedList_#{redpack_id}")-1)
+    hongbao = JSON.parse($redis.rpop("hongBaoConsumedList_#{redpack_id}"))
     user_allocaiton = UserAllocation.find_by(:user_id => hongbao["user_id"])
     if user_allocaiton 
       user_allocaiton.update( :allocation => (user_allocaiton.allocation + hongbao["money"]))
@@ -289,19 +289,19 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
     # end
 
       
-    if $redis.hexists("hongBaoConsumedMap" , user_id) == true 
+    if $redis.hexists("hongBaoConsumedMap_#{redpack.id}" , user_id) == true 
       #p $redis.hget("hongBaoConsumedMap",user_id)
       return 0 
     else
-      hongbao = $redis.rpop("hongbaolist")
+      hongbao = $redis.rpop("hongbaolist_#{redpack.id}")
       if hongbao
         hongbao = JSON.parse(hongbao)
       #p hongbao
       hongbao.merge!({:user_id => user_id})
       #p $redis.lrange("hongbaolist",0,-1)
-      $redis.hset("hongBaoConsumedMap",user_id,user_id)
+      $redis.hset("hongBaoConsumedMap_#{redpack.id}",user_id,user_id)
       #p $redis.hget("hongBaoConsumedMap",user_id)
-      $redis.lpush("hongBaoConsumedList",hongbao.to_json)
+      $redis.lpush("hongBaoConsumedList_#{redpack.id}",hongbao.to_json)
       #p $redis.lrange("hongBaoConsumedList",0,-1)
       
 
