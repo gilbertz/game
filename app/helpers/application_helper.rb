@@ -26,7 +26,8 @@ def get_objects(tt, beaconid=nil)
 end
 
 def fix_slb(url)
-  url.gsub('app_game', 'wx.yaoshengyi.com')
+  url = url.gsub('app_game', 'wx.yaoshengyi.com')
+  url
 end
 
 end
