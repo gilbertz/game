@@ -105,17 +105,17 @@ class WxUtil
     #获取（刷新）授权公众号的令牌
     def get_authorizer_access_token(authorizer_appid)
       authorizer_access_token = $redis.get(authorizer_access_token_key(authorizer_appid))
-      p "get_authorizer_access_token: authorizer_access_token=#{authorizer_access_token}"
+     # p "get_authorizer_access_token: authorizer_access_token=#{authorizer_access_token}"
       if authorizer_access_token.nil? == false
       return authorizer_access_token
       end
-      p "get_authorizer_access_token"
+      #p "get_authorizer_access_token"
       #找到改授权的公众号
       authorizer = WxAuthorizer.find_by_authorizer_appid(authorizer_appid)
       if authorizer.nil?
         return nil
       end
-      p "old authorizer_refresh_token = #{authorizer.authorizer_refresh_token}"
+      #p "old authorizer_refresh_token = #{authorizer.authorizer_refresh_token}"
       #先拿到第三方平台令牌（component_access_token）
       component_access_token = get_component_access_token
       if component_access_token.nil? == false
@@ -124,13 +124,13 @@ class WxUtil
         authorizer_info = JSON.parse(res.body)
         authorizer_access_token = authorizer_info["authorizer_access_token"]
         expires_in = authorizer_info["expires_in"]
-        p "new authorizer_refresh_token = #{authorizer_info["authorizer_refresh_token"]}"
+       # p "new authorizer_refresh_token = #{authorizer_info["authorizer_refresh_token"]}"
 
-        p "get_authorizer_access_token:authorizer_access_token=#{authorizer_access_token}  expires_in=#{expires_in}"
+        #p "get_authorizer_access_token:authorizer_access_token=#{authorizer_access_token}  expires_in=#{expires_in}"
         if authorizer_access_token.nil? == false
           $redis.set(authorizer_access_token_key(authorizer_appid),authorizer_access_token)
-          $redis.expire(authorizer_access_token_key(authorizer_appid),expires_in.to_i - 60)
-          p "redis save authorizer_access_token"
+          $redis.expire(authorizer_access_token_key(authorizer_appid),expires_in.to_i - 200)
+          #p "redis save authorizer_access_token"
           return authorizer_access_token
         end
       end
@@ -249,8 +249,8 @@ class WxUtil
       if info == nil || info["total"] == nil || info["total"].to_i <= 0
         return
       else
-        if info["total"].to_i <  10000
         openid_list.concat info["data"]["openid"]
+        if info["total"].to_i <  10000
         return
         else
           now_next_openid = info["next_openid"]
