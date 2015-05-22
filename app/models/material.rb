@@ -293,6 +293,17 @@ class Material < ActiveRecord::Base
     rs
   end
 
+  def get_today_top(limit=10, beaconid=nil)
+    cond = '1=1'
+    unless beaconid.nil?
+      b = Ibeacon.find_by_url(beaconid)
+      cond = "beaconid=#{b.id}"
+    end
+    rs = Record.where(:game_id => self.id ).where(cond).where("created_at >= ? and created_at <= ?", Date.today.beginning_of_day, Date.today.end_of_day).order('score desc').limit(limit)
+    rs
+  end
+
+
   def get_rank(uid)
     r = Record.find_by_user_id_and_game_id(uid, self.id)
     if r
