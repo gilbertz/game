@@ -302,7 +302,7 @@ class WeitestController < ApplicationController
 
 
  def authorize_url(url)
-  appid = "wx456ffb04ee140d84"
+  appid = WX_APPID
   if params[:beaconid]
     get_beacon
     appid = @beacon.get_merchant.wxappid
