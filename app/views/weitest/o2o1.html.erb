@@ -37,7 +37,7 @@
 <script src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js' type='text/javascript'></script>
 <script>
   wx.config({
-    debug: false,
+    debug: true,
     appId: "<%= sign_package['appId'] %>",
     timestamp: <%= sign_package['timestamp'] %>,
     nonceStr:  "<%= sign_package['nonceStr'] %>",
@@ -73,11 +73,8 @@ function share_api(){
 
   wx.ready(function(){
     var info = $("#info").text();
-    if( info == '' || info == null || info == undefined ){
-      info = "<%= @material.wx_title %>"; 
-    } 
     wx.onMenuShareTimeline({
-      title: info, // 分享标题
+      title: info + "<%= @material.wx_title %>", // 分享标题
       link: "<%= share_link(@material, @beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       success: function () {
@@ -93,7 +90,7 @@ function share_api(){
     });
 
     wx.onMenuShareAppMessage({
-      title: info, // 分享标题
+      title: info + "<%= @material.wx_title %>", // 分享标题
       desc: "<%= @material.wxdesc %>", // 分享描述
       link: "<%= share_link(@material, @beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
@@ -111,11 +108,9 @@ function share_api(){
       }
     });
 
-    <% if @category.hide_pyq %>
-      wx.hideMenuItems({
-        menuList: ["menuItem:share:timeline", "menuItem:copyUrl", "menuItem:favorite", "menuItem:share:qq", "menuItem:openWithSafari","menuItem:openWithQQBrowser"]
-      });
-    <% end %>
+    wx.hideMenuItems({
+      menuList: ["menuItem:share:timeline"]
+    });
 
   });
 
@@ -135,12 +130,10 @@ share_api();
 <a id="game9g9gstart" class="game9g9gstart pulse infinite"></a>
 <div id="game9gmenu" class="game9gmenu">
 <ul>
-  <li><img src="http://wx.51self.com/img/menu/icon_03.png"><a href='/wshows/27?beaconid=<%=@beacon.url %>&game_id=<%= @material.id%>'>今日排行版</a></li>
-  <!--
+  <li><img src="http://wx.51self.com/img/menu/icon_03.png"><a href='/wshows/6?beaconid=<%=@beacon.url %>&game_id=<%= @material.id%>'><%= @beacon.name  %>排行版</a></li>
   <li><img src="http://wx.51self.com/img/menu/icon_04.png"><a href='/wshows/7?beaconid=<%= @beacon.url %>&game_id=<%= @material.id%>'><%= @beacon.name %>动态</a></li>
   <li><img src="http://wx.51self.com/img/menu/icon_01.png"><a href='/<%= @beacon.url %>/home'>@<%=@beacon.name %></a></li>
-  <li id="game9gmenu_credit"><img src="http://wx.51self.com/img/menu/icon_05.png"><a href='/wshows/5'>我的游戏</a></li>
-   -->
+  <li id="game9gmenu_credit"><img src="http://wx.51self.com/img/menu/icon_05.png"><a href='/wshows/5''>我的游戏</a></li>
 </ul>
 </div>
 
@@ -153,7 +146,7 @@ share_api();
     mask();
   }
 
-  
+
   function deviceMotionHandler(eventData) {
     var acceleration =eventData.accelerationIncludingGravity;
     var curTime = new Date().getTime();
@@ -178,7 +171,6 @@ share_api();
   } else {
     document.getElementById("dmEvent").innerHTML = "Not supported on your device."
   }
-      
 
   $("#game9g9gstart").on('touch mousedown', function(e){
     mask();

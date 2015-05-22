@@ -293,6 +293,17 @@ class Material < ActiveRecord::Base
     rs
   end
 
+  def get_today_top(limit=10, beaconid=nil)
+    cond = '1=1'
+    unless beaconid.nil?
+      b = Ibeacon.find_by_url(beaconid)
+      cond = "beaconid=#{b.id}"
+    end
+    rs = Record.where(:game_id => self.id ).where(cond).where("created_at >= ? and created_at <= ?", Date.today.beginning_of_day, Date.today.end_of_day).order('score desc').limit(limit)
+    rs
+  end
+
+
   def get_rank(uid)
     r = Record.find_by_user_id_and_game_id(uid, self.id)
     if r
@@ -301,7 +312,19 @@ class Material < ActiveRecord::Base
     else
       0
     end
-  end 
+  end
+
+  
+  def get_today_rank(uid)
+    ss = Record.where(:game_id => self.id, :user_id => uid).where("created_at >= ? and created_at <= ?", Date.today.beginning_of_day, Date.today.end_of_day).order('score desc')
+    if ss and ss.length > 0
+      rs = Record.where(:game_id => self.id ).where( "score > ?", ss[0].score).where("created_at >= ? and created_at <= ?", Date.today.beginning_of_day, Date.today.end_of_day).order('score desc')
+      rs.length + 1
+    else
+      0
+    end
+  end
+ 
 
   def get_qr_img
     'http://qr.liantu.com/api.php?text=' + self.get_link('shengye')
