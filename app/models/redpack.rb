@@ -144,57 +144,6 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-  def self.first_allocation(user_id, game_id,redpack,beaconid) 
-    beaconid = Ibeacon.find_by(:url=>beaconid).id
-    redpack_time = RedpackTime.where(:redpack_id =>redpack.id).order("start_time desc")[0]
-    person_num = redpack_time.person_num
-    time_amount = TimeAmount.find_by("time_end > ? and time < ? and redpack_time_id = ? ", Time.now, Time.now, redpack_time.id)
-    if time_amount.amount > 0
-      min = redpack_time.min
-      max = redpack_time.max
-      record_allocation = time_amount.amount > min ? rand(min..max) : min
-      record_score = rand((min/person_num)..(record_allocation/person_num))
-      time_amount.update(:amount => (time_amount.amount - record_allocation))
-      UserAllocation.create(:user_id => user_id, :allocation => (record_allocation -record_score), :num => (person_num - 1))
-      Score.create(:user_id => user_id, :value => record_score,:from_user_id => user_id)
-      Score.create(:user_id => user_id, :value => -record_score,:from_user_id => user_id)
-      Record.create(:user_id => user_id, :from_user_id => user_id, :beaconid=> beaconid, :game_id => game_id, :score => record_score, :allocation => record_allocation)
-      return record_score
-    else
-      return "已经被抢光啦，发卡券吧"
-    end
-  end
-
-  def self.share_allocation(user_id, openidshare , game_id, redpack)
-    redpack_time = RedpackTime.find_by(:redpack_id =>redpack.id)
-    person_num = redpack_time.person_num
-    if openidshare
-      au = Authentication.find_by_uid(openidshare)
-      from_user_id = au.user_id 
-      from_user = User.find from_user_id 
-      user_allocation= UserAllocation.find_by("user_id = ? and allocation > ? and num > ?", from_user_id , 0, 0)
-      if user_allocation == nil 
-        render :status => 200, json: {'info' => "已经被抢光啦，发卡券吧"}
-      end
-      if user_allocation.num > 2
-        record_allocation = rand((user_allocation.allocation/person_num/2)..(user_allocation.allocation/person_num*2))   
-      elsif user_allocation.num = 1
-        record_allocation = user_allocation.allocation
-      end  
-      record_score = rand((record_allocation/person_num/2)..(record_allocation/person_num*2))
-      user_allocation.update(:user_id => from_user_id, :allocation => (user_allocation.allocation - record_allocation), :num => (user_allocation.num - 1))
-      UserAllocation.create(:user_id => user_id, :allocation => (record_allocation -record_score)) 
-      Score.create(:user_id => user_id, :value => record_score,:from_user_id => from_user_id)
-      Record.create(:user_id => user_id, :from_user_id => from_user_id, :beaconid=> beaconid, :game_id => game_id, :score => record_score, :allocation => record_allocation)
-    end
-  end
-
-  def self.bus_redpack(user_id, beaconid) 
-    score = UserScore.find_by(user_id: user_id).total_score 
-    Redpack.find_by(beaconid: beaconid).weixin_post(current_user, beaconid_url, score)
-    Score.create(:user_id => current_user.id, :value => -score,:from_user_id => current_user.id)
-  end 
-
   def self.x_random(min,max)
     return (rand((max-min) ** 2) ** (1.0/2)).to_i
   end
@@ -204,7 +153,6 @@ class Redpack < ActiveRecord::Base
   end
 
   def self.generate(total,count,max,min)
-
     $redis.del("hongbaolist")
     $redis.del("hongBaoConsumedMap")
     $redis.del("hongBaoConsumedList")
