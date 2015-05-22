@@ -25,5 +25,8 @@ def get_objects(tt, beaconid=nil)
   [['无', 0]] + obs.map{|ob|[ob.title, ob.id]}
 end
 
+def fix_slb(url)
+  url.gsub('app_game', 'wx.yaoshengyi.com')
+end
 
 end
