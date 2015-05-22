@@ -26,7 +26,7 @@ namespace :redpack do
     min = redpack_time.min
     max = redpack_time.max
 
-    amount = 2000000
+    amount = 3000000
     if amount != nil
       total = amount
       count = amount/200
@@ -49,7 +49,7 @@ namespace :redpack do
       if amount != nil
       total = amount
       count = amount/200
-      Redpack.generate(total,count,max,min)
+      Redpack.generate(total,count,max,min,5)
     end
   end
 
