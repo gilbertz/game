@@ -34,7 +34,7 @@ module API
             #请求端的ip地址
             param_hash["spbill_create_ip"] =  request.remote_ip
           end
-          param_hash["notify_url"] = "http://#{request.domain}/api/v1/pay/callback"
+          param_hash["notify_url"] = "http://#{request.domain}/api/v1/pay/notify"
           param_hash["sign"] = get_sign(product.body,order.device_info,str)
           return param_hash
          end
@@ -74,14 +74,34 @@ module API
             param_hash = generate_wx_pay_param(order)
             xml_str = param_hash.to_xml_str
 
-
-
-              {"result"=>0,"qrcode_url"=>generate_wx_pay_qrcode_url(order)}
+            uri = URI.parse(request_url)
+            http = Net::HTTP.new(uri.host, uri.port)
+            request = Net::HTTP::Post.new(uri)
+            request.content_type = 'text/xml'
+            request.body = xml_str
+            response = http.start do |http|
+              ret = http.request(request)
+              puts request.body
+              puts ret.body
+            end
+            {"result"=>0,"qrcode_url"=>"xxxx"}
           else
             ""
           end
 
         end
+
+
+        desc "支付回调"
+        params do
+          requires
+        end
+        post :notify do
+
+
+
+        end
+
 
       end
 

@@ -30,6 +30,8 @@ module API
           if pay_type == 0
             order.appid = WX_PAY_APPID
             order.mch_id = WX_PAY_MCHID
+          else
+
           end
           order.device_info = params["device_info"]
           order.product_id = params["product_id"].to_s
@@ -44,6 +46,7 @@ module API
             order.openid = current_user.get_openid
           end
           if order.save
+            order.set_wait_pay
             {"result" => "0","order_id"=>order.id}
           else
             {"result"=> "-1"}
