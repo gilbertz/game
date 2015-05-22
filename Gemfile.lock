@@ -347,6 +347,7 @@ DEPENDENCIES
   rabl (~> 0.9.3)
   rails (= 4.0.0)
   redis
+  redis-namespace
   request-log-analyzer
   rest-client
   rvm-capistrano

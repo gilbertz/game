@@ -50,6 +50,7 @@ end
 gem 'bcrypt-ruby', require: 'bcrypt'
 
 gem "redis"
+gem 'redis-namespace'
 
 gem 'rest-client'
 
