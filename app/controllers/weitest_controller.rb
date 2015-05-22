@@ -162,7 +162,7 @@ class WeitestController < ApplicationController
               if from_user.social_value(beaconid) % 3 == 0
                 rp = @beacon.redpacks[0]
                 @rp = rp.weixin_post(from_user, params[:beaconid], f_value)
-                r.feedback = 1 if @rp > 0
+                r.feedback = 1
                 r.save
                 Record.create(:user_id => from_user_id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'f_redpack', :object_id => rp.id)            
               end
