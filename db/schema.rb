@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150521070906) do
+ActiveRecord::Schema.define(version: 20150522060943) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -361,6 +361,7 @@ ActiveRecord::Schema.define(version: 20150521070906) do
     t.string   "trade_type"
     t.string   "openid"
     t.integer  "party_id"
+    t.string   "status"
   end
 
   create_table "parties", force: true do |t|

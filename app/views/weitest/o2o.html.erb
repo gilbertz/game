@@ -73,8 +73,11 @@ function share_api(){
 
   wx.ready(function(){
     var info = $("#info").text();
+    if( info == '' || info == null || info == undefined ){
+      info = "<%= @material.wx_title %>"; 
+    } 
     wx.onMenuShareTimeline({
-      title: info + "<%= @material.wx_title %>", // 分享标题
+      title: info, // 分享标题
       link: "<%= share_link(@material, @beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       success: function () {
@@ -90,7 +93,7 @@ function share_api(){
     });
 
     wx.onMenuShareAppMessage({
-      title: info + "<%= @material.wx_title %>", // 分享标题
+      title: info, // 分享标题
       desc: "<%= @material.wxdesc %>", // 分享描述
       link: "<%= share_link(@material, @beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
