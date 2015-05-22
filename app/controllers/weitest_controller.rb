@@ -36,17 +36,17 @@ class WeitestController < ApplicationController
   end
 
   def seed_redpack
+   @rp = 0
    if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= 3
     beaconid = @beacon.id
     check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
     check.update(:state => 0) if check
     info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
-    Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
-    render :status => 200, json: {'info' => info}
+    @rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
+    render :status => 200, json: {'info' => @rp}
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
-      info = 0
       # 今天次数用完了
-      render :status => 200, json: {'info' => info}
+      render :status => 200, json: {'info' => @rp}
     end 
   end
 
@@ -162,7 +162,7 @@ class WeitestController < ApplicationController
               if from_user.social_value(beaconid) % 3 == 0
                 rp = @beacon.redpacks[0]
                 @rp = rp.weixin_post(from_user, params[:beaconid], f_value)
-                r.feedback = 1
+                r.feedback = 1 if @rp > 0
                 r.save
                 Record.create(:user_id => from_user_id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'f_redpack', :object_id => rp.id)            
               end
