@@ -37,7 +37,7 @@ module API
           order.product_id = params["product_id"].to_s
           order.out_trade_no = out_trade_no
           order.fee_type = "CNY"
-          order.total_fee = (amount * product.price).to_s
+          order.total_fee = (params["amount"] * product.price).to_s
           order.time_start = Time.now.to_local.strftime("yyyyMMddHHmmss")
           order.attach = params["attach_info"].to_json if params["attach_info"]
           order.party_id = current_user.get_party_id
