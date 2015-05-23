@@ -61,6 +61,7 @@ GEM
       mime-types (>= 1.16)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    china_sms (0.0.7)
     chronic (0.10.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -320,6 +321,7 @@ DEPENDENCIES
   actionpack-xml_parser
   bcrypt-ruby
   by_star!
+  china_sms
   chronic
   coffee-rails (~> 4.0.0)
   devise
