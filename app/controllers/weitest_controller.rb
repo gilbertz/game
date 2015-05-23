@@ -156,8 +156,8 @@ class WeitestController < ApplicationController
             @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.id) 
             if not @score and from_user.social_value(beaconid) > 0
               r = Record.where(:beaconid=>beaconid, :user_id =>au.user_id, :object_type => 'Redpack', :feedback => nil).order('created_at desc')[0]
-              f_value = (r.score/2 < 100)?100:r.score/2 if r
               f_value = 100 + rand(50)
+              f_value = (r.score/2 < 100)?100:r.score/2 if r
               from_user.decr_social(beaconid)
               if from_user.social_value(beaconid) % 3 == 0
                 rp = @beacon.redpacks[0]
