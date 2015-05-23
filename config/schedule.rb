@@ -37,7 +37,7 @@ end
 #           rake "redpack:notice_redpack_begin"
 # end
 
-every '9,19,29,39,49,59 * * * *' 
+every '9,19,29,39,49,59 * * * *' do
   rake "redpack:generate_redpack"
 end
 
