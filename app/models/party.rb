@@ -1,6 +1,7 @@
 class Party < ActiveRecord::Base
   has_one :vip
   has_many :orders
+  has_many :managers
 
 
   def is_vip?
@@ -18,6 +19,13 @@ class Party < ActiveRecord::Base
 
   end
 
+
+  def party_sign_in
+
+
+
+
+  end
 
 
 end

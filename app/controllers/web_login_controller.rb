@@ -66,10 +66,9 @@ class WebLoginController < ApplicationController
           party.privilege = user_info["privilege"].to_json
           party.unionid = user_info["unionid"]
           flag = party.save
-          #  进行登陆
-
-
           if flag
+            #  进行登陆
+            party
             redirect_to rurl
             return
           end
