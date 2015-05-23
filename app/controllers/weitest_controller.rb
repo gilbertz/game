@@ -146,7 +146,6 @@ class WeitestController < ApplicationController
 
   def weixin_score
     if current_user
-      f_value = 0
       beaconid = @beacon.id
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
@@ -158,6 +157,7 @@ class WeitestController < ApplicationController
             if not @score and from_user.social_value(beaconid) > 0
               r = Record.where(:beaconid=>beaconid, :user_id =>au.user_id, :object_type => 'Redpack', :feedback => nil).order('created_at desc')[0]
               f_value = (r.score/2 < 100)?100:r.score/2 if r
+              f_value = 100 + rand(50)
               from_user.decr_social(beaconid)
               if from_user.social_value(beaconid) % 3 == 0
                 rp = @beacon.redpacks[0]
