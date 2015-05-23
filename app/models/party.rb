@@ -21,10 +21,12 @@ class Party < ActiveRecord::Base
 
 
   def party_sign_in
-
-
-
-
+    authentication = Authentication.find_by_uid(self.openid)
+    if authentication
+      if authentication.user
+        sign_in authentication.user
+      end
+    end
   end
 
 

@@ -10,8 +10,7 @@ module API
       end
 
       resources :behaviour do
-
-
+        desc ""
 
 
 

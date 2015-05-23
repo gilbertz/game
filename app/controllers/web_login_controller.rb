@@ -68,7 +68,7 @@ class WebLoginController < ApplicationController
           flag = party.save
           if flag
             #  进行登陆
-            party
+            party.party_sign_in
             redirect_to rurl
             return
           end
