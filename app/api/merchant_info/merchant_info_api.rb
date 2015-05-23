@@ -59,7 +59,7 @@ module API
 
           desc "商户绑定手机号"
           params do
-            requires :mobile,type: String,allow_blank: false,desc "手机号"
+            requires :mobile,type: String,allow_blank: false,desc: "手机号"
             requires :code, type: String, allow_blank: false, desc: "验证码"
             optional :name, type: String, desc: "管理者的名字"
             optional :role, type: Integer, default: 1,values:[0,1,2,3], desc: "管理者的权限"
