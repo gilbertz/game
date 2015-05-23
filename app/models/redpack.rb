@@ -307,6 +307,8 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
 
 
       user = User.find user_id
+      # just for tmp
+      beaconid = 6 if beaconid == 20
       user.incr_social(beaconid, 3)
 
       return hongbao["money"]
