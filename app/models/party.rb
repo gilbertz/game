@@ -20,6 +20,7 @@ class Party < ActiveRecord::Base
   end
 
 
+  # 商家登录
   def party_sign_in
     authentication = Authentication.find_by_uid(self.openid)
     if authentication

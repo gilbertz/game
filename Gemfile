@@ -119,3 +119,6 @@ gem 'grape-swagger'
 # @post.next                                   # next post after a given post
 gem 'chronic'
 gem 'by_star', :git => "git://github.com/radar/by_star"
+
+
+gem 'china_sms'

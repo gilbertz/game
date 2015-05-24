@@ -14,7 +14,7 @@ module WxAppAuth
   #通过code换取access_token 等等信息
   def get_app_auth_info(appid,code)
     url = "https://api.weixin.qq.com/sns/oauth2/component/access_token?appid=#{appid}&code=#{code}&grant_type=authorization_code&component_appid=#{SHAKE_APPID}&component_access_token=#{WxUtil.get_component_access_token}"
-    p "get_app_auth_info url is #{url}"
+ #   p "get_app_auth_info url is #{url}"
     res = RestClient::get(url)
     ret = JSON.parse(res.body)
 

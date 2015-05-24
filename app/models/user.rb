@@ -143,9 +143,14 @@ class User < ActiveRecord::Base
   end
 
 
+  #如果是商户则有关联的 pary_id
   def get_party_id
     party = Party.find_by_openid(self.get_openid)
     return party.id  if party
+  end
+
+  def party
+     Party.find_by_openid(self.get_openid)
   end
 
   private
@@ -160,5 +165,6 @@ class User < ActiveRecord::Base
 
   def generate_encrypt_pwd(password)
     BCrypt::Engine.hash_secret(password, self.salt)
-  end 
+  end
+
 end
