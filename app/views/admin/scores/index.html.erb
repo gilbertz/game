@@ -20,7 +20,7 @@
     <td><%= link_to r.beacon_name, "/admin/scores?beaconid=#{r.beaconid}" %></td>
     <td><%= link_to r.user_name, "/admin/scores?user_id=#{r.user_id}" %></td>
     <td><%= link_to r.app_name, "/admin/scores?game_id=#{r.game_id}" %></td>
-    <td><%= r.from_user_name %></td>
+    <td><%= link_to r.from_user_name, "/admin/scores?from_user_id=#{r.from_user_id}" %></td>
     <td><%= r.value %></td>
     <td><%= r.remark %></td>
     <td><%= r.state %></td>

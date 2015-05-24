@@ -19,11 +19,11 @@ class TimeAmount < ActiveRecord::Base
     end
   end
 
-  def self.get_time_amount(redpack_id)
-   redpack_time = RedpackTime.get_redpack_time(redpack_id)
-   return unless redpack_time
-   time_amount = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
- end
+  #def self.get_time_amount(redpack_id)
+  # redpack_time = RedpackTime.get_redpack_time(redpack_id)
+  # return unless redpack_time
+  # time_amount = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
+  #end
 
  def self.get_time(redpack_id)
   redpack_time = RedpackTime.get_redpack_time(redpack_id)
