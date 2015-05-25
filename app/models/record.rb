@@ -35,6 +35,14 @@ class Record < ActiveRecord::Base
     end
   end
 
+
+  def user_img
+    if self.user
+      self.user.profile_img_url
+    end
+  end
+
+
   def app_name
     if self.game_id
       m = Material.find_by_id self.game_id
