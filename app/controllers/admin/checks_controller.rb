@@ -4,7 +4,13 @@ class Admin::ChecksController < Admin::BaseController
   respond_to :html
 
   def index
-    @checks = Check.order('created_at desc')
+    cond = "1=1"
+    cond += " and beaconid=#{params[:beaconid]}" if params[:beaconid]
+    cond += " and user_id=#{params[:user_id]}" if params[:user_id]
+    cond += " and game_id=#{params[:game_id]}" if params[:game_id]
+    limit = 20
+    limit = params[:limit].to_i if params[:limit]
+    @checks = Check.where(cond).order('created_at desc').page(params[:page]).per(limit)
     respond_with(@checks)
   end
 
