@@ -9,6 +9,7 @@ module API
 
       end
 
+      # begin ====== post :party_info do
       desc "上传商户的基本信息"
       params do
         requires :name,type:String,allow_blank:false,desc:'品牌名'
@@ -35,6 +36,45 @@ module API
         end
 
       end
+      #end ===== post :party_info do
+
+
+
+
+      #begin post 'ibeacons/add'
+      desc "添加ibeacons"
+      params do
+        requires :ibeacons ,type:Array do
+          requires :uid,type:String,desc:"ibeacon硬件的ID"
+          requires :name,type:String,desc:"ibeacon的别名"
+          optional :remark,type:String,desc:"附加描述信息"
+        end
+      end
+      post 'ibeacons/add' do
+        arr = []
+        ibeacon_arr = params["ibeacons"]
+        ibeacon_arr.each do |item|
+          ibeacon = Ibeacon.new
+          ibeacon.name = item["name"]
+          ibeacon.uid = item["uid"]
+          ibeacon.user_id = current_user.id
+          ibeacon.remark = item["remark"]
+          ibeacon.state = 1
+          if ibeacon.save
+            arr.push ibeacon
+          end
+
+          if arr.length > 0
+            {"result" => 0,"ibeacons" => arr.to_json}
+          else
+            internal_error!
+          end
+
+        end
+
+      end
+      #end post 'ibeacons/add'
+
 
     end
 

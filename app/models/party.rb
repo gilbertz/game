@@ -3,6 +3,7 @@ class Party < ActiveRecord::Base
   has_many :orders
   has_many :managers
   has_one :partyinfo
+  has_many :ibeacons
 
 
   def is_vip?

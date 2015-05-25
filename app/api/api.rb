@@ -31,7 +31,7 @@ module API
       def render_api_error!(message,status)
         h = Hash.new
         h["result"] = -1
-        h["error_msg"] = message if message
+        h["error"] = message if message
         error! message,status
       end
       def error_403!

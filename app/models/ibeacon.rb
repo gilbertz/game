@@ -1,6 +1,7 @@
 class Ibeacon < ActiveRecord::Base
   belongs_to :user
-  belongs_to :merchant 
+  belongs_to :merchant
+  belongs_to :party
   has_many :bgames, :foreign_key => "beaconid"
   has_many :cards, :foreign_key => "beaconid"
   has_many :redpacks, :foreign_key => "beaconid"
