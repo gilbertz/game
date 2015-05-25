@@ -5,6 +5,7 @@ require 'pay/pay_api'
 require 'orders/order_api'
 require 'behaviour/behaviour_api'
 require 'merchant_info/merchant_info_api'
+require 'merchant_info/party_info_api'
 module API
   #一个服务一个模块  小型微服务
   class Root < Grape::API
