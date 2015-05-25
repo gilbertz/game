@@ -79,7 +79,7 @@ class Image < ActiveRecord::Base
       m.photo_path = photo_path
       m.photo_name = photo_file_name
       m.save
-      return
+      return m
     end
  end
 

@@ -330,7 +330,7 @@ DEPENDENCIES
   grape
   grape-entity
   grape-swagger
-  jbuilder (~> 1.2)
+  jbuilder
   jquery-rails
   json
   kaminari

@@ -11,12 +11,46 @@ module API
     prefix 'api'
     format :json
 
+    helpers do
+      def unauthorized!
+        #如果没有登录
+        unless current_user
+          render_api_error! '401 Unauthorized',401
+        end
+      end
+
+      def not_allowed!
+        render_api_error! 'Method Not Allowed',405
+      end
+
+      def internal_error!
+        render_api_error! 'Internal Server Error',500
+      end
+
+      def render_api_error!(message,status)
+        h = Hash.new
+        h["result"] = -1
+        h["error_msg"] = message if message
+        error! message,status
+      end
+      def error_403!
+        error! 'Forbidden',403
+      end
+    end
+
+    before do
+      unauthorized!
+    end
+
+
+
     mount API::RedPack::RedpackAPI
     mount API::Cards::CardAPI
     mount API::Orders::OrderAPI
     mount API::Pay::PayAPI
     mount API::Behaviour::BehaviourAPI
     mount API::MerchantInfo::MerchantInfoAPI
+    mount API::PartyInfo::PartyInfoAPI
 
     #api 文档
     add_swagger_documentation
