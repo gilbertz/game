@@ -15,29 +15,30 @@ module API
         end
 
         desc "test_seed_redpack"
-        get '/test_seed_redpack' do
+        get '/test_seed_redpack/:redpack.id' do
           Redpack.test(params[:id])
         end
 
         desc "show_generate_length"
-        get '/show_generate_length' do
-          $redis.lrange("hongbaolist",0,-1).length
+        get '/show_generate_length/:redpack.id' do
+          $redis.lrange("hongbaolist_#{redpack.id}",0,-1).length
         end
 
         desc "show_generate"
-        get '/show_generate' do
-          $redis.lrange("hongbaolist",0,-1)
+        get '/show_generate/:redpack.id' do
+          $redis.lrange("hongbaolist_#{redpack.id}",0,-1)
         end
 
-        get '/show_consume' do
-          $redis.lrange("hongBaoConsumedList",0,-1).length
+        desc "show_consume"
+        get '/show_consume/:redpack.id' do
+          $redis.lrange("hongBaoConsumedList_#{redpack.id}",0,-1).length
         end
 
         desc "delete_redpack"
-        get '/delete_redpack' do
-        $redis.del("hongbaolist")
-        $redis.del("hongBaoConsumedMap")
-        $redis.del("hongBaoConsumedList")
+        get '/delete_redpack/:redpack.id' do
+        $redis.del("hongbaolist_#{redpack.id}")
+        $redis.del("hongBaoConsumedMap_#{redpack.id}")
+        $redis.del("hongBaoConsumedList_#{redpack.id}")
         end
 
       end
