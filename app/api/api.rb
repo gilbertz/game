@@ -14,7 +14,7 @@ module API
 
     helpers do
       def unauthorized!
-        #如果没有登录
+        #如果没有登录x
         unless current_user
           render_api_error! '401 Unauthorized',401
         end
@@ -28,7 +28,7 @@ module API
         render_api_error! 'Internal Server Error',500
       end
 
-      def render_api_error!(message,status)
+      def render_api_error!(message,status = 405)
         h = Hash.new
         h["result"] = -1
         h["error"] = message if message

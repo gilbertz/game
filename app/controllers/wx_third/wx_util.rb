@@ -231,6 +231,7 @@ class WxUtil
       card_recode.outer_id = event_msg["OuterId"]
       card_recode.old_user_card_code = event_msg["OldUserCardCode"]
       card_recode.event_time = Time.at((event_msg["CreateTime"]).to_i)
+      card_recode.from_user_name = event_msg["FromUserName"]
       card_recode.save
 
       p "card_recode = #{card_recode.to_s}"
