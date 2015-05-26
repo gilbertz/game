@@ -245,6 +245,9 @@ class Material < ActiveRecord::Base
     m
   end
 
+  def self.get_object(game_id)
+  end
+
   def get_share_url(domain='')
     domain = 'http://51self.com' if domain.blank?
     unless self.share_url

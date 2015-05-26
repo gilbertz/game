@@ -50,24 +50,24 @@ class WeitestController < ApplicationController
     end 
   end
 
-  def bus_allocation
-    if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
-      info = Redpack.first_allocation(current_user.id, params[:game_id], @object,params[:beaconid])
-      render :status => 200, json: {'info' => info}
-    elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
-      info = 0
-      render :status => 200, json: {'info' => info}
-    end 
-  end
+  # def bus_allocation
+  #   if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
+  #     info = Redpack.first_allocation(current_user.id, params[:game_id], @object,params[:beaconid])
+  #     render :status => 200, json: {'info' => info}
+  #   elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
+  #     info = 0
+  #     render :status => 200, json: {'info' => info}
+  #   end 
+  # end
 
-  def not_bus_allocation
-    if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
-      Redpack.share_allocation(current_user.id, params[:openid], params[:game_id], @object)
-      render :status => 200, json: {'info' => "不在公交也有红包"}
-    elsif Record.redpack_per_day(current_user.id, params[:game_id]) ==2
-      render :status => 200, json: {'info' => "今天次数用完"}
-    end 
-  end
+  # def not_bus_allocation
+  #   if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
+  #     Redpack.share_allocation(current_user.id, params[:openid], params[:game_id], @object)
+  #     render :status => 200, json: {'info' => "不在公交也有红包"}
+  #   elsif Record.redpack_per_day(current_user.id, params[:game_id]) ==2
+  #     render :status => 200, json: {'info' => "今天次数用完"}
+  #   end 
+  # end
 
 
   #caches_page :show

@@ -4,6 +4,7 @@ require 'cards/card_api'
 require 'pay/pay_api'
 require 'orders/order_api'
 require 'behaviour/behaviour_api'
+require 'behaviour/check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
 module API
@@ -40,7 +41,7 @@ module API
     end
 
     before do
-      unauthorized!
+      # unauthorized!
     end
 
 
@@ -52,6 +53,7 @@ module API
     mount API::Behaviour::BehaviourAPI
     mount API::MerchantInfo::MerchantInfoAPI
     mount API::PartyInfo::PartyInfoAPI
+    mount API::Behaviour::CheckAPI
 
     #api 文档
     add_swagger_documentation
