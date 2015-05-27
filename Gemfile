@@ -108,6 +108,7 @@ gem 'sinatra'
 gem 'grape'
 gem 'grape-entity'
 gem 'grape-swagger'
+gem 'grape-jbuilder'
 
 
 #根据时间操作数据库的好东西

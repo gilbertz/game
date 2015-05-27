@@ -25,14 +25,9 @@ module API
         params do
           requires :id, type: Integer,allow_blank:false, desc: "card id."
         end
-        route_param :id do
+        route_param :id,jbuilder: 'cards/find_a_card' do
           get do
-            card = Card.find_by_id(params[:id])
-            if card
-              {"result" =>0,"card" => card}
-            else
-              internal_error!
-            end
+            @card = Card.find_by_id(params[:id])
           end
         end
         # route_param :id do
