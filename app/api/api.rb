@@ -13,6 +13,11 @@ module API
     format :json
 
     helpers do
+
+      def current_user
+        User.current_user
+      end
+
       def unauthorized!
         #如果没有登录x
         unless current_user

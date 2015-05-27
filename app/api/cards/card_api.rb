@@ -29,7 +29,7 @@ module API
           get do
             card = Card.find_by_id(params[:id])
             if card
-              {"result" =>0,"card" => card.to_json}
+              {"result" =>0,"card" => card}
             else
               internal_error!
             end
@@ -73,7 +73,7 @@ module API
             qrcode.scanner = current_user.get_openid
             qrcode.url = "api/v1/cards/#{qrcode.ticket}"
             if qrcode.save
-              {"result"=>0,"card" =>card.to_json,"qrcode_content" => "http://#{WX_DOMAIN}/#{qrcode.url}"}
+              {"result"=>0,"card" =>card,"qrcode_content" => "http://#{WX_DOMAIN}/#{qrcode.url}"}
             else
               internal_error!
             end
