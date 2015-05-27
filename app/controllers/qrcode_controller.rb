@@ -20,12 +20,10 @@ class QrcodeController < ApplicationController
     end
     # oNnqbtwCnlfBRX5_RZZ3Uv3AXqA4
     if @scaner
-      p "if scanner"
-
+     # p "if scanner"
       result["result"] = 0
       result["openid"] = @scaner
       $wxclient1.send_text_custom(@scaner,"您已经成功登陆疯狂摇一摇")
-
     else
       result["result"] = -1
     end

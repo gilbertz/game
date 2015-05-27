@@ -7,7 +7,7 @@ module API
 
       helpers do
         def out_trade_no
-          "y1y" + Time.now.strftime("yyyymmddHHMMSS")
+          "y1y_" + Time.now.strftime("yyyymmddHHMMSS")
         end
       end
 
@@ -45,8 +45,8 @@ module API
           if order.trade_type == "JSAPI"
             order.openid = current_user.get_openid
           end
+          order.set_wait_pay
           if order.save
-            order.set_wait_pay
             {"result" => "0","order_id"=>order.id}
           else
             {"result"=> "-1"}

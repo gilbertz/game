@@ -30,7 +30,7 @@ module API
           end
         end
         if p.save
-          {"result" => 0,"party_info" => p.to_json}
+          {"result" => 0,"party_info" => p}
         else
           internal_error!
         end
@@ -65,7 +65,7 @@ module API
           end
 
           if arr.length > 0
-            {"result" => 0,"ibeacons" => arr.to_json}
+            {"result" => 0,"ibeacons" => arr}
           else
             internal_error!
           end
