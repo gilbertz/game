@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
+  <script>
+    //左侧Javascript代码
+    $(function () {
+
+     chart('1340208226','巴士摇一摇','#container_busredpack');
+     chart('1341259419','收到一个红包','#container_getredpack');
+     chart('1355593447','我的红包','#container_myredpack');
+     chart('1358498741','地推红包','#container_ditui');
+
+     function chart(game_url,text,container_id){
+      $.ajax({
+        type: "GET",
+        url: "/api/v1/statis/"+game_url,
+        data: "json",
+        success: function(msg)
+        {
+          var uv = 0;
+          var categories_data=[];
+          var data_data=[];
+          uv = msg.uv;
+          uv_sub_group = msg.uv_sub_group;
+          for(var i=0;i<uv_sub_group.length;i++)
+          {
+            categories_data[i] = uv_sub_group[i]['created_at'];
+            data_data[i] = uv_sub_group[i]['per_num'] ;       
+          }
+
+          $(container_id).highcharts({
+            title: {
+              text: text + '浏览量 总量 '+uv,
+            x: -20 //center
+          },
+          subtitle: {
+            text: '数据来源: 盛也网络 www.y1y.me',
+            x: -20
+          },
+          xAxis: {
+            categories: categories_data
+          },
+          yAxis: {
+            title: {
+              text: '浏览量'
+            },
+            plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+            }]
+          },
+          tooltip: {
+            valueSuffix: '次'
+          },
+          legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+          },
+          series: [{
+            name: '单日浏览量',
+            data: data_data
+          }]
+        });
+
+        }});
+      }
+
+});
+
+
+</script>
+</head>
+<body>
+  <div id="container_busredpack" style="min-width:700px;height:400px"></div>
+  <div id="container_getredpack" style="min-width:700px;height:400px"></div>
+  <div id="container_myredpack" style="min-width:700px;height:400px"></div>
+  <div id="container_ditui" style="min-width:700px;height:400px"></div>
+
+</body>
+</html>

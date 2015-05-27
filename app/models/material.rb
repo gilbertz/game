@@ -253,7 +253,7 @@ class Material < ActiveRecord::Base
   end
 
   def self.get_game(game_url)
-    game_id = Material.by_hook(game_url).id if game_url
+    game_id = Material.by_hook(game_url).id if Material.by_hook(game_url)
   end
 
   def get_share_url(domain='')

@@ -7,6 +7,7 @@ require 'behaviour/behaviour_api'
 require 'behaviour/check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
+require 'statis/statis_api'
 module API
   #一个服务一个模块  小型微服务
   class Root < Grape::API
@@ -47,10 +48,10 @@ module API
     end
 
     before do
-      unauthorized!
+      # unauthorized!
     end
 
-
+    mount API::Statis::StatisAPI
     mount API::RedPack::RedpackAPI
     mount API::Cards::CardAPI
     mount API::Orders::OrderAPI

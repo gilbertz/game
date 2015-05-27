@@ -16,7 +16,7 @@ Game::Application.routes.draw do
 
   get '/:appid/launch' => 'wx_app_auth#launch'
   get '/wx_app_auth/callback' => 'wx_app_auth#callback'
-
+  get '/degao/statis' => 'merchant#statis'
 
 #  mount Yaoshengyi::RedpackAPI => '/'
   mount API::Root => '/'
