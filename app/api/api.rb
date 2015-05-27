@@ -47,9 +47,8 @@ module API
     end
 
     before do
-      # unauthorized!
+      unauthorized!
     end
-
 
 
     mount API::RedPack::RedpackAPI

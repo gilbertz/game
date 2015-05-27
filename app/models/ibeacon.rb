@@ -19,9 +19,8 @@ class Ibeacon < ActiveRecord::Base
     end
   end
 
-  def self.get_beacon(beaconid)
-    beacon = Ibeacon.find_by_url beaconid if beaconid
-    beacon_id = Ibeacon.find(1).id unless beacon
+  def self.get_beacon(beacon_url)
+    beacon = Ibeacon.find_by_url(beacon_url).id if Ibeacon.find_by_url(beacon_url)
   end
 
   def get_message

@@ -245,7 +245,15 @@ class Material < ActiveRecord::Base
     m
   end
 
-  def self.get_object(game_id)
+  def self.get_object(game_url)
+    material = Material.by_hook(game_url) if game_url
+    if not material.object_type.blank? and material.object_id
+      object = material.object_type.capitalize.constantize.find material.object_id
+    end
+  end
+
+  def self.get_game(game_url)
+    game_id = Material.by_hook(game_url).id if game_url
   end
 
   def get_share_url(domain='')

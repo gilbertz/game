@@ -54,3 +54,6 @@ $wxclient1 ||= WeixinAuthorize::Client.new('wx456ffb04ee140d84', 'd1481d1ff0f05d
 WEB_APPID = "wx9d0f1c5f64702271"
 WEB_APPSECRET = "8b7735574eca7c9a951c324070c4f1fc"
 WEB_DOMAIN = "http://www.dapeimishu.com"
+
+# 微信发红包金额限制
+WEIXIN_REDPACK_RESTRICTION_VALUE = 100
