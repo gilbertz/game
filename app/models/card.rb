@@ -21,13 +21,17 @@ class Card < ActiveRecord::Base
     Card.create self.attributes.except!("created_at", "id")
   end
 
-  def get_store(tid)
-    cos = self.card_options.where(:group_id => tid)
+  def get_store(tid=nil)
+    cond = "1=1"
+    cond = "group_id=#{tid}" if tid
+    cos = self.card_options.where( cond )
     cos.sum{|co|co.store}
   end
 
-  def lottery(tid, uid, gid, bid)
-    card_options = self.card_options.where(:group_id => tid)
+  def lottery(tid=nil, uid, gid, bid)
+    cond = "1=1"
+    cond = "group_id=#{tid}" if tid
+    card_options = self.card_options.where( cond )
     total = card_options.sum{|c|c.store}
     n = rand(total)
     
