@@ -18,7 +18,8 @@ module API
     helpers do
 
       def current_user
-        User.current_user
+        # User.current_user
+        User.find_by_id(164)
       end
 
       def unauthorized!
@@ -48,7 +49,7 @@ module API
     end
 
     before do
-      # unauthorized!
+      unauthorized!
     end
 
     mount API::Statis::StatisAPI
