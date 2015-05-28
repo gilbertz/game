@@ -5,7 +5,9 @@ class WeitestController < ApplicationController
 
   def weixin_check
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    if Check.check_per_day(current_user.id,params[:game_id],beaconid)<3
+    redpack_time = RedpackTime.get_redpack_time(@object.id)
+    person_num = redpack_time.person_num if redpack_time
+    if Check.check_per_day(current_user.id,params[:game_id],beaconid)< person_num 
       #p Check.check_per_day(current_user.id,params[:game_id])
       
       Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id]) unless Check.check_state(current_user.id, params[:game_id], beaconid) > 0
@@ -37,7 +39,9 @@ class WeitestController < ApplicationController
 
   def seed_redpack
    @rp = 0
-   if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= 3
+   redpack_time = RedpackTime.get_redpack_time(@object.id)
+   person_num = redpack_time.person_num if redpack_time
+   if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= person_num
     beaconid = @beacon.id
     check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
     check.update(:state => 0) if check
