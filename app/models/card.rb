@@ -1,5 +1,4 @@
 class Card < ActiveRecord::Base
-
   belongs_to :wx_authorizer
   has_many :records
   has_many :card_options
@@ -28,7 +27,7 @@ class Card < ActiveRecord::Base
     cos.sum{|co|co.store}
   end
 
-  def lottery(tid=nil, uid, gid, bid)
+  def lottery(tid, uid, gid, bid)
     cond = "1=1"
     cond = "group_id=#{tid}" if tid
     card_options = self.card_options.where( cond )
