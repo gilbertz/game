@@ -161,7 +161,6 @@ class WeitestController < ApplicationController
               r = Record.where(:beaconid=>beaconid, :user_id =>au.user_id, :object_type => 'Redpack', :feedback => nil).order('created_at desc')[0]
               f_value = 100 + rand(50)
               f_value = (r.score/2 < 100)?100:r.score/2 if r
-              f_value = f_value + 1000
               from_user.decr_social(beaconid)
               if from_user.social_value(beaconid) % 3 == 0
                 rp = @beacon.redpacks[0]
@@ -172,6 +171,7 @@ class WeitestController < ApplicationController
                 end
                 Record.create(:user_id => from_user_id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'f_redpack', :object_id => rp.id)            
               end
+              f_value = f_value + 1000
             else
               f_value = 0
             end
