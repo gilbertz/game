@@ -338,7 +338,7 @@ end
 
 def check_shake_history
   if params[:ticket] and params[:activityid]
-    ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
+    #ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
   end
 end
 
