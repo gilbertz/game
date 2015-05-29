@@ -275,7 +275,8 @@ class WeitestController < ApplicationController
     msg = msgs.sample(1)[0] if msgs.length > 0
 
     return unless @object
-    @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
+    @amount = TimeAmount.get_fake_amount(@object.id,params[:beaconid])
+    p @amount
     fake_amount = @amount + 100000
 
     @time_amount = TimeAmount.get_time(@object.id)
