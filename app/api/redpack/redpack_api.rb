@@ -58,6 +58,7 @@ module API
         end
         get '/get_time_amount' do
           beacon_id = Ibeacon.get_beacon(params[:beacon_url])
+          p beacon_id
           game_id = Material.get_game(params[:game_url])
           check_today = Check.check_today(current_user.id,game_id,beacon_id)
           check_three = Check.check_three(current_user.id,game_id,beacon_id)
@@ -68,6 +69,7 @@ module API
           amount = TimeAmount.get_amount(game_id, beacon_id)
           checked = Check.check_state(current_user.id, game_id, beacon_id)  > 0 ? 1:0
           fake_amount = (@amount + 100000)/100 
+          p fake_amount
           Redpack.distribute_seed_redpack(beacon_id, object_id, game_id)
           return {'check_today' => check_today, 'check_three' => check_three, 'time_amount' => time_amount, 'end_time' => end_time, 'now_time' => now_time, 'amount' => amount, 'checked' => checked, 'fake_amount' => fake_amount}
         end 
