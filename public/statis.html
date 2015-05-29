@@ -16,6 +16,9 @@
      chart('1358498741','DyXzH--jShh9kFa6oN6Y2400','地推红包','#container_ditui');
 
      function chart(game_url,beacon_url,text,container_id){
+      Highcharts.setOptions({
+        colors: ['#058DC7', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+    });
       $.ajax({
         type: "GET",
         url: "/api/v1/statis/"+beacon_url+"/"+game_url,
@@ -25,12 +28,14 @@
           var uv = 0;
           var categories_data=[];
           var data_data=[];
+          var data_person=[];
           uv = msg.uv;
           uv_sub_group = msg.uv_sub_group;
           for(var i=0;i<uv_sub_group.length;i++)
           {
             categories_data[i] = uv_sub_group[i]['created_at'];
-            data_data[i] = uv_sub_group[i]['per_num'] ;       
+            data_data[i] = uv_sub_group[i]['per_num'] ; 
+            data_person[i] = uv_sub_group[i]['person_num']      
           }
 
           $(container_id).highcharts({
@@ -46,6 +51,7 @@
             categories: categories_data
           },
           yAxis: {
+            min: 0,
             title: {
               text: '浏览量'
             },
@@ -64,10 +70,9 @@
             verticalAlign: 'middle',
             borderWidth: 0
           },
-          series: [{
-            name: '单日浏览量',
-            data: data_data
-          }]
+          series: [
+          {name: '单日浏览量',data: data_data},{name:"单日人数",data: data_person}
+          ]
         });
 
         }});

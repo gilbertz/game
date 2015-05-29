@@ -25,13 +25,10 @@ module API
           @name = Material.find_by_id(game_id).name
           uv_groups = @uv.group_by{|date| date.created_at.strftime("%Y %m %d")}
           @uv_sub_group = []
-          uv_groups.each {|key,value| @uv_sub_group.push({"created_at" => key, "per_num" => value.length, "person_num" => value.each{|a| a.reject!{|k,v| k> "created_at"}}.length}) }
+          uv_groups.each {|key,value| @uv_sub_group.push({"created_at" => key, "per_num" => value.length, "person_num" => value.as_json.each{|a| a.select!{|k,v| k =="user_id"}}.uniq.length})}
           @uv_sub_group
         end
       end
-                end_date = Date.parse(Date.today().to_s)
-          start_date = Date.parse((end_date - 30).to_s)
-          @uv = Uv.where("created_at >= ? and created_at <= ? and game_id = ? and beaconid = ?", start_date, end_date, 1341, 5)
 
 
 
