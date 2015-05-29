@@ -11,11 +11,11 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :domain, '121.42.47.121'
-set :deploy_to, '/data/www/apps'
+set :deploy_to, '/data/www/mina'
 set :repository, 'https://leapcliff:831022@git.coding.net/leapcliff/ibeacon.git'
 set :branch, 'master'
 
-ENV['port'] = '8000'
+ENV['port'] = '2016'
 
 # For system-wide RVM install.
 set :rvm_path, '/usr/local/rvm/bin/rvm'
@@ -39,7 +39,7 @@ task :environment do
   # For those using RVM, use this to load an RVM version@gemset.
   #invoke :'rvm:use[ruby-1.9.3-p125@default]'
   
-  invoke :'rvm:use[ruby-2.0.0-p481@default]'
+  invoke :'rvm:use[ruby-2.0.0-p481@global]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -58,19 +58,22 @@ end
 
 
 task :passenger => :environment do
-  invoke :passenger_stop
+#  invoke :passenger_stop
   invoke :passenger_start
 end
 
 task :passenger_start => :environment do
-  queue "source /etc/profile.d/rvm.sh" 
-  queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger start -a 0.0.0.0 -p #{ENV['port']} -d -e production --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
+#  queue "source /etc/profile.d/rvm.sh" 
+ # queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger start -a 0.0.0.0 -p #{ENV['port']} -d -e production --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
+  queue "cd #{deploy_to}/#{current_path} && /usr/local/rvm/gems/ruby-2.0.0-p481@game/bin/passenger  start -a 0.0.0.0 -p #{ENV['port']} -d -e production --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
 end
 
 task :passenger_stop => :environment do
-  queue "source /etc/profile.d/rvm.sh" 
+  #queue "source /etc/profile.d/rvm.sh" 
+  #quene "touch #{deploy_to}/#{current_path}/passenger.#{ENV['port']}.pid"
+  #queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger stop -p #{ENV['port']} --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
   quene "touch #{deploy_to}/#{current_path}/passenger.#{ENV['port']}.pid"
-  queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger stop -p #{ENV['port']} --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
+  queue "cd #{deploy_to}/#{current_path} && /usr/local/rvm/gems/ruby-2.0.0-p481@game/bin/passenger  stop -p #{ENV['port']} --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
 end
 
 
@@ -87,12 +90,14 @@ task :deploy => :environment do
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
-    invoke :'deploy:cleanup'
-    invoke :passenger
+   # invoke :'deploy:cleanup'
+   # invoke :passenger
 
     to :launch do
-      queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-      queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
+      invoke :'deploy:cleanup'
+      invoke :passenger
+    #  queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
+    #  queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
     end
   end
 end

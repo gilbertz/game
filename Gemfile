@@ -96,7 +96,7 @@ gem 'qy_wechat', '~> 1.0.1'
 
 
 gem 'mina'
-gem 'passenger'
+gem 'passenger','~> 5.0.6'
 gem 'sidekiq'
 gem 'mina-sidekiq'
 
