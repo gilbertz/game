@@ -8,6 +8,90 @@ module API
 
       resource :redpack do
 
+#-------------------新建红包------------------#
+
+        desc "创建红包设计"
+        params do 
+          requires :title, type: String, desc: "红包标题"
+          requires :wish, type: String, desc: "红包祝福语"
+          requires :avator, type: String, desc: "头像图片地址"
+        end
+        post '/redpack_design/create' do 
+          RedpackDesign.create(:title => params[:title], :wish => params[:wish], :avator => params[:avator])
+        end
+
+        desc "创建红包设置"
+        params do 
+          requires :amount, type: Integer, desc: "红包总额"
+          requires :store, type: Integer, desc: "红包个数"
+          optional :random do
+            requires :max, type: Integer, desc: "最大金额"
+            requires :min, type: Integer, desc: "最小金额"
+          end
+          optional :equal do
+            requires :money, type: Integer, desc: "等额金额"
+          end
+          optional :manual do
+            requires :money, type: Array[Integer], desc: "手动金额"
+          end
+          exactly_one_of :random, :equal, :manual
+        end
+        post '/redpack_set/create' do
+          if params[:random]
+            RedpackSet.create(:amount => params[:amount], :store => params[:store], :rule => 'random', :max => params[:max], :min => params[:min])
+          elsif params[:equal]
+            RedpackSet.create(:amount => params[:amount], :store => params[:store], :rule => 'equal', :money => params[:money].to_s)
+          elsif params[:manual]
+            RedpackSet.create(:amount => params[:amount], :store => params[:store], :rule => 'manual', money => params[:money].to_s)
+          end    
+        end
+        
+        # 考虑单个时间段和多个时间段
+        desc "创建红包发送设置" 
+        params do
+          requires :send_start_time, type: Time, desc: "发送开始时间"
+          requires :send_end_time, type: Time, desc: "发送结束时间"
+          requires :send_prepare_time, type: Time, desc: "预热时间"
+        end
+        post '/redpack_send/create' do
+          RedpackSend.create(:send_start_time => params[:send_start_time], :send_end_time => params[send_end_time], :send_prepare_time => params[:send_prepare_time])
+        end
+
+        # 考虑每个用户单个时间领取最大，或者整个时间段领取最大，或者全天领取最大
+        desc "创建红包领取设置"
+        params do 
+          requires :person_num, type: Integer, desc: "单个用户最多摇到的次数"
+          optional :immediate_get
+          optional :random_get do
+            requires :probability, type: Integer, desc: "中奖概率"
+          end
+          exactly_one_of :immediate_get, :random_get
+        end
+        post '/redpack_get/create' do
+          if params[:immediate_get]
+          RedpackGet.create(:person_num => params[:person_num], :rule => 'immediate_get')
+          else 
+          RedpackGet.create(:person_num => params[:person_num], :rule => 'random_get', :probability => params[:probability])
+          end
+        end
+
+#-------------------查看红包------------------#
+
+        desc "红包历史"
+        get '/read' do 
+          RedpackDesign.
+          RedpackSend.
+        end
+
+#-------------------修改红包------------------#
+
+#-------------------删除红包------------------#
+
+#-------------------发送红包------------------#
+
+#-------------------发送准备------------------#
+
+
         desc "发送种子红包 德高"
         params do
           requires :beacon_url, type: String, desc: "ibeacon的url"
@@ -74,6 +158,9 @@ module API
           return {'check_today' => check_today, 'check_three' => check_three, 'time_amount' => time_amount, 'end_time' => end_time, 'now_time' => now_time, 'amount' => amount, 'checked' => checked, 'fake_amount' => fake_amount}
         end 
       end
+
+
+#-------------------测试红包------------------#
 
       resource :test_redpack do
         
