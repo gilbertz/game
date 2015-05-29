@@ -5,7 +5,9 @@ class WeitestController < ApplicationController
 
   def weixin_check
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    if Check.check_per_day(current_user.id,params[:game_id],beaconid)<3
+    redpack_time = RedpackTime.get_redpack_time(@object.id)
+    person_num = redpack_time.person_num if redpack_time
+    if Check.check_per_day(current_user.id,params[:game_id],beaconid)< person_num 
       #p Check.check_per_day(current_user.id,params[:game_id])
       
       Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id]) unless Check.check_state(current_user.id, params[:game_id], beaconid) > 0
@@ -25,11 +27,10 @@ class WeitestController < ApplicationController
     if(total_score >= 100)
       Score.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :value => -total_score, :game_id => params[:game_id])
       UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beaconid).update(:total_score => 0) 
-      Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => -total_score, :object_type=> 'social_redpack', :object_id => @object.id)
-      total_score = total_score > 300 ? 300 : total_score
-
-      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
-
+      #total_score = total_score > 300 ? 300 : total_score
+      #total_score = 1000 + total_score.to_i 
+      rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
+      Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => rp.to_i, :object_type=> 'social_redpack', :object_id => @object.id)
       current_user.mark_scores(beaconid, @material.id)
     end
     render :status => 200, json: {'info' => total_score}
@@ -37,7 +38,9 @@ class WeitestController < ApplicationController
 
   def seed_redpack
    @rp = 0
-   if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= 3
+   redpack_time = RedpackTime.get_redpack_time(@object.id)
+   person_num = redpack_time.person_num if redpack_time
+   if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= person_num
     beaconid = @beacon.id
     check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
     check.update(:state => 0) if check
@@ -168,6 +171,7 @@ class WeitestController < ApplicationController
                 end
                 Record.create(:user_id => from_user_id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'f_redpack', :object_id => rp.id)            
               end
+              f_value = f_value + 500
             else
               f_value = 0
             end
@@ -271,7 +275,8 @@ class WeitestController < ApplicationController
     msg = msgs.sample(1)[0] if msgs.length > 0
 
     return unless @object
-    @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
+    @amount = TimeAmount.get_fake_amount(@object.id,params[:beaconid])
+    p @amount
     fake_amount = @amount + 100000
 
     @time_amount = TimeAmount.get_time(@object.id)
