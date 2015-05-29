@@ -45,7 +45,7 @@ Game::Application.routes.draw do
   get '/games', to: "home#list"
   
   #get '/o2o', to: "home#o2o"
-  get ':url', to: "home#ibeacon"
+  #get ':url', to: "home#ibeacon"
 
   resources :home, only: [] do
     get :search
