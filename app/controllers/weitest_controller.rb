@@ -171,7 +171,7 @@ class WeitestController < ApplicationController
                 end
                 Record.create(:user_id => from_user_id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'f_redpack', :object_id => rp.id)            
               end
-              f_value = f_value + 500
+              #f_value = f_value + 500
             else
               f_value = 0
             end
