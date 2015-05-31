@@ -193,6 +193,14 @@ class WeitestController < ApplicationController
     end
     render nothing: true
   end
+
+ 
+  def game_report
+    if current_user
+      Record.create(:user_id => current_user.id, :from_user_id => params[:from_user_id], :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
+    end
+    render nothing: true
+  end
   
   
   def uv
