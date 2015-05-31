@@ -338,7 +338,16 @@ end
 
 def check_shake_history
   if params[:ticket] and params[:activityid]
-    #ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
+    sr = ShakeRecord.find_by(:ticket=>params[:ticket], :activityid=>params[:activityid])
+    unless sr
+      ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>"#" )
+    else
+      render :text=>"请找到巴士摇一摇"
+    end
+  else
+    if params[:id] == '1365567608'
+      render :text=>"请找到巴士摇一摇"
+    end
   end
 end
 
