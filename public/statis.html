@@ -30,13 +30,31 @@
           var categories_data=[];
           var data_data=[];
           var data_person=[];
+          var seed_redpack_num=[];
+          var social_redpack_num=[];
+          var feedback_redpack_num=[];
+          var seed_redpack=[];
+          var social_redpack=[];
+          var feedback_redpack=[];
           uv = msg.uv;
           uv_sub_group = msg.uv_sub_group;
+          record_sub_group = msg.record_sub_group;
           for(var i=0;i<uv_sub_group.length;i++)
           {
             categories_data[i] = uv_sub_group[i]['created_at'];
             data_data[i] = uv_sub_group[i]['per_num'] ; 
-            data_person[i] = uv_sub_group[i]['person_num']      
+            data_person[i] = uv_sub_group[i]['person_num'];     
+          }
+
+          for(var i=0;i<record_sub_group.length;i++)
+          {
+            seed_redpack_num[i] = record_sub_group[i]['seed_redpack_num'] ; 
+            social_redpack_num[i] = record_sub_group[i]['social_redpack_num'] ;
+            feedback_redpack_num[i] = record_sub_group[i]['feedback_redpack_num'] ;  
+            seed_redpack[i] = record_sub_group[i]['seed_redpack']/100;
+            social_redpack[i] = record_sub_group[i]['social_redpack']/100;
+            feedback_redpack[i] = record_sub_group[i]['feedback_redpack']/100;   
+
           }
 
           $(container_id).highcharts({
@@ -63,7 +81,7 @@
             }]
           },
           tooltip: {
-            valueSuffix: '次'
+            valueSuffix: '次/元'
           },
           legend: {
             layout: 'vertical',
@@ -72,7 +90,7 @@
             borderWidth: 0
           },
           series: [
-          {name: '单日浏览量',data: data_data},{name:"单日人数",data: data_person}
+          {name: '单日浏览量',data: data_data},{name:"单日人数",data: data_person},{name:"种子红包数",data: seed_redpack_num},{name:"社交红包数",data: social_redpack_num},{name:"反馈红包数",data: feedback_redpack_num},{name:"种子红包金额",data: seed_redpack},{name:"社交红包金额",data: social_redpack},{name:"反馈红包金额",data: feedback_redpack}
           ]
         });
 
