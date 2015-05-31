@@ -51,7 +51,7 @@ class WeitestController < ApplicationController
    #    # 今天次数用完了
    #    render :status => 200, json: {'info' => @rp.to_i}
    #  end 
-   render :status => 200, json: {"info" => "六一儿童节快乐"}
+   render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
   end
 
   # def bus_allocation
