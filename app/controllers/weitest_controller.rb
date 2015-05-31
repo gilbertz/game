@@ -278,7 +278,7 @@ class WeitestController < ApplicationController
     if @beacon.get_message
       msgs << {:content => @beacon.get_message.content, :type =>'text'}
     end 
-    @beacon.records.where('score > 0').order('created_at desc').limit(3).sample(1).each do |r|
+    @beacon.records.where("game_id=#{params[:game_id]}").where('score > 0').order('created_at desc').limit(3).sample(1).each do |r|
       msgs << {:content => r.to_s, :type => 'text'}
     end
     msg = msgs.sample(1)[0] if msgs.length > 0
