@@ -354,11 +354,11 @@ end
 
 
 def weixin_authorize
-  #check_cookie
-  check_shake_history
+  check_cookie
   unless current_user
     redirect_to authorize_url(request.url)
   end
+  check_shake_history
 end
 
 def get_material  
