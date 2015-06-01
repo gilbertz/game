@@ -314,7 +314,7 @@ class WeitestController < ApplicationController
     return unless @time_amount
     end_time = @time_amount.time
     now_time = Time.now
-    if ( end_time - now_time ) > 60*9
+    if ( end_time - now_time ) > 60*1
     end_time = Time.now
     now_time = Time.now
     else
