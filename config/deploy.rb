@@ -26,6 +26,7 @@ set :shared_paths, ['config/database.yml', 'log']
 
 # Optional settings:
    set :user, 'root'    # Username in the server to SSH to.
+ #  set :passwd, '111111'
 #   set :port, '30000'     # SSH port number.
 #   set :forward_agent, true     # SSH forward_agent.
 
@@ -94,8 +95,9 @@ task :deploy => :environment do
    # invoke :passenger
 
     to :launch do
-      invoke :'deploy:cleanup'
+  #    invoke :'deploy:cleanup'
       invoke :'passenger'
+      invoke :'deploy:cleanup'
       #queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       #queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
     end
