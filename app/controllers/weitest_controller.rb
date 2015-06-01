@@ -307,6 +307,13 @@ class WeitestController < ApplicationController
     return unless @time_amount
     end_time = @time_amount.time
     now_time = Time.now
+    if ( end_time - now_time ) > 60*9
+    end_time = Time.now
+    now_time = Time.now
+    else
+    end_time = @time_amount.time
+    now_time = Time.now
+    end
 
     check_today = Check.check_today(current_user.id,@material.id,@beacon.id)
     check_three = Check.check_three(current_user.id, @material.id,@beacon.id)
