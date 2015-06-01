@@ -5,7 +5,7 @@ class WeitestController < ApplicationController
   skip_before_filter :verify_authenticity_token  
 
   def weixin_check
-    if user_agent?
+    if user_agent?(request.user_agent)
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
     redpack_time = RedpackTime.get_redpack_time(@object.id)
     person_num = redpack_time.person_num if redpack_time
@@ -25,7 +25,7 @@ class WeitestController < ApplicationController
   # 今天没记录 判断是否在车上，如是，则从redpacktime.min max 取allocation,再取score发出weixin——post，如果不在车上，从点的人的allocation拿出一定score存储在allocation里，再从其中拿出score存储
   #@rp = Redpack.find_by(beaconid: beaconid).weixin_post(current_user, params[:beaconid],record_score).to_i
   def social_redpack
-    if user_agent?
+    if user_agent?(request.user_agent)
       beaconid = @beacon.id
       total_score = UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beaconid).total_score  
       if(total_score >= 100)
@@ -42,7 +42,7 @@ class WeitestController < ApplicationController
   end
 
   def seed_redpack
-    if user_agent? 
+    if user_agent?(request.user_agent)
     if request.headers['secret'] == "yaoshengyi"
       @rp = 0
       redpack_time = RedpackTime.get_redpack_time(@object.id)
