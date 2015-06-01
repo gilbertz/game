@@ -41,7 +41,7 @@ class WeitestController < ApplicationController
   end
 
   def seed_redpack
-    if user_agent?
+    # if user_agent? 
       if headers[:secret] == "yaoshengyi"
       @rp = 0
       redpack_time = RedpackTime.get_redpack_time(@object.id)
@@ -58,7 +58,7 @@ class WeitestController < ApplicationController
         render :status => 200, json: {'info' => @rp.to_i}
       end 
     end
-    end
+    # end
    # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
   end
 
@@ -373,7 +373,7 @@ def check_shake_history
     if not sr
       ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>"#" )
     elsif params[:id] == '1365567608'
-      render :text=>"请找到德高巴士摇一摇"
+    #  render :text=>"请找到德高巴士摇一摇"
     end
   else
     if params[:id] == '1365567608'
