@@ -58,8 +58,8 @@ end
 
 
 task :passenger => :environment do
-#  invoke :passenger_stop
-  invoke :passenger_start
+  #invoke :'passenger_stop'
+  invoke :'passenger_start'
 end
 
 task :passenger_start => :environment do
@@ -96,8 +96,8 @@ task :deploy => :environment do
     to :launch do
       invoke :'deploy:cleanup'
       invoke :'passenger'
-    #  queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-    #  queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
+      #queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
+      #queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
     end
   end
 end
