@@ -57,7 +57,7 @@ class WeitestController < ApplicationController
         check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
         check.update(:state => 0) if check
         info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
-        p @current_user.id 
+        p current_user.id 
         p  @object.id
         p @beacon.id
         p info
