@@ -57,6 +57,10 @@ class WeitestController < ApplicationController
         check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
         check.update(:state => 0) if check
         info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
+        p @current_user.id 
+        p  @object.id
+        p @beacon.id
+        p info
         @rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
         render :status => 200, json: {'info' => @rp.to_i}
       else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
@@ -308,7 +312,6 @@ class WeitestController < ApplicationController
 
     return unless @object
     @amount = TimeAmount.get_fake_amount(@object.id,params[:beaconid])
-    p @amount
     fake_amount = @amount + 100000
 
     @time_amount = TimeAmount.get_time(@object.id)
