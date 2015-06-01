@@ -1,6 +1,6 @@
 module API 
 
-  module Behaviour 
+  module Check 
 
     class CheckAPI <  Grape::API 
 

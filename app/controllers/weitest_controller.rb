@@ -29,7 +29,7 @@ class WeitestController < ApplicationController
       UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beaconid).update(:total_score => 0) 
       #total_score = total_score > 300 ? 300 : total_score
       #total_score = 1000 + total_score.to_i 
-      rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
+      # rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
       Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => rp.to_i, :object_type=> 'social_redpack', :object_id => @object.id)
       current_user.mark_scores(beaconid, @material.id)
     end
@@ -37,20 +37,23 @@ class WeitestController < ApplicationController
   end
 
   def seed_redpack
+   if headers[:secret] == "yaoshengyi"
    @rp = 0
    redpack_time = RedpackTime.get_redpack_time(@object.id)
    person_num = redpack_time.person_num if redpack_time
-   if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= person_num
-    beaconid = @beacon.id
-    check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
-    check.update(:state => 0) if check
-    info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
-    @rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
-    render :status => 200, json: {'info' => @rp.to_i}
+    if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= person_num
+      beaconid = @beacon.id
+      check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
+      check.update(:state => 0) if check
+      info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
+      @rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
+      render :status => 200, json: {'info' => @rp.to_i}
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       # 今天次数用完了
       render :status => 200, json: {'info' => @rp.to_i}
     end 
+    end
+   # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
   end
 
   # def bus_allocation
@@ -192,6 +195,21 @@ class WeitestController < ApplicationController
     end
     render nothing: true
   end
+
+ 
+  def game_report
+    if current_user
+      Record.create(:user_id => current_user.id, :from_user_id => params[:from_user_id], :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
+      rs = Record.where(:from_user_id => params[:from_user_id]).where('score > 9500').group('user_id')
+      if rs.length >= 4
+        f_value = 100 +rand(100)
+        from_user = User.find( params[:from_user_id] )   
+        @rp = @object.weixin_post(from_user, params[:beaconid], f_value) 
+        Record.create(:user_id => from_user.id, :beaconid=>@beacon.id, :game_id => params[:game_id], :score => rp, :object_type=>'g_redpack', :object_id => rp.id) 
+      end
+    end
+    render nothing: true
+  end
   
   
   def uv
@@ -269,7 +287,7 @@ class WeitestController < ApplicationController
     if @beacon.get_message
       msgs << {:content => @beacon.get_message.content, :type =>'text'}
     end 
-    @beacon.records.where('score > 0').order('created_at desc').limit(3).sample(1).each do |r|
+    @beacon.records.where("game_id=#{params[:game_id]}").where('score > 0').order('created_at desc').limit(3).sample(1).each do |r|
       msgs << {:content => r.to_s, :type => 'text'}
     end
     msg = msgs.sample(1)[0] if msgs.length > 0
@@ -338,17 +356,26 @@ end
 
 def check_shake_history
   if params[:ticket] and params[:activityid]
-    #ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
+    sr = ShakeRecord.find_by(:ticket=>params[:ticket], :activityid=>params[:activityid])
+    if not sr
+      ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>"#" )
+    elsif params[:id] == '1365567608'
+      render :text=>"请找到德高巴士摇一摇"
+    end
+  else
+    if params[:id] == '1365567608'
+      render :text=>"请找到巴士摇一摇"
+    end
   end
 end
 
 
 def weixin_authorize
-  #check_cookie
-  check_shake_history
+  check_cookie
   unless current_user
     redirect_to authorize_url(request.url)
   end
+  check_shake_history
 end
 
 def get_material  

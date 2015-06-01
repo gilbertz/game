@@ -1,10 +1,11 @@
 require 'grape-swagger'
+require 'image/image_api'
 require 'redpack/redpack_api'
 require 'cards/card_api'
 require 'pay/pay_api'
 require 'orders/order_api'
 require 'behaviour/behaviour_api'
-require 'behaviour/check_api'
+require 'check/check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
 require 'statis/statis_api'
@@ -52,15 +53,17 @@ module API
       unauthorized!
     end
 
-    mount API::Statis::StatisAPI
+    mount API::PartyInfo::PartyInfoAPI
+    mount API::MerchantInfo::MerchantInfoAPI
+    mount API::Pay::PayAPI
+    mount API::Orders::OrderAPI
+    mount API::Image::ImageAPI
+    mount API::Check::CheckAPI
     mount API::RedPack::RedpackAPI
     mount API::Cards::CardAPI
-    mount API::Orders::OrderAPI
-    mount API::Pay::PayAPI
+    mount API::Statis::StatisAPI
     mount API::Behaviour::BehaviourAPI
-    mount API::MerchantInfo::MerchantInfoAPI
-    mount API::PartyInfo::PartyInfoAPI
-    mount API::Behaviour::CheckAPI
+
 
     #api 文档
     add_swagger_documentation
