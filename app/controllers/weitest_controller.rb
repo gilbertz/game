@@ -2,6 +2,12 @@
 class WeitestController < ApplicationController
   before_filter :weixin_authorize, :only => [:o2o]
   before_filter :pre
+  before_filter :current_user
+  skip_before_filter :verify_authenticity_token  
+
+  def current_user
+    current_user = User.find_by_id(164)
+  end
 
   def weixin_check
     if user_agent?
@@ -41,8 +47,8 @@ class WeitestController < ApplicationController
   end
 
   def seed_redpack
-    # if user_agent? 
-      if headers[:secret] == "yaoshengyi"
+    if user_agent? 
+    if request.headers['secret'] == "yaoshengyi"
       @rp = 0
       redpack_time = RedpackTime.get_redpack_time(@object.id)
       person_num = redpack_time.person_num if redpack_time
@@ -57,8 +63,10 @@ class WeitestController < ApplicationController
         # 今天次数用完了
         render :status => 200, json: {'info' => @rp.to_i}
       end 
+    else
+      render :status => 200, json: {'info' => request.headers['secret']}
     end
-    # end
+    end
    # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
   end
 
@@ -300,14 +308,13 @@ class WeitestController < ApplicationController
 
     return unless @object
     @amount = TimeAmount.get_fake_amount(@object.id,params[:beaconid])
-    p @amount
     fake_amount = @amount + 100000
 
     @time_amount = TimeAmount.get_time(@object.id)
     return unless @time_amount
     end_time = @time_amount.time
     now_time = Time.now
-    if ( end_time - now_time ) > 60*9
+    if ( end_time - now_time ) > 60*1
     end_time = Time.now
     now_time = Time.now
     else
