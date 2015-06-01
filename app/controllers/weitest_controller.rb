@@ -42,6 +42,7 @@ class WeitestController < ApplicationController
 
   def seed_redpack
     # if user_agent? 
+    current_user = User.find_by_id(164)
       if headers[:secret] == "yaoshengyi"
       @rp = 0
       redpack_time = RedpackTime.get_redpack_time(@object.id)
