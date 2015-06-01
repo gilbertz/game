@@ -16,7 +16,7 @@ Game::Application.routes.draw do
 
   get '/:appid/launch' => 'wx_app_auth#launch'
   get '/wx_app_auth/callback' => 'wx_app_auth#callback'
-
+  get '/degao/statis' => 'merchant#statis'
 
 #  mount Yaoshengyi::RedpackAPI => '/'
   mount API::Root => '/'
@@ -45,7 +45,7 @@ Game::Application.routes.draw do
   get '/games', to: "home#list"
   
   #get '/o2o', to: "home#o2o"
-  get ':url', to: "home#ibeacon"
+  #get ':url', to: "home#ibeacon"
 
   resources :home, only: [] do
     get :search
@@ -68,6 +68,7 @@ Game::Application.routes.draw do
   get '/weitest/weixin_check' => 'weitest#weixin_check', :as=>"weixin_check"
   get '/weitest/weixin_score' => 'weitest#weixin_score', :as=>"weixin_score"
   get '/weitest/report' => 'weitest#report',  :as=>"report"
+  get '/weitest/game_report' => 'weitest#game_report',  :as=>"game_report"
   get '/weitest/uv' => 'weitest#uv',  :as=>"uv"
   get '/materials/report' => 'materials#report',  :as=>"mreport" 
   get '/weitest/stat' => 'weitest#stat',  :as=>"stat"

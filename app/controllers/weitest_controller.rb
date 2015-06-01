@@ -5,7 +5,9 @@ class WeitestController < ApplicationController
 
   def weixin_check
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
-    if Check.check_per_day(current_user.id,params[:game_id],beaconid)<3
+    redpack_time = RedpackTime.get_redpack_time(@object.id)
+    person_num = redpack_time.person_num if redpack_time
+    if Check.check_per_day(current_user.id,params[:game_id],beaconid)< person_num 
       #p Check.check_per_day(current_user.id,params[:game_id])
       
       Check.create(user_id: current_user.id, beaconid: beaconid, state: 1,game_id: params[:game_id]) unless Check.check_state(current_user.id, params[:game_id], beaconid) > 0
@@ -25,49 +27,53 @@ class WeitestController < ApplicationController
     if(total_score >= 100)
       Score.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :value => -total_score, :game_id => params[:game_id])
       UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beaconid).update(:total_score => 0) 
-      Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => -total_score, :object_type=> 'social_redpack', :object_id => @object.id)
-      total_score = total_score > 300 ? 300 : total_score
-
-      Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
-
+      #total_score = total_score > 300 ? 300 : total_score
+      #total_score = 1000 + total_score.to_i 
+      # rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
+      Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => rp.to_i, :object_type=> 'social_redpack', :object_id => @object.id)
       current_user.mark_scores(beaconid, @material.id)
     end
     render :status => 200, json: {'info' => total_score}
   end
 
   def seed_redpack
+   if headers[:secret] == "yaoshengyi"
    @rp = 0
-   if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= 3
-    beaconid = @beacon.id
-    check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
-    check.update(:state => 0) if check
-    info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
-    @rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
-    render :status => 200, json: {'info' => @rp.to_i}
+   redpack_time = RedpackTime.get_redpack_time(@object.id)
+   person_num = redpack_time.person_num if redpack_time
+    if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= person_num
+      beaconid = @beacon.id
+      check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
+      check.update(:state => 0) if check
+      info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
+      @rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
+      render :status => 200, json: {'info' => @rp.to_i}
     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
       # 今天次数用完了
       render :status => 200, json: {'info' => @rp.to_i}
     end 
+    end
+   # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
   end
 
-  def bus_allocation
-    if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
-      info = Redpack.first_allocation(current_user.id, params[:game_id], @object,params[:beaconid])
-      render :status => 200, json: {'info' => info}
-    elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
-      info = 0
-      render :status => 200, json: {'info' => info}
-    end 
-  end
+  # def bus_allocation
+  #   if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
+  #     info = Redpack.first_allocation(current_user.id, params[:game_id], @object,params[:beaconid])
+  #     render :status => 200, json: {'info' => info}
+  #   elsif Record.redpack_per_day(current_user.id, params[:game_id]) == 3
+  #     info = 0
+  #     render :status => 200, json: {'info' => info}
+  #   end 
+  # end
 
-  def not_bus_allocation
-    if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
-      Redpack.share_allocation(current_user.id, params[:openid], params[:game_id], @object)
-      render :status => 200, json: {'info' => "不在公交也有红包"}
-    elsif Record.redpack_per_day(current_user.id, params[:game_id]) ==2
-      render :status => 200, json: {'info' => "今天次数用完"}
-    end 
-  end
+  # def not_bus_allocation
+  #   if Record.redpack_per_day(current_user.id, params[:game_id]) < 2
+  #     Redpack.share_allocation(current_user.id, params[:openid], params[:game_id], @object)
+  #     render :status => 200, json: {'info' => "不在公交也有红包"}
+  #   elsif Record.redpack_per_day(current_user.id, params[:game_id]) ==2
+  #     render :status => 200, json: {'info' => "今天次数用完"}
+  #   end 
+  # end
 
 
   #caches_page :show
@@ -132,17 +138,17 @@ class WeitestController < ApplicationController
     render nothing: true
   end
 
-  def weixin_redpack
-    if current_user and not @record
-      beaconid = @beacon.id
-      rp = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0]
-      @rp = rp.weixin_post(current_user, params[:beaconid]).to_i
-      Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)
-      render :status => 200, json: {'rp' => @rp}
-    else
-      render :status => 200, json: {'result' => 'not current_user or record' }
-    end 
-  end
+  # def weixin_redpack
+  #   if current_user and not @record
+  #     beaconid = @beacon.id
+  #     rp = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0]
+  #     @rp = rp.weixin_post(current_user, params[:beaconid]).to_i
+  #     Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)
+  #     render :status => 200, json: {'rp' => @rp}
+  #   else
+  #     render :status => 200, json: {'result' => 'not current_user or record' }
+  #   end 
+  # end
 
   def weixin_score
     if current_user
@@ -168,6 +174,7 @@ class WeitestController < ApplicationController
                 end
                 Record.create(:user_id => from_user_id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'f_redpack', :object_id => rp.id)            
               end
+              #f_value = f_value + 500
             else
               f_value = 0
             end
@@ -185,6 +192,21 @@ class WeitestController < ApplicationController
   def report
     if current_user
       Record.create(:user_id => current_user.id, :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
+    end
+    render nothing: true
+  end
+
+ 
+  def game_report
+    if current_user
+      Record.create(:user_id => current_user.id, :from_user_id => params[:from_user_id], :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
+      rs = Record.where(:from_user_id => params[:from_user_id]).where('score > 9500').group('user_id')
+      if rs.length >= 4
+        f_value = 100 +rand(100)
+        from_user = User.find( params[:from_user_id] )   
+        @rp = @object.weixin_post(from_user, params[:beaconid], f_value) 
+        Record.create(:user_id => from_user.id, :beaconid=>@beacon.id, :game_id => params[:game_id], :score => rp, :object_type=>'g_redpack', :object_id => rp.id) 
+      end
     end
     render nothing: true
   end
@@ -265,13 +287,14 @@ class WeitestController < ApplicationController
     if @beacon.get_message
       msgs << {:content => @beacon.get_message.content, :type =>'text'}
     end 
-    @beacon.records.where('score > 0').order('created_at desc').limit(3).sample(1).each do |r|
+    @beacon.records.where("game_id=#{params[:game_id]}").where('score > 0').order('created_at desc').limit(3).sample(1).each do |r|
       msgs << {:content => r.to_s, :type => 'text'}
     end
     msg = msgs.sample(1)[0] if msgs.length > 0
 
     return unless @object
-    @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
+    @amount = TimeAmount.get_fake_amount(@object.id,params[:beaconid])
+    p @amount
     fake_amount = @amount + 100000
 
     @time_amount = TimeAmount.get_time(@object.id)
@@ -333,17 +356,26 @@ end
 
 def check_shake_history
   if params[:ticket] and params[:activityid]
-    ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>request.url )
+    sr = ShakeRecord.find_by(:ticket=>params[:ticket], :activityid=>params[:activityid])
+    if not sr
+      ShakeRecord.create(:ticket=>params[:ticket], :activityid=>params[:activityid], :request_url =>"#" )
+    elsif params[:id] == '1365567608'
+      render :text=>"请找到德高巴士摇一摇"
+    end
+  else
+    if params[:id] == '1365567608'
+      render :text=>"请找到巴士摇一摇"
+    end
   end
 end
 
 
 def weixin_authorize
-  #check_cookie
-  check_shake_history
+  check_cookie
   unless current_user
     redirect_to authorize_url(request.url)
   end
+  check_shake_history
 end
 
 def get_material  

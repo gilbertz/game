@@ -1,11 +1,14 @@
 require 'grape-swagger'
+require 'image/image_api'
 require 'redpack/redpack_api'
 require 'cards/card_api'
 require 'pay/pay_api'
 require 'orders/order_api'
 require 'behaviour/behaviour_api'
+require 'check/check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
+require 'statis/statis_api'
 module API
   #一个服务一个模块  小型微服务
   class Root < Grape::API
@@ -16,7 +19,8 @@ module API
     helpers do
 
       def current_user
-        User.current_user
+        # User.current_user
+        User.find_by_id(164)
       end
 
       def unauthorized!
@@ -46,18 +50,20 @@ module API
     end
 
     before do
-      # unauthorized!
+      unauthorized!
     end
 
-
-
+    mount API::PartyInfo::PartyInfoAPI
+    mount API::MerchantInfo::MerchantInfoAPI
+    mount API::Pay::PayAPI
+    mount API::Orders::OrderAPI
+    mount API::Image::ImageAPI
+    mount API::Check::CheckAPI
     mount API::RedPack::RedpackAPI
     mount API::Cards::CardAPI
-    mount API::Orders::OrderAPI
-    mount API::Pay::PayAPI
+    mount API::Statis::StatisAPI
     mount API::Behaviour::BehaviourAPI
-    mount API::MerchantInfo::MerchantInfoAPI
-    mount API::PartyInfo::PartyInfoAPI
+
 
     #api 文档
     add_swagger_documentation

@@ -19,6 +19,10 @@ class Ibeacon < ActiveRecord::Base
     end
   end
 
+  def self.get_beacon(beacon_url)
+    beacon = Ibeacon.find_by_url(beacon_url).id if Ibeacon.find_by_url(beacon_url)
+  end
+
   def get_message
     if self.messages.length > 0
       self.messages.last
