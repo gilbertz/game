@@ -6,6 +6,8 @@
 # Example:
 #
 # set :output, "/path/to/my/cron_log.log"
+set :output, File.join(File.dirname(__FILE__), '..', 'log', 'scheduled_tasks.log')
+
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
