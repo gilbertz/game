@@ -2,6 +2,7 @@
 class WeitestController < ApplicationController
   before_filter :weixin_authorize, :only => [:o2o]
   before_filter :pre
+  skip_before_filter :verify_authenticity_token  
 
   def weixin_check
     if user_agent?
