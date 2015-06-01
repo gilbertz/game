@@ -64,7 +64,7 @@ class WeitestController < ApplicationController
         render :status => 200, json: {'info' => @rp.to_i}
       end 
     else
-      render :status => 200, json: {'info' => 0}
+      render :status => 200, json: {'info' => headers[:secret]}
     end
     # end
    # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
