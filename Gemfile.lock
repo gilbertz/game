@@ -353,7 +353,7 @@ DEPENDENCIES
   omniauth
   omniauth-oauth2
   omniauth-weixin
-  passenger
+  passenger (~> 5.0.6)
   quiet_assets
   qy_wechat (~> 1.0.1)
   rabl (~> 0.9.3)
