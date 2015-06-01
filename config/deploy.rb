@@ -39,7 +39,7 @@ task :environment do
   # For those using RVM, use this to load an RVM version@gemset.
   #invoke :'rvm:use[ruby-1.9.3-p125@default]'
   
-  invoke :'rvm:use[ruby-2.0.0-p481@global]'
+  invoke :'rvm:use[ruby-2.0.0-p481]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -65,7 +65,7 @@ end
 task :passenger_start => :environment do
 #  queue "source /etc/profile.d/rvm.sh" 
  # queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger start -a 0.0.0.0 -p #{ENV['port']} -d -e production --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
-  queue "cd #{deploy_to}/#{current_path} && /usr/local/rvm/gems/ruby-2.0.0-p481@game/bin/passenger  start -a 0.0.0.0 -p #{ENV['port']} -d -e production --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
+  queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger  start -a 0.0.0.0 -p #{ENV['port']} -d -e production --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
 end
 
 task :passenger_stop => :environment do
@@ -73,7 +73,7 @@ task :passenger_stop => :environment do
   #quene "touch #{deploy_to}/#{current_path}/passenger.#{ENV['port']}.pid"
   #queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger stop -p #{ENV['port']} --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
   quene "touch #{deploy_to}/#{current_path}/passenger.#{ENV['port']}.pid"
-  queue "cd #{deploy_to}/#{current_path} && /usr/local/rvm/gems/ruby-2.0.0-p481@game/bin/passenger  stop -p #{ENV['port']} --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
+  queue "cd #{deploy_to}/#{current_path} && rvmsudo /usr/local/rvm/gems/ruby-2.0.0-p481/bin/passenger  stop -p #{ENV['port']} --pid-file #{deploy_to}/#{shared_path}/passenger.#{ENV['port']}.pid"
 end
 
 
@@ -95,7 +95,7 @@ task :deploy => :environment do
 
     to :launch do
       invoke :'deploy:cleanup'
-      invoke :passenger
+      invoke :'passenger'
     #  queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
     #  queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
     end
