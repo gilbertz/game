@@ -326,7 +326,6 @@ DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
   actionpack-xml_parser
-  bcrypt
   by_star!
   china_sms
   chronic

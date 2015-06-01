@@ -59,7 +59,7 @@ end
 
 
 task :passenger => :environment do
-  #invoke :'passenger_stop'
+  invoke :'passenger_stop'
   invoke :'passenger_start'
 end
 
