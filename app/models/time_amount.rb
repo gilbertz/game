@@ -42,9 +42,9 @@ class TimeAmount < ActiveRecord::Base
   redpack_time = RedpackTime.get_redpack_time(redpack_id)
   return unless redpack_time
   # if $redis.llen("hongbaolist_#{redpack_id}") == 0 
-  #   time = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
+    time = TimeAmount.where("time >= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time asc")[0]
   # else 
-    time =TimeAmount.where("time <= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time desc")[0]
+  # time =TimeAmount.where("time <= ? and redpack_time_id = ?", Time.now, redpack_time.id).order("time desc")[0]
   # end
 end
 
