@@ -41,7 +41,7 @@ class WeitestController < ApplicationController
   end
 
   def seed_redpack
-    if user_agent?
+    # if user_agent? 
       if headers[:secret] == "yaoshengyi"
       @rp = 0
       redpack_time = RedpackTime.get_redpack_time(@object.id)
@@ -58,7 +58,7 @@ class WeitestController < ApplicationController
         render :status => 200, json: {'info' => @rp.to_i}
       end 
     end
-    end
+    # end
    # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
   end
 
