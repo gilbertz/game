@@ -26,6 +26,7 @@ set :shared_paths, ['config/database.yml', 'log']
 
 # Optional settings:
    set :user, 'root'    # Username in the server to SSH to.
+ #  set :passwd, '111111'
 #   set :port, '30000'     # SSH port number.
 #   set :forward_agent, true     # SSH forward_agent.
 
@@ -39,7 +40,7 @@ task :environment do
   # For those using RVM, use this to load an RVM version@gemset.
   #invoke :'rvm:use[ruby-1.9.3-p125@default]'
   
-  invoke :'rvm:use[ruby-2.0.0-p481]'
+  invoke :'rvm:use[ruby-2.0.0-p481@global]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -58,7 +59,7 @@ end
 
 
 task :passenger => :environment do
-  #invoke :'passenger_stop'
+  invoke :'passenger_stop'
   invoke :'passenger_start'
 end
 
@@ -94,8 +95,9 @@ task :deploy => :environment do
    # invoke :passenger
 
     to :launch do
-      invoke :'deploy:cleanup'
+  #    invoke :'deploy:cleanup'
       invoke :'passenger'
+      invoke :'deploy:cleanup'
       #queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       #queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
     end
