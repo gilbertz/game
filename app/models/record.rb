@@ -36,6 +36,14 @@ class Record < ActiveRecord::Base
   end
 
 
+  def from_user_name
+    if self.from_user_id
+      fu = User.find_by_id(self.from_user_id)
+      return fu.name if fu
+    end
+  end
+
+
   def user_img
     if self.user
       self.user.profile_img_url

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526092223) do
+ActiveRecord::Schema.define(version: 20150531101021) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -550,7 +550,10 @@ ActiveRecord::Schema.define(version: 20150526092223) do
     t.string   "ticket"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "shake_records", ["user_id"], name: "index_shake_records_on_user_id", using: :btree
 
   create_table "tasks", force: true do |t|
     t.string   "service_name"
