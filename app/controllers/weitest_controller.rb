@@ -5,10 +5,6 @@ class WeitestController < ApplicationController
   before_filter :current_user
   skip_before_filter :verify_authenticity_token  
 
-  def current_user
-    current_user = User.find_by_id(164)
-  end
-
   def weixin_check
     if user_agent?
     beaconid = Ibeacon.find_by(:url=>params[:beaconid]).id
@@ -47,7 +43,7 @@ class WeitestController < ApplicationController
   end
 
   def seed_redpack
-    # if user_agent? 
+    if user_agent? 
     if request.headers['secret'] == "yaoshengyi"
       @rp = 0
       redpack_time = RedpackTime.get_redpack_time(@object.id)
@@ -66,7 +62,7 @@ class WeitestController < ApplicationController
     else
       render :status => 200, json: {'info' => request.headers['secret']}
     end
-    # end
+    end
    # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
   end
 
