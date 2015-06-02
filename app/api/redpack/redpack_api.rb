@@ -142,6 +142,11 @@ module API
           if check_num <= person_num and check_state
             check_state.update(:state => 0) 
             info = Redpack.gain_seed_redpack(current_user.id, game_id, object, beacon_id)
+            p current_user.id
+            p game_id
+            p object.id
+            p beacon_id
+            p info
             money = Redpack.find(object.id).weixin_post(current_user,beacon_id,info) if info > WEIXIN_REDPACK_RESTRICTION_VALUE
             return {'result' => 0, 'money' => money, 'info' => "成功发送种子红包"}
           else 
