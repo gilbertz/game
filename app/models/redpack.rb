@@ -290,7 +290,7 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
 
     if $redis.hexists("hongBaoConsumedMap_#{redpack.id}" , user_id) == true 
       p "dd"
-      p $redis.hget("hongBaoConsumedMap",user_id)
+      p $redis.hget("hongBaoConsumedMap_#{redpack.id}",user_id)
       return 0 
     else
       hongbao = $redis.rpop("hongbaolist_#{redpack.id}")
