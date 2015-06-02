@@ -16,7 +16,7 @@ case ENV["to"]
     set :user, 'root'
     set :password, 'bNg42mjv'
     set :deploy_to, '/data/www/mina'
-    ENV['port'] = '2016'
+    ENV['port'] = '8000'
   when '114'
     set :domain, '114.215.120.243'
     set :user, 'root'

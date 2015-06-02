@@ -374,6 +374,3 @@ DEPENDENCIES
   weixin_authorize
   weixin_rails_middleware
   whenever
-
-BUNDLED WITH
-   1.10.2
