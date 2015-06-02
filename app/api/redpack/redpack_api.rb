@@ -126,7 +126,7 @@ module API
           requires :game_url, type: String, desc: "游戏url"
         end
         before do
-          # user_agent!
+          user_agent!
           request_headers!
           # wizarcan_sign!
         end
