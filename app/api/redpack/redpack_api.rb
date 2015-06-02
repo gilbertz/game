@@ -243,9 +243,14 @@ module API
           $redis.lrange("hongbaolist_#{params[:rp_id]}",0,-1)
         end
 
-        desc "show_consume"
-        get '/show_consume/:rp_id' do
+        desc "show_consumed_list"
+        get '/show_consumed_list/:rp_id' do
           $redis.lrange("hongBaoConsumedList_#{params[:rp_id]}",0,-1)
+        end
+
+        desc "show_consume_map"
+        get '/show_consume_map/:rp_id' do
+          $redis.hget("hongBaoConsumedMap_#{params[:rp_id]}",current_user.id)
         end
 
         desc "delete_redpack"
