@@ -5,7 +5,7 @@ require 'cards/card_api'
 require 'pay/pay_api'
 require 'orders/order_api'
 require 'behaviour/behaviour_api'
-require 'check/check_api'
+require 'activity_check/activity_check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
 require 'statis/statis_api'
@@ -21,6 +21,28 @@ module API
       def current_user
         # User.current_user
         User.find_by_id(164)
+      end
+
+      def user_agent!
+        ua = request.user_agent.downcase
+        unless ua.index("micromessenger")
+          error_403!
+        end 
+      end
+
+      def request_headers!
+        unless request.headers['Secret'] == "yaoshengyi"
+          error_403!
+        end
+      end
+
+      def wizarcan_sign!
+        key = "bcbd4a839af6380feb85602151f8d4a0"
+        kvs = [params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].join
+        kvs = Digest::MD5.hexdigest(kvs).upcase 
+        unless kvs == params[:sign].upcase
+          error_403!
+        end
       end
 
       def unauthorized!
@@ -44,6 +66,7 @@ module API
         h["error"] = message if message
         error! message,status
       end
+
       def error_403!
         error! 'Forbidden',403
       end
@@ -58,7 +81,7 @@ module API
     mount API::Pay::PayAPI
     mount API::Orders::OrderAPI
     mount API::Image::ImageAPI
-    mount API::Check::CheckAPI
+    mount API::ActivityCheck::ActivityCheckAPI
     mount API::RedPack::RedpackAPI
     mount API::Cards::CardAPI
     mount API::Statis::StatisAPI

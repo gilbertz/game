@@ -47,7 +47,7 @@ end
 # Use ActiveModel has_secure_password
 #gem 'bcrypt-ruby', '~> 3.0.0'
 
-gem 'bcrypt-ruby', require: 'bcrypt'
+gem 'bcrypt'
 
 gem "redis"
 gem 'redis-namespace'
@@ -96,7 +96,7 @@ gem 'qy_wechat', '~> 1.0.1'
 
 
 gem 'mina'
-gem 'passenger'
+gem 'passenger','~> 5.0.6'
 gem 'sidekiq'
 gem 'mina-sidekiq'
 

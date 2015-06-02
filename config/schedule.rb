@@ -6,6 +6,8 @@
 # Example:
 #
 # set :output, "/path/to/my/cron_log.log"
+set :output, File.join(File.dirname(__FILE__), '..', 'log', 'scheduled_tasks.log')
+
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -37,9 +39,13 @@ end
 #           rake "redpack:notice_redpack_begin"
 # end
 
-every '9,19,29,39,49,59 * * * *' do
+every 2.minutes do
   rake "redpack:generate_redpack"
 end
+
+# every '9,19,29,39,49,59 * * * *' do
+#   rake "redpack:generate_redpack"
+# end
 
 #every 1.minute do
  #         rake "redpack:generate_test_redpack"
