@@ -7,7 +7,7 @@ module API
       end
       
       before do
-        user_agent!
+        # user_agent!
         request_headers!
         # wizarcan_sign!
       end 
@@ -219,7 +219,6 @@ module API
 
       resource :test_redpack do
         
-        p request
         desc "test_generate"
         get '/test_generate' do
           result_hongbao = Redpack.generate(params[:total].to_i, params[:count].to_i, params[:max].to_i, params[:min].to_i, params[:rp_id].to_i)
