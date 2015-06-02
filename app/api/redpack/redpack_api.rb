@@ -245,14 +245,14 @@ module API
 
         desc "show_consume"
         get '/show_consume/:rp_id' do
-          $redis.lrange("hongBaoConsumedList_#{rp_id}",0,-1).length
+          $redis.lrange("hongBaoConsumedList_#{params[:rp_id]}",0,-1)
         end
 
         desc "delete_redpack"
         get '/delete_redpack/:rp_id' do
-          $redis.del("hongbaolist_#{rp_id}")
-          $redis.del("hongBaoConsumedMap_#{rp_id}")
-          $redis.del("hongBaoConsumedList_#{rp_id}")
+          $redis.del("hongbaolist_#{params[:rp_id]}")
+          $redis.del("hongBaoConsumedMap_#{params[:rp_id]}")
+          $redis.del("hongBaoConsumedList_#{params[:rp_id]}")
         end
       end
 
