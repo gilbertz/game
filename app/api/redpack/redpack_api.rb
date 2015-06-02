@@ -135,11 +135,11 @@ module API
           check_num = Check.check_per_day(current_user.id, game_id, beacon_id)
           if check_num <= person_num and check_state
             check_state.update(:state => 0) 
-            info = Redpack.gain_seed_redpack(current_user.id, game_id, object.id, beacon_id)
+            info = Redpack.gain_seed_redpack(current_user.id, game_id, object, beacon_id)
             money = Redpack.find(object.id).weixin_post(current_user,beacon_id,info) if info > WEIXIN_REDPACK_RESTRICTION_VALUE
-            return {'info' => money }
+            return {'result' => 0, 'money' => money }
           else 
-            return {'info' => 0 }
+            return {'result' => -1, 'money' => 0 }
           end 
         end
         
@@ -149,7 +149,7 @@ module API
           requires :game_url, type: String, desc: "游戏url"
           optional :openid, type: String, desc: "用户openid"
         end
-        get '/record_social_and_send_feedback_redpack' do
+        post '/record_social_and_send_feedback_redpack' do
           if current_user
             beacon_id = Ibeacon.get_beacon(params[:beacon_url])
             game_id = Material.get_game(params[:game_url])
@@ -192,7 +192,7 @@ module API
           requires :beacon_url, type: String, desc: "ibeacon的url"
           requires :game_url, type: String, desc: "游戏url"
         end
-        get '/send_social_redpack' do
+        post '/send_social_redpack' do
           beacon_id = Ibeacon.get_beacon(params[:beacon_url])
           game_id = Material.get_game(params[:game_url])
           total_score = UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beacon_id).total_score  

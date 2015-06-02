@@ -5,7 +5,7 @@ require 'cards/card_api'
 require 'pay/pay_api'
 require 'orders/order_api'
 require 'behaviour/behaviour_api'
-require 'check/check_api'
+require 'activity_check/activity_check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
 require 'statis/statis_api'
@@ -58,7 +58,7 @@ module API
     mount API::Pay::PayAPI
     mount API::Orders::OrderAPI
     mount API::Image::ImageAPI
-    mount API::Check::CheckAPI
+    mount API::ActivityCheck::ActivityCheckAPI
     mount API::RedPack::RedpackAPI
     mount API::Cards::CardAPI
     mount API::Statis::StatisAPI

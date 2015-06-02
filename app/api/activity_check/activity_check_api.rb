@@ -1,8 +1,8 @@
 module API 
 
-  module Check 
+  module ActivityCheck 
 
-    class CheckAPI <  Grape::API 
+    class ActivityCheckAPI <  Grape::API 
 
       version 'v1'
       helpers  do
