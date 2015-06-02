@@ -43,7 +43,7 @@ class WeitestController < ApplicationController
 
   def seed_redpack
     # if user_agent?(request.user_agent)
-    #if request.headers['secret'] == "yaoshengyi"
+    #if request.headers['Secret'] == "yaoshengyi"
       @rp = 0
       redpack_time = RedpackTime.get_redpack_time(@object.id)
       person_num = redpack_time.person_num if redpack_time

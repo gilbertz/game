@@ -5,7 +5,13 @@ module API
 
       helpers do
       end
-
+      
+      before do
+        user_agent!
+        request_headers!
+        wizarcan_sign!
+      end 
+ 
       resource :redpack do
 
 #-------------------新建红包------------------#

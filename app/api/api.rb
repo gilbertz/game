@@ -23,6 +23,29 @@ module API
         User.find_by_id(164)
       end
 
+      def user_agent!
+        ua = request.user_agent.downcase
+        unless ua.index("micromessenger")
+          error_403!
+        end 
+      end
+
+      def request_headers!
+        unless request.headers['Secret'] == "yaoshengyi"
+          error_403!
+        end
+      end
+
+      def wizarcan_sign!
+        p request
+        key = "bcbd4a839af6380feb85602151f8d4a0"
+        kvs = [params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:id],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].join
+        kvs = Digest::MD5.hexdigest(kvs).upcase 
+        unless kvs == params[:sign].upcase
+          error_403!
+        end
+      end
+
       def unauthorized!
         #如果没有登录x
         unless current_user
@@ -44,6 +67,7 @@ module API
         h["error"] = message if message
         error! message,status
       end
+
       def error_403!
         error! 'Forbidden',403
       end
