@@ -5,12 +5,6 @@ module API
 
       helpers do
       end
-      
-      before do
-        # user_agent!
-        request_headers!
-        # wizarcan_sign!
-      end 
  
       resource :redpack do
 
@@ -130,6 +124,11 @@ module API
         params do
           requires :beacon_url, type: String, desc: "ibeacon的url"
           requires :game_url, type: String, desc: "游戏url"
+        end
+        before do
+          # user_agent!
+          request_headers!
+          # wizarcan_sign!
         end
         post '/send_seed_redpack' do
           beacon_id = Ibeacon.get_beacon(params[:beacon_url])
