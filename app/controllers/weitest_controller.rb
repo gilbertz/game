@@ -41,29 +41,29 @@ class WeitestController < ApplicationController
     # end
   end
 
-  def seed_redpack
-    # if user_agent?(request.user_agent)
-    #if request.headers['Secret'] == "yaoshengyi"
-      @rp = 0
-      redpack_time = RedpackTime.get_redpack_time(@object.id)
-      person_num = redpack_time.person_num if redpack_time
-      if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= person_num
-        beaconid = @beacon.id
-        check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
-        check.update(:state => 0) if check
-        info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
-        @rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
-        render :status => 200, json: {'info' => @rp.to_i}
-      else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
-        # 今天次数用完了
-        render :status => 200, json: {'info' => @rp.to_i}
-      end 
-    #else
-    #  render :status => 200, json: {'info' => request.headers['secret']}
-    #end
-    # end
-   # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
-  end
+  # def seed_redpack
+  #   # if user_agent?(request.user_agent)
+  #   #if request.headers['Secret'] == "yaoshengyi"
+  #     @rp = 0
+  #     redpack_time = RedpackTime.get_redpack_time(@object.id)
+  #     person_num = redpack_time.person_num if redpack_time
+  #     if Check.check_per_day(current_user.id,params[:game_id], @beacon.id) <= person_num
+  #       beaconid = @beacon.id
+  #       check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
+  #       check.update(:state => 0) if check
+  #       info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
+  #       @rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
+  #       render :status => 200, json: {'info' => @rp.to_i}
+  #     else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
+  #       # 今天次数用完了
+  #       render :status => 200, json: {'info' => @rp.to_i}
+  #     end 
+  #   #else
+  #   #  render :status => 200, json: {'info' => request.headers['secret']}
+  #   #end
+  #   # end
+  #  # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
+  # end
 
   # def bus_allocation
   #   if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
@@ -167,7 +167,7 @@ class WeitestController < ApplicationController
         if au
           from_user_id = au.user_id
           from_user = User.find from_user_id
-          if params[:beaconid] == 'dgbs'
+          if params[:y1y_beacon_url] == 'dgbs'
             @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.id) 
             if not @score and from_user.social_value(beaconid) > 0
               r = Record.where(:beaconid=>beaconid, :user_id =>au.user_id, :object_type => 'Redpack', :feedback => nil).order('created_at desc')[0]
@@ -176,7 +176,7 @@ class WeitestController < ApplicationController
               from_user.decr_social(beaconid)
               if from_user.social_value(beaconid) % 3 == 0
                 rp = @beacon.redpacks[0]
-                @rp = rp.weixin_post(from_user, params[:beaconid], f_value)
+                @rp = rp.weixin_post(from_user, params[:y1y_beacon_url], f_value)
                 if r
                   r.feedback = 1
                   r.save
@@ -216,7 +216,7 @@ class WeitestController < ApplicationController
       if params[:score].to_i >= 9500 and rs.length >= 4
         f_value = 100 +rand(100)
         from_user = User.find( params[:from_user_id] )   
-        @rp = @object.weixin_post(from_user, params[:beaconid], f_value) 
+        @rp = @object.weixin_post(from_user, params[:y1y_beacon_url], f_value) 
         Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp, :object_type => 'g_redpack',:object_id => @object.id)       
         from_user.decr_social(@beacon.id) 
         from_user.update_records(@beacon.id)
@@ -307,7 +307,7 @@ class WeitestController < ApplicationController
     msg = msgs.sample(1)[0] if msgs.length > 0
 
     return unless @object
-    @amount = TimeAmount.get_fake_amount(@object.id,params[:beaconid])
+    @amount = TimeAmount.get_fake_amount(@object.id,params[:y1y_beacon_url])
     fake_amount = @amount + 100000
 
     @time_amount = TimeAmount.get_time(@object.id)
@@ -348,7 +348,7 @@ class WeitestController < ApplicationController
 
  def authorize_url(url)
   appid = WX_APPID
-  if params[:beaconid]
+  if params[:y1y_beacon_url]
     get_beacon
     appid = @beacon.get_merchant.wxappid
   end
@@ -404,7 +404,7 @@ def get_material
 end
 
 def get_beacon
-  @beacon = Ibeacon.find_by_url params[:beaconid] if params[:beaconid]
+  @beacon = Ibeacon.find_by_url params[:y1y_beacon_url] if params[:y1y_beacon_url]
   @beacon = Ibeacon.find(1) unless @beacon
 end
 

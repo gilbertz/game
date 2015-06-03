@@ -29,7 +29,7 @@ module API
 
       def current_material
         # Material.current_material
-        Material.find_by_id(1367)
+        Material.find_by_id(1370)
       end
 
       def user_agent!
@@ -47,13 +47,13 @@ module API
       end
 
       def wizarcan_sign!
-        # key = "bcbd4a839af6380feb85602151f8d4a0"
-        # kv = [params[:ctime],params[:appid]]
-        # kvs = ["activityid","appid","beaconid","ctime","openid","otttype","ticket","userinfolevel",params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].sort
-        # kvs = Digest::MD5.hexdigest(kvs)
-        # unless kvs == params[:sign]
-        #   error_403!
-        # end
+        key = "bcbd4a839af6380feb85602151f8d4a0"
+        kvs = ["activityid","appid","beaconid","ctime","openid","otttype","ticket","userinfolevel",params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].sort.join
+        kvs = Digest::MD5.hexdigest(kvs)
+        p kvs
+        unless kvs == params[:sign]
+          error_403!
+        end
       end
 
       def unauthorized!
