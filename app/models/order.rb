@@ -1,5 +1,10 @@
 class Order < ActiveRecord::Base
+  acts_as_paranoid
+
   belongs_to :party
+
+
+
 
   def is_successful?
     self.status == "SUCCESS"

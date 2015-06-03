@@ -153,6 +153,18 @@ class User < ActiveRecord::Base
      Party.find_by_openid(self.get_openid)
   end
 
+  def is_party?
+    Party.find_by_openid(self.get_openid)
+  end
+
+  def update_records(beaconid)
+    rs = Record.where(:from_user_id => self.id, :beaconid => beaconid, :feedback => nil)
+    rs.each do |r|
+     r.feedback = 1
+     r.save
+    end
+  end
+
   private
   def make_password
     self.salt = generate_salt

@@ -9,6 +9,7 @@ require 'activity_check/activity_check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
 require 'statis/statis_api'
+require 'material/material_api'
 module API
   #一个服务一个模块  小型微服务
   class Root < Grape::API
@@ -16,18 +17,28 @@ module API
     format :json
     formatter :json, Grape::Formatter::Jbuilder
 
+    #--------------------helpes-----------------
     helpers do
-
       def current_user
         # User.current_user
         User.find_by_id(164)
       end
 
+      def current_party_id
+        current_user.get_party_id
+      end
+
+      def current_material
+        # Material.current_material
+        Material.find_by_id(1370)
+      end
+
       def user_agent!
+        p requset
         ua = request.user_agent.downcase
         unless ua.index("micromessenger")
           error_403!
-        end 
+        end
       end
 
       def request_headers!
@@ -38,9 +49,10 @@ module API
 
       def wizarcan_sign!
         key = "bcbd4a839af6380feb85602151f8d4a0"
-        kvs = [params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].join
-        kvs = Digest::MD5.hexdigest(kvs).upcase 
-        unless kvs == params[:sign].upcase
+        kvs = ["activityid","appid","beaconid","ctime","openid","otttype","ticket","userinfolevel",params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].sort.join
+        kvs = Digest::MD5.hexdigest(kvs)
+        p kvs
+        unless kvs == params[:sign]
           error_403!
         end
       end
@@ -48,30 +60,33 @@ module API
       def unauthorized!
         #如果没有登录x
         unless current_user
-          render_api_error! '401 Unauthorized',401
+          render_api_error! '401 Unauthorized', 401
         end
       end
 
       def not_allowed!
-        render_api_error! 'Method Not Allowed',405
+        render_api_error! 'Method Not Allowed', 405
       end
 
       def internal_error!
-        render_api_error! 'Internal Server Error',500
+        render_api_error! 'Internal Server Error', 500
       end
 
-      def render_api_error!(message,status = 405)
+      def render_api_error!(message, status = 405)
         h = Hash.new
         h["result"] = -1
         h["error"] = message if message
-        error! message,status
+        error! h, status
       end
 
       def error_403!
-        error! 'Forbidden',403
+        error! 'Forbidden', 403
       end
     end
 
+
+
+    # ---------------before-------------
     before do
       unauthorized!
     end
@@ -86,6 +101,7 @@ module API
     mount API::Cards::CardAPI
     mount API::Statis::StatisAPI
     mount API::Behaviour::BehaviourAPI
+    mount API::MaterialInfo::MaterialInfoAPI
 
 
     #api 文档
@@ -94,3 +110,4 @@ module API
 
 
 end
+

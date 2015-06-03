@@ -125,10 +125,10 @@ Game::Application.routes.draw do
   get '/gs/:id' => 'weitest#o2o'
   get '/gg/:id' => 'weitest#test_seed_redpack'
   get '/gg/:total/:count/:max/:min' => 'weitest#test_generate'
-  get '/:beaconid/gs/:id' => 'weitest#o2o' 
-  get '/:beaconid/wshows/:id' => 'wshows#show'
-  get '/:beaconid/home' => 'home#home'
-  get '/:beaconid/broadcast' => 'weitest#broadcast' 
+  get '/:y1y_beacon_url/gs/:id' => 'weitest#o2o' 
+  get '/:y1y_beacon_url/wshows/:id' => 'wshows#show'
+  get '/:y1y_beacon_url/home' => 'home#home'
+  get '/:y1y_beacon_url/broadcast' => 'weitest#broadcast' 
   get '/api/weixin' =>  'weixin#show',  :as=>"weixin"
   get 'api/weixin/test' =>  'weixin#test',  :as=>"weixin_test"
   post '/api/weixin' => 'weixin#create', :as=>"weixin_path"

@@ -16,8 +16,8 @@ module API
           requires :wish, type: String, desc: "红包祝福语"
           requires :avator, type: String, desc: "头像图片地址"
         end
-        post '/redpack_design/create' do 
-          RedpackDesign.create(:title => params[:title], :wish => params[:wish], :avator => params[:avator])
+        post '/redpack_appearance/create' do 
+          RedpackAppearance.create(:title => params[:title], :wish => params[:wish], :avator => params[:avator])
         end
 
         desc "创建红包设置"
@@ -36,7 +36,7 @@ module API
           end
           exactly_one_of :random, :equal, :manual
         end
-        post '/redpack_set/create' do
+        post '/redpack_option/create' do
           if params[:random]
             RedpackSet.create(:amount => params[:amount], :store => params[:store], :rule => 'random', :max => params[:max], :min => params[:min])
           elsif params[:equal]
@@ -121,16 +121,13 @@ module API
 
 #-------------------发送红包------------------#
         desc "发送种子红包 德高"
-        params do
-          requires :beacon_url, type: String, desc: "ibeacon的url"
-          requires :game_url, type: String, desc: "游戏url"
-        end
         before do
-          # user_agent!
+          user_agent!
           request_headers!
           # wizarcan_sign!
         end
         post '/send_seed_redpack' do
+          curren_material.
           beacon_id = Ibeacon.get_beacon(params[:beacon_url])
           game_id = Material.get_game(params[:game_url])
           object = Material.get_object(params[:game_url])
@@ -141,12 +138,7 @@ module API
           if check_num <= person_num and check_state
             check_state.update(:state => 0) 
             info = Redpack.gain_seed_redpack(current_user.id, game_id, object, beacon_id)
-            p current_user.id
-            p game_id
-            p object.id
-            p beacon_id
-            p info
-            money = Redpack.find(object.id).weixin_post(current_user,beacon_id,info) if info > WEIXIN_REDPACK_RESTRICTION_VALUE
+            money = Redpack.find(object.id).weixin_post(current_user,params[:beacon_url],info) if info > WEIXIN_REDPACK_RESTRICTION_VALUE
             return {'result' => 0, 'money' => money, 'info' => "成功发送种子红包"}
           else 
             return {'result' => -1, 'money' => 0, 'info' => "没有报名或者今天次数已经到限制"  }
@@ -214,7 +206,7 @@ module API
             Redpack.find(@object.id).weixin_post(current_user, beacon_id,total_score)
             current_user.mark_scores(beacon_id, game_id)
           end
-          return {'info' => total_score}
+          return { 'result' => 0, 'info' => total_score}
         end
       end
 

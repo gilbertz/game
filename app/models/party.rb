@@ -4,7 +4,7 @@ class Party < ActiveRecord::Base
   has_many :managers
   has_one :partyinfo
   has_many :ibeacons
-
+  has_one :fund_account
 
   def is_vip?
      self.vip != nil
@@ -32,5 +32,37 @@ class Party < ActiveRecord::Base
     end
   end
 
+
+
+  def add_balance(balance)
+    operate_balance balance
+  end
+
+  def subtract_balance(balance)
+    balance = -balance
+    operate_balance balance
+  end
+
+
+  private
+  #必须返回boolean值 判断是否加成功
+  def operate_balance(balance)
+    fund_account = self.fund_account
+    if fund_account
+      fund_account.balance.add(balance)
+      if fund_account.save
+        true
+      else
+        false
+      end
+    else
+      fund_account = FundAccount.create(:balance => balance,:party_id => self.id)
+      if fund_account
+        true
+      else
+        false
+      end
+    end
+  end
 
 end
