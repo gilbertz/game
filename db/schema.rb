@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150602140457) do
+ActiveRecord::Schema.define(version: 20150603064657) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -99,6 +99,20 @@ ActiveRecord::Schema.define(version: 20150602140457) do
     t.datetime "updated_at"
     t.integer  "target_id"
     t.string   "target_type"
+  end
+
+  create_table "card_appearances", force: true do |t|
+    t.string   "logo"
+    t.string   "head_title"
+    t.string   "background_url"
+    t.string   "title"
+    t.string   "desc"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.text     "instructions"
+    t.integer  "card_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "card_options", force: true do |t|
