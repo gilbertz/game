@@ -77,6 +77,7 @@ class HomeController < ApplicationController
     if @beacon 
       bgames = Bgame.where(:beaconid => @beacon.id).order('created_at desc').page( page ).per( limit )
       @materials = bgames.map{|b| b.get_game }
+      Material.current_material = @materials.first
     end
     render 'o2o', :layout => nil 
   end
