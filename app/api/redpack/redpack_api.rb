@@ -122,15 +122,16 @@ module API
 #-------------------发送红包------------------#
         desc "发送种子红包 德高"
         before do
-          user_agent!
-          request_headers!
+          # user_agent!
+          # request_headers!
           # wizarcan_sign!
         end
         post '/send_seed_redpack' do
-          curren_material.
-          beacon_id = Ibeacon.get_beacon(params[:beacon_url])
-          game_id = Material.get_game(params[:game_url])
-          object = Material.get_object(params[:game_url])
+          beacon_id = curren_material.beaconid
+          game_id = curren_material.id
+          if not curren_material.object_type.blank? and curren_material.object_id
+          object = curren_material.object_type.capitalize.constantize.find curren_material.object_id
+          end
           redpack_time = RedpackTime.get_redpack_time(object.id)
           person_num = redpack_time.person_num if redpack_time
           check_state = Check.find_by(user_id: current_user.id, beaconid: beacon_id,state: 1,game_id: game_id)
