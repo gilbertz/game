@@ -5,12 +5,6 @@ module API
 
       helpers do
       end
-      
-      before do
-        # user_agent!
-        request_headers!
-        # wizarcan_sign!
-      end 
  
       resource :redpack do
 
@@ -131,6 +125,11 @@ module API
           requires :beacon_url, type: String, desc: "ibeacon的url"
           requires :game_url, type: String, desc: "游戏url"
         end
+        before do
+          user_agent!
+          request_headers!
+          # wizarcan_sign!
+        end
         post '/send_seed_redpack' do
           beacon_id = Ibeacon.get_beacon(params[:beacon_url])
           game_id = Material.get_game(params[:game_url])
@@ -142,7 +141,7 @@ module API
           if check_num <= person_num and check_state
             check_state.update(:state => 0) 
             info = Redpack.gain_seed_redpack(current_user.id, game_id, object, beacon_id)
-            money = Redpack.find(object.id).weixin_post(current_user,beacon_id,info) if info > WEIXIN_REDPACK_RESTRICTION_VALUE
+            money = Redpack.find(object.id).weixin_post(current_user,params[:beacon_url],info) if info > WEIXIN_REDPACK_RESTRICTION_VALUE
             return {'result' => 0, 'money' => money, 'info' => "成功发送种子红包"}
           else 
             return {'result' => -1, 'money' => 0, 'info' => "没有报名或者今天次数已经到限制"  }
@@ -239,16 +238,21 @@ module API
           $redis.lrange("hongbaolist_#{params[:rp_id]}",0,-1)
         end
 
-        desc "show_consume"
-        get '/show_consume/:rp_id' do
-          $redis.lrange("hongBaoConsumedList_#{rp_id}",0,-1).length
+        desc "show_consumed_list"
+        get '/show_consumed_list/:rp_id' do
+          $redis.lrange("hongBaoConsumedList_#{params[:rp_id]}",0,-1)
+        end
+
+        desc "show_consume_map"
+        get '/show_consume_map/:rp_id' do
+          $redis.hget("hongBaoConsumedMap_#{params[:rp_id]}",current_user.id)
         end
 
         desc "delete_redpack"
         get '/delete_redpack/:rp_id' do
-          $redis.del("hongbaolist_#{rp_id}")
-          $redis.del("hongBaoConsumedMap_#{rp_id}")
-          $redis.del("hongBaoConsumedList_#{rp_id}")
+          $redis.del("hongbaolist_#{params[:rp_id]}")
+          $redis.del("hongBaoConsumedMap_#{params[:rp_id]}")
+          $redis.del("hongBaoConsumedList_#{params[:rp_id]}")
         end
       end
 

@@ -289,7 +289,7 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
     # end
 
     if $redis.hexists("hongBaoConsumedMap_#{redpack.id}" , user_id) == true 
-      #p $redis.hget("hongBaoConsumedMap",user_id)
+      # p $redis.hget("hongBaoConsumedMap_#{redpack.id}",user_id)
       return 0 
     else
       hongbao = $redis.rpop("hongbaolist_#{redpack.id}")
@@ -297,11 +297,11 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
         hongbao = JSON.parse(hongbao)
       #p hongbao
       hongbao.merge!({:user_id => user_id})
-      #p $redis.lrange("hongbaolist",0,-1)
+      # p $redis.lrange("hongbaolist",0,-1)
       $redis.hset("hongBaoConsumedMap_#{redpack.id}",user_id,user_id)
-      #p $redis.hget("hongBaoConsumedMap",user_id)
+      # p $redis.hget("hongBaoConsumedMap",user_id)
       $redis.lpush("hongBaoConsumedList_#{redpack.id}",hongbao.to_json)
-      #p $redis.lrange("hongBaoConsumedList",0,-1)
+      # p $redis.lrange("hongBaoConsumedList",0,-1)
       
 
 
@@ -309,7 +309,7 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
       # just for tmp
       beaconid = 6 if beaconid == 20
       user.incr_social(beaconid, 3)
-
+       
       return hongbao["money"]
     else
       return 0
