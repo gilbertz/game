@@ -9,6 +9,7 @@ require 'activity_check/activity_check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
 require 'statis/statis_api'
+require 'material/material_api'
 module API
   #一个服务一个模块  小型微服务
   class Root < Grape::API
@@ -100,6 +101,7 @@ module API
     mount API::Cards::CardAPI
     mount API::Statis::StatisAPI
     mount API::Behaviour::BehaviourAPI
+    mount API::MaterialInfo::MaterialInfoAPI
 
 
     #api 文档
