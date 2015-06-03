@@ -209,7 +209,7 @@ module API
             Redpack.find(@object.id).weixin_post(current_user, beacon_id,total_score)
             current_user.mark_scores(beacon_id, game_id)
           end
-          return {'info' => total_score}
+          return { 'result' => 0, 'info' => total_score}
         end
       end
 

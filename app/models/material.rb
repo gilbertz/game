@@ -10,6 +10,7 @@ class Material < ActiveRecord::Base
   has_many :questions
   has_many :records
 
+  cattr_accessor :current_material
   class_attribute :clone
 
   before_validation :auto_url

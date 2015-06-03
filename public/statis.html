@@ -71,7 +71,7 @@
           yAxis: {
             min: 0,
             title: {
-              text: '浏览量'
+              text: '数量'
             },
             plotLines: [{
               value: 0,
@@ -80,7 +80,7 @@
             }]
           },
           tooltip: {
-            valueSuffix: '次/元'
+            valueSuffix: ''
           },
           legend: {
             layout: 'vertical',
@@ -89,7 +89,7 @@
             borderWidth: 0
           },
           series: [
-          {name: '单日浏览量',data: data_data},{name:"单日人数",data: data_person},{name:"种子红包数",data: seed_redpack_num},{name:"社交红包数",data: social_redpack_num},{name:"反馈红包数",data: feedback_redpack_num},{name:"种子红包金额",data: seed_redpack},{name:"社交红包金额",data: social_redpack},{name:"反馈红包金额",data: feedback_redpack}
+          {name: '单日浏览量(次)',data: data_data},{name:"单日人数(个)",data: data_person},{name:"种子红包数(个)",data: seed_redpack_num},{name:"社交红包数(个)",data: social_redpack_num},{name:"反馈红包数(个)",data: feedback_redpack_num},{name:"种子红包金额(元)",data: seed_redpack},{name:"社交红包金额(元)",data: social_redpack},{name:"反馈红包金额(元)",data: feedback_redpack}
           ]
         });
 

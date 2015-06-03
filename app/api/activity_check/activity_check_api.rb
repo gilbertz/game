@@ -51,9 +51,17 @@ module API
           requires :beacon_url, type: String, desc: "ibeacon的url"
           requires :game_url, type: String, desc: "游戏url"
         end
-        post '/:user_id' do 
+        before do
+          user_agent!
+          request_headers!
+          # wizarcan_sign!
+        end
+        post '/dgbs' do 
           beacon_id = Ibeacon.get_beacon(params[:beacon_url])
           game_id = Material.get_game(params[:game_url])
+          object = Material.get_object(params[:game_url])
+          redpack_time = RedpackTime.get_redpack_time(object.id)
+          person_num = redpack_time.person_num if redpack_time
           if Check.check_per_day(current_user.id,game_id,beacon_id)<3
             Check.create(user_id: current_user.id, beaconid: beacon_id, state: 1,game_id: game_id) unless Check.check_state(current_user.id, game_id, beacon_id) > 0
             return {'result' => 0 } 
