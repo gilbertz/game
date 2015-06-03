@@ -23,6 +23,11 @@ module API
         User.find_by_id(164)
       end
 
+      def current_application
+        # Application.current_application
+        Application.find_by_id(1)
+      end
+
       def user_agent!
         ua = request.user_agent.downcase
         unless ua.index("micromessenger")
@@ -37,12 +42,13 @@ module API
       end
 
       def wizarcan_sign!
-        key = "bcbd4a839af6380feb85602151f8d4a0"
-        kvs = [params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].join
-        kvs = Digest::MD5.hexdigest(kvs).upcase 
-        unless kvs == params[:sign].upcase
-          error_403!
-        end
+        # key = "bcbd4a839af6380feb85602151f8d4a0"
+        # kv = [params[:ctime],params[:appid]]
+        # kvs = ["activityid","appid","beaconid","ctime","openid","otttype","ticket","userinfolevel",params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].sort
+        # kvs = Digest::MD5.hexdigest(kvs) 
+        # unless kvs == params[:sign]
+        #   error_403!
+        # end
       end
 
       def unauthorized!
