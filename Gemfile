@@ -121,5 +121,10 @@ gem 'grape-jbuilder'
 gem 'chronic'
 gem 'by_star', :git => "git://github.com/radar/by_star"
 
-
 gem 'china_sms'
+
+#https://github.com/ActsAsParanoid/acts_as_paranoid
+# gem "acts_as_paranoid"
+
+#https://github.com/softcraft-development/rails3_acts_as_paranoid
+gem 'rails4_acts_as_paranoid', '~> 0.1.4'

@@ -23,6 +23,10 @@ module API
         User.find_by_id(164)
       end
 
+      def current_party_id
+        current_user.get_party_id
+      end
+
       def user_agent!
         ua = request.user_agent.downcase
         unless ua.index("micromessenger")
@@ -65,7 +69,7 @@ module API
         h = Hash.new
         h["result"] = -1
         h["error"] = message if message
-        error! message,status
+        error! h,status
       end
 
       def error_403!

@@ -8,6 +8,20 @@ module API
       helpers do 
       end
 
+      #post :images do
+      desc "上传图片"
+      post :images do
+
+
+      end
+      #post :images do
+
+
+
+
+
+
+
     end
 
   end

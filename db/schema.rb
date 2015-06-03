@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150531101021) do
+ActiveRecord::Schema.define(version: 20150602140457) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -221,6 +221,13 @@ ActiveRecord::Schema.define(version: 20150531101021) do
     t.datetime "updated_at"
   end
 
+  create_table "fund_accounts", force: true do |t|
+    t.decimal  "balance",    precision: 10, scale: 0
+    t.integer  "party_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "game_types", force: true do |t|
     t.string   "game_type"
     t.datetime "created_at"
@@ -372,6 +379,7 @@ ActiveRecord::Schema.define(version: 20150531101021) do
     t.string   "openid"
     t.integer  "party_id"
     t.string   "status"
+    t.datetime "deleted_at"
   end
 
   create_table "parties", force: true do |t|
