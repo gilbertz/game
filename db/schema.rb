@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603080425) do
+ActiveRecord::Schema.define(version: 20150604062616) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -31,12 +31,12 @@ ActiveRecord::Schema.define(version: 20150603080425) do
 
   create_table "answers", force: true do |t|
     t.text     "title"
-    t.integer  "group"
+    t.string   "group"
     t.string   "img"
     t.integer  "viewable_id"
     t.string   "viewable_type"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "big_than"
     t.integer  "small_than"
     t.integer  "weight"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20150603080425) do
     t.string   "url"
   end
 
-  add_index "answers", ["viewable_id", "viewable_type"], name: "index_game_answers_on_viewable_id_and_viewable_type", using: :btree
+  add_index "answers", ["viewable_id", "viewable_type"], name: "index_answers_on_viewable_id_and_viewable_type", using: :btree
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id"
@@ -181,8 +181,8 @@ ActiveRecord::Schema.define(version: 20150603080425) do
     t.integer  "state"
     t.text     "js"
     t.text     "css"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "material_type", default: 0, null: false
     t.integer  "game_type_id"
     t.boolean  "use_wxjs"
@@ -249,16 +249,6 @@ ActiveRecord::Schema.define(version: 20150603080425) do
     t.string   "type_image"
   end
 
-  create_table "hooks", force: true do |t|
-    t.integer  "material_id"
-    t.string   "url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "hooks", ["material_id"], name: "index_hooks_on_material_id", using: :btree
-  add_index "hooks", ["url"], name: "index_hooks_on_url", using: :btree
-
   create_table "ibeacons", force: true do |t|
     t.string   "name"
     t.integer  "user_id"
@@ -272,8 +262,8 @@ ActiveRecord::Schema.define(version: 20150603080425) do
     t.integer  "merchant_id"
   end
 
-  add_index "ibeacons", ["uid"], name: "index_ibeacons_on_uid", length: {"uid"=>191}, using: :btree
-  add_index "ibeacons", ["url"], name: "index_ibeacons_on_url", length: {"url"=>191}, using: :btree
+  add_index "ibeacons", ["uid"], name: "index_ibeacons_on_uid", using: :btree
+  add_index "ibeacons", ["url"], name: "index_ibeacons_on_url", using: :btree
   add_index "ibeacons", ["user_id"], name: "index_ibeacons_on_user_id", using: :btree
 
   create_table "images", force: true do |t|
@@ -282,15 +272,15 @@ ActiveRecord::Schema.define(version: 20150603080425) do
     t.string   "viewable_type"
     t.integer  "state"
     t.string   "body"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "photo_name"
     t.string   "photo_path"
     t.integer  "user_id"
   end
 
   add_index "images", ["user_id"], name: "index_images_on_user_id", using: :btree
-  add_index "images", ["viewable_id", "viewable_type"], name: "index_game_images_on_viewable_id_and_viewable_type", using: :btree
+  add_index "images", ["viewable_id", "viewable_type"], name: "index_images_on_viewable_id_and_viewable_type", using: :btree
 
   create_table "managers", force: true do |t|
     t.string   "name"
@@ -315,8 +305,8 @@ ActiveRecord::Schema.define(version: 20150603080425) do
     t.string   "wxdesc"
     t.text     "advertisement"
     t.string   "wx_ln"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "advertisement_1"
     t.integer  "is_qq",                        default: 0, null: false
     t.integer  "is_recommend_to_qq",           default: 0, null: false
@@ -334,13 +324,13 @@ ActiveRecord::Schema.define(version: 20150603080425) do
     t.integer  "beacon_id"
   end
 
+  add_index "materials", ["category_id"], name: "index_materials_on_category_id", using: :btree
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
   add_index "materials", ["is_qq"], name: "index_materials_on_is_qq", using: :btree
   add_index "materials", ["is_recommend_to_qq"], name: "index_materials_on_is_recommend_to_qq", using: :btree
   add_index "materials", ["redis_pv"], name: "index_materials_on_redis_pv", using: :btree
   add_index "materials", ["redis_wx_share_pyq"], name: "index_materials_on_redis_wx_share_pyq", using: :btree
   add_index "materials", ["rrr"], name: "index_materials_on_rrr", using: :btree
-  add_index "materials", ["state"], name: "index_materials_on_state", using: :btree
   add_index "materials", ["user_id"], name: "index_materials_on_user_id", using: :btree
 
   create_table "merchants", force: true do |t|
@@ -553,6 +543,7 @@ ActiveRecord::Schema.define(version: 20150603080425) do
     t.integer  "virtual_num"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.integer  "material_id"
   end
 
   create_table "scores", force: true do |t|
@@ -618,20 +609,20 @@ ActiveRecord::Schema.define(version: 20150603080425) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "name",                   limit: 100
+    t.string   "name"
     t.string   "encrypt_pwd"
     t.string   "salt"
     t.string   "rememberme_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "role",                               default: 0,  null: false
+    t.integer  "role",                   default: 0,  null: false
     t.string   "wx_token"
-    t.string   "email",                              default: "", null: false
-    t.string   "encrypted_password",                 default: "", null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
