@@ -52,14 +52,14 @@ module API
         #   requires :game_url, type: String, desc: "游戏url"
         # end
         before do
-          user_agent!
+         # user_agent!
           request_headers!
           # wizarcan_sign!
         end
         post '/dgbs' do 
           beacon_id = current_material.beacon_id
           game_id = current_material.id
-          object = Redpack.find(:material_id => current_material.id)
+          object = Redpack.find_by(:material_id => current_material.id)
           redpack_time = RedpackTime.get_redpack_time(object.id)
           person_num = redpack_time.person_num if redpack_time
           if Check.check_per_day(current_user.id,game_id,beacon_id)< person_num

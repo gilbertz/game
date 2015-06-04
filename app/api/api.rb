@@ -20,8 +20,8 @@ module API
     #--------------------helpes-----------------
     helpers do
       def current_user
-         User.current_user
-        # User.find_by_id(164)
+        # User.current_user
+         User.find_by_id(164)
       end
 
       def current_party_id
@@ -34,7 +34,7 @@ module API
       end
 
       def user_agent!
-        p requset
+        p request
         ua = request.user_agent.downcase
         unless ua.index("micromessenger")
           error_403!
