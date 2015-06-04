@@ -34,17 +34,17 @@ module API
       end
 
       def user_agent!
-        p request
-        ua = request.user_agent.downcase
-        unless ua.index("micromessenger")
-          error_403!
-        end
+        #p request
+        #ua = request.user_agent.downcase
+        #unless ua.index("micromessenger")
+        #  error_403!
+        #end
       end
 
       def request_headers!
-        unless request.headers['Secret'] == "yaoshengyi"
-          error_403!
-        end
+        #unless request.headers['Secret'] == "yaoshengyi"
+        #  error_403!
+        #end
       end
 
       def wizarcan_sign!
