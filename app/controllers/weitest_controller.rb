@@ -167,7 +167,7 @@ class WeitestController < ApplicationController
         if au
           from_user_id = au.user_id
           from_user = User.find from_user_id
-          if params[:y1y_beacon_url] == 'dgbs'
+          if params[:beaconid] == 'dgbs'
             @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.id) 
             if not @score and from_user.social_value(beaconid) > 0
               r = Record.where(:beaconid=>beaconid, :user_id =>au.user_id, :object_type => 'Redpack', :feedback => nil).order('created_at desc')[0]
@@ -176,7 +176,7 @@ class WeitestController < ApplicationController
               from_user.decr_social(beaconid)
               if from_user.social_value(beaconid) % 3 == 0
                 rp = @beacon.redpacks[0]
-                @rp = rp.weixin_post(from_user, params[:y1y_beacon_url], f_value)
+                @rp = rp.weixin_post(from_user, params[:beaconid], f_value)
                 if r
                   r.feedback = 1
                   r.save
@@ -401,6 +401,7 @@ end
 def get_material  
   @material = Material.by_hook params[:id] if params[:id]
   @material = Material.by_hook params[:game_id] if params[:game_id]
+  Material.current_material = @materials
 end
 
 def get_beacon

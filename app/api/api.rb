@@ -48,7 +48,7 @@ module API
       end
 
       def wizarcan_sign!
-        key = "bcbd4a839af6380feb85602151f8d4a0"
+        key = "8ea1cb017e11550c36b8615bcf0fea5d"
         kvs = ["activityid","appid","beaconid","ctime","openid","otttype","ticket","userinfolevel",params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].sort.join
         kvs = Digest::MD5.hexdigest(kvs)
         p kvs

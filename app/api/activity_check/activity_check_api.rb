@@ -47,26 +47,30 @@ module API
         end
 
         desc "规定次数新建活动报名签到 德高"
-        params do 
-          requires :beacon_url, type: String, desc: "ibeacon的url"
-          requires :game_url, type: String, desc: "游戏url"
-        end
+        # params do 
+        #   requires :beacon_url, type: String, desc: "ibeacon的url"
+        #   requires :game_url, type: String, desc: "游戏url"
+        # end
         before do
           user_agent!
           request_headers!
           # wizarcan_sign!
         end
         post '/dgbs' do 
-          beacon_id = Ibeacon.get_beacon(params[:beacon_url])
-          game_id = Material.get_game(params[:game_url])
-          object = Material.get_object(params[:game_url])
+          beacon_id = current_material.beaconid
+          game_id = current_material.id
+          object = Redpack.find(:material_id => current_material.id)
           redpack_time = RedpackTime.get_redpack_time(object.id)
           person_num = redpack_time.person_num if redpack_time
-          if Check.check_per_day(current_user.id,game_id,beacon_id)<3
-            Check.create(user_id: current_user.id, beaconid: beacon_id, state: 1,game_id: game_id) unless Check.check_state(current_user.id, game_id, beacon_id) > 0
-            return {'result' => 0 } 
+          if Check.check_per_day(current_user.id,game_id,beacon_id)< person_num
+            unless Check.check_state(current_user.id, game_id, beacon_id) > 0
+              Check.create(user_id: current_user.id, beaconid: beacon_id, state: 1,game_id: game_id) 
+              return {'result' => 0 ,'info' => "报名成功",'name' => current_user.name} 
+            else
+              return {'result' => -1 ,'info' => "已经报过名了",'name' => current_user.name} 
+            end
           else 
-            return {'result' => -1 }
+            return {'result' => -1 ,'info' => "今日报名超过次数",'name' => current_user.name}
           end
         end
 

@@ -123,7 +123,6 @@ Game::Application.routes.draw do
   get '/s/:sid/:id' => "weitest#show"
 
   get '/gs/:id' => 'weitest#o2o'
-  get '/gg/:id' => 'weitest#test_seed_redpack'
   get '/gg/:total/:count/:max/:min' => 'weitest#test_generate'
   get '/:y1y_beacon_url/gs/:id' => 'weitest#o2o' 
   get '/:y1y_beacon_url/wshows/:id' => 'wshows#show'

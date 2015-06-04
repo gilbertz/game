@@ -6,6 +6,7 @@ class Redpack < ActiveRecord::Base
   include REXML
   
   belongs_to :ibeacon
+  has_many :redpack_time
 
 
   def title
