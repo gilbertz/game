@@ -19,10 +19,10 @@ module API
     #--------------------helpes-----------------
     helpers do
       def current_user
-         p "ii"
-         #User.current_user
+        # p "ii"
+        User.current_user
          
-         User.find_by_id(164)
+        # User.find_by_id(164)
       end
 
       def current_party_id

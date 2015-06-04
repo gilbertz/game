@@ -2,11 +2,12 @@
 class WeitestController < ApplicationController
   before_filter :weixin_authorize, :only => [:o2o]
   before_filter :pre
-  before_filter :wizarcan_sign
+ # before_filter :wizarcan_sign
   skip_before_filter :verify_authenticity_token  
   
   def wizarcan_sign
     @beacon.provider == 'wizarcan'
+    key = '8ea1cb017e11550c36b8615bcf0fea5d'
     kvs = ["activityid","appid","beaconid","ctime","openid","otttype","ticket","userinfolevel",params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].sort.join
     kvs = Digest::MD5.hexdigest(kvs)
     p kvs
