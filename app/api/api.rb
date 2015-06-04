@@ -23,7 +23,6 @@ module API
            User.find_by_id(164)
          else
            User.current_user
-           User.find_by_id(18748)
          end  
       end
 
