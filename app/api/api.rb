@@ -32,7 +32,7 @@ module API
         # Material.find_by_id(1370)
       end
       def user_agent!
-        p request
+        p request.url
         ua = request.user_agent.downcase
         unless ua.index("micromessenger")
          error_403!
@@ -41,25 +41,6 @@ module API
       def request_headers!
         unless request.headers['Secret'] == "yaoshengyi"
          error_403!
-        end
-      end
-      def wizarcan_sign!
-        key = "8ea1cb017e11550c36b8615bcf0fea5d"
-        p params[:activityid]
-        p params[:appid]
-        p params[:beaconid]
-        p params[:ctime]
-        p params[:openid]
-        p params[:otttype]
-        p params[:ticket]
-        p params[:userinfolevel]
-        p key 
-        kvs = ["activityid","appid","beaconid","ctime","openid","otttype","ticket","userinfolevel",params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].sort.join
-        kvs = Digest::MD5.hexdigest(kvs)
-        p kvs
-        p params[:sign]
-        unless kvs == params[:sign]
-          error_403!
         end
       end
       def unauthorized!
