@@ -25,8 +25,8 @@ class Redpack < ActiveRecord::Base
   end
 
 
-  def weixin_post(user,beaconid_url,  money=nil)
-    beacon = Ibeacon.find_by_url(beaconid_url)
+  def weixin_post(user_id,beacon_id, money=nil)
+    beacon = Ibeacon.find_by_id(beacon_id)
     return unless beacon
     m = beacon.get_merchant    
 
@@ -40,7 +40,7 @@ class Redpack < ActiveRecord::Base
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
 
-    request.body = array_xml(user,beaconid_url, m, money)
+    request.body = array_xml(user_id,beacon_id, m, money)
     response = http.start do |http|
       ret = http.request(request)
       puts request.body
@@ -52,9 +52,11 @@ class Redpack < ActiveRecord::Base
     end
   end
 
-  def array_xml(user,beaconid_url, m, money=nil)
-    current_redpack = get_current_redpack(beaconid_url)
-    money = get_redpack_rand(beaconid_url) unless money
+  def array_xml(user_id,beacon_id, m, money=nil)
+    
+    current_redpack = get_current_redpack(beacon_id)
+    money = get_redpack_rand(beacon_id) unless money
+    user = User.find_by_id(user_id)
     doc = Document.new"<xml/>"
     root_node = doc.root
     el14 = root_node.add_element "act_name"
@@ -98,15 +100,14 @@ class Redpack < ActiveRecord::Base
     return doc.to_s
   end
 
-  def get_current_redpack(beaconid_url)
-    beaconid = Ibeacon.find_by(:url=>beaconid_url).id
+  def get_current_redpack(beacon_id)
     current_redpack = Redpack.find_by(beaconid: beaconid)
     return current_redpack
   end
 
-  def get_redpack_rand(beaconid_url)
+  def get_redpack_rand(beacon_id)
     rand_num = rand(10)
-    current_redpack = get_current_redpack(beaconid_url)
+    current_redpack = get_current_redpack(beacon_id)
     min = current_redpack.min*100
     max = current_redpack.max*100
     weight_1 = 0.5
@@ -290,19 +291,19 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
     # end
 
     if $redis.hexists("hongBaoConsumedMap_#{redpack.id}" , user_id) == true 
-      # p $redis.hget("hongBaoConsumedMap_#{redpack.id}",user_id)
+      p $redis.hget("hongBaoConsumedMap_#{redpack.id}",user_id)
       return 0 
     else
       hongbao = $redis.rpop("hongbaolist_#{redpack.id}")
       if hongbao
         hongbao = JSON.parse(hongbao)
-      #p hongbao
+      p hongbao
       hongbao.merge!({:user_id => user_id})
-      # p $redis.lrange("hongbaolist",0,-1)
+       p $redis.lrange("hongbaolist",0,-1)
       $redis.hset("hongBaoConsumedMap_#{redpack.id}",user_id,user_id)
-      # p $redis.hget("hongBaoConsumedMap",user_id)
+       p $redis.hget("hongBaoConsumedMap",user_id)
       $redis.lpush("hongBaoConsumedList_#{redpack.id}",hongbao.to_json)
-      # p $redis.lrange("hongBaoConsumedList",0,-1)
+       p $redis.lrange("hongBaoConsumedList",0,-1)
       
 
 
@@ -314,6 +315,7 @@ def self.gain_seed_redpack(user_id, game_id,redpack,beaconid)
       return hongbao["money"]
     else
       return 0
+      p "no hongbao"
     end
   end
 end
