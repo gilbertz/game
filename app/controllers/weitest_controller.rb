@@ -432,7 +432,7 @@ def get_object
       @object = @material.object_type.capitalize.constantize.find @material.object_id
     end
     @record = current_user.get_record(@beacon.id, @material.id) if current_user
-    # get_time_amount if @object.instance_of?(Redpack)
+     get_time_amount if @object.instance_of?(Redpack)
   end
 end
 
@@ -441,11 +441,13 @@ def get_time_amount
   beaconid = @beacon.id
   @check_today = Check.check_today(current_user.id,@material.id,@beacon.id)
   @check_three = Check.check_three(current_user.id,@material.id,@beacon.id)
-  @time_amount = TimeAmount.get_time(@object.id)
+ p @check_three
+p "11" 
+@time_amount = TimeAmount.get_time(@object.id)
   return unless @time_amount
   @end_time = @time_amount.time
   @now_time = Time.now
-  @amount = TimeAmount.get_amount(@object.id,params[:y1y_beacon_url])
+  @amount = TimeAmount.get_amount(@object.id,@beacon.url)
   @fake_amount = (@amount + 100000)/100  
   beaconid = @beacon.id
   Redpack.distribute_seed_redpack(beaconid,@object.id,@material.id)
