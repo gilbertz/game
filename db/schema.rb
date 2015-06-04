@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603080425) do
+ActiveRecord::Schema.define(version: 20150604062616) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -553,6 +553,7 @@ ActiveRecord::Schema.define(version: 20150603080425) do
     t.integer  "virtual_num"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.integer  "material_id"
   end
 
   create_table "scores", force: true do |t|
