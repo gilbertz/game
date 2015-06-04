@@ -403,10 +403,7 @@ end
 def get_material  
   @material = Material.by_hook params[:id] if params[:id]
   @material = Material.by_hook params[:game_id] if params[:game_id]
-  p @material
-  p "mm"
   Material.current_material = @material
-  p Material.current_material
 end
 
 def get_beacon
