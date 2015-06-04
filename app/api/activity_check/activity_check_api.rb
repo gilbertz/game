@@ -48,7 +48,7 @@ module API
 
         desc "规定次数新建活动报名签到 德高"
         before do
-          user_agent!
+          # user_agent!
           request_headers!
         end
         post '/dgbs' do 
