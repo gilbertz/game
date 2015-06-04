@@ -13,6 +13,7 @@ class WeitestController < ApplicationController
     unless kvs == params[:sign]
       render :status => 403, json: {'info' => 'forbidden'}
     end
+    p "yanzhengtongguo"
   end
   def weixin_check
     # if user_agent?(request.user_agent)
