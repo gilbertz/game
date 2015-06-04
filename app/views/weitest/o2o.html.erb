@@ -78,7 +78,7 @@ function share_api(){
     } 
     wx.onMenuShareTimeline({
       title: info, // 分享标题
-      link: "<%= share_link(@material, @beacon) %>", // 分享链接
+      link: "<%= pyq_share_link(@material, @beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       success: function () {
         share_callback_pyq();

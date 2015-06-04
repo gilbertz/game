@@ -18,6 +18,14 @@ def share_link(m, b)
 end
 
 
+def pyq_share_link(m, b)
+  if m.pyq_url.blank?
+    share_link(m, b)
+  else
+    m.pyq_url
+  end
+end
+
 def get_objects(tt, beaconid=nil)
   cond = '1=1'
   cond = "beaconid=#{beaconid}" if beaconid
