@@ -145,7 +145,7 @@ module API
 
         desc "红包首页配置 德高"
         post '/get_time_amount' do
-          beacon_id = current_material.beaconid
+          beacon_id = current_material.beacon_id
           game_id = current_material.id
           @object = Redpack.find(:material_id => current_material.id)
           check_today = Check.check_today(current_user.id,game_id,beacon_id)
@@ -172,7 +172,7 @@ module API
           # wizarcan_sign!
         end
         post '/send_seed_redpack' do
-          beacon_id = current_material.beaconid
+          beacon_id = current_material.beacon_id
           game_id = current_material.id
           @object = Redpack.find(:material_id => current_material.id)
           redpack_time = RedpackTime.get_redpack_time(@object.id)
@@ -200,7 +200,7 @@ module API
         end
         post '/record_social_and_send_feedback_redpack' do
           if current_user
-            beacon_id = current_material.beaconid
+            beacon_id = current_material.beacon_id
             game_id = current_material.id
             @object = Redpack.find(:material_id => current_material.id)
             if params[:openid]
@@ -243,7 +243,7 @@ module API
           # wizarcan_sign!
         end
         post '/send_social_redpack' do
-          beacon_id = current_material.beaconid
+          beacon_id = current_material.beacon_id
           game_id = current_material.id
           @object = Redpack.find(:material_id => current_material.id)
           total_score = UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beacon_id).total_score  

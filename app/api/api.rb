@@ -29,7 +29,7 @@ module API
       end
 
       def current_material
-         Material.current_material
+        Material.current_material
         # Material.find_by_id(1370)
       end
 

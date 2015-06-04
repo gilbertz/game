@@ -401,7 +401,10 @@ end
 def get_material  
   @material = Material.by_hook params[:id] if params[:id]
   @material = Material.by_hook params[:game_id] if params[:game_id]
-  Material.current_material = @materials
+  p @material
+  p "mm"
+  Material.current_material = @material
+  p Material.current_material
 end
 
 def get_beacon
@@ -427,7 +430,7 @@ def get_time_amount
   return unless @time_amount
   @end_time = @time_amount.time
   @now_time = Time.now
-  @amount = TimeAmount.get_amount(@object.id,params[:beaconid])
+  @amount = TimeAmount.get_amount(@object.id,params[:y1y_beacon_url])
   @fake_amount = (@amount + 100000)/100  
   beaconid = @beacon.id
   Redpack.distribute_seed_redpack(beaconid,@object.id,@material.id)

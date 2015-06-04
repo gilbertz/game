@@ -57,7 +57,7 @@ module API
           # wizarcan_sign!
         end
         post '/dgbs' do 
-          beacon_id = current_material.beaconid
+          beacon_id = current_material.beacon_id
           game_id = current_material.id
           object = Redpack.find(:material_id => current_material.id)
           redpack_time = RedpackTime.get_redpack_time(object.id)
