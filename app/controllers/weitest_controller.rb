@@ -433,6 +433,7 @@ def get_object
 end
 
 def get_time_amount
+  return unless @beacon
   beaconid = @beacon.id
   @check_today = Check.check_today(current_user.id,@material.id,@beacon.id)
   @check_three = Check.check_three(current_user.id,@material.id,@beacon.id)
