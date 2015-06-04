@@ -167,8 +167,8 @@ module API
 #-------------------发送红包------------------#
         desc "发送种子红包 德高"
         before do
-          user_agent!
-          request_headers!
+          #user_agent!
+          #request_headers!
           # wizarcan_sign!
         end
         post '/send_seed_redpack' do
@@ -194,8 +194,8 @@ module API
           optional :openid, type: String, desc: "用户openid"
         end
         before do
-          user_agent!
-          request_headers!
+          #user_agent!
+          #request_headers!
           # wizarcan_sign!
         end
         post '/record_social_and_send_feedback_redpack' do

@@ -53,7 +53,7 @@ module API
         # end
         before do
          # user_agent!
-          request_headers!
+         # request_headers!
           # wizarcan_sign!
         end
         post '/dgbs' do 
