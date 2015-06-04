@@ -182,8 +182,15 @@ module API
           if check_num <= person_num and check_state
             check_state.update(:state => 0) 
             info = Redpack.gain_seed_redpack(current_user.id, game_id, @object, beacon_id)
-            money = Redpack.find(@object.id).weixin_post(current_user,params[:beacon_url],info) if info > WEIXIN_REDPACK_RESTRICTION_VALUE
-            return {'result' => 0, 'money' => money, 'info' => "成功发送种子红包"}
+            p current_user 
+            p game_id
+            p @object
+            p beacon_id 
+            p info 
+            money = Redpack.find(@object.id).weixin_post(current_user.id,beacon_id,info) if info > WEIXIN_REDPACK_RESTRICTION_VALUE
+p @object.id           
+p money 
+return {'result' => 0, 'money' => money, 'info' => "成功发送种子红包"}
           else 
             return {'result' => -1, 'money' => 0, 'info' => "没有报名或者今天次数已经到限制"  }
           end 
@@ -216,7 +223,7 @@ module API
                       f_value = (r.score/2 < 100)?100:r.score/2 if r
                       from_user.decr_social(beacon_id)
                       if from_user.social_value(beacon_id) % 3 == 0
-                        @rp = @object.weixin_post(from_user, params[:beaconid], f_value)
+                        @rp = @object.weixin_post(from_user.id, beacon_id, f_value)
                         if r
                           r.feedback = 1
                           r.save
@@ -252,7 +259,7 @@ module API
             UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beacon_id).update(:total_score => 0) 
             Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beacon_id, :game_id => game_id, :score => total_score, :object_type=> 'social_redpack', :object_id => @object.id)
             total_score = total_score > 300 ? 300 : total_score
-            Redpack.find(@object.id).weixin_post(current_user, beacon_id,total_score)
+            Redpack.find(@object.id).weixin_post(current_user.id, beacon_id,total_score)
             current_user.mark_scores(beacon_id, game_id)
           end
           return { 'result' => 0, 'info' => total_score}
