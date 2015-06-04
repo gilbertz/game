@@ -147,7 +147,7 @@ module API
         post '/get_time_amount' do
           beacon_id = current_material.beacon_id
           game_id = current_material.id
-          @object = Redpack.find(:material_id => current_material.id)
+          @object = Redpack.find_by(:material_id => current_material.id)
           check_today = Check.check_today(current_user.id,game_id,beacon_id)
           check_three = Check.check_three(current_user.id,game_id,beacon_id)
           @time_amount = TimeAmount.get_time(game_id)
@@ -167,14 +167,14 @@ module API
 #-------------------发送红包------------------#
         desc "发送种子红包 德高"
         before do
-          user_agent!
-          request_headers!
+          #user_agent!
+          #request_headers!
           # wizarcan_sign!
         end
         post '/send_seed_redpack' do
           beacon_id = current_material.beacon_id
           game_id = current_material.id
-          @object = Redpack.find(:material_id => current_material.id)
+          @object = Redpack.find_by(:material_id => current_material.id)
           redpack_time = RedpackTime.get_redpack_time(@object.id)
           person_num = redpack_time.person_num if redpack_time
           check_state = Check.find_by(user_id: current_user.id, beaconid: beacon_id,state: 1,game_id: game_id)
@@ -194,15 +194,15 @@ module API
           optional :openid, type: String, desc: "用户openid"
         end
         before do
-          user_agent!
-          request_headers!
+          #user_agent!
+          #request_headers!
           # wizarcan_sign!
         end
         post '/record_social_and_send_feedback_redpack' do
           if current_user
             beacon_id = current_material.beacon_id
             game_id = current_material.id
-            @object = Redpack.find(:material_id => current_material.id)
+            @object = Redpack.find_by(:material_id => current_material.id)
             if params[:openid]
               au = Authentication.find_by_uid( params[:openid] )
               if au
@@ -245,7 +245,7 @@ module API
         post '/send_social_redpack' do
           beacon_id = current_material.beacon_id
           game_id = current_material.id
-          @object = Redpack.find(:material_id => current_material.id)
+          @object = Redpack.find_by(:material_id => current_material.id)
           total_score = UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beacon_id).total_score  
           if(total_score >= 100)
             Score.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beacon_id, :value => -total_score, :game_id => game_id)
