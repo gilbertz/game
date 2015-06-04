@@ -207,15 +207,17 @@ class WeitestController < ApplicationController
 
  
   def game_report
+    t_score = 1200
     if current_user
       Record.create(:user_id => current_user.id, :from_user_id => params[:from_user_id], :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
-      if params[:score].to_i >= 9500 and current_user.social_value(@beacon.id) <= 0
+     from_user = User.find_by_id( params[:from_user_id] ) 
+     if params[:score].to_i >= t_score and current_user.social_value(@beacon.id) <= 0
         current_user.incr_social(@beacon.id)
+        from_user.update_records(@beacon.id) if from_user
       end
-      rs = Record.where(:from_user_id => params[:from_user_id], :game_id=>params[:game_id], :feedback =>nil).where('score >= 9500').group('user_id')
-      if params[:score].to_i >= 9500 and rs.length >= 4
+      rs = Record.where(:from_user_id => params[:from_user_id], :game_id=>params[:game_id], :feedback =>nil).where('score >= t_score').group('user_id')
+      if params[:score].to_i >= t_score and rs.length >= 4 and from_user
         f_value = 100 +rand(50)
-        from_user = User.find( params[:from_user_id] )   
         @rp = @object.weixin_post(from_user, params[:y1y_beacon_url], f_value) 
         Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp, :object_type => 'g_redpack',:object_id => @object.id)       
         from_user.decr_social(@beacon.id) 
@@ -401,10 +403,7 @@ end
 def get_material  
   @material = Material.by_hook params[:id] if params[:id]
   @material = Material.by_hook params[:game_id] if params[:game_id]
-  p @material
-  p "mm"
   Material.current_material = @material
-  p Material.current_material
 end
 
 def get_beacon
