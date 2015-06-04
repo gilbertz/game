@@ -227,7 +227,7 @@ class WeitestController < ApplicationController
      from_user = User.find_by_id( params[:from_user_id] ) 
      if params[:score].to_i >= t_score and current_user.social_value(@beacon.id) <= 0
         current_user.incr_social(@beacon.id)
-        from_user.update_records(@beacon.id) if from_user
+        current_user.update_records(@beacon.id)
       end
       rs = Record.where(:from_user_id => params[:from_user_id], :game_id=>params[:game_id], :feedback =>nil).where('score >= t_score').group('user_id')
       if params[:score].to_i >= t_score and rs.length >= t_num and from_user
