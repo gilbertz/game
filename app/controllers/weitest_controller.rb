@@ -2,7 +2,7 @@
 class WeitestController < ApplicationController
   before_filter :weixin_authorize, :only => [:o2o]
   before_filter :pre
-  before_filter :wizarcan_sign
+  #before_filter :wizarcan_sign
   skip_before_filter :verify_authenticity_token  
   
   def wizarcan_sign
