@@ -19,8 +19,8 @@ module API
     #--------------------helpes-----------------
     helpers do
       def current_user
-         User.current_user
-         # User.find_by_id(164)
+         # User.current_user
+          User.find_by_id(164)
       end
 
       def current_party_id
