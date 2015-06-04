@@ -34,7 +34,7 @@ module API
         # Material.find_by_id(1370)
       end
       def user_agent!
-        p request
+        p request.url
         ua = request.user_agent.downcase
         unless ua.index("micromessenger")
          error_403!
