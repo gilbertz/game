@@ -145,8 +145,10 @@ module API
 
         desc "红包首页配置 德高"
         post '/get_time_amount' do
-          beacon_id = current_material.beacon_id
-          game_id = current_material.id
+        p "GGGGGGGG" 
+ beacon_id = current_material.beacon_id
+         p "vv" 
+game_id = current_material.id
           @object = Redpack.find_by(:material_id => current_material.id)
           check_today = Check.check_today(current_user.id,game_id,beacon_id)
           check_three = Check.check_three(current_user.id,game_id,beacon_id)
@@ -160,7 +162,8 @@ module API
           checked = Check.check_state(current_user.id, game_id, beacon_id)  > 0 ? 1:0
           fake_amount = (@amount + 100000)/100 
           Redpack.distribute_seed_redpack(beacon_id, @object.id, game_id)
-          return {'check_today' => check_today, 'check_three' => check_three, 'time_amount' => time_amount, 'end_time' => end_time, 'now_time' => now_time, 'amount' => amount, 'checked' => checked, 'fake_amount' => fake_amount}
+          p fake_amount 
+return {'check_today' => check_today, 'check_three' => check_three, 'time_amount' => time_amount, 'end_time' => end_time, 'now_time' => now_time, 'amount' => amount, 'checked' => checked, 'fake_amount' => fake_amount}
         end 
 
 
