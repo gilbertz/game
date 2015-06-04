@@ -9,14 +9,14 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 #   deploy_to    - Path to deploy into.
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
-ENV["to"] ||= '114'
+ENV["to"] ||= '121'
 case ENV["to"]
   when '121'
     set :domain, '121.42.47.121'
     set :user, 'root'
     set :password, 'bNg42mjv'
     set :deploy_to, '/data/www/mina'
-    ENV['port'] = '8000'
+    ENV['port'] = '2016'
   when '114'
     set :domain, '114.215.120.243'
     set :user, 'root'
@@ -71,7 +71,7 @@ end
 
 
 task :passenger => :environment do
-  invoke :'passenger_stop'
+  #invoke :'passenger_stop'
   invoke :'passenger_start'
 end
 

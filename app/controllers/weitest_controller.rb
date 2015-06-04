@@ -209,12 +209,12 @@ class WeitestController < ApplicationController
   def game_report
     if current_user
       Record.create(:user_id => current_user.id, :from_user_id => params[:from_user_id], :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
-      if params[:score].to_i >= 9500 and current_user.social_value(@beacon.id) == 0
+      if params[:score].to_i >= 9500 and current_user.social_value(@beacon.id) <= 0
         current_user.incr_social(@beacon.id)
       end
       rs = Record.where(:from_user_id => params[:from_user_id], :game_id=>params[:game_id], :feedback =>nil).where('score >= 9500').group('user_id')
       if params[:score].to_i >= 9500 and rs.length >= 4
-        f_value = 100 +rand(100)
+        f_value = 100 +rand(50)
         from_user = User.find( params[:from_user_id] )   
         @rp = @object.weixin_post(from_user, params[:y1y_beacon_url], f_value) 
         Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp, :object_type => 'g_redpack',:object_id => @object.id)       

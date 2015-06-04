@@ -263,7 +263,7 @@ module API
 #-------------------测试红包------------------#
 
       resource :test_redpack do
-        
+   
         desc "test_generate"
         get '/test_generate' do
           result_hongbao = Redpack.generate(params[:total].to_i, params[:count].to_i, params[:max].to_i, params[:min].to_i, params[:rp_id].to_i)
