@@ -47,14 +47,10 @@ module API
         end
 
         desc "规定次数新建活动报名签到 德高"
-        # params do 
-        #   requires :beacon_url, type: String, desc: "ibeacon的url"
-        #   requires :game_url, type: String, desc: "游戏url"
-        # end
         before do
-         # user_agent!
-         # request_headers!
-          # wizarcan_sign!
+          user_agent!
+          request_headers!
+          wizarcan_sign!
         end
         post '/dgbs' do 
           beacon_id = current_material.beacon_id
