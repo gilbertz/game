@@ -1,5 +1,8 @@
 class Card < ActiveRecord::Base
+  acts_as_paranoid
+
   belongs_to :wx_authorizer
+  belongs_to :party
   has_many :records
   has_many :card_options
   belongs_to :ibeacon

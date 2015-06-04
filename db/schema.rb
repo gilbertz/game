@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603064657) do
+ActiveRecord::Schema.define(version: 20150603135739) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -167,6 +167,8 @@ ActiveRecord::Schema.define(version: 20150603064657) do
     t.string   "code_type"
     t.integer  "total_quantity"
     t.string   "status"
+    t.datetime "deleted_at"
+    t.integer  "party_id"
   end
 
   create_table "categories", force: true do |t|
@@ -331,6 +333,7 @@ ActiveRecord::Schema.define(version: 20150603064657) do
     t.integer  "rrr"
     t.string   "object_type"
     t.integer  "object_id"
+    t.integer  "beacon_id"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree

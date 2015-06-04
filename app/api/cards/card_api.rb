@@ -16,22 +16,30 @@ module API
     # end
 
     class CardAPI < Grape::API
-      version      'v1'
+      version 'v1'
 
       namespace :cards do
 
         # route_param :id do
         desc "Return a card."
         params do
-          requires :id, type: Integer,allow_blank:false, desc: "card id."
+          requires :id, type: Integer, allow_blank: false, desc: "card id."
         end
-        route_param :id,jbuilder: 'cards/find_a_card' do
-          get do
-            @card = Card.find_by_id(params[:id])
-          end
+        get :id, jbuilder: 'cards/find_a_card' do
+          @card = Card.find_by_id(params[:id])
         end
         # route_param :id do
 
+        #---------------------get :history do-------------------------
+        desc '历史卡券--可以查询到某个ibeacon下发的历史卡券'
+        params do
+          optional :beaconid, type: Integer, allow_blank: false, desc: 'beacon 表中的 id字段'
+        end
+        get '/history', jbuilder: 'cards/list' do
+          @history = Card.where(:party_id => current_party_id, :beaconid => params["beaconid"])
+
+        end
+        #---------------------get :history do-------------------------
 
 
         #  post :create do
@@ -45,10 +53,9 @@ module API
         # post :create do
 
 
-
         desc "用户领取卡券"
         params do
-          requires :card_id,type:Integer,allow_blank:false,desc: "卡券的ID"
+          requires :card_id, type: Integer, allow_blank: false, desc: "卡券的ID"
         end
         get :get do
           card = Card.find_by_id(params[:card_id])
@@ -68,7 +75,7 @@ module API
             qrcode.scanner = current_user.get_openid
             qrcode.url = "api/v1/cards/#{qrcode.ticket}"
             if qrcode.save
-              {"result"=>0,"card" =>card,"qrcode_content" => "http://#{WX_DOMAIN}/#{qrcode.url}"}
+              {"result" => 0, "card" => card, "qrcode_content" => "http://#{WX_DOMAIN}/#{qrcode.url}"}
             else
               internal_error!
             end
@@ -81,7 +88,7 @@ module API
         # post 'verification' do
         desc "核销卡券"
         params do
-          requires :card_record_id,type:Integer,allow_blank:false,desc: "卡券记录的ID"
+          requires :card_record_id, type: Integer, allow_blank: false, desc: "卡券记录的ID"
         end
         post 'verification' do
           card_record = CardRecord.find_by_id(params["card_record_id"])

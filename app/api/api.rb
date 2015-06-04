@@ -34,7 +34,7 @@ module API
       end
 
       def user_agent!
-        p requset
+        # p requset
         ua = request.user_agent.downcase
         unless ua.index("micromessenger")
           error_403!
