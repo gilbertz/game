@@ -444,6 +444,8 @@ def get_time_amount
   return unless @time_amount
   @end_time = @time_amount.time
   @now_time = Time.now
+  p @object.id 
+  p params[:y1y_beacon_url]
   @amount = TimeAmount.get_amount(@object.id,params[:y1y_beacon_url])
   @fake_amount = (@amount + 100000)/100  
   beaconid = @beacon.id
