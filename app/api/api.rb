@@ -19,8 +19,11 @@ module API
     #--------------------helpes-----------------
     helpers do
       def current_user
-         # User.current_user
-          User.find_by_id(164)
+         unless request.user_agent.downcase.index("micromessenger")
+           User.find_by_id(164)
+         else
+           User.current_user
+         end  
       end
 
       def current_party_id
