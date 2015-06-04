@@ -170,9 +170,8 @@ return {'check_today' => check_today, 'check_three' => check_three, 'time_amount
 #-------------------发送红包------------------#
         desc "发送种子红包 德高"
         before do
-          # user_agent!
-          # request_headers!
-          # wizarcan_sign!
+          user_agent!
+          request_headers!
         end
         post '/send_seed_redpack' do
           beacon_id = current_material.beacon_id
@@ -197,9 +196,8 @@ return {'check_today' => check_today, 'check_three' => check_three, 'time_amount
           optional :openid, type: String, desc: "用户openid"
         end
         before do
-          #user_agent!
-          #request_headers!
-          # wizarcan_sign!
+          user_agent!
+          request_headers!
         end
         post '/record_social_and_send_feedback_redpack' do
           if current_user
@@ -243,7 +241,6 @@ return {'check_today' => check_today, 'check_three' => check_three, 'time_amount
         before do
           user_agent!
           request_headers!
-          # wizarcan_sign!
         end
         post '/send_social_redpack' do
           beacon_id = current_material.beacon_id

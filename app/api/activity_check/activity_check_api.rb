@@ -50,7 +50,6 @@ module API
         before do
           user_agent!
           request_headers!
-          wizarcan_sign!
         end
         post '/dgbs' do 
           beacon_id = current_material.beacon_id
