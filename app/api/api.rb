@@ -20,8 +20,8 @@ module API
     #--------------------helpes-----------------
     helpers do
       def current_user
-        # User.current_user
-        User.find_by_id(164)
+         User.current_user
+        # User.find_by_id(164)
       end
 
       def current_party_id
@@ -29,8 +29,8 @@ module API
       end
 
       def current_material
-        # Material.current_material
-        Material.find_by_id(1370)
+         Material.current_material
+        # Material.find_by_id(1370)
       end
 
       def user_agent!
