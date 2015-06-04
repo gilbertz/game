@@ -18,7 +18,7 @@ module API
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
-      def current_user
+      def current_user1
          unless request.user_agent.downcase.index("micromessenger")
            #User.find_by_id(164)
 User.current_user
