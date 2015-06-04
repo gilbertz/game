@@ -110,7 +110,7 @@ module API
         desc "查看红包"
         get '/history'do 
           json_redpacks = []
-          redpacks = Redpack.includes(:redpack_appearance,:redpack_option,:redpack_send,:redpack_get).where( " merchant_id = ? and redpack_send.send_end_time <= ?", current_user.id, Time.now ).order("created_at desc")
+          redpacks = Redpack.includes(:redpack_appearance,:redpack_option,:redpack_send,:redpack_get).where( " party_id = ? and redpack_send.send_end_time <= ?", current_user.id, Time.now ).order("created_at desc")
           redpacks.each do |redpack|
             json_redpack.push({"redpack_id" => redpack.id, "title" => redpack.redpack_appearance.title, "send_start_time" => redpack.redpack_send.send_start_time, "send_end_time" => redpack.redpack_send.send_end_time, "created_at" => redpack.created_at})
           end
@@ -167,8 +167,8 @@ module API
 #-------------------发送红包------------------#
         desc "发送种子红包 德高"
         before do
-          #user_agent!
-          #request_headers!
+          # user_agent!
+          # request_headers!
           # wizarcan_sign!
         end
         post '/send_seed_redpack' do
@@ -182,15 +182,8 @@ module API
           if check_num <= person_num and check_state
             check_state.update(:state => 0) 
             info = Redpack.gain_seed_redpack(current_user.id, game_id, @object, beacon_id)
-            p current_user 
-            p game_id
-            p @object
-            p beacon_id 
-            p info 
             money = Redpack.find(@object.id).weixin_post(current_user.id,beacon_id,info) if info > WEIXIN_REDPACK_RESTRICTION_VALUE
-p @object.id           
-p money 
-return {'result' => 0, 'money' => money, 'info' => "成功发送种子红包"}
+            return {'result' => 0, 'money' => money, 'info' => "成功发送种子红包"}
           else 
             return {'result' => -1, 'money' => 0, 'info' => "没有报名或者今天次数已经到限制"  }
           end 
