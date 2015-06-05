@@ -219,7 +219,8 @@ class WeitestController < ApplicationController
         current_user.update_records(@beacon.id)
       end
       rs = Record.where(:from_user_id => params[:from_user_id], :game_id=>params[:game_id], :feedback =>nil).where("score >= #{t_score}").group('user_id')
-      if params[:score].to_i >= t_score and rs.length >= t_num and from_user
+      rps = Record.where( :game_id=>params[:game_id], :beaconid => @beacon.id, :object_type => 'g_redpack')
+      if params[:score].to_i >= t_score and rs.length >= t_num and from_user and rps.length <= 4
         f_value = 100 +rand(50)
         @rp = @object.weixin_post(from_user.id, @beacon.id, f_value) 
         Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp, :object_type => 'g_redpack',:object_id => @object.id)       
