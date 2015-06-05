@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
 
   def update_user_score(beaconid)
     ss = Score.where(:user_id => self.id, :beaconid => beaconid )
-    total_score = ss.sum{|s|s.value.to_i}
+    total_score = ss.sum{|s|s.value.to_i if s}
     us = self.get_user_score( beaconid )
     us.total_score = total_score
     us.save
