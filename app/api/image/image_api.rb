@@ -10,9 +10,9 @@ module API
 
       #post :images do
       desc "上传图片"
-      post :images do
+      get :images do
 
-
+        {"result" => 323}
       end
       #post :images do
 
