@@ -10,6 +10,7 @@ class Ibeacon < ActiveRecord::Base
   has_many :user_scores, :foreign_key => "beaconid"  
   has_many :checks, :foreign_key => "beaconid"
   has_many :messages, :foreign_key => "beaconid"
+  has_many :MappingMis
 
   before_validation :auto_url
 

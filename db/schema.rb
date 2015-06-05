@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603135739) do
+ActiveRecord::Schema.define(version: 20150605090042) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -303,6 +303,13 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.datetime "updated_at"
   end
 
+  create_table "mapping_mis", force: true do |t|
+    t.integer  "material_id"
+    t.integer  "ibeacon_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "materials", force: true do |t|
     t.integer  "state",                        default: 0
     t.text     "description"
@@ -334,6 +341,7 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.string   "object_type"
     t.integer  "object_id"
     t.integer  "beacon_id"
+    t.string   "pyq_url"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
@@ -555,6 +563,7 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.integer  "virtual_num"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.integer  "material_id"
   end
 
   create_table "scores", force: true do |t|
