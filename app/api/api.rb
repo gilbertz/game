@@ -18,13 +18,13 @@ module API
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
-      def current_user1
-         unless request.user_agent.downcase.index("micromessenger")
-           #User.find_by_id(164)
-User.current_user
-         else
-           User.current_user
-         end  
+      def current_user
+        unless request.user_agent.downcase.index("micromessenger")
+          #User.find_by_id(164)
+          User.current_user
+        else
+          User.current_user
+        end
       end
 
       def current_party_id
@@ -35,36 +35,42 @@ User.current_user
         Material.current_material
         # Material.find_by_id(1370)
       end
+
       def user_agent!
-        p request.url
         ua = request.user_agent.downcase
         unless ua.index("micromessenger")
-         error_403!
+          error_403!
         end
       end
+
       def request_headers!
         unless request.headers['Secret'] == "yaoshengyi"
-         error_403!
+          error_403!
         end
       end
+
       def unauthorized!
         #如果没有登录x
         unless current_user
           render_api_error! '401 Unauthorized', 401
         end
       end
+
       def not_allowed!
         render_api_error! 'Method Not Allowed', 405
       end
+
       def internal_error!
         render_api_error! 'Internal Server Error', 500
       end
+
       def render_api_error!(message, status = 405)
         h = Hash.new
         h["result"] = -1
         h["error"] = message if message
         error! h, status
       end
+
       def error_403!
         error! 'Forbidden', 403
       end

@@ -5,6 +5,7 @@ class Party < ActiveRecord::Base
   has_one :partyinfo
   has_many :ibeacons
   has_one :fund_account
+  has_many :cards
 
   def is_vip?
      self.vip != nil
