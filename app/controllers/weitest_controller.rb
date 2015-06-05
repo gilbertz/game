@@ -210,7 +210,7 @@ class WeitestController < ApplicationController
  
   def game_report
     t_score = 9500
-    t_num = 6
+    t_num = 4
     if current_user and current_user.social_value(@beacon.id) == 0
       Record.create(:user_id => current_user.id, :from_user_id => params[:from_user_id], :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
      from_user = User.find_by_id( params[:from_user_id] ) 
