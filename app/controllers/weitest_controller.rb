@@ -46,7 +46,7 @@ class WeitestController < ApplicationController
         UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beaconid).update(:total_score => 0) 
         total_score = total_score > 300 ? 300 : total_score
         total_score = 1000 + total_score.to_i 
-        rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],total_score)
+        rp = Redpack.find(@object.id).weixin_post(current_user, @beacon.id,total_score)
         Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => rp.to_i, :object_type=> 'social_redpack', :object_id => @object.id)
         current_user.mark_scores(beaconid, @material.id)
       end
@@ -65,7 +65,7 @@ class WeitestController < ApplicationController
         check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
         check.update(:state => 0) if check
         info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
-        @rp = Redpack.find(@object.id).weixin_post(current_user,params[:beaconid],info) if info >100
+        @rp = Redpack.find(@object.id).weixin_post(current_user, @beacon.id,info) if info >100
         render :status => 200, json: {'info' => @rp.to_i}
       else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
         # 今天次数用完了
@@ -160,17 +160,6 @@ class WeitestController < ApplicationController
     render nothing: true
   end
 
-  # def weixin_redpack
-  #   if current_user and not @record
-  #     beaconid = @beacon.id
-  #     rp = Redpack.where(beaconid: beaconid,:state =>1).order("start_time desc")[0]
-  #     @rp = rp.weixin_post(current_user, params[:beaconid]).to_i
-  #     Record.create(:user_id => current_user.id, :beaconid=>beaconid, :game_id => params[:game_id], :score => @rp, :object_type=>'Redpack', :object_id => rp.id)
-  #     render :status => 200, json: {'rp' => @rp}
-  #   else
-  #     render :status => 200, json: {'result' => 'not current_user or record' }
-  #   end 
-  # end
 
   def weixin_score
     if current_user
@@ -189,7 +178,7 @@ class WeitestController < ApplicationController
               from_user.decr_social(beaconid)
               if from_user.social_value(beaconid) % 3 == 0
                 rp = @beacon.redpacks[0]
-                @rp = rp.weixin_post(from_user, params[:beaconid], f_value)
+                @rp = rp.weixin_post(from_user, @beacon.id, f_value)
                 if r
                   r.feedback = 1
                   r.save
@@ -232,7 +221,7 @@ class WeitestController < ApplicationController
       rs = Record.where(:from_user_id => params[:from_user_id], :game_id=>params[:game_id], :feedback =>nil).where("score >= #{t_score}").group('user_id')
       if params[:score].to_i >= t_score and rs.length >= t_num and from_user
         f_value = 100 +rand(50)
-        @rp = @object.weixin_post(from_user, params[:y1y_beacon_url], f_value) 
+        @rp = @object.weixin_post(from_user, @beacon.id, f_value) 
         Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp, :object_type => 'g_redpack',:object_id => @object.id)       
         from_user.decr_social(@beacon.id) 
         from_user.update_records(@beacon.id)
