@@ -21,8 +21,10 @@ module API
       def current_user
         unless request.user_agent.downcase.index("micromessenger")
           #User.find_by_id(164)
+          p "micro"
           User.current_user
         else
+          p "shouji"
           User.current_user
         end
       end
