@@ -16,12 +16,15 @@ module API
     prefix 'api'
     format :json
     formatter :json, Grape::Formatter::Jbuilder
-
     #--------------------helpes-----------------
     helpers do
       def current_user
-        # User.current_user
-        User.find_by_id(164)
+        unless request.user_agent.downcase.index("micromessenger")
+          #User.find_by_id(164)
+          User.current_user
+        else
+          User.current_user
+        end
       end
 
       def current_party_id
@@ -29,12 +32,11 @@ module API
       end
 
       def current_material
-        # Material.current_material
-        Material.find_by_id 1343
+        Material.current_material
+        # Material.find_by_id(1370)
       end
 
       def user_agent!
-        # p requset
         ua = request.user_agent.downcase
         unless ua.index("micromessenger")
           error_403!
@@ -45,16 +47,6 @@ module API
         unless request.headers['Secret'] == "yaoshengyi"
           error_403!
         end
-      end
-
-      def wizarcan_sign!
-        # key = "bcbd4a839af6380feb85602151f8d4a0"
-        # kv = [params[:ctime],params[:appid]]
-        # kvs = ["activityid","appid","beaconid","ctime","openid","otttype","ticket","userinfolevel",params[:activityid],params[:appid],params[:beaconid],params[:ctime],params[:openid], params[:otttype],params[:ticket],params[:userinfolevel],key].sort
-        # kvs = Digest::MD5.hexdigest(kvs)
-        # unless kvs == params[:sign]
-        #   error_403!
-        # end
       end
 
       def unauthorized!
@@ -83,14 +75,10 @@ module API
         error! 'Forbidden', 403
       end
     end
-
-
-
     # ---------------before-------------
     before do
       unauthorized!
     end
-
     mount API::PartyInfo::PartyInfoAPI
     mount API::MerchantInfo::MerchantInfoAPI
     mount API::Pay::PayAPI
@@ -102,12 +90,7 @@ module API
     mount API::Statis::StatisAPI
     mount API::Behaviour::BehaviourAPI
     mount API::MaterialInfo::MaterialInfoAPI
-
-
     #api 文档
     add_swagger_documentation
   end
-
-
 end
-

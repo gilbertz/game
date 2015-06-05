@@ -1,4 +1,5 @@
 class RedpackTime < ActiveRecord::Base
+  belongs_to :redpack
     def self.get_redpack_time(redpack_id)
         redpack_times = RedpackTime.where(:redpack_id =>redpack_id).order("start_time desc")
         if redpack_times and redpack_times.length > 0

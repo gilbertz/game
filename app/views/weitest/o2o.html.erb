@@ -78,7 +78,7 @@ function share_api(){
     } 
     wx.onMenuShareTimeline({
       title: info, // 分享标题
-      link: "<%= share_link(@material, @beacon) %>", // 分享链接
+      link: "<%= pyq_share_link(@material, @beacon) %>", // 分享链接
       imgUrl: "<%= @material.wx_tlimg %>", // 分享图标
       success: function () {
         share_callback_pyq();
@@ -146,7 +146,7 @@ share_api();
 </div>
 
 <script type="text/javascript">
-  var SHAKE_THRESHOLD = 1000;
+  var SHAKE_THRESHOLD = 5000;
   var last_update = 0;
   var x, y, z, last_x = 0, last_y = 0, last_z = 0;
 
@@ -236,9 +236,9 @@ share_api();
    
     <%= render :partial=>"shared/report", :locals=>{:type=>"pv", :cid=>@category.id, :gid=>@material.id } %>
 
-    <script>
-      var url="/weitest/uv?beaconid=<%= params[:beaconid] %>&game_id=<%= @material.id %>&remark=浏览"
-      var img = new Image();
-      img.src = url;
-    </script>
+   <script>
+     var url="/weitest/uv?beaconid=<%= params[:y1y_beacon_url] %>&game_id=<%= @material.id %>&remark=浏览"
+     var img = new Image();
+     img.src = url;
+   </script>
 </html>
