@@ -1,15 +1,35 @@
 require 'grape-swagger'
-module API
-  #一个服务一个模块  小型微服务
-  class NormalRoot < Grape::API
-    prefix 'api'
+# 不需要验证的api
+module NORMAL
+  class Root < Grape::API
+    prefix 'normal'
     format :json
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
-      def current_material
-        Material.current_material
-        # Material.find_by_id(1370)
+
+      def check_cookie
+        if true
+          unless current_user
+            if cookies.signed[:remember_me].present?
+              user = User.find_by_rememberme_token cookies.signed[:remember_me]
+              if user && user.rememberme_token == cookies.signed[:remember_me]
+                session[:admin_user_id] = user.id
+                current_user = user
+                User.current_user = current_user
+              end
+            end
+          end
+        end
+      end
+
+      def authorize_url(url)
+        appid = WX_APPID
+        if params[:y1y_beacon_url]
+          get_beacon
+          appid = @beacon.get_merchant.wxappid
+        end
+        "http://#{WX_DOMAIN}/#{appid}/launch?rurl=" + url
       end
 
       def user_agent!
@@ -22,13 +42,6 @@ module API
       def request_headers!
         unless request.headers['Secret'] == "yaoshengyi"
           error_403!
-        end
-      end
-
-      def unauthorized!
-        #如果没有登录x
-        unless current_user
-          render_api_error! '401 Unauthorized', 401
         end
       end
 
@@ -58,6 +71,10 @@ module API
 
 
     #api 文档
-    # add_swagger_documentation
+    add_swagger_documentation
+
   end
+
+
+
 end

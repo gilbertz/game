@@ -1,33 +1,18 @@
 require 'grape-swagger'
-require 'image/image_api'
-require 'redpack/redpack_api'
-require 'cards/card_api'
-require 'pay/pay_api'
-require 'orders/order_api'
-require 'behaviour/behaviour_api'
-require 'activity_check/activity_check_api'
-require 'merchant_info/merchant_info_api'
-require 'merchant_info/party_info_api'
-require 'statis/statis_api'
-require 'material/material_api'
-module API
-  #一个服务一个模块  小型微服务
+
+# 为c端用户提供的api
+module CUSTOMER
   class Root < Grape::API
-    prefix 'api'
+
+    prefix 'customer'
     format :json
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
-      def current_party
-        if User.current_user && User.current_user.role == 2
-          User.current_user.party
-        end
+      def current_user
+        User.current_user
       end
-
-      def current_party_id
-	      current_party.id
-      end
-
+      
       def weixin_authorize
         check_cookie
         unless current_user
@@ -103,18 +88,17 @@ module API
       weixin_authorize
       unauthorized!
     end
-    mount API::PartyInfo::PartyInfoAPI
-    mount API::MerchantInfo::MerchantInfoAPI
-    mount API::Pay::PayAPI
-    mount API::Orders::OrderAPI
-    mount API::Image::ImageAPI
-    mount API::ActivityCheck::ActivityCheckAPI
-    mount API::RedPack::RedpackAPI
-    mount API::Cards::CardAPI
-    mount API::Statis::StatisAPI
-    mount API::Behaviour::BehaviourAPI
-    mount API::MaterialInfo::MaterialInfoAPI
+
+
+
+
+
+
     #api 文档
     add_swagger_documentation
+
   end
+
+
+
 end

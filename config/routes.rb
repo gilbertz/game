@@ -22,8 +22,8 @@ Game::Application.routes.draw do
 
 
   mount API::Root => '/'
-  # mount API::NormalRoot => '/'
-  # mount API::NoVerifyRoot => '/'
+  mount CUSTOMER::Root => '/'
+  mount NORMAL::Root => '/'
 
   #mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
