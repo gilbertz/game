@@ -18,25 +18,14 @@ module API
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
-      def current_user
-        unless request.user_agent.downcase.index("micromessenger")
-          #User.find_by_id(164)
-          p "micro"
-          User.current_user
-        else
-          p "shouji"
-          User.current_user
-          p "phone"
+      def current_party
+        if User.current_user && User.current_user.role == 2
+          User.current_user.party
         end
       end
 
       def current_party_id
-        current_user.get_party_id
-      end
-
-      def current_material
-        Material.current_material
-        # Material.find_by_id(1370)
+	current_party.id
       end
 
       def weixin_authorize
@@ -85,7 +74,7 @@ module API
 
       def unauthorized!
         #如果没有登录x
-        unless current_user
+        unless current_party
           render_api_error! '401 Unauthorized', 401
         end
       end

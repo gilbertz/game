@@ -8,7 +8,7 @@ $(document).ready(function(){
      var content =  "";
      $.each(data.content, function(index, value){
 //         content += "<div class='grid_4 alpha1'>";
-//         content += "<div class='home blog paged paged-2 cat-links asides' style='height:48px;overflow:hidden;'>";
+//         content += "<div class='site blog paged paged-2 cat-links asides' style='height:48px;overflow:hidden;'>";
 //         content += value.name;// + "</a>";
 //         content += "</div>";
 //         content += "<div id='post-11945' class='post-11945 post type-post status-publish format-standard hentry category-asides posthome author-admin1310 asides'>"
@@ -29,7 +29,7 @@ $(document).ready(function(){
          content += "<img src='"+value.wx_tlimg+"' style: 'width:100%; margin-bottom:0px!important;'/>";
          content += "</a></div>";
          content += "</div>";
-         content += "<div class='home blog paged paged-2 cat-links asides' style='height:40px;'>";
+         content += "<div class='site blog paged paged-2 cat-links asides' style='height:40px;'>";
          content += value.name+"</div></div>";
 
      });

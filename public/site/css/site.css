@@ -1,0 +1,232 @@
+body{
+    margin:0;
+    font-family: "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","\9ED1\4F53",Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #222;
+    font-size: 14px;
+}
+ul{
+    padding: 0;
+    list-style-type: none;
+}
+a,a:hover{
+    color: #fff;
+    text-decoration: none;
+
+}
+
+
+.home__head{
+    /*position: relative;*/
+    width:100%;
+    height: 760px;
+    background:url("../img/head_bg.JPG") center no-repeat;
+    background-size: 100% 100%;
+
+}
+.home__head-title{
+    width:inherit;
+    height: 70px;
+    background-color: #000;
+    color: #fff;
+    opacity: 0.5;
+}
+.home__head-title a{
+    margin-left: 15px;
+    line-height:70px;
+    font-size: 1.8em;
+}
+.home__content-wrap{
+    position: relative;
+    width: 100%;
+    height:100%;
+    margin: 0 auto;
+    padding: 0 60px 0 60px ;
+}
+.icon{
+   display: inline-block;
+    float: left;
+
+}
+.home__head-logo{
+    width: 100px;
+    height: 70px;
+    background: url("../img/logo.png") center no-repeat;
+    background-size: 100% 100%;
+}
+.home__what{
+    position: relative;
+    height: 632px;
+    background: url(../img/bg1.png) top center no-repeat;
+
+}
+.home__what-title{
+    padding-top: 50px;
+    text-align: center;
+    color: #242424;
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+.home__what-desc{
+    width: 500px;
+    margin: 0 auto;
+    color: #666;
+    font-size: 17px;
+    text-align: center;
+    line-height: 1.7;
+}
+.home__video{
+    position: relative;
+    height: 632px;
+}
+.home__video-style{
+    width: 70%;
+    margin-top: 80px;
+    margin-left: 120px;
+}
+.home__scene{
+    background-color: #fff;
+    padding: 27px
+}
+.ui-bfc {
+    zoom: 1;
+}
+.home__scene-item{
+    padding: 40px 0;
+    border-top: 1px solid #e3e3e3;
+}
+.ui-bfc__left{
+    float: left;
+}
+.home__scene-item-img{
+    width: 150px;
+    margin-right: 78px;
+    line-height: 1;
+    background: url("../img/phone.jpg") top center no-repeat;
+    background-size: contain;
+    padding:30px 10px;
+
+}
+.ui-bfc__content {
+    display: table-cell;
+    zoom: 1;
+}
+.home__scene-title {
+    font-size: 28px;
+    color: #2b2b2b;
+    margin-bottom: 45px;
+}
+.home__scene-usage {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 45px;
+}
+.home__scene-desc {
+    color: #a9a9a9;
+    font-size: 14px;
+    line-height: 24px;
+}
+.home__scene-item-dot {
+    font-size: 20px;
+    color: #64ca51;
+
+}
+.carousel-img{
+    width: 100%;
+}
+.home__scene-cases{
+    width: 350px;
+    margin-right: 78px;
+    line-height: 1;
+}
+.case-img{
+    width: 400px;
+    height: 350px;
+}
+.case-img-s{
+    width: 40px;
+    height: 35px;
+}
+.carousel_indicator-my{
+    position: relative;
+}
+.home__how {
+    padding: 42px 0;
+    height: 635px;
+}
+.home__how-title {
+    text-align: center;
+    color: #242424;
+    font-size: 32px;
+    margin-bottom: 80px;
+}
+.home__cooperation {
+    padding: 40px 0 55px;
+    background-color: #fbfbfb;
+    text-align: center;
+}
+.home__how-list {
+    zoom: 1;
+}
+.home__how-item {
+    float: left;
+    width: 33.3%;
+    text-align: center;
+}
+.home__how-step {
+    display: inline-block;
+    padding-top: 40px;
+    position: relative;
+    font-size: 20px;
+    color: #221815;
+    margin-bottom: 20px;
+}
+.home__icon-step_1 {
+    background-image: url("../sprite/style-mp-ibeacon-home.png");
+    background-position: -1595px -587px;
+}
+.home__icon-step {
+    width: 33px;
+    height: 33px;
+    position: absolute;
+    left: -42px;
+    top: 35px;
+}
+.home__how-desc {
+    font-size: 18px;
+    color: #afafaf;
+    line-height: 30px;
+}
+.home__cooperation {
+    padding: 40px 0 55px;
+    background-color: #fbfbfb;
+    text-align: center;
+}
+.home__cooperation-title {
+    font-size: 32px;
+    color: #242424;
+    margin-bottom: 80px;
+}
+.home__icon-logos{
+
+    height: 100px;
+    margin-bottom: 15px;
+}
+.home__foot {
+    background-color: #fff;
+    border-top: 1px solid #e6e6e6;
+    padding: 15px 0 50px;
+    color: #888;
+}
+.home__foot-list {
+    text-align: center;
+}
+.home__foot-item {
+    display: inline-block;
+}
+.video{
+    width: 850px;
+    height: 500px;
+    margin-top: 50px;
+    margin-left: 115px;
+}
