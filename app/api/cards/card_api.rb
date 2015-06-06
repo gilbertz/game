@@ -27,6 +27,7 @@ module API
         end
         get :id, jbuilder: 'cards/find_a_card' do
           @card = Card.find_by_id(params[:id])
+	 p "current_user = #{current_user}"
         end
         # route_param :id do
 

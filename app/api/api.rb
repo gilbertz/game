@@ -26,6 +26,7 @@ module API
         else
           p "shouji"
           User.current_user
+          p "phone"
         end
       end
 
@@ -36,6 +37,37 @@ module API
       def current_material
         Material.current_material
         # Material.find_by_id(1370)
+      end
+
+      def weixin_authorize
+        check_cookie
+        unless current_user
+          redirect_to authorize_url(request.url)
+        end
+      end
+
+      def check_cookie
+        if true
+          unless current_user
+            if cookies.signed[:remember_me].present?
+              user = User.find_by_rememberme_token cookies.signed[:remember_me]
+              if user && user.rememberme_token == cookies.signed[:remember_me]
+                session[:admin_user_id] = user.id
+                current_user = user
+                User.current_user = current_user
+              end
+            end
+          end
+        end
+      end
+
+      def authorize_url(url)
+        appid = WX_APPID
+        if params[:y1y_beacon_url]
+          get_beacon
+          appid = @beacon.get_merchant.wxappid
+        end
+        "http://#{WX_DOMAIN}/#{appid}/launch?rurl=" + url
       end
 
       def user_agent!
@@ -79,6 +111,7 @@ module API
     end
     # ---------------before-------------
     before do
+      weixin_authorize
       unauthorized!
     end
     mount API::PartyInfo::PartyInfoAPI
