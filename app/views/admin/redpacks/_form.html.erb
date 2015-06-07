@@ -82,6 +82,15 @@
   </div>
 </div>
 
+
+<div class="control-group">
+  <label class="control-label">类型</label>
+  <div class="controls">
+    <%= f.select :type_id, Redpack.get_types_for_select, required: true %>
+  </div>
+</div>
+
+
 <div class="control-group">
   <label class="control-label"></label>
   <div class="controls">
