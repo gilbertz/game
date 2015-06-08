@@ -14,7 +14,6 @@ module API
           param_hash["mch_id"] = order.mch_id
           param_hash["device_info"] = order.device_info
           param_hash["nonce_str"] = str
-          param_hash["sign"] = sign
           param_hash["body"] = product.body
           param_hash["detail"] = product.detail
           param_hash["attach"] = order.attach
