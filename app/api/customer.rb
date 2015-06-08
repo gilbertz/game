@@ -1,5 +1,5 @@
 require 'grape-swagger'
-
+require 'material/customer_material_api'
 # 为c端用户提供的api
 module CUSTOMER
   class Root < Grape::API
@@ -12,7 +12,7 @@ module CUSTOMER
       def current_user
         User.current_user
       end
-      
+
       def weixin_authorize
         check_cookie
         unless current_user
@@ -93,7 +93,7 @@ module CUSTOMER
 
 
 
-
+    mount CUSTOMER::MaterialInfo::MaterialInfoAPI
     #api 文档
     add_swagger_documentation
 

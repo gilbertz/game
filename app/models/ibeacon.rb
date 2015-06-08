@@ -34,7 +34,7 @@ class Ibeacon < ActiveRecord::Base
     if self.merchant_id
       return self.merchant
     end
-    Merchant.find 1 
+    Merchant.find_by_wxappid WX_APPID
   end
 
   def user_name

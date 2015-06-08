@@ -1,4 +1,5 @@
 require 'grape-swagger'
+require 'cards/normal_card_api'
 # 不需要验证的api
 module NORMAL
   class Root < Grape::API
@@ -7,7 +8,6 @@ module NORMAL
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
-
       def check_cookie
         if true
           unless current_user
@@ -69,7 +69,7 @@ module NORMAL
 
     end
 
-
+    mount NORMAL::Cards::CardAPI
     #api 文档
     add_swagger_documentation
 

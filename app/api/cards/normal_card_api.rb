@@ -1,16 +1,15 @@
 module NORMAL
 
-  module My
+  module Cards
 
-
-    class TextAPI < Grape::API
+    class CardAPI < Grape::API
 
 
       version 'v1'
 
       get '/text_api' do
 
-
+        Party.qy_pay(nil,nil,800)
         {"result" => 749792}
       end
 
