@@ -28,7 +28,11 @@ class Redpack < ActiveRecord::Base
   def weixin_post(user_id,beacon_id, money=nil)
     beacon = Ibeacon.find_by_id(beacon_id)
     return unless beacon
-    m = beacon.get_merchant    
+    m = beacon.get_merchant
+    authentication = Authentication.find_by_user_id(user_id)
+    return false unless authentication
+    # 防止用户窜发
+    return false if authentication.appid != m.wxappid
 
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
     http = Net::HTTP.new(uri.host, uri.port)
