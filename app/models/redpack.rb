@@ -8,6 +8,9 @@ class Redpack < ActiveRecord::Base
   belongs_to :ibeacon
   has_many :redpack_time
 
+  def self.get_types_for_select
+    [["普通红包", 0], ["德高红包", 1], ["社交红包", 3] ]
+  end
 
   def title
     self.action_title

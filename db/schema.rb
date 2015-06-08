@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603135739) do
+ActiveRecord::Schema.define(version: 20150607075810) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -65,7 +65,11 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.string   "groupid"
   end
 
+  add_index "authentications", ["appid"], name: "index_authentications_on_appid", using: :btree
+  add_index "authentications", ["groupid"], name: "index_authentications_on_groupid", using: :btree
+  add_index "authentications", ["uid"], name: "index_authentications_on_uid", using: :btree
   add_index "authentications", ["unionid"], name: "index_authentications_on_unionid", using: :btree
+  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "banners", force: true do |t|
     t.integer  "wait",       default: 1, null: false
@@ -203,6 +207,14 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.datetime "last_notice_time"
   end
 
+  add_index "checks", ["beaconid"], name: "index_checks_on_beaconid", using: :btree
+  add_index "checks", ["created_at"], name: "index_checks_on_created_at", using: :btree
+  add_index "checks", ["game_id"], name: "index_checks_on_game_id", using: :btree
+  add_index "checks", ["state"], name: "index_checks_on_state", using: :btree
+  add_index "checks", ["user_id", "beaconid", "game_id", "created_at"], name: "index_checks_on_user_id_and_beaconid_and_game_id_and_created_at", using: :btree
+  add_index "checks", ["user_id", "beaconid", "game_id"], name: "index_checks_on_user_id_and_beaconid_and_game_id", using: :btree
+  add_index "checks", ["user_id"], name: "index_checks_on_user_id", using: :btree
+
   create_table "code_blocks", force: true do |t|
     t.integer  "category_id"
     t.text     "code"
@@ -334,6 +346,7 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.string   "object_type"
     t.integer  "object_id"
     t.integer  "beacon_id"
+    t.string   "pyq_url"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
@@ -555,6 +568,8 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.integer  "virtual_num"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.integer  "material_id"
+    t.integer  "type_id"
   end
 
   create_table "scores", force: true do |t|
@@ -601,6 +616,10 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.integer  "state"
     t.integer  "fake_amount"
   end
+
+  add_index "time_amounts", ["redpack_time_id"], name: "index_time_amounts_on_redpack_time_id", using: :btree
+  add_index "time_amounts", ["time", "redpack_time_id"], name: "index_time_amounts_on_time_and_redpack_time_id", using: :btree
+  add_index "time_amounts", ["time"], name: "index_time_amounts_on_time", using: :btree
 
   create_table "user_allocations", force: true do |t|
     t.integer  "user_id"
