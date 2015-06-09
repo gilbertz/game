@@ -27,12 +27,12 @@
     <td><img src='<%= r.user_img %>' width='100px;'></td>
     <td><%= link_to r.app_name, "/admin/records?game_id=#{r.game_id}" %></td>
     <td><img src="<%= r.get_qr_img %>" width='100px'></td>
-    <td><%= r.from_user_name %></td>
+    <td><%= link_to r.from_user_name, "/admin/records?from_user_id=#{r.from_user_id}" %></td>
     <td><%= r.score %></td>
     <td><%= r.allocation%></td>
     <td><%= r.remark %></td>
     <td><%= r.feedback %></td>
-    <td><%= r.object_type %></td>
+    <td><%= link_to r.object_type, "/admin/records?object_type=#{r.object_type}" %></td>
     <td><%= r.object_id %></td>
     <td><%= r.created_at %></td>
   </tr>
