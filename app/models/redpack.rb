@@ -179,6 +179,7 @@ class Redpack < ActiveRecord::Base
     str = nonce_str
     trade = out_trade_no
     desc = self.action_title || "疯狂摇一摇给您送红包了!"
+    desc += "   #{self.wishing}"
     money = get_redpack_rand(beacon_id) unless money
     param_hash["mch_appid"]= merchant.wxappid.to_s
     param_hash["mchid"] = merchant.mch_id.to_s
