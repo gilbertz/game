@@ -46,18 +46,18 @@ class Party < ActiveRecord::Base
   end
 
   #企业付款
-  def self.qy_pay(user_id,beacon_id, money=nil)
+  def self.qy_pay(user_id,merchant, money=nil,desc = nil)
     # beacon = Ibeacon.find_by_id(beacon_id)
     # return false unless beacon
-    # return false unless money.to_i > 0
-    # m = beacon.get_merchant
-    # authentication = Authentication.find_by_user_id(user_id)
-    # return false unless authentication
-    # # 防止用户窜发
-    # return false if authentication.appid != m.wxappid
+    return false unless money.to_i > 0
+    authentication = Authentication.find_by_user_id(user_id)
+    return false unless authentication
+    # 防止用户窜发
+    m = merchant || Merchant.find(1)
+    return false if authentication.appid != m.wxappid
 
-    m = Merchant.find 1
-    authentication = Authentication.find_by_user_id(7)
+    # p "m = #{m.to_json}"
+    # p "authentication = #{authentication.to_json}"
 
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers')
     http = Net::HTTP.new(uri.host, uri.port)
@@ -69,29 +69,39 @@ class Party < ActiveRecord::Base
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
 
-    body =  generate_qy_pay_param(m,authentication,money,nil)
-    p "body = #{body}"
+    body =  generate_qy_pay_param(m,authentication,money,desc)
+    # p "body = #{body}"
 
     request.body = body.to_xml_str
     response = http.start do |http|
       ret = http.request(request)
       puts request.body
-      puts ret.body
-      # doc = Document.new(ret.body)
-      # chapter1 = doc.root.elements[8] #输出节点中的子节点
-      # puts chapter1.text #输出第一个节点的包含文本
-      # return chapter1.text
+      result =  Hash.from_xml(ret.body)
+      result = result["xml"]
+      result["money"] = money.to_i
+      # p result
+      if result["return_code"] == "SUCCESS" && result["result_code"] == "SUCCESS"
+        result["openid"] = authentication.uid
+        Payment.create_from(result)
+        return true
+      else
+        result["openid"] = authentication.uid
+        result["mch_appid"] = m.wxappid.to_s
+        result["mchid"] = m.mch_id.to_s
+        Payment.create_from(result)
+        return false
+      end
     end
 
   end
 
   def self.generate_qy_pay_param(merchant,authentication,money,device_info,desc = '疯狂摇一摇给您送红包了!')
     param_hash = Hash.new
-    stamp = time_stamp
     str = nonce_str
-    param_hash["mch_appid"]= merchant.wxappid
-    param_hash["mch_id"] = merchant.mch_id
-    param_hash["partner_trade_no"] = out_trade_no
+    trade = out_trade_no
+    param_hash["mch_appid"]= merchant.wxappid.to_s
+    param_hash["mchid"] = merchant.mch_id.to_s
+    param_hash["partner_trade_no"] = trade
     param_hash["nonce_str"] = str
     param_hash["desc"] = desc
     param_hash["amount"] = money
@@ -101,8 +111,8 @@ class Party < ActiveRecord::Base
     #本机ip地址
     local_ip = IPSocket.getaddress(Socket.gethostname)
     param_hash["spbill_create_ip"] = local_ip
-    stringA = "amount=#{money}&check_name=#{"NO_CHECK"}&desc=#{desc}&mch_appid=#{merchant.wxappid}&mch_id=#{merchant.mch_id}&nonce_str=#{str}&openid=#{authentication.uid}&partner_trade_no=#{out_trade_no}&spbill_create_ip=#{local_ip}"
-    stringSignTemp = "#{stringA}&key=#{WX_PAY_KEY}"
+    stringA = "amount=#{money}&check_name=#{"NO_CHECK"}&desc=#{desc}&mch_appid=#{merchant.wxappid.to_s}&mchid=#{merchant.mch_id.to_s}&nonce_str=#{str}&openid=#{authentication.uid.to_s}&partner_trade_no=#{trade}&re_user_name=#{authentication.user_name}&spbill_create_ip=#{local_ip}"
+    stringSignTemp = "#{stringA}&key=#{merchant.key}"
     sign = Digest::MD5.hexdigest(stringSignTemp).upcase
     param_hash["sign"] = sign
     return param_hash
@@ -110,7 +120,7 @@ class Party < ActiveRecord::Base
 
 
   def self.time_stamp
-    Time.now.to_local.to_i.to_s
+    Time.now.to_i.to_s
   end
 
   def self.nonce_str(len = 16)
@@ -121,7 +131,7 @@ class Party < ActiveRecord::Base
   end
 
   def self.out_trade_no
-    "y1y_" + Time.now.strftime("yyyymmddHHMMSS")
+    "y1y_" + Time.now.strftime("%Y%m%d-%H%M%S")
   end
 
 

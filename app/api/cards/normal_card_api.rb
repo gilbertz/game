@@ -9,7 +9,7 @@ module NORMAL
 
       get '/text_api' do
 
-        Party.qy_pay(nil,nil,800)
+        Party.qy_pay(7,nil,1,"送钱了")
         {"result" => 749792}
       end
 
