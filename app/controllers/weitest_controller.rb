@@ -225,11 +225,11 @@ class WeitestController < ApplicationController
         #@rp = @object.weixin_post(from_user.id, @beacon.id, f_value)
         f_value = rand(20)
         @rp = Pary.qy_pay(from_user.id, @beacon.get_merchant, f_value)
-        if @rp.to_i >０ 
+        #if @rp.to_i >０ 
           Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp, :object_type => 'g_redpack',:object_id => @object.id)       
           from_user.decr_social(@beacon.id) 
           from_user.update_records(@beacon.id)
-        end
+        #end
       end
     end
     render nothing: true
