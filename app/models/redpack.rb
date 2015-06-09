@@ -1,3 +1,4 @@
+require "#{Rails.root}/lib/extend/hash_to_xml"
 class Redpack < ActiveRecord::Base
 
   require 'net/https'
@@ -25,6 +26,18 @@ class Redpack < ActiveRecord::Base
 
   def cloning(recursive=false)
     Redpack.create self.attributes.except!("created_at", "id")
+  end
+
+
+  # pattern == 0 ==> 红包
+  # pattern == 非 0 ==> 企业付款
+  def send_pay(user_id,beacon_id, pattern,money=nil)
+    pattern = 0 unless pattern
+    if pattern == 0
+      weixin_post(user_id,beacon_id,money)
+    else
+      qy_pay(user_id,money)
+    end
   end
 
 
@@ -61,7 +74,7 @@ class Redpack < ActiveRecord::Base
 
   def array_xml(user_id,beacon_id, m, money=nil)
     
-    current_redpack = get_current_redpack(beacon_id)
+    current_redpack = self
     money = get_redpack_rand(beacon_id) unless money
     user = User.find_by_id(user_id)
     doc = Document.new"<xml/>"
@@ -107,8 +120,107 @@ class Redpack < ActiveRecord::Base
     return doc.to_s
   end
 
+
+
+  #企业付款
+  def qy_pay(user_id, money=nil)
+    beacon_id = self.beaconid
+    beacon = Ibeacon.find_by_id(beacon_id)
+    p beacon.to_json
+    return  unless beacon
+    authentication = Authentication.find_by_user_id(user_id)
+    p authentication.to_json
+    return  unless authentication
+    # 防止用户窜发
+    m = beacon.get_merchant
+    # return  if authentication.appid != m.wxappid
+
+    p "m = #{m.to_json}"
+    p "authentication = #{authentication.to_json}"
+
+    uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers')
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true if uri.scheme == "https"  # enable SSL/TLS
+    http.cert =OpenSSL::X509::Certificate.new(File.read(m.certificate))
+    http.key =OpenSSL::PKey::RSA.new(File.read(m.rsa), m.rsa_key)# key and password
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE #这个也很重要
+
+    request = Net::HTTP::Post.new(uri)
+    request.content_type = 'text/xml'
+
+    body =  generate_qy_pay_param(beacon_id,m,authentication,money)
+    p "body = #{body}"
+
+    request.body = body.to_xml_str
+    response = http.start do |http|
+      ret = http.request(request)
+      puts request.body
+      result =  Hash.from_xml(ret.body)
+      result = result["xml"]
+      result["money"] = money.to_i
+      p result
+      if result["return_code"] == "SUCCESS" && result["result_code"] == "SUCCESS"
+        result["openid"] = authentication.uid
+        Payment.create_from(result)
+        return money
+      else
+        result["openid"] = authentication.uid
+        result["mch_appid"] = m.wxappid.to_s
+        result["mchid"] = m.mch_id.to_s
+        Payment.create_from(result)
+        return
+      end
+    end
+
+  end
+
+  def generate_qy_pay_param(beacon_id,merchant,authentication,money)
+    param_hash = Hash.new
+    str = nonce_str
+    trade = out_trade_no
+    desc = self.action_title || "疯狂摇一摇给您送红包了!"
+    money = get_redpack_rand(beacon_id) unless money
+    param_hash["mch_appid"]= merchant.wxappid.to_s
+    param_hash["mchid"] = merchant.mch_id.to_s
+    param_hash["partner_trade_no"] = trade
+    param_hash["nonce_str"] = str
+    param_hash["desc"] = desc
+    param_hash["amount"] = money
+    param_hash["openid"] = authentication.uid
+    param_hash["re_user_name"] = authentication.user_name
+    param_hash["check_name"] = "NO_CHECK"
+    #本机ip地址
+    local_ip = IPSocket.getaddress(Socket.gethostname)
+    param_hash["spbill_create_ip"] = local_ip
+    stringA = "amount=#{money}&check_name=#{"NO_CHECK"}&desc=#{desc}&mch_appid=#{merchant.wxappid.to_s}&mchid=#{merchant.mch_id.to_s}&nonce_str=#{str}&openid=#{authentication.uid.to_s}&partner_trade_no=#{trade}&re_user_name=#{authentication.user_name}&spbill_create_ip=#{local_ip}"
+    stringSignTemp = "#{stringA}&key=#{merchant.key}"
+    sign = Digest::MD5.hexdigest(stringSignTemp).upcase
+    param_hash["sign"] = sign
+    return param_hash
+  end
+
+
+  def time_stamp
+    Time.now.to_i.to_s
+  end
+
+  def nonce_str(len = 16)
+    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    newStr = ""
+    1.upto(len) { |i| newStr << chars[rand(chars.size-1)] }
+    return newStr
+  end
+
+  def out_trade_no
+    "y1y_" + Time.now.strftime("%Y%m%d-%H%M%S")
+  end
+
+
+
+
+
   def get_current_redpack(beacon_id)
-    current_redpack = Redpack.find_by(beaconid: beaconid)
+    current_redpack = Redpack.find_by(beaconid: beacon_id)
     return current_redpack
   end
 
