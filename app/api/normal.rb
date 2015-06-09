@@ -1,39 +1,13 @@
 require 'grape-swagger'
-require 'image/image_api'
-require 'redpack/redpack_api'
-require 'cards/card_api'
-require 'pay/pay_api'
-require 'orders/order_api'
-require 'behaviour/behaviour_api'
-require 'activity_check/activity_check_api'
-require 'merchant_info/merchant_info_api'
-require 'merchant_info/party_info_api'
-require 'statis/statis_api'
-module API
-  #一个服务一个模块  小型微服务
+require 'cards/normal_card_api'
+# 不需要验证的api
+module NORMAL
   class Root < Grape::API
-    prefix 'api'
+    prefix 'normal'
     format :json
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
-      def current_party
-        if User.current_user && User.current_user.role == 2
-          User.current_user.party
-        end
-      end
-
-      def current_party_id
-	      current_party.id
-      end
-
-      def weixin_authorize
-        check_cookie
-        unless current_user
-          redirect_to authorize_url(request.url)
-        end
-      end
-
       def check_cookie
         if true
           unless current_user
@@ -71,13 +45,6 @@ module API
         end
       end
 
-      def unauthorized!
-        #如果没有登录x
-        unless current_party
-          render_api_error! '401 Unauthorized', 401
-        end
-      end
-
       def not_allowed!
         render_api_error! 'Method Not Allowed', 405
       end
@@ -99,21 +66,15 @@ module API
     end
     # ---------------before-------------
     before do
-      weixin_authorize
-      unauthorized!
-    end
-    mount API::PartyInfo::PartyInfoAPI
-    mount API::MerchantInfo::MerchantInfoAPI
-    mount API::Pay::PayAPI
-    mount API::Orders::OrderAPI
-    mount API::Image::ImageAPI
-    mount API::ActivityCheck::ActivityCheckAPI
-    mount API::RedPack::RedpackAPI
-    mount API::Cards::CardAPI
-    mount API::Statis::StatisAPI
-    mount API::Behaviour::BehaviourAPI
 
+    end
+
+    mount NORMAL::Cards::CardAPI
     #api 文档
     add_swagger_documentation
+
   end
+
+
+
 end

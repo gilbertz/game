@@ -1,5 +1,7 @@
 Game::Application.routes.draw do
 
+  root :to => redirect("/site/site.html")
+
   require "sidekiq/web"
   mount Sidekiq::Web => '/sidekiq'
   get "qrcode/query_scaner"
@@ -18,8 +20,10 @@ Game::Application.routes.draw do
   get '/wx_app_auth/callback' => 'wx_app_auth#callback'
   get '/degao/statis' => 'merchant#statis'
 
-#  mount Yaoshengyi::RedpackAPI => '/'
+
   mount API::Root => '/'
+  mount CUSTOMER::Root => '/'
+  mount NORMAL::Root => '/'
 
   #mount WeixinRailsMiddleware::Engine, at: "/"
   resources :wx_configs
@@ -27,7 +31,7 @@ Game::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  #get "games/toplist" => "home#redirect"
+  #get "games/toplist" => "site#redirect"
 
   #namespace :qq do
   #  root to: "welcome#index"
@@ -37,24 +41,24 @@ Game::Application.routes.draw do
   #  get "welcome/test" => "welcome#test"
   #end
 
-  #root :to => 'home#index', :as => "root"
+  #root :to => 'site#index', :as => "root"
   #root :to => redirect("/weitest/875161620")
 
-  get '/', to: 'home#read', constraints: {subdomain: 't'}, as: 'read_root'
-  get '/',  to: "home#list", as: 'default_root'
-  get '/games', to: "home#list"
+  get '/', to: 'site#read', constraints: {subdomain: 't'}, as: 'read_root'
+  get '/',  to: "site#list", as: 'default_root'
+  get '/games', to: "site#list"
   
-  #get '/o2o', to: "home#o2o"
-  #get ':url', to: "home#ibeacon"
+  #get '/o2o', to: "site#o2o"
+  #get ':url', to: "site#ibeacon"
 
-  resources :home, only: [] do
+  resources :site, only: [] do
     get :search
   end
 
-  get '/r' => 'home#r'
-  get '/read' => 'home#read'
-  get '/list/:type' => 'home#index'
-  get '/add_weixin_url' => "home#add_weixin_url"
+  get '/r' => 'site#r'
+  get '/read' => 'site#read'
+  get '/list/:type' => 'site#index'
+  get '/add_weixin_url' => "site#add_weixin_url"
 
   get '/weitest/:material_id/result' => "weitest#result"
   get '/gouhai/:gurl/:title' => "wcards#gouhai" 
@@ -126,7 +130,7 @@ Game::Application.routes.draw do
   get '/gg/:total/:count/:max/:min' => 'weitest#test_generate'
   get '/:y1y_beacon_url/gs/:id' => 'weitest#o2o' 
   get '/:y1y_beacon_url/wshows/:id' => 'wshows#show'
-  get '/:y1y_beacon_url/home' => 'home#home'
+  get '/:y1y_beacon_url/site' => 'site#site'
   get '/:y1y_beacon_url/broadcast' => 'weitest#broadcast' 
   get '/api/weixin' =>  'weixin#show',  :as=>"weixin"
   get 'api/weixin/test' =>  'weixin#test',  :as=>"weixin_test"
@@ -137,9 +141,9 @@ Game::Application.routes.draw do
 
   namespace :admin do
     get '/login' => 'session#new', as: :login
-    #root "home#index"
+    #root "site#index"
 
-    get 'home/clear_single_cache/:id' => "home#clear_single_cache"
+    get 'site/clear_single_cache/:id' => "site#clear_single_cache"
     
     get 'records' =>'records#index'
 

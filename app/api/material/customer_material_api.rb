@@ -1,4 +1,4 @@
-module API
+module CUSTOMER
 
   module MaterialInfo
 
