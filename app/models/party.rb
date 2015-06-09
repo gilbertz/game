@@ -46,14 +46,14 @@ class Party < ActiveRecord::Base
   end
 
   #企业付款
-  def self.qy_pay(user_id,merchant = Merchant.find(1), money=nil,desc = nil)
+  def self.qy_pay(user_id,merchant, money=nil,desc = nil)
     # beacon = Ibeacon.find_by_id(beacon_id)
     # return false unless beacon
     return false unless money.to_i > 0
     authentication = Authentication.find_by_user_id(user_id)
     return false unless authentication
     # 防止用户窜发
-    m = merchant
+    m = merchant || Merchant.find(1)
     return false if authentication.appid != m.wxappid
 
     # p "m = #{m.to_json}"
