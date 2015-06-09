@@ -7,7 +7,7 @@ class Admin::RecordsController < Admin::BaseController
     cond += " and user_id=#{params[:user_id]}" if params[:user_id]
     cond += " and game_id=#{params[:game_id]}" if params[:game_id]
     cond += " and from_user_id=#{params[:from_user_id]}" if params[:from_user_id]
-    cond += " and object_type='#{params[:object_type]}'" if params[:object_type]
+    cond += " and object_id=#{params[:object_id]}" if params[:object_id]
     limit = 20
     limit = params[:limit].to_i if params[:limit]
     @records = Record.where(cond).order('created_at desc').page(params[:page]).per(limit)

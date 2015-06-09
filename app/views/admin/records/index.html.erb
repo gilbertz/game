@@ -32,8 +32,8 @@
     <td><%= r.allocation%></td>
     <td><%= r.remark %></td>
     <td><%= r.feedback %></td>
-    <td><%= link_to r.object_type, "/admin/records?object_type=#{r.object_type}" %></td>
-    <td><%= r.object_id %></td>
+    <td><%= r.object_type %></td>
+    <td><%= link_to r.object_id, "/admin/records?object_id=#{r.object_id}" %></td>
     <td><%= r.created_at %></td>
   </tr>
   <% end %>
