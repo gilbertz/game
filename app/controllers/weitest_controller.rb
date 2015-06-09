@@ -222,8 +222,9 @@ class WeitestController < ApplicationController
       if params[:score].to_i >= t_score and rs.length >= t_num and from_user and from_user.social_value(@beacon.id) > 0
         #f_value = 100 +rand(20)
         #@rp = @object.weixin_post(from_user.id, @beacon.id, f_value)
-        f_value = rand(10)
-        @rp = Party.qy_pay(from_user.id, @beacon.get_merchant, f_value)
+        f_value = 1+rand(10)
+        desc = '4个好友帮你抢到红包了，快去感谢他们哦'
+        @rp = Party.qy_pay(from_user.id, @beacon.get_merchant, f_value, desc)
         #if @rp.to_i >０ 
           Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => f_value, :object_type => 'g_redpack',:object_id => @object.id)       
           from_user.decr_social(@beacon.id) 
