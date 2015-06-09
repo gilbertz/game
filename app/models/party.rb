@@ -46,21 +46,18 @@ class Party < ActiveRecord::Base
   end
 
   #企业付款
-  def self.qy_pay(user_id,beacon_id, money=nil,desc = nil)
+  def self.qy_pay(user_id,merchant = Merchant.find(1), money=nil,desc = nil)
     # beacon = Ibeacon.find_by_id(beacon_id)
     # return false unless beacon
-    # return false unless money.to_i > 0
-    # m = beacon.get_merchant
-    # authentication = Authentication.find_by_user_id(user_id)
-    # return false unless authentication
-    # # 防止用户窜发
-    # return false if authentication.appid != m.wxappid
+    return false unless money.to_i > 0
+    authentication = Authentication.find_by_user_id(user_id)
+    return false unless authentication
+    # 防止用户窜发
+    m = merchant
+    return false if authentication.appid != m.wxappid
 
-    m = Merchant.find 1
-    authentication = Authentication.find_by_user_id(7)
-
-    p "m = #{m.to_json}"
-    p "authentication = #{authentication.to_json}"
+    # p "m = #{m.to_json}"
+    # p "authentication = #{authentication.to_json}"
 
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers')
     http = Net::HTTP.new(uri.host, uri.port)
@@ -73,7 +70,7 @@ class Party < ActiveRecord::Base
     request.content_type = 'text/xml'
 
     body =  generate_qy_pay_param(m,authentication,money,desc)
-    p "body = #{body}"
+    # p "body = #{body}"
 
     request.body = body.to_xml_str
     response = http.start do |http|
@@ -82,7 +79,7 @@ class Party < ActiveRecord::Base
       result =  Hash.from_xml(ret.body)
       result = result["xml"]
       result["money"] = money.to_i
-      p result
+      # p result
       if result["return_code"] == "SUCCESS" && result["result_code"] == "SUCCESS"
         result["openid"] = authentication.uid
         Payment.create_from(result)
