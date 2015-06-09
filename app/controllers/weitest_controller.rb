@@ -210,7 +210,7 @@ class WeitestController < ApplicationController
  
   def game_report
     t_score = 9500
-    t_num = 6
+    t_num = 4
     if current_user and current_user.social_value(@beacon.id) == 0 
       Record.create(:user_id => current_user.id, :from_user_id => params[:from_user_id], :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
      from_user = User.find_by_id( params[:from_user_id] ) 
@@ -222,7 +222,7 @@ class WeitestController < ApplicationController
       if params[:score].to_i >= t_score and rs.length >= t_num and from_user and from_user.social_value(@beacon.id) > 0
         #f_value = 100 +rand(20)
         #@rp = @object.weixin_post(from_user.id, @beacon.id, f_value)
-        f_value = rand(20)
+        f_value = rand(10)
         @rp = Party.qy_pay(from_user.id, @beacon.get_merchant, f_value)
         #if @rp.to_i >０ 
           Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => f_value, :object_type => 'g_redpack',:object_id => @object.id)       
