@@ -149,7 +149,8 @@ class Redpack < ActiveRecord::Base
     request.content_type = 'text/xml'
 
     body =  generate_qy_pay_param(beacon_id,m,authentication,money)
-    p "body = #{body}"
+    money = body["amount"]
+    # p "body = #{body}"
 
     request.body = body.to_xml_str
     response = http.start do |http|

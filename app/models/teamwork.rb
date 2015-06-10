@@ -10,6 +10,21 @@ class Teamwork < ActiveRecord::Base
   validates :material_id,
             :presence     => true
 
+
+  def self.create_teamwork(user_id,material_id,init_percent,total_work = 1000)
+    t = Teamwork.new
+    t.sponsor = user_id
+    t.material_id = material_id
+    t.total_work = 1000
+    if init_percent
+
+    end
+    if t.save
+      return t
+    else
+    end
+  end
+
   #0 代表进行中  1代表成功完成  2代表失败结束
   def teamwork_state
     [0,1,2]
@@ -25,6 +40,8 @@ class Teamwork < ActiveRecord::Base
     end
 
   end
+
+
 
   def add_one_person(user_id,percent,appid=WX_APPID)
     if user_id && percent
