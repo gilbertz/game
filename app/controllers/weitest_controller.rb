@@ -228,7 +228,7 @@ class WeitestController < ApplicationController
         # @rp = @object.send_pay(from_user.id,@beacon.id,f_value)
         @rp = @object.send_pay(from_user.id, @beacon.id)
         if @rp.to_i > 0
-          Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => f_value, :object_type => 'g_redpack',:object_id => @object.id)       
+          Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp.to_i, :object_type => 'g_redpack',:object_id => @object.id)       
           from_user.decr_social(@beacon.id) 
           from_user.update_records(@beacon.id)
         end
