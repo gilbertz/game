@@ -16,7 +16,7 @@ class Payment < ActiveRecord::Base
     payment.err_code = hash["err_code"]
     payment.err_code_des = hash["err_code_des"].to_s
     payment.openid = hash["openid"]
-    payment.money = hash["amount"].to_i
+    payment.money = hash["money"].to_i
     if payment.save
       return payment
     end

@@ -34,6 +34,7 @@ class Redpack < ActiveRecord::Base
   def send_pay(user_id,beacon_id,money=nil)
     pattern = 0 unless self.pattern
     money = get_redpack_rand(beacon_id) unless money
+
     if pattern == 0 && money.to_i >= 100
       weixin_post(user_id,beacon_id,money)
     else
@@ -47,9 +48,12 @@ class Redpack < ActiveRecord::Base
     return unless beacon
     m = beacon.get_merchant
     authentication = Authentication.find_by_user_id(user_id)
-    return false unless authentication
+
+    # p "authentication #{authentication.to_json}"
+    # p "merchant = #{m.to_json}"
+    return  unless authentication
     # 防止用户窜发
-    return false if authentication.appid != m.wxappid
+    # return if authentication.appid != m.wxappid
 
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack')
     http = Net::HTTP.new(uri.host, uri.port)
@@ -61,15 +65,16 @@ class Redpack < ActiveRecord::Base
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'text/xml'
 
+    # p "request = #{request}"
     request.body = array_xml(user_id,beacon_id, m, money)
     response = http.start do |http|
       ret = http.request(request)
-      puts request.body
-      puts ret.body
-      doc = Document.new(ret.body)
-      chapter1 = doc.root.elements[8] #输出节点中的子节点
-      puts chapter1.text #输出第一个节点的包含文本
-      return chapter1.text
+      result = (Hash.from_xml(ret.body))["xml"]
+      # p  "result #{result}"
+      # doc = Document.new(ret.body)
+      # chapter1 = doc.root.elements[8] #输出节点中的子节点
+      # puts chapter1.text #输出第一个节点的包含文本
+      result["total_amount"]
     end
   end
 
@@ -156,7 +161,7 @@ class Redpack < ActiveRecord::Base
     request.body = body.to_xml_str
     response = http.start do |http|
       ret = http.request(request)
-      puts request.body
+      # puts request.body
       result =  Hash.from_xml(ret.body)
       result = result["xml"]
       result["money"] = money.to_i
