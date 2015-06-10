@@ -35,11 +35,17 @@ class Redpack < ActiveRecord::Base
     pattern = 0 unless self.pattern
     money = get_redpack_rand(beacon_id) unless money
 
-    if pattern == 0 && money.to_i >= 100
-      weixin_post(user_id,beacon_id,money)
-    else
+    time = Time.now
+    if time.hour < 8 && time > 0
       qy_pay(user_id,money)
+    else
+      if pattern == 0 && money.to_i >= 100
+        weixin_post(user_id,beacon_id,money)
+      else
+        qy_pay(user_id,money)
+      end
     end
+
   end
 
 
