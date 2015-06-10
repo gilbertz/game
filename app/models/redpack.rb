@@ -135,8 +135,8 @@ class Redpack < ActiveRecord::Base
     m = beacon.get_merchant
     # return  if authentication.appid != m.wxappid
 
-    p "m = #{m.to_json}"
-    p "authentication = #{authentication.to_json}"
+    # p "m = #{m.to_json}"
+    # p "authentication = #{authentication.to_json}"
 
     uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers')
     http = Net::HTTP.new(uri.host, uri.port)
