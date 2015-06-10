@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610061536) do
+ActiveRecord::Schema.define(version: 20150610094023) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -610,6 +610,7 @@ ActiveRecord::Schema.define(version: 20150610061536) do
     t.datetime "end_time"
     t.integer  "material_id"
     t.integer  "type_id"
+    t.integer  "pattern"
   end
 
   create_table "scores", force: true do |t|

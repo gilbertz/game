@@ -225,7 +225,7 @@ class WeitestController < ApplicationController
         f_value = 1+rand(10)
         # desc = '4个好友帮你抢到红包了，快去感谢他们哦'
         # @rp = @object.qy_pay(from_user.id, @beacon.get_merchant, f_value, desc)
-        @rp = @object.send_pay(from_user.id,@beacon.id, 1,f_value)
+        @rp = @object.send_pay(from_user.id,@beacon.id,f_value)
         if @rp.to_i > 0
           Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => f_value, :object_type => 'g_redpack',:object_id => @object.id)       
           from_user.decr_social(@beacon.id) 
