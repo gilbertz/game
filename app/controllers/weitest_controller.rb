@@ -164,6 +164,7 @@ class WeitestController < ApplicationController
   def weixin_score
     if current_user
       beaconid = @beacon.id
+      f_value = 0
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
         if au
