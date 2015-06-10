@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609032334) do
+ActiveRecord::Schema.define(version: 20150610061536) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -642,6 +642,17 @@ ActiveRecord::Schema.define(version: 20150609032334) do
     t.string   "party_id"
     t.text     "param_format"
     t.string   "task_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teamworks", force: true do |t|
+    t.integer  "sponsor"
+    t.integer  "total_work"
+    t.string   "partner"
+    t.string   "team_percent"
+    t.integer  "material_id"
+    t.integer  "state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

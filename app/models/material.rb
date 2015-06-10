@@ -11,6 +11,8 @@ class Material < ActiveRecord::Base
   has_many :records
   has_many :MappingMis
 
+  has_many :teamworks
+
   cattr_accessor :current_material
   class_attribute :clone
 
