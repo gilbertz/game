@@ -15,8 +15,7 @@ module NORMAL
         # r.qy_pay(7, money=nil)
         # r.send_pay(7,23, 1,nil)
 
-        r.send_pay(7,23, 0,nil)
-
+        r.send_pay(7,23,nil)
 
 
         {"result" => 749792}

@@ -33,6 +33,7 @@ class Redpack < ActiveRecord::Base
   # pattern == 非 0 ==> 企业付款
   def send_pay(user_id,beacon_id,money=nil)
     pattern = 0 unless self.pattern
+    money = get_redpack_rand(beacon_id) unless money
     if pattern == 0 && money.to_i >= 100
       weixin_post(user_id,beacon_id,money)
     else
