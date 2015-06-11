@@ -11,5 +11,7 @@
  *= require_self
  *= require wpinstagram
  *= require style
+ *= require bootstrap
+ *= require bootstrap.min
  *= require jquery.fancybox-1.3.4.min
  */

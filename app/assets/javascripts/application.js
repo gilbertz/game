@@ -15,3 +15,6 @@
 //= require jquery.infinitescroll
 //= require jquery.masonry.min
 //= require home
+//= require underscore
+//= require bootstrap
+//= require angular
