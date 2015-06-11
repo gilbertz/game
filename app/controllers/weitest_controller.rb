@@ -164,12 +164,13 @@ class WeitestController < ApplicationController
   def weixin_score
     if current_user
       beaconid = @beacon.id
+      f_value = 0
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
         if au
           from_user_id = au.user_id
           from_user = User.find from_user_id
-          if params[:beaconid] == 'dgbs'
+          if @beacon.url == 'dgbs'
             @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.id) 
             if not @score and from_user.social_value(beaconid) > 0
               r = Record.where(:beaconid=>beaconid, :user_id =>au.user_id, :object_type => 'Redpack', :feedback => nil).order('created_at desc')[0]
@@ -222,12 +223,13 @@ class WeitestController < ApplicationController
       if params[:score].to_i >= t_score and rs.length >= t_num and from_user and from_user.social_value(@beacon.id) > 0
         #f_value = 100 +rand(20)
         # @rp = @object.weixin_post(from_user.id, @beacon.id, f_value)
-        f_value = 1+rand(10)
+        #f_value = 1+rand(10)
         # desc = '4个好友帮你抢到红包了，快去感谢他们哦'
         # @rp = @object.qy_pay(from_user.id, @beacon.get_merchant, f_value, desc)
-        @rp = @object.send_pay(from_user.id,@beacon.id,f_value)
+        # @rp = @object.send_pay(from_user.id,@beacon.id,f_value)
+        @rp = @object.send_pay(from_user.id, @beacon.id)
         if @rp.to_i > 0
-          Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => f_value, :object_type => 'g_redpack',:object_id => @object.id)       
+          Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp.to_i, :object_type => 'g_redpack',:object_id => @object.id)       
           from_user.decr_social(@beacon.id) 
           from_user.update_records(@beacon.id)
         end

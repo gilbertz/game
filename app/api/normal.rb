@@ -1,5 +1,6 @@
 require 'grape-swagger'
 require 'cards/normal_card_api'
+require 'statis/statis_api'
 # 不需要验证的api
 module NORMAL
   class Root < Grape::API
@@ -70,6 +71,7 @@ module NORMAL
     end
 
     mount NORMAL::Cards::CardAPI
+    mount API::Statis::StatisAPI
     #api 文档
     add_swagger_documentation
 
