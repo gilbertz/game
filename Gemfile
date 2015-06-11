@@ -128,3 +128,5 @@ gem 'china_sms'
 
 #https://github.com/softcraft-development/rails3_acts_as_paranoid
 gem 'rails4_acts_as_paranoid', '~> 0.1.4'
+
+gem 'qiniu', '~> 6.2.1'

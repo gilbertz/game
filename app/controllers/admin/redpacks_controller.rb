@@ -53,6 +53,6 @@ class Admin::RedpacksController < Admin::BaseController
     end
 
     def redpack_params
-      params.require(:redpack).permit(:beaconid, :app_id, :store, :state, :shop_id, :sender_name, :wishing, :action_title, :action_remark, :min, :max, :suc_url, :fail_url, :amount, :each_max, :each_num, :probability, :password, :virtual_num, :start_time, :end_time)
+      params.require(:redpack).permit(:beaconid, :app_id, :type_id, :store, :state, :shop_id, :sender_name, :wishing, :action_title, :action_remark, :min, :max, :suc_url, :fail_url, :amount, :each_max, :each_num, :probability, :password, :virtual_num, :start_time, :end_time)
     end
 end
