@@ -22,7 +22,7 @@ module API
           # end_date = Date.parse(params[:end_date] || Date.today().to_s)
           # start_date = Date.parse(params[:start_date] || (end_date - 30).to_s)
           end_date = Time.now
-          start_date = Time.now-24*3600*10
+          start_date = Time.now-24*3600*2
           @name = Material.find_by_id(game_id).name
           @uv = Uv.where("created_at >= ? and created_at <= ? and game_id = ? and beaconid = ?", start_date, end_date, game_id, beacon_id)
           @record = Record.where("created_at >= ? and created_at <= ? and game_id = ? and beaconid =? ",start_date, end_date, game_id ,beacon_id)
