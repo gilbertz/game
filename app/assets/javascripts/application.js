@@ -18,3 +18,4 @@
 //= require underscore
 //= require bootstrap
 //= require angular
+//= require main
