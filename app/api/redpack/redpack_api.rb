@@ -101,7 +101,7 @@ module API
             @redpack_get.probability = params[:probability]
           end
 
-          Material.create(:merchant_id => current_user.id, :beaconid => params[:beaconid], :appearance_type => "RedpackAppearance", :appearance_id => @redpack_appearance.id, :object_type => "Redpack", :object_id => @redpack.id)
+          Material.create(:party_id => current_user.id, :beaconid => params[:beaconid], :appearance_type => "RedpackAppearance", :appearance_id => @redpack_appearance.id, :object_type => "Redpack", :object_id => @redpack.id)
         end
 
 

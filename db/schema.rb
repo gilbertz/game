@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603135739) do
+ActiveRecord::Schema.define(version: 20150610094023) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -65,7 +65,11 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.string   "groupid"
   end
 
+  add_index "authentications", ["appid"], name: "index_authentications_on_appid", using: :btree
+  add_index "authentications", ["groupid"], name: "index_authentications_on_groupid", using: :btree
+  add_index "authentications", ["uid"], name: "index_authentications_on_uid", using: :btree
   add_index "authentications", ["unionid"], name: "index_authentications_on_unionid", using: :btree
+  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "banners", force: true do |t|
     t.integer  "wait",       default: 1, null: false
@@ -203,6 +207,14 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.datetime "last_notice_time"
   end
 
+  add_index "checks", ["beaconid"], name: "index_checks_on_beaconid", using: :btree
+  add_index "checks", ["created_at"], name: "index_checks_on_created_at", using: :btree
+  add_index "checks", ["game_id"], name: "index_checks_on_game_id", using: :btree
+  add_index "checks", ["state"], name: "index_checks_on_state", using: :btree
+  add_index "checks", ["user_id", "beaconid", "game_id", "created_at"], name: "index_checks_on_user_id_and_beaconid_and_game_id_and_created_at", using: :btree
+  add_index "checks", ["user_id", "beaconid", "game_id"], name: "index_checks_on_user_id_and_beaconid_and_game_id", using: :btree
+  add_index "checks", ["user_id"], name: "index_checks_on_user_id", using: :btree
+
   create_table "code_blocks", force: true do |t|
     t.integer  "category_id"
     t.text     "code"
@@ -303,6 +315,13 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.datetime "updated_at"
   end
 
+  create_table "mapping_mis", force: true do |t|
+    t.integer  "material_id"
+    t.integer  "ibeacon_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "materials", force: true do |t|
     t.integer  "state",                        default: 0
     t.text     "description"
@@ -334,6 +353,7 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.string   "object_type"
     t.integer  "object_id"
     t.integer  "beacon_id"
+    t.string   "pyq_url"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
@@ -425,6 +445,34 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "payments", force: true do |t|
+    t.string   "mch_appid"
+    t.string   "mchid"
+    t.string   "device_info"
+    t.string   "partner_trade_no"
+    t.string   "payment_no"
+    t.string   "payment_time"
+    t.string   "return_code"
+    t.text     "return_msg"
+    t.string   "result_code"
+    t.string   "err_code"
+    t.text     "err_code_des"
+    t.string   "openid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "money"
+  end
+
+  add_index "payments", ["created_at"], name: "index_payments_on_created_at", using: :btree
+  add_index "payments", ["mchid", "openid", "created_at", "payment_no"], name: "index_payments_on_mchid_and_openid_and_created_at_and_payment_no", length: {"mchid"=>191, "openid"=>191, "created_at"=>nil, "payment_no"=>191}, using: :btree
+  add_index "payments", ["mchid", "openid", "created_at"], name: "index_payments_on_mchid_and_openid_and_created_at", length: {"mchid"=>191, "openid"=>191, "created_at"=>nil}, using: :btree
+  add_index "payments", ["mchid", "openid", "payment_no"], name: "index_payments_on_mchid_and_openid_and_payment_no", length: {"mchid"=>191, "openid"=>191, "payment_no"=>191}, using: :btree
+  add_index "payments", ["mchid", "openid"], name: "index_payments_on_mchid_and_openid", length: {"mchid"=>191, "openid"=>191}, using: :btree
+  add_index "payments", ["mchid"], name: "index_payments_on_mchid", length: {"mchid"=>191}, using: :btree
+  add_index "payments", ["money"], name: "index_payments_on_money", using: :btree
+  add_index "payments", ["openid"], name: "index_payments_on_openid", length: {"openid"=>191}, using: :btree
+  add_index "payments", ["payment_no"], name: "index_payments_on_payment_no", length: {"payment_no"=>191}, using: :btree
 
   create_table "products", force: true do |t|
     t.string   "name"
@@ -555,6 +603,9 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.integer  "virtual_num"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.integer  "material_id"
+    t.integer  "type_id"
+    t.integer  "pattern"
   end
 
   create_table "scores", force: true do |t|
@@ -591,6 +642,17 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.datetime "updated_at"
   end
 
+  create_table "teamworks", force: true do |t|
+    t.integer  "sponsor"
+    t.integer  "total_work"
+    t.string   "partner"
+    t.string   "team_percent"
+    t.integer  "material_id"
+    t.integer  "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "time_amounts", force: true do |t|
     t.datetime "time"
     t.integer  "amount"
@@ -601,6 +663,10 @@ ActiveRecord::Schema.define(version: 20150603135739) do
     t.integer  "state"
     t.integer  "fake_amount"
   end
+
+  add_index "time_amounts", ["redpack_time_id"], name: "index_time_amounts_on_redpack_time_id", using: :btree
+  add_index "time_amounts", ["time", "redpack_time_id"], name: "index_time_amounts_on_time_and_redpack_time_id", using: :btree
+  add_index "time_amounts", ["time"], name: "index_time_amounts_on_time", using: :btree
 
   create_table "user_allocations", force: true do |t|
     t.integer  "user_id"

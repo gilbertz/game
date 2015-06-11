@@ -45,7 +45,7 @@ class WeitestController < ApplicationController
         Score.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :value => -total_score, :game_id => params[:game_id])
         UserScore.find_by("user_id = ? and beaconid = ?", current_user.id, beaconid).update(:total_score => 0) 
         total_score = total_score > 300 ? 300 : total_score
-        total_score = 1000 + total_score.to_i 
+        #total_score = 1000 + total_score.to_i 
         rp = Redpack.find(@object.id).weixin_post(current_user.id,beaconid,total_score)
         Record.create(:user_id => current_user.id, :from_user_id => current_user.id, :beaconid=> beaconid, :game_id => params[:game_id], :score => rp.to_i, :object_type=> 'social_redpack', :object_id => @object.id)
         current_user.mark_scores(beaconid, @material.id)
@@ -164,12 +164,13 @@ class WeitestController < ApplicationController
   def weixin_score
     if current_user
       beaconid = @beacon.id
+      f_value = 0
       if params[:openid]
         au = Authentication.find_by_uid( params[:openid] )
         if au
           from_user_id = au.user_id
           from_user = User.find from_user_id
-          if params[:beaconid] == 'dgbs'
+          if @beacon.url == 'dgbs'
             @score = Score.find_by(:beaconid=>beaconid, :from_user_id =>au.user_id, :user_id =>current_user.id) 
             if not @score and from_user.social_value(beaconid) > 0
               r = Record.where(:beaconid=>beaconid, :user_id =>au.user_id, :object_type => 'Redpack', :feedback => nil).order('created_at desc')[0]
@@ -219,13 +220,19 @@ class WeitestController < ApplicationController
         current_user.update_records(@beacon.id)
       end
       rs = Record.where(:from_user_id => params[:from_user_id], :game_id=>params[:game_id], :feedback =>nil).where("score >= #{t_score}").group('user_id')
-      rps = Record.where( :game_id=>params[:game_id], :beaconid => @beacon.id, :object_type => 'g_redpack')
-      if params[:score].to_i >= t_score and rs.length >= t_num and from_user
-        f_value = 100 +rand(50)
-        @rp = @object.weixin_post(from_user.id, @beacon.id, f_value) 
-        Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp, :object_type => 'g_redpack',:object_id => @object.id)       
-        from_user.decr_social(@beacon.id) 
-        from_user.update_records(@beacon.id)
+      if params[:score].to_i >= t_score and rs.length >= t_num and from_user and from_user.social_value(@beacon.id) > 0
+        #f_value = 100 +rand(20)
+        # @rp = @object.weixin_post(from_user.id, @beacon.id, f_value)
+        #f_value = 1+rand(10)
+        # desc = '4个好友帮你抢到红包了，快去感谢他们哦'
+        # @rp = @object.qy_pay(from_user.id, @beacon.get_merchant, f_value, desc)
+        # @rp = @object.send_pay(from_user.id,@beacon.id,f_value)
+        @rp = @object.send_pay(from_user.id, @beacon.id)
+        if @rp.to_i > 0
+          Record.create(:user_id => from_user.id, :beaconid => @beacon.id, :game_id => params[:game_id], :score => @rp.to_i, :object_type => 'g_redpack',:object_id => @object.id)       
+          from_user.decr_social(@beacon.id) 
+          from_user.update_records(@beacon.id)
+        end
       end
     end
     render nothing: true
@@ -422,7 +429,7 @@ def get_object
       @object = @material.object_type.capitalize.constantize.find @material.object_id
     end
     @record = current_user.get_record(@beacon.id, @material.id) if current_user
-     get_time_amount if @object.instance_of?(Redpack)
+     get_time_amount if @object.instance_of?(Redpack) and  @object.type_id == 1
   end
 end
 

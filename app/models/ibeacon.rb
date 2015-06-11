@@ -10,6 +10,7 @@ class Ibeacon < ActiveRecord::Base
   has_many :user_scores, :foreign_key => "beaconid"  
   has_many :checks, :foreign_key => "beaconid"
   has_many :messages, :foreign_key => "beaconid"
+  has_many :MappingMis
 
   before_validation :auto_url
 
@@ -33,7 +34,7 @@ class Ibeacon < ActiveRecord::Base
     if self.merchant_id
       return self.merchant
     end
-    Merchant.find 1 
+    Merchant.find_by_wxappid WX_APPID
   end
 
   def user_name

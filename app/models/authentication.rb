@@ -70,4 +70,17 @@ class Authentication < ActiveRecord::Base
     ret
   end
 
+
+
+
+  def user_name
+    user = User.find_by_id(self.user_id)
+    if user
+      user.name
+    end
+  end
+
+
+
+
 end

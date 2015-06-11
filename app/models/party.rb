@@ -45,6 +45,7 @@ class Party < ActiveRecord::Base
   end
 
 
+
   private
   #必须返回boolean值 判断是否加成功
   def operate_balance(balance)

@@ -9,7 +9,6 @@ require 'activity_check/activity_check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
 require 'statis/statis_api'
-require 'material/material_api'
 module API
   #一个服务一个模块  小型微服务
   class Root < Grape::API
@@ -18,22 +17,45 @@ module API
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
-      def current_user
-        unless request.user_agent.downcase.index("micromessenger")
-          #User.find_by_id(164)
-          User.current_user
-        else
-          User.current_user
+      def current_party
+        if User.current_user && User.current_user.role == 2
+          User.current_user.party
         end
       end
 
       def current_party_id
-        current_user.get_party_id
+	      current_party.id
       end
 
-      def current_material
-        Material.current_material
-        # Material.find_by_id(1370)
+      def weixin_authorize
+        check_cookie
+        unless current_user
+          redirect_to authorize_url(request.url)
+        end
+      end
+
+      def check_cookie
+        if true
+          unless current_user
+            if cookies.signed[:remember_me].present?
+              user = User.find_by_rememberme_token cookies.signed[:remember_me]
+              if user && user.rememberme_token == cookies.signed[:remember_me]
+                session[:admin_user_id] = user.id
+                current_user = user
+                User.current_user = current_user
+              end
+            end
+          end
+        end
+      end
+
+      def authorize_url(url)
+        appid = WX_APPID
+        if params[:y1y_beacon_url]
+          get_beacon
+          appid = @beacon.get_merchant.wxappid
+        end
+        "http://#{WX_DOMAIN}/#{appid}/launch?rurl=" + url
       end
 
       def user_agent!
@@ -51,7 +73,7 @@ module API
 
       def unauthorized!
         #如果没有登录x
-        unless current_user
+        unless current_party
           render_api_error! '401 Unauthorized', 401
         end
       end
@@ -77,6 +99,7 @@ module API
     end
     # ---------------before-------------
     before do
+      weixin_authorize
       unauthorized!
     end
     mount API::PartyInfo::PartyInfoAPI
@@ -89,7 +112,7 @@ module API
     mount API::Cards::CardAPI
     mount API::Statis::StatisAPI
     mount API::Behaviour::BehaviourAPI
-    mount API::MaterialInfo::MaterialInfoAPI
+
     #api 文档
     add_swagger_documentation
   end
