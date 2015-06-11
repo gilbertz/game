@@ -65,11 +65,7 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.string   "groupid"
   end
 
-  add_index "authentications", ["appid"], name: "index_authentications_on_appid", using: :btree
-  add_index "authentications", ["groupid"], name: "index_authentications_on_groupid", using: :btree
-  add_index "authentications", ["uid"], name: "index_authentications_on_uid", using: :btree
   add_index "authentications", ["unionid"], name: "index_authentications_on_unionid", using: :btree
-  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "banners", force: true do |t|
     t.integer  "wait",       default: 1, null: false
@@ -465,14 +461,23 @@ ActiveRecord::Schema.define(version: 20150610094023) do
   end
 
   add_index "payments", ["created_at"], name: "index_payments_on_created_at", using: :btree
-  add_index "payments", ["mchid", "openid", "created_at", "payment_no"], name: "index_payments_on_mchid_and_openid_and_created_at_and_payment_no", length: {"mchid"=>191, "openid"=>191, "created_at"=>nil, "payment_no"=>191}, using: :btree
-  add_index "payments", ["mchid", "openid", "created_at"], name: "index_payments_on_mchid_and_openid_and_created_at", length: {"mchid"=>191, "openid"=>191, "created_at"=>nil}, using: :btree
-  add_index "payments", ["mchid", "openid", "payment_no"], name: "index_payments_on_mchid_and_openid_and_payment_no", length: {"mchid"=>191, "openid"=>191, "payment_no"=>191}, using: :btree
-  add_index "payments", ["mchid", "openid"], name: "index_payments_on_mchid_and_openid", length: {"mchid"=>191, "openid"=>191}, using: :btree
-  add_index "payments", ["mchid"], name: "index_payments_on_mchid", length: {"mchid"=>191}, using: :btree
+  add_index "payments", ["mchid", "openid", "created_at", "payment_no"], name: "index_payments_on_mchid_and_openid_and_created_at_and_payment_no", using: :btree
+  add_index "payments", ["mchid", "openid", "created_at"], name: "index_payments_on_mchid_and_openid_and_created_at", using: :btree
+  add_index "payments", ["mchid", "openid", "payment_no"], name: "index_payments_on_mchid_and_openid_and_payment_no", using: :btree
+  add_index "payments", ["mchid", "openid"], name: "index_payments_on_mchid_and_openid", using: :btree
+  add_index "payments", ["mchid"], name: "index_payments_on_mchid", using: :btree
   add_index "payments", ["money"], name: "index_payments_on_money", using: :btree
-  add_index "payments", ["openid"], name: "index_payments_on_openid", length: {"openid"=>191}, using: :btree
-  add_index "payments", ["payment_no"], name: "index_payments_on_payment_no", length: {"payment_no"=>191}, using: :btree
+  add_index "payments", ["openid"], name: "index_payments_on_openid", using: :btree
+  add_index "payments", ["payment_no"], name: "index_payments_on_payment_no", using: :btree
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.text     "contents"
+    t.string   "author"
+    t.datetime "post_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "products", force: true do |t|
     t.string   "name"
