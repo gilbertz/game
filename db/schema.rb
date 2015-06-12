@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610094023) do
+ActiveRecord::Schema.define(version: 20150612013512) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -65,7 +65,11 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.string   "groupid"
   end
 
+  add_index "authentications", ["appid"], name: "index_authentications_on_appid", using: :btree
+  add_index "authentications", ["groupid"], name: "index_authentications_on_groupid", using: :btree
+  add_index "authentications", ["uid"], name: "index_authentications_on_uid", using: :btree
   add_index "authentications", ["unionid"], name: "index_authentications_on_unionid", using: :btree
+  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "banners", force: true do |t|
     t.integer  "wait",       default: 1, null: false
@@ -201,6 +205,7 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.datetime "updated_at"
     t.integer  "game_id"
     t.datetime "last_notice_time"
+    t.integer  "new_state"
   end
 
   add_index "checks", ["beaconid"], name: "index_checks_on_beaconid", using: :btree
@@ -350,6 +355,9 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.integer  "object_id"
     t.integer  "beacon_id"
     t.string   "pyq_url"
+    t.integer  "team_persons"
+    t.float    "one_percent"
+    t.integer  "team_reward"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
@@ -433,6 +441,8 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.datetime "updated_at"
   end
 
+  add_index "parties", ["openid"], name: "index_parties_on_openid", length: {"openid"=>191}, using: :btree
+
   create_table "partyinfos", force: true do |t|
     t.string   "logo"
     t.string   "name"
@@ -461,14 +471,14 @@ ActiveRecord::Schema.define(version: 20150610094023) do
   end
 
   add_index "payments", ["created_at"], name: "index_payments_on_created_at", using: :btree
-  add_index "payments", ["mchid", "openid", "created_at", "payment_no"], name: "index_payments_on_mchid_and_openid_and_created_at_and_payment_no", using: :btree
-  add_index "payments", ["mchid", "openid", "created_at"], name: "index_payments_on_mchid_and_openid_and_created_at", using: :btree
-  add_index "payments", ["mchid", "openid", "payment_no"], name: "index_payments_on_mchid_and_openid_and_payment_no", using: :btree
-  add_index "payments", ["mchid", "openid"], name: "index_payments_on_mchid_and_openid", using: :btree
-  add_index "payments", ["mchid"], name: "index_payments_on_mchid", using: :btree
+  add_index "payments", ["mchid", "openid", "created_at", "payment_no"], name: "index_payments_on_mchid_and_openid_and_created_at_and_payment_no", length: {"mchid"=>191, "openid"=>191, "created_at"=>nil, "payment_no"=>191}, using: :btree
+  add_index "payments", ["mchid", "openid", "created_at"], name: "index_payments_on_mchid_and_openid_and_created_at", length: {"mchid"=>191, "openid"=>191, "created_at"=>nil}, using: :btree
+  add_index "payments", ["mchid", "openid", "payment_no"], name: "index_payments_on_mchid_and_openid_and_payment_no", length: {"mchid"=>191, "openid"=>191, "payment_no"=>191}, using: :btree
+  add_index "payments", ["mchid", "openid"], name: "index_payments_on_mchid_and_openid", length: {"mchid"=>191, "openid"=>191}, using: :btree
+  add_index "payments", ["mchid"], name: "index_payments_on_mchid", length: {"mchid"=>191}, using: :btree
   add_index "payments", ["money"], name: "index_payments_on_money", using: :btree
-  add_index "payments", ["openid"], name: "index_payments_on_openid", using: :btree
-  add_index "payments", ["payment_no"], name: "index_payments_on_payment_no", using: :btree
+  add_index "payments", ["openid"], name: "index_payments_on_openid", length: {"openid"=>191}, using: :btree
+  add_index "payments", ["payment_no"], name: "index_payments_on_payment_no", length: {"payment_no"=>191}, using: :btree
 
   create_table "posts", force: true do |t|
     t.string   "title"
@@ -541,6 +551,7 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.integer  "allocation"
     t.string   "card_id"
     t.integer  "feedback"
+    t.integer  "material_id"
   end
 
   add_index "records", ["beaconid", "score"], name: "index_records_on_beaconid_and_score", using: :btree
@@ -657,6 +668,14 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "teamworks", ["created_at"], name: "index_teamworks_on_created_at", using: :btree
+  add_index "teamworks", ["material_id"], name: "index_teamworks_on_material_id", using: :btree
+  add_index "teamworks", ["sponsor", "material_id", "state", "created_at"], name: "index_teamwoks_sponsor_state", using: :btree
+  add_index "teamworks", ["sponsor", "material_id", "state"], name: "index_teamworks_on_sponsor_and_material_id_and_state", using: :btree
+  add_index "teamworks", ["sponsor", "material_id"], name: "index_teamworks_on_sponsor_and_material_id", using: :btree
+  add_index "teamworks", ["sponsor"], name: "index_teamworks_on_sponsor", using: :btree
+  add_index "teamworks", ["state"], name: "index_teamworks_on_state", using: :btree
 
   create_table "time_amounts", force: true do |t|
     t.datetime "time"

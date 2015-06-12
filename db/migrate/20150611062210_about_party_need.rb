@@ -8,7 +8,7 @@ class AboutPartyNeed < ActiveRecord::Migration
 
     add_index :materials, :party_id
 
-    add_index :party, :openid
+    add_index :parties, :openid
 
     add_index :teamworks,:sponsor
     add_index :teamworks,:material_id
@@ -17,7 +17,7 @@ class AboutPartyNeed < ActiveRecord::Migration
 
     add_index :teamworks, [:sponsor, :material_id]
     add_index :teamworks, [:sponsor, :material_id,:state]
-    add_index :teamworks, [:sponsor, :material_id,:state,:created_at]
+    add_index :teamworks, [:sponsor, :material_id,:state,:created_at],:name => "index_teamwoks_sponsor_state"
 
   end
 end
