@@ -3,6 +3,7 @@ class Material < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :user
+  belongs_to :party
   has_many :images, as: :viewable, class_name: "Image", dependent: :destroy
   has_many :answers, as: :viewable, class_name: "Answer",  dependent: :destroy
   has_many :bgames, :foreign_key => "game_id"
@@ -12,6 +13,8 @@ class Material < ActiveRecord::Base
   has_many :MappingMis
 
   has_many :teamworks
+  has_many :records
+
 
   cattr_accessor :current_material
   class_attribute :clone
@@ -82,6 +85,26 @@ class Material < ActiveRecord::Base
     m = Material.find_by_id( url ) unless m
     m
   end
+
+  add_column :materials, :team_psersons, :integer
+  add_column :materials, :one_percent, :float
+
+  # 如果活动类型是团队接力模式
+  # rest --> 剩余份额
+  # num ---> 要分的人数
+  def teamworks_rand(rest,num)
+      if self.one_percent && self.one_percent > 0.0
+        arr = []
+        (0...num).step 1 do |t|
+          arr.push self.one_percent
+        end
+        return arr
+      # 随机生成
+      else
+        Tool.split_rand(rest,num)
+      end
+  end
+
 
   def get_name
     if self.id == Material.last.id
@@ -361,6 +384,14 @@ class Material < ActiveRecord::Base
     end
     return false
   end
+
+
+
+
+
+
+
+
 
 
   private
