@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610094023) do
+ActiveRecord::Schema.define(version: 20150612013512) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.datetime "updated_at"
     t.integer  "game_id"
     t.datetime "last_notice_time"
+    t.integer  "new_state"
   end
 
   add_index "checks", ["beaconid"], name: "index_checks_on_beaconid", using: :btree
@@ -354,11 +355,16 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.integer  "object_id"
     t.integer  "beacon_id"
     t.string   "pyq_url"
+    t.integer  "team_persons"
+    t.float    "one_percent"
+    t.integer  "team_reward"
+    t.integer  "party_id"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
   add_index "materials", ["is_qq"], name: "index_materials_on_is_qq", using: :btree
   add_index "materials", ["is_recommend_to_qq"], name: "index_materials_on_is_recommend_to_qq", using: :btree
+  add_index "materials", ["party_id"], name: "index_materials_on_party_id", using: :btree
   add_index "materials", ["redis_pv"], name: "index_materials_on_redis_pv", using: :btree
   add_index "materials", ["redis_wx_share_pyq"], name: "index_materials_on_redis_wx_share_pyq", using: :btree
   add_index "materials", ["rrr"], name: "index_materials_on_rrr", using: :btree
@@ -437,6 +443,8 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.datetime "updated_at"
   end
 
+  add_index "parties", ["openid"], name: "index_parties_on_openid", length: {"openid"=>191}, using: :btree
+
   create_table "partyinfos", force: true do |t|
     t.string   "logo"
     t.string   "name"
@@ -473,6 +481,15 @@ ActiveRecord::Schema.define(version: 20150610094023) do
   add_index "payments", ["money"], name: "index_payments_on_money", using: :btree
   add_index "payments", ["openid"], name: "index_payments_on_openid", length: {"openid"=>191}, using: :btree
   add_index "payments", ["payment_no"], name: "index_payments_on_payment_no", length: {"payment_no"=>191}, using: :btree
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.text     "contents"
+    t.string   "author"
+    t.datetime "post_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "products", force: true do |t|
     t.string   "name"
@@ -536,6 +553,7 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.integer  "allocation"
     t.string   "card_id"
     t.integer  "feedback"
+    t.integer  "material_id"
   end
 
   add_index "records", ["beaconid", "score"], name: "index_records_on_beaconid_and_score", using: :btree
@@ -605,10 +623,7 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.datetime "end_time"
     t.integer  "material_id"
     t.integer  "type_id"
-<<<<<<< HEAD
-=======
     t.integer  "pattern"
->>>>>>> 64fdf968f65322d9e4a423806c981be40c30fd01
   end
 
   create_table "scores", force: true do |t|
@@ -655,6 +670,14 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "teamworks", ["created_at"], name: "index_teamworks_on_created_at", using: :btree
+  add_index "teamworks", ["material_id"], name: "index_teamworks_on_material_id", using: :btree
+  add_index "teamworks", ["sponsor", "material_id", "state", "created_at"], name: "index_teamwoks_sponsor_state", using: :btree
+  add_index "teamworks", ["sponsor", "material_id", "state"], name: "index_teamworks_on_sponsor_and_material_id_and_state", using: :btree
+  add_index "teamworks", ["sponsor", "material_id"], name: "index_teamworks_on_sponsor_and_material_id", using: :btree
+  add_index "teamworks", ["sponsor"], name: "index_teamworks_on_sponsor", using: :btree
+  add_index "teamworks", ["state"], name: "index_teamworks_on_state", using: :btree
 
   create_table "time_amounts", force: true do |t|
     t.datetime "time"
