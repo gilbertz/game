@@ -86,8 +86,7 @@ class Material < ActiveRecord::Base
     m
   end
 
-  add_column :materials, :team_psersons, :integer
-  add_column :materials, :one_percent, :float
+
 
   # 如果活动类型是团队接力模式
   # rest --> 剩余份额
