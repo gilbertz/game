@@ -20,6 +20,7 @@ Game::Application.routes.draw do
   get '/wx_app_auth/callback' => 'wx_app_auth#callback'
   get '/degao/statis' => 'merchant#statis'
 
+  get '/party_center' => 'main#index'
 
   mount API::Root => '/'
   mount CUSTOMER::Root => '/'

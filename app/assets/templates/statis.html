@@ -1,0 +1,101 @@
+
+  <script>
+    //左侧Javascript代码
+    $(function () {
+
+     chart('1365567608','dgbs','巴士摇一摇','#container_newbusredpack');
+     chart('1341259419','dgbs','收到一个红包','#container_getredpack');
+     chart('1355593447','dgbs','我的红包','#container_myredpack');
+
+     function chart(game_url,beacon_url,text,container_id){
+      Highcharts.setOptions({
+        colors: ['#058DC7', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4','#ED561B']
+    });
+      $.ajax({
+        type: "GET",
+        url: "/normal/v1/statis/"+beacon_url+"/"+game_url,
+        data: "json",
+        success: function(msg)
+        {
+          var uv = 0;
+          var categories_data=[];
+          var data_data=[];
+          var data_person=[];
+          var data_new_person=[];
+          var seed_redpack_num=[];
+          var social_redpack_num=[];
+          var feedback_redpack_num=[];
+          var seed_redpack=[];
+          var social_redpack=[];
+          var feedback_redpack=[];
+          uv = msg.uv;
+          uv_sub_group = msg.uv_sub_group;
+          record_sub_group = msg.record_sub_group;
+          for(var i=0;i<uv_sub_group.length;i++)
+          {
+            categories_data[i] = uv_sub_group[i]['created_at'];
+            data_data[i] = uv_sub_group[i]['per_num'] ; 
+            data_person[i] = uv_sub_group[i]['person_num']; 
+            data_new_person[i] = uv_sub_group[i]['new_person_num'];    
+          }
+
+          for(var i=0;i<record_sub_group.length;i++)
+          {
+            seed_redpack_num[i] = record_sub_group[i]['seed_redpack_num'] ; 
+            social_redpack_num[i] = record_sub_group[i]['social_redpack_num'] ;
+            feedback_redpack_num[i] = record_sub_group[i]['feedback_redpack_num'] ;  
+            seed_redpack[i] = record_sub_group[i]['seed_redpack']/100;
+            social_redpack[i] = record_sub_group[i]['social_redpack']/100;
+            feedback_redpack[i] = record_sub_group[i]['feedback_redpack']/100;   
+
+          }
+
+          $(container_id).highcharts({
+            title: {
+              text: text + '浏览量 总量 '+uv,
+            x: -20 //center
+          },
+          subtitle: {
+            text: '数据来源: 盛也网络 www.y1y.me',
+            x: -20
+          },
+          xAxis: {
+            categories: categories_data
+          },
+          yAxis: {
+            min: 0,
+            title: {
+              text: '数量'
+            },
+            plotLines: [{
+              value: 0,
+              width: 1,
+              color: '#808080'
+            }]
+          },
+          tooltip: {
+            valueSuffix: ''
+          },
+          legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+          },
+          series: [
+          {name: '单日浏览量(次)',data: data_data},{name:"单日人数(个)",data: data_person},{name:"单日新增人数(个)",data: data_new_person},{name:"种子红包数(个)",data: seed_redpack_num},{name:"社交红包数(个)",data: social_redpack_num},{name:"反馈红包数(个)",data: feedback_redpack_num},{name:"种子红包金额(元)",data: seed_redpack},{name:"社交红包金额(元)",data: social_redpack},{name:"反馈红包金额(元)",data: feedback_redpack}
+          ]
+        });
+
+        }});
+      }
+
+});
+
+
+</script>
+
+
+  <div id="container_newbusredpack" style="min-width:700px;height:400px"></div>
+  <div id="container_getredpack" style="min-width:700px;height:400px"></div>
+  <div id="container_myredpack" style="min-width:700px;height:400px"></div>
