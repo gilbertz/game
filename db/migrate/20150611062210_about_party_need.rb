@@ -5,6 +5,7 @@ class AboutPartyNeed < ActiveRecord::Migration
     add_column :materials, :one_percent, :float
     add_column :materials, :team_reward, :integer
     add_column :records, :material_id, :integer
+    add_column :materials, :party_id, :integer
 
     add_index :materials, :party_id
 
