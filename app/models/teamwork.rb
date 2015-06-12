@@ -85,6 +85,18 @@ class Teamwork < ActiveRecord::Base
     end
   end
 
+  def get_user_percent(user_id)
+    arr1 = partners
+    arr2 = team_percents
+    for i in 0...(arr1.count)
+      item = arr1[i]
+      if item.to_s == user_id
+          return arr2[i]
+      end
+    end
+
+  end
+
 
   # 剩余的 percent
   def rest_percent

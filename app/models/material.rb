@@ -91,7 +91,7 @@ class Material < ActiveRecord::Base
   # 如果活动类型是团队接力模式
   # rest --> 剩余份额
   # num ---> 要分的人数
-  def teamworks_rand(rest,num)
+  def teamworks_rand
       if self.one_percent && self.one_percent > 0.0
         arr = []
         (0...num).step 1 do |t|
@@ -100,7 +100,7 @@ class Material < ActiveRecord::Base
         return arr
       # 随机生成
       else
-        Tool.split_rand(rest,num)
+        Tool.split_rand(1,team_persons)
       end
   end
 
@@ -110,7 +110,7 @@ class Material < ActiveRecord::Base
       "【新】" + self.name
     else
       self.name
-    end 
+    end
   end 
 
   def get_answers
@@ -378,7 +378,7 @@ class Material < ActiveRecord::Base
   end
 
   def social_share?
-    if self.category and  self.category.game_type_id == 15
+    if self.category and  (self.category.game_type_id == 15 || self.category.game_type_id == 17)
       return true
     end
     return false
