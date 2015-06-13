@@ -84,6 +84,7 @@ class WeitestController < ApplicationController
       @rp = 0
       unless @record
         @rp = @object.weixin_post(current_user.id, @beacon.id)
+        Record.create(:user_id => current_user.id, :beaconid=> @beacon.id, :game_id => params[:game_id], :score => @rp.to_i, :object_type=> 'redpack', :object_id => @object.id)
         render :status => 200, json: {'info' => @rp.to_i}
       else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
         # 今天次数用完了
