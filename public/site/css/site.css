@@ -79,6 +79,7 @@ a,a:hover{
 .home__video{
     position: relative;
     height: 632px;
+    text-align: center;
 }
 .home__video-style{
     width: 70%;
@@ -228,9 +229,12 @@ a,a:hover{
 }
 .video{
     position: absolute;
-    width: 80%;
-    margin: 0 auto;
-    margin-top: 50px;
+    width: 850px;
+    height:500px;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -425px;
 }
 .carousel-control{
     font-size: 80px;
