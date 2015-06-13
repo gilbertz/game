@@ -165,6 +165,24 @@ class User < ActiveRecord::Base
     end
   end
 
+  def resend_redpack(game_id, beaconid)
+      t_score = 9500
+      t_num = 4
+      rs = Record.where(:from_user_id => self.id, :game_id=>game_id, :feedback =>nil).where("score >= #{t_score}").group('user_id')
+      if rs.length >= t_num and self.social_value(beaconid) > 0
+        beacon = Ibeacon.find beaconid
+        rp = beacon.redpacks.last
+        ret = rp.send_pay(self.id, beaconid)
+        if ret.to_i > 0
+          Record.create(:user_id => self.id, :beaconid => beaconid, :game_id => game_id, :score => ret.to_i, :object_type => 'g_redpack',:object_id => rp.id)
+          self.decr_social( beaconid )
+          self.update_records( beaconid )
+        end
+      end
+  end
+
+
+
   private
   def make_password
     self.salt = generate_salt
