@@ -1,5 +1,6 @@
 require 'grape-swagger'
 require 'material/customer_material_api'
+require 'material/customer_teamwork_api'
 # 为c端用户提供的api
 module CUSTOMER
   class Root < Grape::API
@@ -10,7 +11,12 @@ module CUSTOMER
     #--------------------helpes-----------------
     helpers do
       def current_user
-        User.current_user
+        # User.current_user
+        User.find_by(7)
+      end
+
+      def current_material
+        Material.current_material
       end
 
       def weixin_authorize
@@ -21,15 +27,13 @@ module CUSTOMER
       end
 
       def check_cookie
-        if true
-          unless current_user
-            if cookies.signed[:remember_me].present?
-              user = User.find_by_rememberme_token cookies.signed[:remember_me]
-              if user && user.rememberme_token == cookies.signed[:remember_me]
-                session[:admin_user_id] = user.id
-                current_user = user
-                User.current_user = current_user
-              end
+        unless current_user
+          if cookies.signed[:remember_me].present?
+            user = User.find_by_rememberme_token cookies.signed[:remember_me]
+            if user && user.rememberme_token == cookies.signed[:remember_me]
+              session[:admin_user_id] = user.id
+              current_user = user
+              User.current_user = current_user
             end
           end
         end
@@ -59,7 +63,7 @@ module CUSTOMER
 
       def unauthorized!
         #如果没有登录x
-        unless current_party
+        unless current_user
           render_api_error! '401 Unauthorized', 401
         end
       end
@@ -85,20 +89,17 @@ module CUSTOMER
     end
     # ---------------before-------------
     before do
-      weixin_authorize
+      # weixin_authorize
       unauthorized!
     end
 
 
-
-
-
     mount CUSTOMER::MaterialInfo::MaterialInfoAPI
+    mount CUSTOMER::Teamwork::TeamworkAPI
     #api 文档
     add_swagger_documentation
 
   end
-
 
 
 end

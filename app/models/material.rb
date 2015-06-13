@@ -3,6 +3,7 @@ class Material < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :user
+  belongs_to :party
   has_many :images, as: :viewable, class_name: "Image", dependent: :destroy
   has_many :answers, as: :viewable, class_name: "Answer",  dependent: :destroy
   has_many :bgames, :foreign_key => "game_id"
@@ -12,6 +13,8 @@ class Material < ActiveRecord::Base
   has_many :MappingMis
 
   has_many :teamworks
+  has_many :records
+
 
   cattr_accessor :current_material
   class_attribute :clone
@@ -83,12 +86,31 @@ class Material < ActiveRecord::Base
     m
   end
 
+
+
+  # 如果活动类型是团队接力模式
+  # rest --> 剩余份额
+  # num ---> 要分的人数
+  def teamworks_rand
+      if self.one_percent && self.one_percent > 0.0
+        arr = []
+        (0...num).step 1 do |t|
+          arr.push self.one_percent
+        end
+        return arr
+      # 随机生成
+      else
+        Tool.split_rand(1,team_persons)
+      end
+  end
+
+
   def get_name
     if self.id == Material.last.id
       "【新】" + self.name
     else
       self.name
-    end 
+    end
   end 
 
   def get_answers
@@ -356,11 +378,19 @@ class Material < ActiveRecord::Base
   end
 
   def social_share?
-    if self.category and  self.category.game_type_id == 15
+    if self.category and  (self.category.game_type_id == 15 || self.category.game_type_id == 17)
       return true
     end
     return false
   end
+
+
+
+
+
+
+
+
 
 
   private

@@ -355,6 +355,10 @@ ActiveRecord::Schema.define(version: 20150612013512) do
     t.integer  "object_id"
     t.integer  "beacon_id"
     t.string   "pyq_url"
+    t.integer  "team_persons"
+    t.float    "one_percent"
+    t.integer  "team_reward"
+    t.integer  "total_work"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
@@ -438,6 +442,8 @@ ActiveRecord::Schema.define(version: 20150612013512) do
     t.datetime "updated_at"
   end
 
+  add_index "parties", ["openid"], name: "index_parties_on_openid", length: {"openid"=>191}, using: :btree
+
   create_table "partyinfos", force: true do |t|
     t.string   "logo"
     t.string   "name"
@@ -474,6 +480,15 @@ ActiveRecord::Schema.define(version: 20150612013512) do
   add_index "payments", ["money"], name: "index_payments_on_money", using: :btree
   add_index "payments", ["openid"], name: "index_payments_on_openid", length: {"openid"=>191}, using: :btree
   add_index "payments", ["payment_no"], name: "index_payments_on_payment_no", length: {"payment_no"=>191}, using: :btree
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.text     "contents"
+    t.string   "author"
+    t.datetime "post_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "products", force: true do |t|
     t.string   "name"
@@ -537,6 +552,7 @@ ActiveRecord::Schema.define(version: 20150612013512) do
     t.integer  "allocation"
     t.string   "card_id"
     t.integer  "feedback"
+    t.integer  "material_id"
   end
 
   add_index "records", ["beaconid", "score"], name: "index_records_on_beaconid_and_score", using: :btree
@@ -653,6 +669,14 @@ ActiveRecord::Schema.define(version: 20150612013512) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "teamworks", ["created_at"], name: "index_teamworks_on_created_at", using: :btree
+  add_index "teamworks", ["material_id"], name: "index_teamworks_on_material_id", using: :btree
+  add_index "teamworks", ["sponsor", "material_id", "state", "created_at"], name: "index_teamwoks_sponsor_state", using: :btree
+  add_index "teamworks", ["sponsor", "material_id", "state"], name: "index_teamworks_on_sponsor_and_material_id_and_state", using: :btree
+  add_index "teamworks", ["sponsor", "material_id"], name: "index_teamworks_on_sponsor_and_material_id", using: :btree
+  add_index "teamworks", ["sponsor"], name: "index_teamworks_on_sponsor", using: :btree
+  add_index "teamworks", ["state"], name: "index_teamworks_on_state", using: :btree
 
   create_table "time_amounts", force: true do |t|
     t.datetime "time"

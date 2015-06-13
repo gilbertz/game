@@ -36,7 +36,7 @@ class Redpack < ActiveRecord::Base
     money = get_redpack_rand(beacon_id) unless money
 
     time = Time.now
-    if time.hour < 8 && time > 0
+    if time.hour < 8 && time.hour > 0
       qy_pay(user_id,money)
     else
       if pattern == 0 && money.to_i >= 100
