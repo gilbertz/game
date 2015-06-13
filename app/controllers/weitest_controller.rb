@@ -65,7 +65,7 @@ class WeitestController < ApplicationController
         check = Check.find_by(user_id: current_user.id, beaconid: beaconid,state: 1,game_id: params[:game_id])
         check.update(:state => 0) if check
         info = Redpack.gain_seed_redpack(current_user.id, params[:game_id], @object, @beacon.id)
-        @rp = Redpack.find(@object.id).weixin_post(current_user.id,beaconid,info) if info >100
+        @rp = @object.weixin_post(current_user.id,beaconid,info) if info >100
         render :status => 200, json: {'info' => @rp.to_i}
       else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
         # 今天次数用完了
@@ -77,6 +77,20 @@ class WeitestController < ApplicationController
     # end
    # render :status => 200, json: {"info" => "六一儿童节快乐", "name" => current_user.id}
   end
+
+
+  
+  def weixin_redpack
+      @rp = 0
+      unless @record
+        @rp = @object.weixin_post(current_user.id, @beacon.id)
+        render :status => 200, json: {'info' => @rp.to_i}
+      else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
+        # 今天次数用完了
+        render :status => 200, json: {'info' => 0}
+      end
+  end
+
 
   # def bus_allocation
   #   if Record.redpack_per_day(current_user.id, params[:game_id]) < 3
