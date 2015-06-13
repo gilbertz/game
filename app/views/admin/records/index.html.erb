@@ -10,6 +10,7 @@
     <th>app name</th>
     <th>qr</th>
     <th>from user</th>
+    <th>social value</th>
     <th>score</th>
     <th>allocation</th>
     <th>remark</th>
@@ -28,6 +29,7 @@
     <td><%= link_to r.app_name, "/admin/records?game_id=#{r.game_id}" %></td>
     <td><img src="<%= r.get_qr_img %>" width='100px'></td>
     <td><%= link_to r.from_user_name, "/admin/records?from_user_id=#{r.from_user_id}" %></td>
+    <td><%= r.user.social_value(r.beaconid) %></td>
     <td><%= r.score %></td>
     <td><%= r.allocation%></td>
     <td><%= r.remark %></td>

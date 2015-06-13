@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610094023) do
+ActiveRecord::Schema.define(version: 20150612013512) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(version: 20150610094023) do
     t.datetime "updated_at"
     t.integer  "game_id"
     t.datetime "last_notice_time"
+    t.integer  "new_state"
   end
 
   add_index "checks", ["beaconid"], name: "index_checks_on_beaconid", using: :btree

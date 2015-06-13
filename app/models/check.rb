@@ -17,6 +17,11 @@ class Check < ActiveRecord::Base
     end
   end
 
+  def is_new_user
+    self.user.created_at > self.created_at - 12.hours
+  end
+
+
   def self.check_per_day(user_id,game_id,beacon_id)
      Check.where("user_id = ? and game_id = ? and beaconid =? and created_at >= ? and created_at <= ?" , user_id, game_id, beacon_id, Date.today.beginning_of_day, Date.today.end_of_day).length
   end
