@@ -80,7 +80,9 @@ class Redpack < ActiveRecord::Base
       # doc = Document.new(ret.body)
       # chapter1 = doc.root.elements[8] #输出节点中的子节点
       # puts chapter1.text #输出第一个节点的包含文本
-      result["total_amount"]
+      if result["return_code"] == "SUCCESS" && result["result_code"] == "SUCCESS"
+        result["total_amount"]
+      end
     end
   end
 

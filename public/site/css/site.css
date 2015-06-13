@@ -1,4 +1,5 @@
-body{
+html,body{
+    width: 100%;
     margin:0;
     font-family: "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","\9ED1\4F53",Arial,sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -25,7 +26,7 @@ a,a:hover{
 
 }
 .home__head-title{
-    width:inherit;
+    width:100%;
     height: 70px;
     background-color: #000;
     color: #fff;
@@ -44,7 +45,7 @@ a,a:hover{
     padding: 0 60px 0 60px ;
 }
 .icon{
-   display: inline-block;
+    display: inline-block;
     float: left;
 
 }
@@ -78,6 +79,7 @@ a,a:hover{
 .home__video{
     position: relative;
     height: 632px;
+    text-align: center;
 }
 .home__video-style{
     width: 70%;
@@ -92,7 +94,7 @@ a,a:hover{
     zoom: 1;
 }
 .home__scene-item{
-    padding: 40px 0;
+    padding: 80px 0;
     border-top: 1px solid #e3e3e3;
 }
 .ui-bfc__left{
@@ -100,7 +102,8 @@ a,a:hover{
 }
 .home__scene-item-img{
     width: 150px;
-    margin-right: 78px;
+    height:300px;
+    margin-right: 200px;
     line-height: 1;
     background: url("../img/phone.jpg") top center no-repeat;
     background-size: contain;
@@ -225,8 +228,15 @@ a,a:hover{
     display: inline-block;
 }
 .video{
+    position: absolute;
     width: 850px;
-    height: 500px;
-    margin-top: 50px;
-    margin-left: 115px;
+    height:500px;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -425px;
+}
+.carousel-control{
+    font-size: 80px;
+    padding-top:20%;
 }
