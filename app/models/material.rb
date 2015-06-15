@@ -100,7 +100,7 @@ class Material < ActiveRecord::Base
         return arr
       # 随机生成
       else
-        Tool.split_rand(1,team_persons)
+        Tool.split_rand(1,self.team_persons)
       end
   end
 
