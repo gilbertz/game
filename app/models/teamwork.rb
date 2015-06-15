@@ -78,7 +78,7 @@ class Teamwork < ActiveRecord::Base
   def add_partner (user_id, appid = WX_APPID)
     if user_id
       arr = partners
-      arr.push user_id
+      arr.push user_id.to_s
 
       self.partner = arr.join(',')
     end
@@ -158,9 +158,9 @@ class Teamwork < ActiveRecord::Base
     p "up = #{up.to_json}  and num = #{num.to_i}"
     #如果是偶数 则代表成功
     if num.to_i % 2 == 0
-      rp = up.to_f + rand(1.0)
+      rp = up.to_f + rand(6)/10.0
     else
-      rp = up - 0.13
+      rp = up.to_f - 0.13
     end
   end
 
