@@ -166,6 +166,7 @@ class Teamwork < ActiveRecord::Base
   def get_result_percent(user_id)
     if user_id
       index = partners.index user_id
+      p "partners = #{partners}  and index = #{index}"
       r = results
       if r
         r[index]
