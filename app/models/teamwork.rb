@@ -142,9 +142,10 @@ class Teamwork < ActiveRecord::Base
     if user_id
       index = partners.index user_id
       r = results
+      p "results = #{r}"
       if r
         r[index] = percent
-        self.result_percent = r.json(',')
+        self.result_percent = r.join(',')
         [index,percent]
       end
     end
