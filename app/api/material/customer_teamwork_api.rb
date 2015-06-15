@@ -45,7 +45,7 @@ module CUSTOMER
         params do
           optional :from_user,type: String,allow_blank: false,desc: '团队接龙发起者'
         end
-        get :start ,jbuilder:'material/teamwork_start' do
+        post :start ,jbuilder:'material/teamwork_start' do
           @flag = -1
           p "current user = #{current_user.to_json}"
           p "current_material = #{current_material.to_json}"
@@ -129,7 +129,7 @@ module CUSTOMER
         params do
           requires :percent,type: Integer,allow_blank: false,desc: '提交结果'
         end
-        get :submit_percent ,jbuilder:'material/teamwork_submit_percent' do
+        post :submit_percent ,jbuilder:'material/teamwork_submit_percent' do
           @flag = -1
           if current_material
             @material = current_material
