@@ -37,6 +37,8 @@ module CUSTOMER
         end
         get :start ,jbuilder:'material/teamwork_start' do
           @flag = -1
+          p "current user = #{current_user.to_json}"
+          p "current_material = #{current_material.to_json}"
           if current_material
             @material = current_material
             @category = @material.category
