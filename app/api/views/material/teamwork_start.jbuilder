@@ -22,6 +22,14 @@ elsif @flag == 1
 #自己创建一个
 elsif @flag == 2
 
+  json.teamwork do
+    json.id = @teamwork.id
+    json.total_work = @teamwork.total_work
+    json.sponsor = current_user.get_openid
+    json.state = @teamwork.state
+  end
+
+
 # 手速慢了  teamwork 已经不存在了
 elsif @flag == 3
 
