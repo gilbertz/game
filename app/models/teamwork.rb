@@ -140,9 +140,10 @@ class Teamwork < ActiveRecord::Base
 
   def set_result_percent(user_id,percent)
     if user_id
-      index = partners.index user_id
+      p "user_id = #{user_id} and partners = #{partners}"
+      index = partners.index user_id.to_s
       r = results
-      p "results = #{r}"
+      p "results = #{r} and index = #{index}"
       if r
         r[index] = percent
         self.result_percent = r.join(',')

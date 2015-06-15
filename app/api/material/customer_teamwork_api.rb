@@ -144,7 +144,7 @@ module CUSTOMER
                 if @expect_percent && @expect_percent.to_f <= result_percent
                   # 过关
                   @flag = 0
-                  if @exist_teamwork.partners.count >= @material.team_persons.count
+                  if @exist_teamwork.partners.count >= @material.team_persons
                     # 成功完成
                     @flag = 1
                     @exist_teamwork.state = 1
