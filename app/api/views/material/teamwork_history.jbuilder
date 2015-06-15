@@ -1,4 +1,4 @@
-if @exist_teamwork.present
+if @exist_teamwork.present?
   if @exist_teamwork
     json.result 0
     json.teamwork do
