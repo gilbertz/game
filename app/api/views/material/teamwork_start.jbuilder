@@ -21,12 +21,12 @@ elsif @flag == 1
 
 #自己创建一个
 elsif @flag == 2
-
+  json.message "发起活动成功!"
   json.teamwork do
-    json.id = @teamwork.id
-    json.total_work = @teamwork.total_work
-    json.sponsor = current_user.get_openid
-    json.state = @teamwork.state
+    json.id  @teamwork.id
+    json.total_work  @teamwork.total_work
+    json.sponsor  current_user.get_openid
+    json.state  @teamwork.state
   end
 
 

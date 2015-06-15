@@ -12,7 +12,7 @@ module CUSTOMER
     helpers do
       def current_user
         # User.current_user
-        User.find_by(7)
+        User.find_by_id(7)
       end
 
       def current_material
