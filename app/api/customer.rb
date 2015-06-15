@@ -96,7 +96,7 @@ module CUSTOMER
 
 
     mount CUSTOMER::MaterialInfo::MaterialInfoAPI
-    mount CUSTOMER::Teamwork::TeamworkAPI
+    mount CUSTOMER::Teamworks::TeamworkAPI
     #api 文档
     add_swagger_documentation
 

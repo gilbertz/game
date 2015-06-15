@@ -1,5 +1,5 @@
 module CUSTOMER
-  module Teamwork
+  module Teamworks
     class TeamworkAPI < Grape::API
       version 'v1'
       #------------------helpers------------------
