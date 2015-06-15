@@ -154,6 +154,7 @@ class Teamwork < ActiveRecord::Base
 
   def rand_result_percent(user_id,num)
     up = get_user_percent(user_id)
+    p "up = #{up.to_json}  and num = #{num.to_i}"
     #如果是偶数 则代表成功
     if num.to_i % 2 == 0
       rp = up + rand(1.0)
@@ -168,7 +169,7 @@ class Teamwork < ActiveRecord::Base
       index = partners.index user_id
       p "partners = #{partners}  and index = #{index}"
       r = results
-      if r
+      if r && index
         r[index]
       end
     end
