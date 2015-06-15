@@ -69,7 +69,7 @@ class Teamwork < ActiveRecord::Base
     arr1 = []
     arr.each do |item|
       u = User.find_by_id(item.to_i)
-      arr1.push item
+      arr1.push u
     end
     arr1
   end
