@@ -59,6 +59,7 @@ module CUSTOMER
               if @teamwork
                 @flag = 0
                 @partner_users = @teamwork.partner_users
+                p "@partner_users #{@partner_users.to_json}"
               else
                 #如果是加入到别人创建好的团队中
                 from_user = User.by_openid(params["from_user"])

@@ -155,7 +155,7 @@ class Teamwork < ActiveRecord::Base
   def rand_result_percent(user_id,num)
     up = get_user_percent(user_id)
     #如果是偶数 则代表成功
-    if num.to_i %2 ==0
+    if num.to_i % 2 == 0
       rp = up + rand(1.0)
     else
       rp = up - 0.13
