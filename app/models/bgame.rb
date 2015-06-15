@@ -35,11 +35,11 @@ class Bgame < ActiveRecord::Base
   end
 
   def game_link
-    self.get_game.get_link(self.get_beacon.url)    
+    self.get_game.get_link(self.get_beacon.url) if self.get_game 
   end
 
   def get_qr_img
-    'http://qr.liantu.com/api.php?text=' + self.game_link
+    'http://qr.liantu.com/api.php?text=' + self.game_link.to_s
   end
 
 end
