@@ -157,7 +157,7 @@ class Teamwork < ActiveRecord::Base
     p "up = #{up.to_json}  and num = #{num.to_i}"
     #如果是偶数 则代表成功
     if num.to_i % 2 == 0
-      rp = up + rand(1.0)
+      rp = up.to_f + rand(1.0)
     else
       rp = up - 0.13
     end
