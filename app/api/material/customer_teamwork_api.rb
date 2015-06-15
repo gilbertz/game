@@ -9,7 +9,7 @@ module CUSTOMER
           teamwork_id = teamwork_key(user_id,matterial_id)
           if teamwork_id
             t = Teamwork.find_by_id(teamwork_id)
-            if t.status == 0
+            if t && t.status == 0
               t
             end
           end
