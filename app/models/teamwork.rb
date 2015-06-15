@@ -18,6 +18,11 @@ class Teamwork < ActiveRecord::Base
     t.total_work = total_work
     if init_percents
       t.team_percent = init_percents.join(',')
+      rp = []
+      for i in 0...init_percents.count
+        rp.push 0
+      end
+      t.result_percent = rp.join(',')
     end
     if t.save
       return t
@@ -59,6 +64,17 @@ class Teamwork < ActiveRecord::Base
     end
   end
 
+  def partner_users
+    arr = partners
+    arr1 = []
+    arr.each do |item|
+      u = User.find_by_id(item.to_i)
+      arr1.push item
+    end
+    arr1
+  end
+
+
   def add_partner (user_id, appid = WX_APPID)
     if user_id
       arr = partners
@@ -90,13 +106,12 @@ class Teamwork < ActiveRecord::Base
     arr2 = team_percents
     for i in 0...(arr1.count)
       item = arr1[i]
-      if item.to_s == user_id
+      if item.to_s == user_id.to_s
           return arr2[i]
       end
     end
 
   end
-
 
   # 剩余的 percent
   def rest_percent
@@ -114,6 +129,51 @@ class Teamwork < ActiveRecord::Base
     end
 
   end
+
+  def results
+    if self.result_percent
+      self.result_percent.split(',')
+    else
+      []
+    end
+  end
+
+  def set_result_percent(user_id,percent)
+    u = get_user_percent(user_id)
+    if u
+      index = partners.index u
+      r = results
+      if r
+        r[index] = percent
+        self.result_percent = r.json(',')
+        [index,percent]
+      end
+    end
+  end
+
+
+  def rand_result_percent(user_id,num)
+    up = get_user_percent(user_id)
+    #如果是偶数 则代表成功
+    if num.to_i %2 ==0
+      rp = up + rand(1.0)
+    else
+      rp = up - 0.13
+    end
+  end
+
+
+  def get_result_percent(user_id)
+    if user_id
+      index = partners.index u
+      r = results
+      if r
+        r[index]
+      end
+    end
+  end
+
+
 
   def is_successful?
     self.state == teamwork_state[1]
