@@ -129,7 +129,7 @@ module CUSTOMER
         params do
           requires :percent,type: Integer,allow_blank: false,desc: '提交结果'
         end
-        post :submit_percent ,jbuilder:'material/teamwork_submit_percent' do
+        get :submit_percent ,jbuilder:'material/teamwork_submit_percent' do
           @flag = -1
           if current_material
             @material = current_material
