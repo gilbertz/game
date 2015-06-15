@@ -6,7 +6,7 @@ module CUSTOMER
       helpers do
         #获取用户目前参与的团队任务
         def self_in_teamwork(user_id,matterial_id)
-          teamwork_id = teamwork_key(user_id,matterial_id)
+          teamwork_id = $redis.get(teamwork_key(user_id,matterial_id))
           if teamwork_id
             t = Teamwork.find_by_id(teamwork_id)
             if t && t.status == 0
@@ -45,6 +45,7 @@ module CUSTOMER
             # 团队协作类型的模版
             if @category.game_type_id = 17
               @exist_teamwork = self_in_teamwork(current_user.id,@material.id)
+              p "@exist_teamwork = #{@exist_teamwork.to_json}"
               if @exist_teamwork
                 @flag = 0
               else
@@ -77,6 +78,7 @@ module CUSTOMER
                   @teamwork = Teamwork.create_teamwork(current_user.id, @material.id, init_percents, total_work)
                   if @teamwork
                     $redis.set(teamwork_key(current_user.id, @material.id),@teamwork.id)
+                    p "redis get #{$redis.get(teamwork_key(current_user.id, @material.id))}"
                   end
                 end
               end
