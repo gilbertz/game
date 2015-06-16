@@ -41,14 +41,15 @@ private
     @set_wx_ad = wx_config.wx_ad
 
     if params[:token]
-      unless current_user
+      p "last current_user = #{User.current_user.to_json}"
+      # unless current_user
         au = Authentication.find_by_uid( params[:token] )
         user = User.find au.user_id if au
         sign_in user
 
         User.current_user = user
-        p "User.current_user = #{User.current_user}"
-      end
+        p "User.current_user = #{User.current_user.to_json}"
+      # end
     end
   end
 
