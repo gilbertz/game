@@ -18,8 +18,7 @@ module CUSTOMER
         def reset_teamwork_partners(teamwork,matterial_id)
           if teamwork
             arr = teamwork.partners
-            arr.each { |item|  $redis.expire(teamwork_key(item.to_i,matterial_id)) }
-
+            arr.each { |item|  $redis.set(teamwork_key(item.to_i,matterial_id),nil) }
           end
         end
 
@@ -83,7 +82,7 @@ module CUSTOMER
                   else
                     @flag = 3
                   end
-                  $redis.expire(teamwork_lock_key(@exist_teamwork.id,@material.id))
+                  $redis.set(teamwork_lock_key(@exist_teamwork.id,@material.id),nil)
                #自己创建一个
                 else
                   @flag = 2
