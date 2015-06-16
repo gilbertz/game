@@ -18,8 +18,8 @@ module CUSTOMER
 
       def current_material
         p "Material.current_material = #{Material.current_material}"
-        Material.current_material
-        # Material.find_by_id(1381)
+        # Material.current_material
+        Material.find_by_id(1381)
       end
 
       def weixin_authorize
