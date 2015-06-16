@@ -157,7 +157,7 @@ class Teamwork < ActiveRecord::Base
     up = get_user_percent(user_id)
     # 发起者成功概率大些
     if is_sponsor
-      x = (rand (10) > 2 ) ? true : false
+      x = (rand(10) > 2 ) ? true : false
       if  x
         return up.to_f + rand(6)/10.0
       end
