@@ -11,13 +11,15 @@ module CUSTOMER
     #--------------------helpes-----------------
     helpers do
       def current_user
-        # User.current_user
-        User.find_by_id(7)
+       p "User.current_user = #{User.current_user.to_json}"
+        User.current_user
+        # User.find_by_id(7)
       end
 
       def current_material
-        # Material.current_material
-        Material.find_by_id(1381)
+        p "Material.current_material = #{Material.current_material}"
+        Material.current_material
+        # Material.find_by_id(1381)
       end
 
       def weixin_authorize
