@@ -153,8 +153,15 @@ class Teamwork < ActiveRecord::Base
   end
 
 
-  def rand_result_percent(user_id,num)
+  def rand_result_percent(user_id,num,is_sponsor = false)
     up = get_user_percent(user_id)
+    # 发起者成功概率大些
+    if is_sponsor
+      x = (rand (10) > 2 ) ? true : false
+      if  x
+        return up.to_f + rand(6)/10.0
+      end
+    end
     p "up = #{up.to_json}  and num = #{num.to_i}"
     #如果是偶数 则代表成功
     if num.to_i % 2 == 0

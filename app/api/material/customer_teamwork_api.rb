@@ -137,7 +137,7 @@ module CUSTOMER
             if @category.game_type_id = 17
               @exist_teamwork = self_in_teamwork(current_user.id,@material.id)
               if @exist_teamwork
-                result_percent = @exist_teamwork.rand_result_percent(current_user.id,params["percent"])
+                result_percent = @exist_teamwork.rand_result_percent(current_user.id,params["percent"],current_user.id.to_i == @exist_teamwork.sponsor.to_i)
                 @exist_teamwork.set_result_percent(current_user.id,result_percent)
                 @expect_percent =  @exist_teamwork.get_user_percent(current_user.id)
                 if @expect_percent && @expect_percent.to_f <= result_percent

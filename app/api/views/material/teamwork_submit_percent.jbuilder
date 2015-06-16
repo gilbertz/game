@@ -9,7 +9,7 @@ elsif @flag == 1
 
 #完成活动失败
 elsif @flag == 2
-  json.message "很遗憾,任务未完成,再来一句吧!"
+  json.message "很遗憾,任务未完成,再来一局吧!"
 # 没有这个应用 或者当前应用不是团队合作应用
 else
   json.message '资源不存在'
