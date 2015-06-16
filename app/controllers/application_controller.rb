@@ -47,7 +47,7 @@ private
         sign_in user
 
         User.current_user = user
-        p "User.current_user = #{User.current_user}"
+        p "set_weixin_config User.current_user = #{User.current_user}"
       end
     end
   end
