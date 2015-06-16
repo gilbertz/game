@@ -45,6 +45,9 @@ private
         au = Authentication.find_by_uid( params[:token] )
         user = User.find au.user_id if au
         sign_in user
+
+        User.current_user = user
+        p "User.current_user = #{User.current_user}"
       end
     end
   end
