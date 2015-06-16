@@ -6,6 +6,7 @@ if @exist_teamwork.present?
       json.total_work  @exist_teamwork.total_work
       json.state  @exist_teamwork.state
       json.sponsor @exist_teamwork.sponsor
+      json.reward @material.team_reward
       # json.result_percent @teamwork.result_percent
     end
     json.partner_users(@partner_users) do |item|
