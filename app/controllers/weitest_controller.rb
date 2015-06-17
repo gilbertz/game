@@ -83,7 +83,9 @@ class WeitestController < ApplicationController
   def weixin_redpack
       @rp = 0
       unless @record
-        @rp = @object.weixin_post(current_user.id, @beacon.id)
+        money = nil
+        money = params[:score] if params[:score]
+        @rp = @object.weixin_post(current_user.id, @beacon.id, money)
         Record.create(:user_id => current_user.id, :beaconid=> @beacon.id, :game_id => params[:game_id], :score => @rp.to_i, :object_type=> 'redpack', :object_id => @object.id)
         render :status => 200, json: {'info' => @rp.to_i}
       else # Record.redpack_per_day(current_user.id, params[:game_id]) == 3
