@@ -35,6 +35,19 @@ module CUSTOMER
           "teamwork_lock_#{matterial_id}_#{teamwork_id}"
         end
 
+
+        def teamwork_can_json?(teamwork)
+          if teamwork
+            arr = teamwork.partners
+            if arr.count > 0
+              if (teamwork.get_result_percent(arr.last)).to_f > 0.0
+                true
+              end
+            end
+          end
+          false
+        end
+
       end
 
       #------------------resources material------------------
@@ -72,7 +85,7 @@ module CUSTOMER
                       break
                     end
                   end
-                  if @teamwork && @material.team_persons && @teamwork.partners.count < @material.team_persons
+                  if teamwork_can_json?(teamwork) && @material.team_persons && @teamwork.partners.count < @material.team_persons
                     @teamwork.add_partner(current_user.id)
                     if @teamwork.save
                       $redis.set(last_teamwork_key(current_user.id, @material.id),@exist_teamwork.id)
@@ -140,21 +153,22 @@ module CUSTOMER
               if @exist_teamwork && @exist_teamwork.get_result_percent(current_user.id).to_f <= 0.0
                 result_percent = @exist_teamwork.rand_result_percent(current_user.id,params["percent"],current_user.id.to_i == @exist_teamwork.sponsor.to_i)
                 @exist_teamwork.set_result_percent(current_user.id,result_percent)
-                @expect_percent =  @exist_teamwork.get_user_percent(current_user.id)
-                if @expect_percent && @expect_percent.to_f <= result_percent
+                # @expect_percent =  @exist_teamwork.get_user_percent(current_user.id)
+                if  result_percent
                   # 过关
                   @flag = 0
                   if @exist_teamwork.partners.count >= @material.team_persons
-                    # 成功完成
-                    @flag = 1
-                    @exist_teamwork.state = 1
+                    if @exist_teamwork.results_sum > 1.0
+                      # 成功完成
+                      @flag = 1
+                      @exist_teamwork.state = 1
+                    else
+                      # 失败结束
+                      @flag = 2
+                      @exist_teamwork.state = 2
+                    end
                   end
-                else
-                  # 失败结束
-                  @flag = 2
-                  @exist_teamwork.state = 2
                 end
-
                 if @exist_teamwork.save
                   @partner_users = @exist_teamwork.partner_users
                   # 成功完成 或者失败完成  要把 redis归位
