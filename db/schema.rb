@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150612092546) do
+ActiveRecord::Schema.define(version: 20150615051912) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -358,14 +358,12 @@ ActiveRecord::Schema.define(version: 20150612092546) do
     t.integer  "team_persons"
     t.float    "one_percent"
     t.integer  "team_reward"
-    t.integer  "party_id"
     t.integer  "total_work"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
   add_index "materials", ["is_qq"], name: "index_materials_on_is_qq", using: :btree
   add_index "materials", ["is_recommend_to_qq"], name: "index_materials_on_is_recommend_to_qq", using: :btree
-  add_index "materials", ["party_id"], name: "index_materials_on_party_id", using: :btree
   add_index "materials", ["redis_pv"], name: "index_materials_on_redis_pv", using: :btree
   add_index "materials", ["redis_wx_share_pyq"], name: "index_materials_on_redis_wx_share_pyq", using: :btree
   add_index "materials", ["rrr"], name: "index_materials_on_rrr", using: :btree
@@ -670,6 +668,7 @@ ActiveRecord::Schema.define(version: 20150612092546) do
     t.integer  "state"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "result_percent"
   end
 
   add_index "teamworks", ["created_at"], name: "index_teamworks_on_created_at", using: :btree

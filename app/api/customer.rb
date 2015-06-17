@@ -11,11 +11,13 @@ module CUSTOMER
     #--------------------helpes-----------------
     helpers do
       def current_user
-        # User.current_user
-        User.find_by(7)
+       p "User.current_user = #{User.current_user.to_json}"
+        User.current_user
+        # User.find_by_id(7)
       end
 
       def current_material
+        p "Material.current_material = #{Material.current_material}"
         # Material.current_material
         Material.find_by_id(1381)
       end
@@ -96,7 +98,7 @@ module CUSTOMER
 
 
     mount CUSTOMER::MaterialInfo::MaterialInfoAPI
-    mount CUSTOMER::Teamwork::TeamworkAPI
+    mount CUSTOMER::Teamworks::TeamworkAPI
     #api 文档
     add_swagger_documentation
 

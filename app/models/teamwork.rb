@@ -18,6 +18,11 @@ class Teamwork < ActiveRecord::Base
     t.total_work = total_work
     if init_percents
       t.team_percent = init_percents.join(',')
+      rp = []
+      for i in 0...init_percents.count
+        rp.push 0
+      end
+      t.result_percent = rp.join(',')
     end
     if t.save
       return t
@@ -59,10 +64,21 @@ class Teamwork < ActiveRecord::Base
     end
   end
 
+  def partner_users
+    arr = partners
+    arr1 = []
+    arr.each do |item|
+      u = User.find_by_id(item.to_i)
+      arr1.push u
+    end
+    arr1
+  end
+
+
   def add_partner (user_id, appid = WX_APPID)
     if user_id
       arr = partners
-      arr.push user_id
+      arr.push user_id.to_s
 
       self.partner = arr.join(',')
     end
@@ -90,13 +106,12 @@ class Teamwork < ActiveRecord::Base
     arr2 = team_percents
     for i in 0...(arr1.count)
       item = arr1[i]
-      if item.to_s == user_id
+      if item.to_s == user_id.to_s
           return arr2[i]
       end
     end
 
   end
-
 
   # 剩余的 percent
   def rest_percent
@@ -114,6 +129,61 @@ class Teamwork < ActiveRecord::Base
     end
 
   end
+
+  def results
+    if self.result_percent
+      self.result_percent.split(',')
+    else
+      []
+    end
+  end
+
+  def set_result_percent(user_id,percent)
+    if user_id
+      p "user_id = #{user_id} and partners = #{partners}"
+      index = partners.index user_id.to_s
+      r = results
+      p "results = #{r} and index = #{index}"
+      if r
+        r[index] = percent
+        self.result_percent = r.join(',')
+        [index,percent]
+      end
+    end
+  end
+
+
+  def rand_result_percent(user_id,num,is_sponsor = false)
+    up = get_user_percent(user_id)
+    # 发起者成功概率大些
+    if is_sponsor
+      x = (rand(10) > 2 ) ? true : false
+      if  x
+        return up.to_f + rand(6)/10.0
+      end
+    end
+    p "up = #{up.to_json}  and num = #{num.to_i}"
+    #如果是偶数 则代表成功
+    if num.to_i % 2 == 0
+      rp = up.to_f + rand(6)/10.0
+    else
+      rp = up.to_f - 0.13
+    end
+  end
+
+
+  def get_result_percent(user_id)
+    if user_id
+      index = partners.index user_id.to_s
+      p "partners = #{partners}  and index = #{index}"
+      r = results
+      if r && index
+        r[index]
+      end
+    end
+  end
+
+
 
   def is_successful?
     self.state == teamwork_state[1]

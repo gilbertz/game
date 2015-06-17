@@ -45,6 +45,34 @@
   </div>
 
 
+    <div class="control-group">
+      <label class="control-label">团队合作人数</label>
+      <div class="controls">
+        <%= f.text_field :team_persons, class: "input-xxlarge" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">每个人完成任务的比例</label>
+      <div class="controls">
+        <%= f.text_field :one_percent, class: "input-xxlarge" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">总共的工作量</label>
+      <div class="controls">
+        <%= f.text_field :total_work, class: "input-xxlarge" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">整体奖金</label>
+      <div class="controls">
+        <%= f.text_field :team_reward, class: "input-xxlarge" %>
+      </div>
+    </div>
+
+
   <% if action_name == "edit" && @material.category && @material.category.material_type == 1 %>
 
         <% questions = @material.questions %>
@@ -146,7 +174,7 @@
   <% end %>
 
   <h4 style="margin-left:100px">微信</h4>
-  <hr/ style="margin-top:0px">
+  <hr style="margin-top:0px"/>
   <div class="control-group">
     <label class="control-label">appID</label>
     <div class="controls">

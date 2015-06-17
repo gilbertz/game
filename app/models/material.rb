@@ -94,13 +94,13 @@ class Material < ActiveRecord::Base
   def teamworks_rand
       if self.one_percent && self.one_percent > 0.0
         arr = []
-        (0...num).step 1 do |t|
+        (0...self.team_persons).step 1 do |t|
           arr.push self.one_percent
         end
         return arr
       # 随机生成
       else
-        Tool.split_rand(1,team_persons)
+        Tool.split_rand(1,self.team_persons)
       end
   end
 
