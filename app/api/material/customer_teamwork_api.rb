@@ -130,6 +130,7 @@ module CUSTOMER
                 @exist_teamwork = Teamwork.find_by_id(team_id)
                 if @exist_teamwork
                   @partner_users = @exist_teamwork.partner_users
+                  @ower = current_user
                 end
               end
             end
