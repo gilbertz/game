@@ -26,7 +26,7 @@ module CUSTOMER
       desc '随机要到一个'
       params do
       end
-      get '/banners/draw',jbuilder:'banners/banner_draw' do
+      post '/banners/draw',jbuilder:'banners/banner_draw' do
         matterial_id = 1112
         state = 1
         @banners = Banner.where(:material_id => matterial_id,:state => state)
