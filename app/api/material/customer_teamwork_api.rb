@@ -57,7 +57,7 @@ module CUSTOMER
         #--------------------post :start do-----------------
         desc '开启或加入一个团队合作模式'
         params do
-          optional :from_user,type: String,allow_blank: false,desc: '团队接龙发起者'
+          optional :from_user,type: String,desc: '团队接龙发起者'
         end
         post :start ,jbuilder:'material/teamwork_start' do
           @flag = -1
