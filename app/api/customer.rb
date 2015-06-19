@@ -1,6 +1,8 @@
 require 'grape-swagger'
 require 'material/customer_material_api'
 require 'material/customer_teamwork_api'
+require 'material/customer_headline_api'
+require 'banners/customer_banner_api'
 # 为c端用户提供的api
 module CUSTOMER
   class Root < Grape::API
@@ -12,8 +14,11 @@ module CUSTOMER
     helpers do
       def current_user
        p "User.current_user = #{User.current_user.to_json}"
-        User.current_user
-        # User.find_by_id(7)
+        if User.current_user
+          User.current_user
+        else
+          User.find_by_id(7)
+        end
       end
 
       def current_material
@@ -99,6 +104,8 @@ module CUSTOMER
 
     mount CUSTOMER::MaterialInfo::MaterialInfoAPI
     mount CUSTOMER::Teamworks::TeamworkAPI
+    mount CUSTOMER::HeadlineInfo::HeadlineAPI
+    mount CUSTOMER::Banners::BannerAPI
     #api 文档
     add_swagger_documentation
 

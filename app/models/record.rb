@@ -2,11 +2,68 @@ class Record < ActiveRecord::Base
   belongs_to :user
   belongs_to :material
 
+  def self.record_statis(beacon_id,game_id,day)
+    Record.where("created_at >= ? and created_at <= ? and beaconid = ? and game_id = ?",day.beginning_of_day,day.end_of_day,beacon_id,game_id)
+  end
+
+  def self.seed_redpack_num(beacon_id,game_id,day)
+    item = "seed_redpack_num"
+    unless $redis.exists("record_#{beacon_id}_#{game_id}_#{day}_#{item}")
+      num = Record.record_statis(beacon_id,game_id,day).as_json.select{|a| a["object_type"] == "Redpack"}.length
+      $redis.set("record_#{beacon_id}_#{game_id}_#{day}_#{item}",num)
+    end
+    return $redis.get("record_#{beacon_id}_#{game_id}_#{day}_#{item}").to_i
+  end
+
+  def self.social_redpack_num(beacon_id,game_id,day)
+    item = "social_redpack_num"
+    unless $redis.exists("record_#{beacon_id}_#{game_id}_#{day}_#{item}")
+      num = Record.record_statis(beacon_id,game_id,day).as_json.select{|a| a["object_type"] == "social_redpack"}.length
+      $redis.set("record_#{beacon_id}_#{game_id}_#{day}_#{item}",num)
+    end
+    return $redis.get("record_#{beacon_id}_#{game_id}_#{day}_#{item}").to_i
+  end
+
+  def self.feedback_redpack_num(beacon_id,game_id,day)
+    item = "feedback_redpack_num"
+    unless $redis.exists("record_#{beacon_id}_#{game_id}_#{day}_#{item}")
+      num = Record.record_statis(beacon_id,game_id,day).as_json.select{|a| a["object_type"] == "f_redpack"}.length
+      $redis.set("record_#{beacon_id}_#{game_id}_#{day}_#{item}",num)
+    end
+    return $redis.get("record_#{beacon_id}_#{game_id}_#{day}_#{item}").to_i
+  end
+
+  def self.seed_redpack(beacon_id,game_id,day)
+    item = "seed_redpack"
+    unless $redis.exists("record_#{beacon_id}_#{game_id}_#{day}_#{item}")
+      num = Record.record_statis(beacon_id,game_id,day).as_json.select{|a| a["object_type"] == "Redpack"}.collect{|a| a["score"]}.reduce(:+)
+      $redis.set("record_#{beacon_id}_#{game_id}_#{day}_#{item}",num)
+    end
+    return $redis.get("record_#{beacon_id}_#{game_id}_#{day}_#{item}").to_i
+  end
+
+  def self.social_redpack(beacon_id,game_id,day)
+    item = "social_redpack"
+    unless $redis.exists("record_#{beacon_id}_#{game_id}_#{day}_#{item}")
+      num = Record.record_statis(beacon_id,game_id,day).as_json.select{|a| a["object_type"] == "social_redpack"}.collect{|a| a["score"]}.reduce(:+)
+      $redis.set("record_#{beacon_id}_#{game_id}_#{day}_#{item}",num)
+    end
+    return $redis.get("record_#{beacon_id}_#{game_id}_#{day}_#{item}").to_i
+  end
+
+  def self.feedback_redpack(beacon_id,game_id,day)
+    item = "feedback_redpack"
+    unless $redis.exists("record_#{beacon_id}_#{game_id}_#{day}_#{item}")
+      num = Record.record_statis(beacon_id,game_id,day).as_json.select{|a| a["object_type"] == "f_redpack"}.collect{|a| a["score"]}.reduce(:+)
+      $redis.set("record_#{beacon_id}_#{game_id}_#{day}_#{item}",num)
+    end
+    return $redis.get("record_#{beacon_id}_#{game_id}_#{day}_#{item}").to_i
+  end
 
   def beacon_name
     if self.beaconid
       b = Ibeacon.find_by_id self.beaconid
-      if b
+      if bsocial_redpack_num
         return b.name
       end
     end
