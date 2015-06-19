@@ -20,7 +20,6 @@ module API
           end_date =  Date.parse(end_date)
           date_range = []
           (start_date .. end_date).each do |date|
-            puts date.strftime("%Y-%m-%d")
             date_range << date.strftime("%Y-%m-%d")
           end
           return date_range
@@ -60,7 +59,6 @@ module API
               feedback_redpack = Record.feedback_redpack(beacon_id,game_id,date_range[i])
               @record_sub_group.push({"created_at" => date_range[i].to_s,"seed_redpack_num" => seed_redpack_num,"social_redpack_num" => social_redpack_num,"feedback_redpack_num" => feedback_redpack_num,"seed_redpack" => seed_redpack,"social_redpack" => social_redpack,"feedback_redpack" => feedback_redpack})
           end
-          p @uv_sub_group
           @sum = 0
           @uv_sub_group.each{|a| @sum = @sum+a["per_num"].to_i}
           # 
