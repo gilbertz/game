@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615051912) do
+ActiveRecord::Schema.define(version: 20150618060017) do
 
   create_table "ads", force: true do |t|
     t.string   "title"
@@ -72,13 +72,16 @@ ActiveRecord::Schema.define(version: 20150615051912) do
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "banners", force: true do |t|
-    t.integer  "wait",       default: 1, null: false
+    t.integer  "wait",        default: 1, null: false
     t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "state",      default: 0, null: false
+    t.integer  "state",       default: 0, null: false
     t.string   "link"
+    t.integer  "material_id"
   end
+
+  add_index "banners", ["material_id", "state"], name: "index_banners_on_material_id_and_state", using: :btree
 
   create_table "bgames", force: true do |t|
     t.integer  "beaconid"
@@ -264,6 +267,13 @@ ActiveRecord::Schema.define(version: 20150615051912) do
     t.string   "type_image"
   end
 
+  create_table "headlines", force: true do |t|
+    t.text     "content"
+    t.string   "teacher"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "hooks", force: true do |t|
     t.integer  "material_id"
     t.string   "url"
@@ -358,12 +368,14 @@ ActiveRecord::Schema.define(version: 20150615051912) do
     t.integer  "team_persons"
     t.float    "one_percent"
     t.integer  "team_reward"
+    t.integer  "party_id"
     t.integer  "total_work"
   end
 
   add_index "materials", ["docid"], name: "index_materials_on_docid", using: :btree
   add_index "materials", ["is_qq"], name: "index_materials_on_is_qq", using: :btree
   add_index "materials", ["is_recommend_to_qq"], name: "index_materials_on_is_recommend_to_qq", using: :btree
+  add_index "materials", ["party_id"], name: "index_materials_on_party_id", using: :btree
   add_index "materials", ["redis_pv"], name: "index_materials_on_redis_pv", using: :btree
   add_index "materials", ["redis_wx_share_pyq"], name: "index_materials_on_redis_wx_share_pyq", using: :btree
   add_index "materials", ["rrr"], name: "index_materials_on_rrr", using: :btree
