@@ -71,6 +71,7 @@ module CUSTOMER
 
       def unauthorized!
         #如果没有登录x
+        check_cookie
         unless current_user
           render_api_error! '401 Unauthorized', 401
         end
