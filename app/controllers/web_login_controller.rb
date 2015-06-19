@@ -19,7 +19,7 @@ class WebLoginController < ApplicationController
   #扫描二维码登陆
   def qr_login
     p params
-    access_token = WxUtil.get_authorizer_access_token("wx456ffb04ee140d84")
+    access_token = WxUtil.get_authorizer_access_token(WX_APPID) #"wx456ffb04ee140d84"
     p "access_token = #{access_token}"
     qrcode = generate_qr(access_token)
  #   jsoncallback = params["jsoncallback"]

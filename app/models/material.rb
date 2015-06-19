@@ -14,6 +14,7 @@ class Material < ActiveRecord::Base
 
   has_many :teamworks
   has_many :records
+  has_many :banners
 
 
   cattr_accessor :current_material
