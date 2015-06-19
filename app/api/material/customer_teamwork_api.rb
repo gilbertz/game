@@ -40,8 +40,10 @@ module CUSTOMER
           if teamwork
             arr = teamwork.partners
             if arr.count > 0
-              if (teamwork.get_result_percent(arr.last)).to_f > 0.0
-                true
+              p "arr.count > 0 and p #{teamwork.get_result_percent(arr.last)}"
+              f = teamwork.get_result_percent(arr.last)
+	      if f.to_f > 0.0
+                return  true
               end
             end
           end
@@ -55,7 +57,7 @@ module CUSTOMER
         #--------------------post :start do-----------------
         desc '开启或加入一个团队合作模式'
         params do
-          optional :from_user,type: String,allow_blank: false,desc: '团队接龙发起者'
+          optional :from_user,type: String,desc: '团队接龙发起者'
         end
         post :start ,jbuilder:'material/teamwork_start' do
           @flag = -1
@@ -79,23 +81,24 @@ module CUSTOMER
                   @flag = 1
                   @teamwork = self_in_teamwork(from_user.id,@material.id)
                   # 访问排重
-                  loop do
-                    if $redis.get(teamwork_lock_key(@teamwork.id,@material.id)) != '1'
-                      $redis.set(teamwork_lock_key(@teamwork.id,@material.id),'1')
-                      break
-                    end
-                  end
-                  if teamwork_can_json?(teamwork) && @material.team_persons && @teamwork.partners.count < @material.team_persons
+            #      loop do
+             #       if $redis.get(teamwork_lock_key(@teamwork.id,@material.id)) != '1'
+              #        $redis.set(teamwork_lock_key(@teamwork.id,@material.id),'1')
+               #       break
+                #    end
+                 # end
+                  p "fromuser = #{from_user.to_json}  can join #{teamwork_can_json?(@teamwork)}"
+                  if teamwork_can_json?(@teamwork) && @material.team_persons && @teamwork.partners.count < @material.team_persons
                     @teamwork.add_partner(current_user.id)
                     if @teamwork.save
-                      $redis.set(last_teamwork_key(current_user.id, @material.id),@exist_teamwork.id)
+                      $redis.set(last_teamwork_key(current_user.id, @material.id),@teamwork.id)
                       @partner_users = @teamwork.partner_users
                     end
                   # teamwork 已经不存在了
                   else
                     @flag = 3
                   end
-                  $redis.set(teamwork_lock_key(@exist_teamwork.id,@material.id),nil)
+                  $redis.set(teamwork_lock_key(@teamwork.id,@material.id),nil)
                #自己创建一个
                 else
                   @flag = 2
