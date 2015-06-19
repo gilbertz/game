@@ -181,6 +181,24 @@ class User < ActiveRecord::Base
       end
   end
 
+  def self.new_user_of_day(day)
+    b = [] 
+    first_user = User.where("created_at >= ? and created_at <= ? ", day.beginning_of_day,day.end_of_day).first
+    if first_user
+      first = first_user.id
+    end 
+    last_user = User.where("created_at >= ? and created_at <= ? ", day.beginning_of_day,day.end_of_day).last
+    if last_user
+      last = last_user.id
+    end
+    if first and last
+      for i in 0..(last-first-1)
+        b << first+i
+      end
+    end
+    return b 
+  end
+
 
 
   private

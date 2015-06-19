@@ -36,6 +36,7 @@ if @flag == 0 || @flag == 1 || @flag == 2
     json.total_work  @teamwork.total_work
     json.state  @teamwork.state
     json.sponsor @teamwork.sponsor
+    json.reward @material.team_reward
   end
   json.partner_users(@partner_users) do |item|
     json.id  item.id
