@@ -15,7 +15,6 @@ class Uv < ActiveRecord::Base
 
   def self.person_num(beacon_id,game_id,day)
     item = "person_num"
-    $redis.del("uv_#{beacon_id}_#{game_id}_#{day}_#{item}")
     unless $redis.exists("uv_#{beacon_id}_#{game_id}_#{day}_#{item}")
       num = Uv.where("created_at >= ? and created_at <= ? and beaconid = ? and game_id = ?",day.beginning_of_day,day.end_of_day,beacon_id,game_id).as_json.each{|a| a.select!{|k,v| k =="user_id"}}.uniq.length
       $redis.set("uv_#{beacon_id}_#{game_id}_#{day}_#{item}",num)
