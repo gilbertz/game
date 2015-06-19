@@ -138,6 +138,14 @@ class Teamwork < ActiveRecord::Base
     end
   end
 
+  def results_sum
+    arr = results
+    sum = 0.0
+    arr.each { |item| sum += item.to_f }
+    sum
+  end
+
+
   def set_result_percent(user_id,percent)
     if user_id
       p "user_id = #{user_id} and partners = #{partners}"

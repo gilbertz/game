@@ -36,6 +36,8 @@ module Game
     config.autoload_paths += Dir["#{config.root}/vendor/**/"]
     config.assets.paths << Rails.root.join("app", "assets")
     config.assets.precompile += ["main.js", "main.css"]
+    config.assets.paths << Rails.root.join("templates")
+
 
 
     config.middleware.use(Rack::Config) do |env|
