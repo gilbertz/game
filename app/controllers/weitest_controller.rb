@@ -239,6 +239,7 @@ class WeitestController < ApplicationController
         end
         from_user.resend_redpack(params[:game_id], @beacon.id)
       end
+      from_user.resend_redpack(params[:game_id], @beacon.id) 
     end
     render nothing: true
   end
