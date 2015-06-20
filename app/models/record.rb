@@ -63,7 +63,7 @@ class Record < ActiveRecord::Base
   def beacon_name
     if self.beaconid
       b = Ibeacon.find_by_id self.beaconid
-      if bsocial_redpack_num
+      if b
         return b.name
       end
     end
