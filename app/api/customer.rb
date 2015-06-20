@@ -14,11 +14,6 @@ module CUSTOMER
     helpers do
       def current_user
        p "User.current_user = #{User.current_user.to_json}"
-     #   if User.current_user
-          #User.current_user
-     #   else
-        #  User.find_by_id(7)
-     #   end
          User.by_openid(request.headers["Wps"])
       end
 
@@ -71,8 +66,7 @@ module CUSTOMER
       end
 
       def unauthorized!
-        #如果没有登录x
-        check_cookie
+        #如果没有登录
         unless current_user
           render_api_error! '401 Unauthorized', 401
         end
@@ -99,7 +93,6 @@ module CUSTOMER
     end
     # ---------------before-------------
     before do
-      # weixin_authorize
       unauthorized!
     end
 

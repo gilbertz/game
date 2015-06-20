@@ -92,6 +92,7 @@ module CUSTOMER
                     @teamwork.add_partner(current_user.id)
                     if @teamwork.save
                       $redis.set(last_teamwork_key(current_user.id, @material.id),@teamwork.id)
+                      $redis.set(teamwork_key(user_id,matterial_id),@teamwork.id)
                       @partner_users = @teamwork.partner_users
                     end
                   # teamwork 已经不存在了
