@@ -14,17 +14,18 @@ module CUSTOMER
     helpers do
       def current_user
        p "User.current_user = #{User.current_user.to_json}"
-        if User.current_user
-          User.current_user
-        else
-      #    User.find_by_id(7)
-        end
+     #   if User.current_user
+          #User.current_user
+     #   else
+        #  User.find_by_id(7)
+     #   end
+         User.by_openid(request.headers["Wps"])
       end
 
       def current_material
         p "Material.current_material = #{Material.current_material}"
-        Material.current_material
-       # Material.find_by_id(1381)
+      #  Material.current_material
+        Material.find_by_id(1381)
       end
 
       def weixin_authorize
