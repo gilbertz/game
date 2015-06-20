@@ -92,7 +92,7 @@ module CUSTOMER
                     @teamwork.add_partner(current_user.id)
                     if @teamwork.save
                       $redis.set(last_teamwork_key(current_user.id, @material.id),@teamwork.id)
-                      $redis.set(teamwork_key(user_id,matterial_id),@teamwork.id)
+                      $redis.set(teamwork_key(current_user.id, @material.id),@teamwork.id)
                       @partner_users = @teamwork.partner_users
                     end
                   # teamwork 已经不存在了
@@ -155,7 +155,7 @@ module CUSTOMER
             if @category.game_type_id = 17
               @exist_teamwork = self_in_teamwork(current_user.id,@material.id)
               # 存在并且无提交过成绩
-              if @exist_teamwork && @exist_teamwork.get_result_percent(current_user.id).to_f <= 0.0
+              if @exist_teamwork && (@exist_teamwork.get_result_percent(current_user.id)).to_f <= 0.0
                 result_percent = @exist_teamwork.rand_result_percent(current_user.id,params["percent"],current_user.id.to_i == @exist_teamwork.sponsor.to_i)
                 @exist_teamwork.set_result_percent(current_user.id,result_percent)
                 # @expect_percent =  @exist_teamwork.get_user_percent(current_user.id)
