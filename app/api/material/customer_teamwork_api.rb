@@ -42,7 +42,7 @@ module CUSTOMER
             if arr.count > 0
               p "arr.count > 0 and p #{teamwork.get_result_percent(arr.last)}"
               f = teamwork.get_result_percent(arr.last)
-	      if f.to_f > 0.0
+	             if f.to_f > 0.0
                 return  true
               end
             end
@@ -123,6 +123,9 @@ module CUSTOMER
 
         #--------------------post :history do---------------
         desc '历史活动'
+        params do
+          optional :from_user,type: String,desc: '团队接龙发起者'
+        end
         get :history ,jbuilder:'material/teamwork_history' do
           if current_material
             @material = current_material
@@ -135,6 +138,12 @@ module CUSTOMER
                 if @exist_teamwork
                   @partner_users = @exist_teamwork.partner_users
                   @ower = current_user
+                end
+                from_user = User.by_openid(params["from_user"])
+                if from_user && from_user.id != current_user.id && self_in_teamwork(from_user.id,@material.id) && @exist_teamwork.is_over?
+                  @is_goon = 1
+                else
+                  @is_goon = 0
                 end
               end
             end
