@@ -146,8 +146,6 @@ module CUSTOMER
                 else
                   @is_goon = 0
                 end
-
-                @is_goon = 1
               end
             end
           end
