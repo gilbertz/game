@@ -1,4 +1,16 @@
 namespace :redpack do
+  desc "补发红包"
+  task :resend => :environment do
+
+    puts 'resend_redpack'
+    rs = Record.where('score >= 9500').order('created_at desc').limit(1000)
+    rs.each do |r|
+     u = User.find_by_id r.from_user_id
+     u.resend_redpack(r.game_id, r.beaconid) if u
+    end
+
+  end
+
 
   desc "生成红包"
   task :generate_redpack => :environment do
