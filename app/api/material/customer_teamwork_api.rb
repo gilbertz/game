@@ -140,7 +140,7 @@ module CUSTOMER
                   @ower = current_user
                 end
                 from_user = User.by_openid(params["from_user"])
-                if from_user && from_user.id != current_user.id && self_in_teamwork(from_user.id,@material.id) #&& @exist_teamwork.is_over?
+                if from_user && from_user.id != current_user.id #&& self_in_teamwork(from_user.id,@material.id) #&& @exist_teamwork.is_over?
                   @is_goon = 1
                 else
                   @is_goon = 0
