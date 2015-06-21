@@ -6,8 +6,12 @@ class Admin::BgamesController < Admin::BaseController
   respond_to :html
 
   def index
-    @bgames = Bgame.all
-    respond_with(@bgames)
+    cond = "1=1"
+    cond += " and beaconid=#{params[:beaconid]}" if params[:beaconid]
+    cond += " and game_id=#{params[:game_id]}" if params[:game_id]
+    limit = 20
+    limit = params[:limit].to_i if params[:limit]
+    @bgames = Bgame.where(cond).order('created_at desc').page(params[:page]).per(limit)
   end
 
   def show
