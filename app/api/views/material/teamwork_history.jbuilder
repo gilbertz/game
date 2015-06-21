@@ -1,6 +1,7 @@
 if @exist_teamwork.present?
   if @exist_teamwork
     json.result 0
+    json.is_goon @is_goon
     json.teamwork do
       json.id  @exist_teamwork.id
       json.total_work  @exist_teamwork.total_work
