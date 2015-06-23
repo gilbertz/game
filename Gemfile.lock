@@ -6,7 +6,7 @@ GIT
       activesupport
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://ruby.taobao.org/
   specs:
     actionmailer (4.0.0)
       actionpack (= 4.0.0)
@@ -82,6 +82,8 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    doorkeeper (2.1.4)
+      railties (>= 3.2)
     em-http-request (1.1.2)
       addressable (>= 2.3.4)
       cookiejar
@@ -328,6 +330,9 @@ GEM
       roxml
     whenever (0.9.4)
       chronic (>= 0.6.3)
+    wine_bouncer (0.3.1)
+      doorkeeper (>= 1.4, < 2.2)
+      grape (~> 0.8, < 0.12)
     yajl-ruby (1.2.1)
 
 PLATFORMS
@@ -343,6 +348,7 @@ DEPENDENCIES
   chronic
   coffee-rails (~> 4.0.0)
   devise
+  doorkeeper
   em-http-request
   faraday
   grape
@@ -387,6 +393,7 @@ DEPENDENCIES
   weixin_authorize
   weixin_rails_middleware
   whenever
+  wine_bouncer
 
 BUNDLED WITH
    1.10.2

@@ -1,5 +1,11 @@
 Game::Application.routes.draw do
 
+  # use_doorkeeper :scope => 'auth' do
+  #   skip_controllers :applications, :authorized_applications
+  #   controllers :tokens => 'access_token'
+  # end
+  use_doorkeeper
+
   root :to => redirect("/site/site.html")
 
   require "sidekiq/web"
@@ -237,7 +243,8 @@ Game::Application.routes.draw do
     get '/click_stat' => 'ads#click_stat', as: :click_stat
   end
 
-  devise_for :users, :controllers => {:sessions => "sessions", :passwords => "passwords", :registrations => "registration", :omniauth_callbacks => "authentications"}
+  # devise_for :users, :controllers => {:sessions => "sessions", :passwords => "passwords", :registrations => "registration", :omniauth_callbacks => "authentications"}
+  devise_for :users
 
 
   #namespace :custom do
