@@ -231,15 +231,17 @@ class WeitestController < ApplicationController
     t_num = 4
     if current_user and current_user.social_value(@beacon.id) == 0 
       Record.create(:user_id => current_user.id, :from_user_id => params[:from_user_id], :beaconid=>@beacon.id, :game_id => params[:game_id], :sn=>params[:sn], :score => params[:score], :remark=>params[:remark])
-      from_user = User.find_by_id( params[:from_user_id] ) 
-      if params[:score].to_i >= t_score
-        if current_user.social_value(@beacon.id) <= 0
-          current_user.incr_social(@beacon.id)
-          current_user.update_records(@beacon.id)
+      if params[:from_user_id] 
+        from_user = User.find_by_id( params[:from_user_id] ) 
+        if params[:score].to_i >= t_score
+          if current_user.social_value(@beacon.id) <= 0
+            current_user.incr_social(@beacon.id)
+            current_user.update_records(@beacon.id)
+          end
+          from_user.resend_redpack(params[:game_id], @beacon.id)
         end
         from_user.resend_redpack(params[:game_id], @beacon.id)
       end
-      from_user.resend_redpack(params[:game_id], @beacon.id) 
     end
     render nothing: true
   end
