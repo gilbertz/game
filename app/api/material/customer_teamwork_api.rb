@@ -72,7 +72,7 @@ module CUSTOMER
               now_time = Time.now.to_i
               if last_time && now_time - last_time > 60
                 arr1 = arr.pop
-                teamwork.partner = arr.join(',')
+                teamwork.partner = arr1.join(',')
                 teamwork.save
               end
             end
