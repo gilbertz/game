@@ -50,6 +50,36 @@ module CUSTOMER
           false
         end
 
+        def join_teamwork_time_key(teamwork_id,user_id)
+          "join_teamwork_time_key_#{teamwork_id}_#{user_id}"
+        end
+
+        def get_join_teamwork_time(teamwork_id,user_id)
+          $redis.get(join_teamwork_time_key(teamwork_id,user_id))
+        end
+
+        def set_join_teamwork_time(teamwork_id,user_id)
+          i = Time.now.to_i
+          $redis.set(join_teamwork_time_key(teamwork_id,user_id),i)
+        end
+
+
+        def deal_expire_user(teamwork,user_id)
+          if teamwork.is_over? == false && teamwork.sponsor == user_id
+            arr = teamwork.partners
+            if (teamwork.get_user_percent(arr.last)).to_f <= 0.0 && arr.last.to_i != user_id
+              last_time = get_join_teamwork_time(teamwork.id,arr.last)
+              now_time = Time.now.to_i
+              if last_time && now_time - last_time > 60
+                arr1 = arr.pop
+                teamwork.partner = arr.join(',')
+                teamwork.save
+              end
+            end
+
+          end
+        end
+
       end
 
       #------------------resources material------------------
@@ -90,6 +120,8 @@ module CUSTOMER
                       $redis.set(last_teamwork_key(current_user.id, @material.id),@teamwork.id)
                       $redis.set(teamwork_key(current_user.id, @material.id),@teamwork.id)
                       @partner_users = @teamwork.partner_users
+
+                      set_join_teamwork_time(@teamwork.id,current_user.id)
                     end
                   # teamwork 已经不存在了
                   else
@@ -132,6 +164,7 @@ module CUSTOMER
               if team_id
                 @exist_teamwork = Teamwork.find_by_id(team_id)
                 if @exist_teamwork
+                  deal_expire_user(@exist_teamwork,current_user.id)
                   @partner_users = @exist_teamwork.partner_users
                   @ower = current_user
                 end
@@ -196,7 +229,6 @@ module CUSTOMER
                 end
               end
             end
-
 
           end
 

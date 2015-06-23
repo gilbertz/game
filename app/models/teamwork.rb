@@ -162,7 +162,7 @@ class Teamwork < ActiveRecord::Base
 
 
   def rand_result_percent(user_id,num,is_sponsor = false)
-    p =  self.probability
+    p =  self.material.probability
     up = (get_user_percent(user_id)).to_f
     interval = (1.0 / self.team_persons * 0.9)
     min = up - up * interval
