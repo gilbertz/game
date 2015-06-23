@@ -162,22 +162,20 @@ class Teamwork < ActiveRecord::Base
 
 
   def rand_result_percent(user_id,num,is_sponsor = false)
-    up = get_user_percent(user_id)
-    # 发起者成功概率大些
+    p =  self.probability
+    up = (get_user_percent(user_id)).to_f
+    interval = (1.0 / self.team_persons * 0.9)
+    min = up - up * interval
+    max = up + up * interval
+    num = 1000 - rand(100) if num < 1000
+    num = 2000 + rand(100) if num > 2000
+    p = p + (p * num).to_f / 2000.0 * 0.1
     if is_sponsor
-      x = (rand(10) > 2 ) ? true : false
-      if  x
-        return up.to_f + rand(6)/10.0
-      end
+      return Tool.get_rand_num(min,max,p + 0.2)
     end
-    p "up = #{up.to_json}  and num = #{num.to_i}"
-    #如果是偶数 则代表成功
-    if num.to_i % 2 == 0
-      rp = up.to_f + rand(6)/10.0
-    else
-      rp = up.to_f - 0.13
-    end
+    return Tool.get_rand_num(min,max,p)
   end
+
 
 
   def get_result_percent(user_id)
