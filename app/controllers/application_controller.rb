@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
 
-protected
+  protected
   def check_cookie
     #if cookies[:remember_me].present?
     if true
@@ -34,23 +34,23 @@ protected
     end
   end
 
-  
-private
+
+  private
   def set_weixin_config
     wx_config = WxConfig.find 1
     @set_wx_ad = wx_config.wx_ad
 
     if params[:token]
-      p "last current_user = #{User.current_user.to_json}"
-      # unless current_user
-        au = Authentication.find_by_uid( params[:token] )
+      #p "last current_user = #{User.current_user.to_json}"
+      unless current_user
+        au = Authentication.find_by_uid(params[:token])
         user = User.find au.user_id if au
         sign_in user
 
         User.current_user = user
-        p "set_weixin_config User.current_user = #{User.current_user.to_json}"
+        # p "set_weixin_config User.current_user = #{User.current_user.to_json}"
       end
-      # end
+    end
     # end
   end
 

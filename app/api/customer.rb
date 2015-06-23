@@ -15,12 +15,13 @@ module CUSTOMER
       def current_user
        p "User.current_user = #{User.current_user.to_json}"
          User.by_openid(request.headers["Wps"])
+         User.find_by(7)
       end
 
       def current_material
         p "Material.current_material = #{Material.current_material}"
-      #  Material.current_material
-        Material.find_by_id(1381)
+        Material.find_by_url(request.headers["Material_id"])
+          Material.find_by_id(1381)
       end
 
       def weixin_authorize

@@ -81,14 +81,10 @@ module CUSTOMER
                   @flag = 1
                   @teamwork = self_in_teamwork(from_user.id,@material.id)
                   # 访问排重
-            #      loop do
-             #       if $redis.get(teamwork_lock_key(@teamwork.id,@material.id)) != '1'
-              #        $redis.set(teamwork_lock_key(@teamwork.id,@material.id),'1')
-               #       break
-                #    end
-                 # end
+                  lock_key = $redis.get(teamwork_lock_key(@teamwork.id,@material.id))
                   p "fromuser = #{from_user.to_json}  can join #{teamwork_can_json?(@teamwork)}"
-                  if teamwork_can_json?(@teamwork) && @material.team_persons && @teamwork.partners.count < @material.team_persons
+                  if lock_key != '1' && teamwork_can_json?(@teamwork) && @material.team_persons && @teamwork.partners.count < @material.team_persons
+                    $redis.set(teamwork_lock_key(@teamwork.id,@material.id),'1')
                     @teamwork.add_partner(current_user.id)
                     if @teamwork.save
                       $redis.set(last_teamwork_key(current_user.id, @material.id),@teamwork.id)
