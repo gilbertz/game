@@ -65,16 +65,12 @@ module CUSTOMER
 
 
         def deal_expire_user(teamwork,user_id)
-          if teamwork.is_over? == false && teamwork.sponsor == user_id
+          if teamwork.is_over? == false
             arr = teamwork.partners
-            p arr
-            p (teamwork.get_user_percent(arr.last)).to_f
-            if (teamwork.get_user_percent(arr.last)).to_f <= 0.0 && arr.last.to_i != user_id
+            if (teamwork.get_result_percent(arr.last)).to_f <= 0.0 && arr.last.to_i != user_id
               last_time = get_join_teamwork_time(teamwork.id,arr.last)
               now_time = Time.now.to_i
-              p last_time
-              p now_time
-              if last_time && now_time - last_time > 60
+              if last_time && now_time - last_time.to_i > 60
                 arr1 = arr.pop
                 p arr1
                 teamwork.partner = arr1.join(',')
@@ -115,6 +111,7 @@ module CUSTOMER
                 if from_user && from_user.id != current_user.id
                   @flag = 1
                   @teamwork = self_in_teamwork(from_user.id,@material.id)
+                  deal_expire_user(@teamwork,current_user.id)
                   # 访问排重
                   lock_key = $redis.get(teamwork_lock_key(@teamwork.id,@material.id))
                   p "fromuser = #{from_user.to_json}  can join #{teamwork_can_json?(@teamwork)}"
