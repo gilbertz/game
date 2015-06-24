@@ -64,7 +64,8 @@ module CUSTOMER
         end
 
 
-        def deal_expire_user(teamwork,user_id)
+        def deal_expire_user(teamwork_id,user_id)
+          teamwork = Teamwork.find_by(teamwork_id)
           if teamwork.is_over? == false
             arr = teamwork.partners
             if (teamwork.get_result_percent(arr.last)).to_f <= 0.0 && arr.last.to_i != user_id
@@ -113,7 +114,7 @@ module CUSTOMER
                 if from_user && from_user.id != current_user.id
                   @flag = 1
                   @teamwork = self_in_teamwork(from_user.id,@material.id)
-                  deal_expire_user(@teamwork,current_user.id)
+                  deal_expire_user(@teamwork.id,current_user.id)
                   # 访问排重
                   lock_key = $redis.get(teamwork_lock_key(@teamwork.id,@material.id))
                   p "fromuser = #{from_user.to_json}  can join #{teamwork_can_json?(@teamwork)}"
@@ -168,7 +169,7 @@ module CUSTOMER
               if team_id
                 @exist_teamwork = Teamwork.find_by_id(team_id)
                 if @exist_teamwork
-                  deal_expire_user(@exist_teamwork,current_user.id)
+                  deal_expire_user(@exist_teamwork.id,current_user.id)
                   @partner_users = @exist_teamwork.partner_users
                   @ower = current_user
                 end
