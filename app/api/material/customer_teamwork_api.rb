@@ -72,11 +72,9 @@ module CUSTOMER
               last_time = get_join_teamwork_time(teamwork.id,arr.last)
               now_time = Time.now.to_i
               if last_time != nil && now_time - last_time.to_i > 60
+                teamwork.set_result_percent(arr.last,0)
                 arr.pop
                 teamwork.partner = arr.join(',')
-                r = teamwork.result_percent
-                r.pop
-                teamwork.result_percent = r.join(',')
                 teamwork.save
               end
             end
