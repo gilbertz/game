@@ -68,14 +68,16 @@ module CUSTOMER
           teamwork = Teamwork.find_by(teamwork_id)
           if teamwork.is_over? == false
             arr = teamwork.partners
-            if (teamwork.get_result_percent(arr.last)).to_f <= 0.0 && arr.last.to_i != user_id
+            if (teamwork.get_result_percent(arr.last)).to_f <= 0.0 && arr.last.to_i != user_id.to_i
               last_time = get_join_teamwork_time(teamwork.id,arr.last)
               now_time = Time.now.to_i
               if last_time != nil && now_time - last_time.to_i > 60
                 teamwork.set_result_percent(arr.last,0)
                 arr.pop
                 teamwork.partner = arr.join(',')
-                teamwork.save
+                if teamwork.save
+                  $redis.set(teamwork_key(user_id,current_material.id),nil)
+                end
               end
             end
 
