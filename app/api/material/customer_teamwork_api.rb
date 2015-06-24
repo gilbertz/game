@@ -72,7 +72,6 @@ module CUSTOMER
               now_time = Time.now.to_i
               if last_time && now_time - last_time.to_i > 60
                 arr1 = arr.pop
-                p arr1
                 teamwork.partner = arr1.join(',')
                 teamwork.save
               end
@@ -166,7 +165,7 @@ module CUSTOMER
               if team_id
                 @exist_teamwork = Teamwork.find_by_id(team_id)
                 if @exist_teamwork
-                  deal_expire_user(@exist_teamwork,current_user.id)
+                  # deal_expire_user(@exist_teamwork,current_user.id)
                   @partner_users = @exist_teamwork.partner_users
                   @ower = current_user
                 end
