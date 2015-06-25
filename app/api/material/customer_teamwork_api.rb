@@ -174,7 +174,7 @@ module CUSTOMER
             # 团队协作类型的模版
             if @category.game_type_id = 17
               team_id = $redis.get(last_teamwork_key(current_user.id,@material.id))
-              if team_id && team_id > 0
+              if team_id && team_id.to_i > 0
                 @exist_teamwork = Teamwork.find_by_id(team_id.to_i)
                 if @exist_teamwork
                   # t =  deal_expire_user(@exist_teamwork.id,current_user.id)
