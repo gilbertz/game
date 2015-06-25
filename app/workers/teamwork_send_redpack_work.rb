@@ -17,7 +17,8 @@ class TeamworkSendRedpackWork < BaseWorker
         money = material.team_reward / material.team_persons
         arr = teamwork.partners
         p arr
-        for uid in 0...arr.count
+        for i in 0...arr.count
+          uid = arr[i]
           p "uid = #{uid}"
           ret = rp.send_pay(uid,beacon.id,money)
           if ret && ret.to_i > 0.0
