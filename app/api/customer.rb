@@ -15,7 +15,6 @@ module CUSTOMER
       def current_user
        p "User.current_user = #{User.current_user.to_json}"
          User.by_openid(request.headers["Wps"])
-         User.find_by(7)
       end
 
       def current_material
