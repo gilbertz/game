@@ -67,9 +67,10 @@ module CUSTOMER
         def deal_expire_user(teamwork_id,user_id)
           teamwork = Teamwork.find_by_id(teamwork_id)
           p "teamwork = #{teamwork.to_json}"
-          if teamwork.is_over? == false
+          if teamwork.is_over? == false && user_id.to_i != teamwork.sponsor.to_i
             arr = teamwork.partners
-            if (teamwork.get_result_percent(arr.last)).to_f <= 0.0 && arr.last.to_i != user_id.to_i
+            u = arr.last.to_i
+            if (teamwork.get_result_percent(arr.last)).to_f <= 0.0 && u != user_id.to_i
               last_time = get_join_teamwork_time(teamwork.id,arr.last)
               now_time = Time.now.to_i
               p "last_time = #{last_time}"
@@ -79,8 +80,8 @@ module CUSTOMER
                 teamwork.partner = arr.join(',')
                 if teamwork.save
                   p "now teamwork = #{teamwork}"
-                  $redis.set(teamwork_key(user_id,current_material.id),nil)
-                  $redis.set(last_teamwork_key(user_id, current_material.id),nil)
+                  $redis.set(teamwork_key(u,current_material.id),nil)
+                  $redis.set(last_teamwork_key(u, current_material.id),nil)
                   return teamwork
                 end
               end
