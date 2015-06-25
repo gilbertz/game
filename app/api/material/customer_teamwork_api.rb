@@ -81,6 +81,7 @@ module CUSTOMER
                 if teamwork.save
                   p "now teamwork = #{teamwork}"
                   $redis.set(teamwork_key(user_id,current_material.id),nil)
+                  $redis.set(last_teamwork_key(current_user.id, current_material.id),nil)
                   return teamwork
                 end
               end
