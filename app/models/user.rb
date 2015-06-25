@@ -4,21 +4,19 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:weixin]
-
   cattr_accessor :current_user 
-  # attr_accessor :password
+  attr_accessor :password
  
-  # validates :name,                                                                                  
-  #   :presence     => true,
-  #   :on => :create
-  # #:format       => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i }
-
-  # validates :password,
-  # :presence     => true,                                                                   
-  # :confirmation => true,
-  # :length       => {in: 6..18},
-  # :on => :create
-
+  validates :name,                                                                                  
+    :presence     => true,
+    :on => :create
+  #:format       => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i }
+  validates :password,
+  :presence     => true,                                                                   
+  :confirmation => true,
+  :length       => {in: 6..18},
+  :on => :create
+  
   has_many :authentications
   has_many :materials
   has_many :ibeacons
@@ -29,7 +27,7 @@ class User < ActiveRecord::Base
   has_many :user_scores
   has_many :merchants
 
-  # before_create :make_password
+  before_create :make_password
 
   Role = {
       :user => 0,

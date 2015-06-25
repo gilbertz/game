@@ -57,6 +57,9 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
+    carrierwave-qiniu (0.1.5)
+      carrierwave
+      qiniu (~> 6.2.4)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     china_sms (0.0.7)
@@ -344,6 +347,8 @@ DEPENDENCIES
   actionpack-xml_parser
   bcrypt
   by_star!
+  carrierwave
+  carrierwave-qiniu
   china_sms
   chronic
   coffee-rails (~> 4.0.0)
@@ -361,6 +366,7 @@ DEPENDENCIES
   kaminari
   mina
   mina-sidekiq
+  mini_magick
   mysql2 (~> 0.3.14)
   nokogiri
   oauth2

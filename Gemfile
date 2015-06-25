@@ -133,3 +133,8 @@ gem 'qiniu', '~> 6.2.1'
 
 gem 'wine_bouncer'
 gem 'doorkeeper'
+
+gem 'carrierwave-qiniu'
+gem 'carrierwave'
+gem 'mini_magick'
+
