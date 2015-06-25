@@ -18,7 +18,7 @@ module CUSTOMER
         def reset_teamwork_partners(teamwork,matterial_id)
           if teamwork
             arr = teamwork.partners
-            arr.each { |item|  $redis.set(teamwork_key(item.to_i,matterial_id),nil) }
+            arr.each { |item|  $redis.del(teamwork_key(item.to_i,matterial_id)) }
           end
         end
 
@@ -48,6 +48,46 @@ module CUSTOMER
             end
           end
           false
+        end
+
+        def join_teamwork_time_key(teamwork_id,user_id)
+          "join_teamwork_time_key_#{teamwork_id}_#{user_id}"
+        end
+
+        def get_join_teamwork_time(teamwork_id,user_id)
+          $redis.get(join_teamwork_time_key(teamwork_id,user_id))
+        end
+
+        def set_join_teamwork_time(teamwork_id,user_id)
+          i = Time.now.to_i
+          $redis.set(join_teamwork_time_key(teamwork_id,user_id),i)
+        end
+
+
+        def deal_expire_user(teamwork_id,user_id)
+          teamwork = Teamwork.find_by_id(teamwork_id)
+          p "teamwork = #{teamwork.to_json}"
+          if teamwork.is_over? == false
+            arr = teamwork.partners
+            u = arr.last.to_i
+            if (teamwork.get_result_percent(arr.last)).to_f <= 0.0 && u != user_id.to_i && u != teamwork.sponsor.to_i
+              last_time = get_join_teamwork_time(teamwork.id,u)
+              now_time = Time.now.to_i
+              p "last_time = #{last_time}"
+              if last_time != nil && now_time - last_time.to_i > 60
+                teamwork.set_result_percent(u,0)
+                arr.pop
+                teamwork.partner = arr.join(',')
+                if teamwork.save
+                  p "now teamwork = #{teamwork}"
+                  $redis.del(teamwork_key(u,current_material.id))
+                  $redis.del(last_teamwork_key(u, current_material.id))
+                  return teamwork
+                end
+              end
+            end
+
+          end
         end
 
       end
@@ -80,6 +120,10 @@ module CUSTOMER
                 if from_user && from_user.id != current_user.id
                   @flag = 1
                   @teamwork = self_in_teamwork(from_user.id,@material.id)
+                  x = deal_expire_user(@teamwork.id,current_user.id)
+                  if x
+                    @teamwork = x
+                  end
                   # 访问排重
                   lock_key = $redis.get(teamwork_lock_key(@teamwork.id,@material.id))
                   p "fromuser = #{from_user.to_json}  can join #{teamwork_can_json?(@teamwork)}"
@@ -90,12 +134,13 @@ module CUSTOMER
                       $redis.set(last_teamwork_key(current_user.id, @material.id),@teamwork.id)
                       $redis.set(teamwork_key(current_user.id, @material.id),@teamwork.id)
                       @partner_users = @teamwork.partner_users
+                      set_join_teamwork_time(@teamwork.id,current_user.id)
                     end
                   # teamwork 已经不存在了
                   else
                     @flag = 3
                   end
-                  $redis.set(teamwork_lock_key(@teamwork.id,@material.id),nil)
+                  $redis.del(teamwork_lock_key(@teamwork.id,@material.id))
                #自己创建一个
                 else
                   @flag = 2
@@ -129,9 +174,13 @@ module CUSTOMER
             # 团队协作类型的模版
             if @category.game_type_id = 17
               team_id = $redis.get(last_teamwork_key(current_user.id,@material.id))
-              if team_id
-                @exist_teamwork = Teamwork.find_by_id(team_id)
+              if team_id && team_id.to_i > 0
+                @exist_teamwork = Teamwork.find_by_id(team_id.to_i)
                 if @exist_teamwork
+                  t =  deal_expire_user(@exist_teamwork.id,current_user.id)
+                  if t
+                    @exist_teamwork = t
+                  end
                   @partner_users = @exist_teamwork.partner_users
                   @ower = current_user
                 end
@@ -196,7 +245,6 @@ module CUSTOMER
                 end
               end
             end
-
 
           end
 
