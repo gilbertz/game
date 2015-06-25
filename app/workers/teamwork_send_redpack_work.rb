@@ -7,8 +7,8 @@ class TeamworkSendRedpackWork < BaseWorker
     return unless teamwork
     return if teamwork.is_successful? == false
     #发钱
-    material_id = teamwork.material_id
-    bggame = Bgame.where(:state => 1,:game_id=>material_id).first
+    material = teamwork.material
+    bggame = Bgame.where(:state => 1,:game_id=>material.id).first
     if bggame
       beacon = Ibeacon.find_by_id(bggame.beaconid)
       rp = beacon.redpacks[0]
