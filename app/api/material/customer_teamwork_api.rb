@@ -238,7 +238,7 @@ module CUSTOMER
                   # 成功完成 还要发钱
                   if @flag == 1 && @material.team_reward && @material.team_reward.to_i > 4
                     # 开始发钱
-
+                    TeamworkSendRedpackWork.perform_async(@exist_teamwork.id)
                   end
                 else
                   @flag = -1
