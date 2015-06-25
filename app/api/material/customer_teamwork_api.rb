@@ -65,7 +65,7 @@ module CUSTOMER
 
 
         def deal_expire_user(teamwork_id,user_id)
-          teamwork = Teamwork.find_by(teamwork_id)
+          teamwork = Teamwork.find_by_id(teamwork_id)
           p "teamwork = #{teamwork.to_json}"
           if teamwork.is_over? == false
             arr = teamwork.partners
@@ -119,7 +119,10 @@ module CUSTOMER
                 if from_user && from_user.id != current_user.id
                   @flag = 1
                   @teamwork = self_in_teamwork(from_user.id,@material.id)
-                  deal_expire_user(@teamwork.id,current_user.id)
+                  x = deal_expire_user(@teamwork.id,current_user.id)
+                  if x
+                    @teamwork = x
+                  end
                   # 访问排重
                   lock_key = $redis.get(teamwork_lock_key(@teamwork.id,@material.id))
                   p "fromuser = #{from_user.to_json}  can join #{teamwork_can_json?(@teamwork)}"
