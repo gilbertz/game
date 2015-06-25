@@ -26,8 +26,8 @@ if Rails.env.development?
 
 
   WX_DOMAIN = 'dapeimishu.com'
-  WX_APPID = 'wx456ffb04ee140d84'
-  WX_SECRET= 'd1481d1ff0f05d0234a391cfc1c2a4b3'
+  WX_APPID = 'wx629a5ad4f3fc5f63'
+  WX_SECRET= '843d5cb0b87561e54c644327bd297f10'
 
 else
   #摇生意

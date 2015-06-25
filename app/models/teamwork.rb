@@ -162,9 +162,10 @@ class Teamwork < ActiveRecord::Base
 
 
   def rand_result_percent(user_id,num,is_sponsor = false)
-    p =  self.probability
+    material= self.material
+    p =  material.probability
     up = (get_user_percent(user_id)).to_f
-    interval = (1.0 / self.team_persons * 0.9)
+    interval = (1.0 / material.team_persons * 0.9)
     min = up - up * interval
     max = up + up * interval
     num = 1000 - rand(100) if num < 1000
@@ -181,7 +182,7 @@ class Teamwork < ActiveRecord::Base
   def get_result_percent(user_id)
     if user_id
       index = partners.index user_id.to_s
-      p "partners = #{partners}  and index = #{index}"
+      # p "partners = #{partners}  and index = #{index}"
       r = results
       if r && index
         r[index]
