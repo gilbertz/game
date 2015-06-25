@@ -18,7 +18,7 @@ module CUSTOMER
         def reset_teamwork_partners(teamwork,matterial_id)
           if teamwork
             arr = teamwork.partners
-            arr.each { |item|  $redis.set(teamwork_key(item.to_i,matterial_id),nil) }
+            arr.each { |item|  $redis.del(teamwork_key(item.to_i,matterial_id)) }
           end
         end
 
@@ -80,8 +80,8 @@ module CUSTOMER
                 teamwork.partner = arr.join(',')
                 if teamwork.save
                   p "now teamwork = #{teamwork}"
-                  $redis.set(teamwork_key(u,current_material.id),nil)
-                  $redis.set(last_teamwork_key(u, current_material.id),nil)
+                  $redis.del(teamwork_key(u,current_material.id))
+                  $redis.del(last_teamwork_key(u, current_material.id))
                   return teamwork
                 end
               end
@@ -140,7 +140,7 @@ module CUSTOMER
                   else
                     @flag = 3
                   end
-                  $redis.set(teamwork_lock_key(@teamwork.id,@material.id),nil)
+                  $redis.del(teamwork_lock_key(@teamwork.id,@material.id))
                #自己创建一个
                 else
                   @flag = 2
@@ -175,7 +175,7 @@ module CUSTOMER
             if @category.game_type_id = 17
               team_id = $redis.get(last_teamwork_key(current_user.id,@material.id))
               if team_id
-                @exist_teamwork = Teamwork.find_by_id(team_id)
+                @exist_teamwork = Teamwork.find_by_id(team_id.to_i)
                 if @exist_teamwork
                   t =  deal_expire_user(@exist_teamwork.id,current_user.id)
                   if t
