@@ -177,10 +177,10 @@ module CUSTOMER
               if team_id && team_id.to_i > 0
                 @exist_teamwork = Teamwork.find_by_id(team_id.to_i)
                 if @exist_teamwork
-                  # t =  deal_expire_user(@exist_teamwork.id,current_user.id)
-                  # if t
-                  #   @exist_teamwork = t
-                  # end
+                  t =  deal_expire_user(@exist_teamwork.id,current_user.id)
+                  if t
+                    @exist_teamwork = t
+                  end
                   @partner_users = @exist_teamwork.partner_users
                   @ower = current_user
                 end
