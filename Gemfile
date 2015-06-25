@@ -1,5 +1,5 @@
-source 'https://rubygems.org'
-# source 'http://ruby.taobao.org'
+# source 'https://rubygems.org'
+source 'http://ruby.taobao.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
@@ -130,3 +130,6 @@ gem 'china_sms'
 gem 'rails4_acts_as_paranoid', '~> 0.1.4'
 
 gem 'qiniu', '~> 6.2.1'
+
+gem 'wine_bouncer'
+gem 'doorkeeper'

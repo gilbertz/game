@@ -8,12 +8,14 @@ require 'behaviour/behaviour_api'
 require 'activity_check/activity_check_api'
 require 'merchant_info/merchant_info_api'
 require 'merchant_info/party_info_api'
+require 'statis/statis_api'
 
 module API
   #一个服务一个模块  小型微服务
   class Root < Grape::API
     prefix 'api'
     format :json
+    use ::WineBouncer::OAuth2
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
@@ -21,6 +23,11 @@ module API
         if User.current_user && User.current_user.role == 2
           User.current_user.party
         end
+      end
+
+      def current_user
+        current_user = resource_owner
+        p resource_owner
       end
 
       def current_party_id
@@ -99,8 +106,8 @@ module API
     end
     # ---------------before-------------
     before do
-      weixin_authorize
-      unauthorized!
+      # weixin_authorize
+      # unauthorized!
     end
     mount API::PartyInfo::PartyInfoAPI
     mount API::MerchantInfo::MerchantInfoAPI
@@ -111,6 +118,7 @@ module API
     mount API::RedPack::RedpackAPI
     mount API::Cards::CardAPI
     mount API::Behaviour::BehaviourAPI
+    mount API::Statis::StatisAPI
 
     #api 文档
     add_swagger_documentation
