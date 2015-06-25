@@ -67,10 +67,10 @@ module CUSTOMER
         def deal_expire_user(teamwork_id,user_id)
           teamwork = Teamwork.find_by_id(teamwork_id)
           p "teamwork = #{teamwork.to_json}"
-          if teamwork.is_over? == false && user_id.to_i != teamwork.sponsor.to_i
+          if teamwork.is_over? == false
             arr = teamwork.partners
             u = arr.last.to_i
-            if (teamwork.get_result_percent(arr.last)).to_f <= 0.0 && u != user_id.to_i
+            if (teamwork.get_result_percent(arr.last)).to_f <= 0.0 && u != user_id.to_i && u != teamwork.sponsor.to_i
               last_time = get_join_teamwork_time(teamwork.id,u)
               now_time = Time.now.to_i
               p "last_time = #{last_time}"
