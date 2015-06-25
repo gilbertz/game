@@ -12,11 +12,17 @@ class TeamworkSendRedpackWork < BaseWorker
     if bggame
       beacon = Ibeacon.find_by_id(bggame.beaconid)
       rp = beacon.redpacks[0]
+      p rp
       if rp
         money = material.team_reward / material.team_persons
         arr = teamwork.partners
+        p arr
         for uid in 0...arr.count
-          rp.send_pay(uid,beacon.id,money)
+          p "uid = #{uid}"
+          ret = rp.send_pay(uid,beacon.id,money)
+          if ret && ret.to_i > 0.0
+            Record.create(:user_id =>uid, :beaconid=> beacon.id, :game_id => material.id, :score => ret.to_i, :object_type=> 'redpack', :object_id => rp.id)
+          end
         end
       end
     end
