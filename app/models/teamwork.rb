@@ -208,4 +208,31 @@ class Teamwork < ActiveRecord::Base
     self.state == teamwork_state[0]
   end
 
+ # state = 1 代表开局
+ # state = 2 代表接棒
+ # state = ＝3 代表接力结果
+ # state = ＝4 代表被踢
+  # order 代表是第几棒
+  def insert_record(user_id,state,order,from_user_id,result_percent=0.0)
+    return unless user_id
+    material = self.material
+    bggame = Bgame.where(:state => 1,:game_id=>material.id).first
+    if bggame
+      beacon = Ibeacon.find_by_id(bggame.beaconid)
+      return unless beacon
+      mark = nil
+      case state
+        when 1
+          mark = "开了一局"
+        when 2
+          mark = "接了第#{order}棒"
+        when 3
+          mark = "成绩为#{material.total_work * result_percent}"
+        when 4
+          mark = "长时间不开,被系统踢出局"
+      end
+      Record.create(:user_id =>user_id, :beaconid=> beacon.id, :from_user_id =>from_user_id ,:game_id => material.id, :score => order.to_i, :object_type=> 'teamwork', :object_id => self.id,:remark=>mark)
+    end
+  end
+
 end
