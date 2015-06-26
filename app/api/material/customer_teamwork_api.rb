@@ -136,7 +136,8 @@ module CUSTOMER
                       $redis.set(teamwork_key(current_user.id, @material.id),@teamwork.id)
                       @partner_users = @teamwork.partner_users
                       set_join_teamwork_time(@teamwork.id,current_user.id)
-                      @teamwork.create_record(current_user.id,2,@partner_users.count,from_user ? from_user.id : nil)
+                      fid = from_user ? from_user.id : nil
+                      @teamwork.create_record(current_user.id,2,@partner_users.count,fid)
                     end
                   # teamwork 已经不存在了
                   else
@@ -154,7 +155,8 @@ module CUSTOMER
                     $redis.set(teamwork_key(current_user.id, @material.id),@teamwork.id)
                     $redis.set(last_teamwork_key(current_user.id, @material.id),@teamwork.id)
                     p "redis get #{$redis.get(teamwork_key(current_user.id, @material.id))}"
-                    @teamwork.create_record(current_user.id,1,1,from_user ? from_user.id : nil)
+                    fid = from_user ? from_user.id : nil
+                    @teamwork.create_record(current_user.id,1,1,fid)
                   end
                 end
               end
