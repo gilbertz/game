@@ -96,6 +96,9 @@ class WxAppAuthController < ApplicationController
 
   def dispatch_url(appid,openid,rurl)
     ret = rurl.index('?')
+    if rurl.index('web.y1y.me')
+      rurl = rurl+'/#/weixin_login'
+    end
     if  ret
       "#{rurl}&webtoken=#{openid}"
     else
