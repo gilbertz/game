@@ -82,7 +82,7 @@ module CUSTOMER
                   p "now teamwork = #{teamwork}"
                   $redis.del(teamwork_key(u,current_material.id))
                   $redis.del(last_teamwork_key(u, current_material.id))
-                  teamwork.create_record(u,4,arr.count + 1,nil,0)
+                  teamwork.insert_record(u,4,arr.count + 1,nil,0)
                   return teamwork
                 end
               end
@@ -137,7 +137,7 @@ module CUSTOMER
                       @partner_users = @teamwork.partner_users
                       set_join_teamwork_time(@teamwork.id,current_user.id)
                       fid = from_user ? from_user.id : nil
-                      @teamwork.create_record(current_user.id,2,@partner_users.count,fid)
+                      @teamwork.insert_record(current_user.id,2,@partner_users.count,fid)
                     end
                   # teamwork 已经不存在了
                   else
@@ -156,7 +156,7 @@ module CUSTOMER
                     $redis.set(last_teamwork_key(current_user.id, @material.id),@teamwork.id)
                     p "redis get #{$redis.get(teamwork_key(current_user.id, @material.id))}"
                     fid = from_user ? from_user.id : nil
-                    @teamwork.create_record(current_user.id,1,1,fid)
+                    @teamwork.insert_record(current_user.id,1,1,fid)
                   end
                 end
               end
@@ -240,7 +240,7 @@ module CUSTOMER
                   if @flag == 1 || @flag == 2
                     reset_teamwork_partners(@exist_teamwork,@material.id)
                   end
-                  @exist_teamwork.create_record(current_user.id,3,@partner_users.count,nil,result_percent)
+                  @exist_teamwork.insert_record(current_user.id,3,@partner_users.count,nil,result_percent)
                   # 成功完成 还要发钱
                   if @flag == 1 && @material.team_reward && @material.team_reward.to_i > 4
                     # 开始发钱

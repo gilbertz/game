@@ -213,7 +213,7 @@ class Teamwork < ActiveRecord::Base
  # state = ＝3 代表接力结果
  # state = ＝4 代表被踢
   # order 代表是第几棒
-  def create_record(user_id,state,order,from_user_id,result_percent=0.0)
+  def insert_record(user_id,state,order,from_user_id,result_percent=0.0)
     return unless user_id
     material = self.material
     bggame = Bgame.where(:state => 1,:game_id=>material.id).first
@@ -231,7 +231,7 @@ class Teamwork < ActiveRecord::Base
         when 4
           mark = "长时间不开,被系统踢出局"
       end
-      Record.create(:user_id =>user_id, :beaconid=> beacon.id, :from_user_id=>from_user_id ,:game_id => material.id, :score => order.to_i, :object_type=> 'teamwork', :object_id => self.id,:remark=>mark)
+      Record.create(:user_id =>user_id, :beaconid=> beacon.id, :from_user_id =>from_user_id ,:game_id => material.id, :score => order.to_i, :object_type=> 'teamwork', :object_id => self.id,:remark=>mark)
     end
   end
 
