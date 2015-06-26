@@ -37,41 +37,41 @@ class WxAppAuthController < ApplicationController
       if scope == "snsapi_userinfo"
         access_token = app_auth_info["access_token"]
         # Thread.new do
-         p "*******************************"
-          user_info = get_user_info(openid,access_token)
-          p "user_info = #{user_info}"
-         authentication = Authentication.find_by_uid(openid)
-         unless authentication
+        p "*******************************"
+        user_info = get_user_info(openid,access_token)
+        p "user_info = #{user_info}"
+        authentication = Authentication.find_by_uid(openid)
+        unless authentication
             #创建一个user
-           user = User.new
-           user.name = user_info["nickname"]
-           user.email = "fk"+Devise.friendly_token[0,20]+"@yaoshengyi.com"
-           user.password = Devise.friendly_token[0,12]
-           user.sex = user_info["sex"].to_i
-           user.city = user_info["city"]
-           user.country = user_info["country"]
-           user.province = user_info["province"]
-           user.profile_img_url = user_info["headimgurl"]
-           user.save
-          authentication = Authentication.new
-          authentication.user_id = user.id
-         end
+            user = User.new
+            user.name = user_info["nickname"]
+            user.email = "fk"+Devise.friendly_token[0,20]+"@yaoshengyi.com"
+            user.password = Devise.friendly_token[0,12]
+            user.sex = user_info["sex"].to_i
+            user.city = user_info["city"]
+            user.country = user_info["country"]
+            user.province = user_info["province"]
+            user.profile_img_url = user_info["headimgurl"]
+            user.save
+            authentication = Authentication.new
+            authentication.user_id = user.id
+          end
 
-         authentication.uid = user_info["openid"]
-         authentication.appid = appid
-         authentication.access_token = access_token
-         authentication.unionid = user_info["unionid"]
-         authentication.provider = "weixin"
-         authentication.sex = user_info["sex"].to_s
-         authentication.city = user_info["city"]
-         authentication.province = user_info["province"]
-         authentication.expires_at = Time.now.to_i + app_auth_info["expires_in"].to_i - 100
-         authentication.save
+          authentication.uid = user_info["openid"]
+          authentication.appid = appid
+          authentication.access_token = access_token
+          authentication.unionid = user_info["unionid"]
+          authentication.provider = "weixin"
+          authentication.sex = user_info["sex"].to_s
+          authentication.city = user_info["city"]
+          authentication.province = user_info["province"]
+          authentication.expires_at = Time.now.to_i + app_auth_info["expires_in"].to_i - 100
+          authentication.save
 
           p "authentication = #{authentication}"
         # end
        # 静默授权
-      elsif scope == "snsapi_base"
+     elsif scope == "snsapi_base"
         #通过openid 在本地找用户 没有找到则启动非静默授权
         authentication = Authentication.find_by_uid(openid)
         if authentication
@@ -95,7 +95,12 @@ class WxAppAuthController < ApplicationController
 
 
   def dispatch_url(appid,openid,rurl)
-    rurl
+    ret = rurl.index('?')
+    if  ret
+      "#{rurl}&webtoken=#{openid}"
+    else
+      "#{rurl}?webtoken=#{openid}"
+    end
   end
 
 end
