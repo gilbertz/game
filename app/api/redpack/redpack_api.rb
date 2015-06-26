@@ -124,8 +124,10 @@ module API
 
 
 #-------------------修改红包------------------#
-        desc "查看红包"
+        desc "查看红包", auth: { scopes: [] }
+
         get '/edit'do
+        return {"ok" => current_user}
         end
 
         desc "修改红包"

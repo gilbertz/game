@@ -4,7 +4,6 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:weixin]
-
   cattr_accessor :current_user 
   attr_accessor :password
  
@@ -12,13 +11,12 @@ class User < ActiveRecord::Base
     :presence     => true,
     :on => :create
   #:format       => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i }
-
   validates :password,
   :presence     => true,                                                                   
   :confirmation => true,
   :length       => {in: 6..18},
   :on => :create
-
+  
   has_many :authentications
   has_many :materials
   has_many :ibeacons

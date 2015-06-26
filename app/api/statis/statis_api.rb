@@ -27,7 +27,7 @@ module API
       end
      
       resource :statis do 
-        desc "统计红包浏览量、种子红包、社交红包、反馈红包"
+        desc "统计红包浏览量、种子红包、社交红包、反馈红包",auth: { scopes: [] }
         params do
           requires :beacon_url, type: String, desc: "beacon的url" 
           requires :game_url, type: String, desc: "游戏url"
@@ -35,6 +35,9 @@ module API
           optional :start_date, type: Date, desc: "开始时间"
         end
         get "/:beacon_url/:game_url" , jbuilder: 'statis/game_statis'do
+        p current_user
+          @current_user = current_user.id
+          p @current_user
           beacon_id = Ibeacon.get_beacon(params[:beacon_url]) 
           game_id = Material.get_game(params[:game_url])
           @name = Material.find_by_id(game_id).name
