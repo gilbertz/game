@@ -22,7 +22,7 @@ class TeamworkSendRedpackWork < BaseWorker
           p "uid = #{uid}"
           ret = rp.send_pay(uid,beacon.id,money)
           if ret && ret.to_i > 0.0
-            Record.create(:user_id =>uid, :beaconid=> beacon.id, :game_id => material.id, :score => ret.to_i, :object_type=> 'redpack', :object_id => rp.id)
+            Record.create(:user_id =>uid, :beaconid=> beacon.id, :game_id => material.id, :score => ret.to_i, :object_type=> 'redpack', :object_id => rp.id,:remark=>material.name)
           end
         end
       end

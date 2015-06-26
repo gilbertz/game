@@ -82,6 +82,7 @@ module CUSTOMER
                   p "now teamwork = #{teamwork}"
                   $redis.del(teamwork_key(u,current_material.id))
                   $redis.del(last_teamwork_key(u, current_material.id))
+                  teamwork.create_record(u,4,arr.count + 1,nil,0)
                   return teamwork
                 end
               end
@@ -108,6 +109,7 @@ module CUSTOMER
             @category = @material.category
             # 团队协作类型的模版
             if @category.game_type_id = 17
+              from_user = User.by_openid(params["from_user"])
               @teamwork = self_in_teamwork(current_user.id,@material.id)
               p "@exist_teamwork = #{@teamwork.to_json}"
               if @teamwork
@@ -116,7 +118,6 @@ module CUSTOMER
                 p "@partner_users #{@partner_users.to_json}"
               else
                 #如果是加入到别人创建好的团队中
-                from_user = User.by_openid(params["from_user"])
                 if from_user && from_user.id != current_user.id
                   @flag = 1
                   @teamwork = self_in_teamwork(from_user.id,@material.id)
@@ -135,6 +136,7 @@ module CUSTOMER
                       $redis.set(teamwork_key(current_user.id, @material.id),@teamwork.id)
                       @partner_users = @teamwork.partner_users
                       set_join_teamwork_time(@teamwork.id,current_user.id)
+                      @teamwork.create_record(current_user.id,2,@partner_users.count,from_user.id)
                     end
                   # teamwork 已经不存在了
                   else
@@ -152,6 +154,7 @@ module CUSTOMER
                     $redis.set(teamwork_key(current_user.id, @material.id),@teamwork.id)
                     $redis.set(last_teamwork_key(current_user.id, @material.id),@teamwork.id)
                     p "redis get #{$redis.get(teamwork_key(current_user.id, @material.id))}"
+                    @teamwork.create_record(current_user.id,1,1,from_user.id)
                   end
                 end
               end
@@ -235,6 +238,7 @@ module CUSTOMER
                   if @flag == 1 || @flag == 2
                     reset_teamwork_partners(@exist_teamwork,@material.id)
                   end
+                  @exist_teamwork.create_record(current_user.id,3,@partner_users.count,nil,result_percent)
                   # 成功完成 还要发钱
                   if @flag == 1 && @material.team_reward && @material.team_reward.to_i > 4
                     # 开始发钱

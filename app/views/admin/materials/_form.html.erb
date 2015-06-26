@@ -72,6 +72,13 @@
       </div>
     </div>
 
+    <div class="control-group">
+      <label class="control-label">中奖概率</label>
+      <div class="controls">
+        <%= f.text_field :probability, class: "input-xxlarge" %>
+      </div>
+    </div>
+
 
   <% if action_name == "edit" && @material.category && @material.category.material_type == 1 %>
 
