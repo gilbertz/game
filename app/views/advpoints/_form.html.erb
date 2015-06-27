@@ -1,0 +1,69 @@
+<%= form_for(@advpoint) do |f| %>
+  <% if @advpoint.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@advpoint.errors.count, "error") %> prohibited this advpoint from being saved:</h2>
+
+      <ul>
+      <% @advpoint.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :'公司/商户' %><br>
+    <%= f.text_field :company %>
+  </div>
+  <div class="field">
+    <%= f.label :省 %><br>
+    <%= f.text_field :province %>
+  </div>
+  <div class="field">
+    <%= f.label :城市 %><br>
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :地址 %><br>
+    <%= f.text_field :address %>
+  </div>
+  <!--<div class="field">-->
+    <%= f.label :advtype %><br>
+    <!--<%= f.number_field :advtype %>-->
+  <!--</div>-->
+
+    <div class="control-group">
+      <label class="control-label">advtype</label>
+      <div class="controls" id='advtype'>
+        <%= f.select :advtype, AdvpointsController::Advtype  %>
+      </div>
+    </div>
+
+
+  <div class="field">
+    <%= f.label :mark %><br>
+    <%= f.text_field :mark %>
+  </div>
+
+    <div class="field">
+      <%= f.label :公共交通描述 %><br>
+      <%= f.text_field :trans_desc %>
+    </div>
+    <div class="field">
+      <%= f.label :基础设施描述 %><br>
+      <%= f.text_field :facility_desc %>
+    </div>
+    <div class="field">
+      <%= f.label :人流量 %><br>
+      <%= f.text_field :people_flow %>
+    </div>
+
+
+  <div class="field">
+    <%= f.label :'所属商户party_id' %><br>
+    <%= f.number_field :party_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

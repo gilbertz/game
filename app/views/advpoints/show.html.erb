@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>公司/商户:</strong>
+  <%= @advpoint.company %>
+</p>
+
+<p>
+  <strong>省:</strong>
+  <%= @advpoint.province %>
+</p>
+
+<p>
+  <strong>城市:</strong>
+  <%= @advpoint.city %>
+</p>
+
+<p>
+  <strong>地址:</strong>
+  <%= @advpoint.address %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= AdvpointsController::Advtype[@advpoint.advtype][0] %>
+</p>
+
+<p>
+  <strong>Mark:</strong>
+  <%= @advpoint.mark %>
+</p>
+
+<p>
+  <strong>公共交通描述:</strong>
+  <%= @advpoint.trans_desc %>
+</p>
+
+<p>
+  <strong>基础设施描述:</strong>:</strong>
+  <%= @advpoint.facility_desc %>
+</p>
+
+<p>
+  <strong>人流量:</strong>
+  <%= @advpoint.people_flow %>
+</p>
+
+<p>
+  <strong>Party:</strong>
+  <%= @advpoint.party_id %>
+</p>
+
+<%= link_to 'Edit', edit_advpoint_path(@advpoint) %> |
+<%= link_to 'Back', advpoints_path %>

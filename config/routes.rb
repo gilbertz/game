@@ -1,5 +1,7 @@
 Game::Application.routes.draw do
 
+  resources :advpoints
+
   # use_doorkeeper :scope => 'auth' do
   #   skip_controllers :applications, :authorized_applications
   #   controllers :tokens => 'access_token'

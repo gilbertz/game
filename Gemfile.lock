@@ -400,6 +400,3 @@ DEPENDENCIES
   weixin_rails_middleware
   whenever
   wine_bouncer
-
-BUNDLED WITH
-   1.10.2

@@ -1,0 +1,45 @@
+<h1>盛也ibeacon广告位</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>公司/商户</th>
+      <th>省</th>
+      <th>城市</th>
+      <th>地址</th>
+      <th>Type</th>
+      <th>Mark</th>
+      <th>交通描述</th>
+      <th>基础设施描述</th>
+      <th>人流量</th>
+      <th>所属商户party_id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @advpoints.each do |advpoint| %>
+      <tr>
+        <td><%= advpoint.company %></td>
+        <td><%= advpoint.province %></td>
+        <td><%= advpoint.city %></td>
+        <td><%= advpoint.address %></td>
+        <td><%= AdvpointsController::Advtype[advpoint.advtype][0] %></td>
+        <td><%= advpoint.mark %></td>
+        <td><%= advpoint.trans_desc %></td>
+        <td><%= advpoint.facility_desc %></td>
+        <td><%= advpoint.people_flow %></td>
+        <td><%= advpoint.party_id %></td>
+        <td><%= link_to 'Show', advpoint %></td>
+        <td><%= link_to 'Edit', edit_advpoint_path(advpoint) %></td>
+        <td><%= link_to 'Destroy', advpoint, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '新建广告位', new_advpoint_path %>
