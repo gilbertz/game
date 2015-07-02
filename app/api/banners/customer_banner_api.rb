@@ -23,7 +23,7 @@ module CUSTOMER
 
 
       #===================get '/banners'=================
-      desc '随机要到一个'
+      desc '随机摇到一个'
       params do
       end
       post '/banners/draw',jbuilder:'banners/banner_draw' do
