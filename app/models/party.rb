@@ -8,6 +8,8 @@ class Party < ActiveRecord::Base
   has_many :cards
   has_many :materials
   has_many :advpoints
+  has_many :components
+  has_many :activities
 
   def is_vip?
      self.vip != nil
