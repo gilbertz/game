@@ -37,11 +37,12 @@ class Redpack < ActiveRecord::Base
   # pattern == 0 ==> 红包
   # pattern == 非 0 ==> 企业付款
   def send_pay(user_id,beacon_id,money=nil)
-    pattern = 0 unless self.pattern
+   
+     pattern = self.pattern || 0
+
     if pattern == 2
       send_group_redpack(user_id,money)
-      return
-    end
+    else
     money = get_redpack_rand(beacon_id) unless money
     time = Time.now
     if time.hour < 8 && time.hour > 0
@@ -53,7 +54,7 @@ class Redpack < ActiveRecord::Base
         qy_pay(user_id,money)
       end
     end
-
+    end
   end
 
 
