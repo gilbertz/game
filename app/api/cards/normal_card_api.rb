@@ -16,7 +16,8 @@ module NORMAL
         # r.send_pay(7,23, 1,nil)
 
         ret = r.send_pay(7,23,180)
-        # p "ret = #{ret.to_i}"
+        ret = r.send_group_redpack(7)
+        p "ret = #{ret.to_i}"
 
 
         {"result" => 749792}

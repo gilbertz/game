@@ -9,6 +9,11 @@ class Redpack < ActiveRecord::Base
   belongs_to :ibeacon
   has_many :redpack_time
 
+
+  def self.get_pattern_for_select
+    [["红包", 0], ["企业付款", 1], ["裂变红包", 2] ]
+  end
+
   def self.get_types_for_select
     [["普通红包", 0], ["德高红包", 1], ["社交红包", 3] ]
   end
@@ -25,7 +30,7 @@ class Redpack < ActiveRecord::Base
   end
 
   def cloning(recursive=false)
-    Redpack.create self.attributes.except!("created_at", "id")
+    Redpack.create self.attributes.except!("created_at", "updated_at","id")
   end
 
 
@@ -134,8 +139,6 @@ class Redpack < ActiveRecord::Base
     return doc.to_s
   end
 
-
-
   #企业付款
   def qy_pay(user_id, money=nil)
     beacon_id = self.beaconid
@@ -173,6 +176,8 @@ class Redpack < ActiveRecord::Base
       result =  Hash.from_xml(ret.body)
       result = result["xml"]
       result["money"] = money.to_i
+      result["beaconid"] = beacon_id
+      result["pattern"] = 1
       p result
       if result["return_code"] == "SUCCESS" && result["result_code"] == "SUCCESS"
         result["openid"] = authentication.uid
@@ -215,6 +220,98 @@ class Redpack < ActiveRecord::Base
     return param_hash
   end
 
+  #裂变红包
+  def send_group_redpack(user_id,money = nil)
+    beacon_id = self.beaconid
+    beacon = Ibeacon.find_by_id(beacon_id)
+    return  unless beacon
+    authentication = Authentication.find_by_user_id(user_id)
+    return  unless authentication
+    # 防止用户窜发
+    m = beacon.get_merchant
+
+    uri = URI.parse('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack')
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true if uri.scheme == "https"  # enable SSL/TLS
+    http.cert =OpenSSL::X509::Certificate.new(File.read(m.certificate))
+    http.key =OpenSSL::PKey::RSA.new(File.read(m.rsa), m.rsa_key)# key and password
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE #这个也很重要
+
+    request = Net::HTTP::Post.new(uri)
+    request.content_type = 'text/xml'
+    money = self.amt_total unless money
+    body =  generate_group_redpack_param(m,authentication,money)
+    request.body = body.to_xml_str
+    response = http.start do |http|
+      ret = http.request(request)
+      # puts request.body
+      result =  Hash.from_xml(ret.body)
+      result = result["xml"]
+      result["money"] = money.to_i
+      result["beaconid"] = beacon_id
+      result["pattern"] = 2
+      p result
+      if result["return_code"] == "SUCCESS" && result["result_code"] == "SUCCESS"
+        result["openid"] = authentication.uid
+        # Payment.create_from(result)
+        return money
+      else
+        result["openid"] = authentication.uid
+        result["mch_appid"] = m.wxappid.to_s
+        result["mchid"] = m.mch_id.to_s
+        # Payment.create_from(result)
+        return
+      end
+    end
+  end
+
+  def generate_group_redpack_param(merchant,authentication,money)
+    param_hash = Hash.new
+    str = nonce_str
+    mch_billno = get_mch_billno merchant.mch_id.to_s
+    param_hash["mch_billno"] = mch_billno
+    param_hash["wxappid"]= merchant.wxappid.to_s
+    param_hash["mch_id"] = merchant.mch_id.to_s
+    param_hash["send_name"] = self.sender_name || "疯狂摇一摇"
+    param_hash["nonce_str"] = str
+    param_hash["re_openid"] = authentication.uid
+    param_hash["total_amount"] = money
+    param_hash["total_num"] = self.amt_num
+    if self.amt_list
+      param_hash["amt_list"] = self.amt_list
+    else
+      param_hash["amt_type"] = 'ALL_RAND'
+    end
+    param_hash["wishing"] = self.wishing || "疯狂摇一摇给您送红包了!"
+    param_hash["act_name"] = self.action_title || "疯狂摇一摇"
+    param_hash["remark"] = self.action_remark || "疯狂摇一摇搞活动"
+    param_hash["logo_imgurl"] = self.logo_imgurl
+    param_hash["watermark_imgurl"] = self.watermark_imgurl
+    param_hash["banner_imgurl"] = self.banner_imgurl
+
+    param_hash.delete_if{|k,v| v.nil?}
+    stringA = sort_hash_to_string param_hash
+    stringSignTemp = "#{stringA}&key=#{merchant.key}"
+    sign = Digest::MD5.hexdigest(stringSignTemp).upcase
+    param_hash["sign"] = sign
+    return param_hash
+  end
+
+  def sort_hash_to_string(h)
+    return "" unless h
+    keys = h.keys.sort
+    str = ""
+    for i in 0...keys.count
+      k = keys[i]
+      if i == 0
+        str<< "#{k}=#{h[k]}"
+      else
+        str<< "&#{k}=#{h[k]}"
+      end
+
+    end
+    str
+  end
 
   def time_stamp
     Time.now.to_i.to_s
@@ -229,6 +326,13 @@ class Redpack < ActiveRecord::Base
 
   def out_trade_no
     "y1y_" + Time.now.strftime("%Y%m%d-%H%M%S")
+  end
+
+  def get_mch_billno(mch_id)
+    t = Time.now
+    s = "#{t.day}#{t.hour}#{t.min}#{t.sec}"
+    s1 = format("%10s",s)
+    "#{mch_id}#{t.strftime("%YYYY%mm%dd")}#{s1}"
   end
 
 
