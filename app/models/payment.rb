@@ -17,6 +17,8 @@ class Payment < ActiveRecord::Base
     payment.err_code_des = hash["err_code_des"].to_s
     payment.openid = hash["openid"]
     payment.money = hash["money"].to_i
+    payment.beaconid = hash["beaconid"]
+    payment.pattern = hash["pattern"]
     if payment.save
       return payment
     end
