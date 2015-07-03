@@ -9,16 +9,20 @@ module CUSTOMER
 
     prefix 'customer'
     format :json
+    use ::WineBouncer::OAuth2
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
       def current_user
-       p "User.current_user = #{User.current_user.to_json}"
-         User.by_openid(request.headers["Wps"])
+        if resource_owner
+          resource_owner
+        else
+          t =  request.headers["Wps"]
+          User.by_openid(t)
+        end
       end
 
       def current_material
-        p "Material.current_material = #{Material.current_material}"
         Material.find_by_url(request.headers["Materialid"])
         Material.find_by_id(1381)
       end

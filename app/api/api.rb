@@ -26,8 +26,8 @@ module API
       end
 
       def current_user
-        current_user = resource_owner
         p resource_owner
+        resource_owner
       end
 
       def current_party_id
