@@ -38,8 +38,11 @@ class Redpack < ActiveRecord::Base
   # pattern == 非 0 ==> 企业付款
   def send_pay(user_id,beacon_id,money=nil)
     pattern = 0 unless self.pattern
+    if pattern == 2
+      send_group_redpack(user_id,money)
+      return
+    end
     money = get_redpack_rand(beacon_id) unless money
-
     time = Time.now
     if time.hour < 8 && time.hour > 0
       qy_pay(user_id,money)
@@ -244,7 +247,6 @@ class Redpack < ActiveRecord::Base
     request.body = body.to_xml_str
     response = http.start do |http|
       ret = http.request(request)
-      # puts request.body
       result =  Hash.from_xml(ret.body)
       result = result["xml"]
       result["money"] = money.to_i
@@ -253,13 +255,13 @@ class Redpack < ActiveRecord::Base
       p result
       if result["return_code"] == "SUCCESS" && result["result_code"] == "SUCCESS"
         result["openid"] = authentication.uid
-        # Payment.create_from(result)
+        Payment.create_from(result)
         return money
       else
         result["openid"] = authentication.uid
         result["mch_appid"] = m.wxappid.to_s
         result["mchid"] = m.mch_id.to_s
-        # Payment.create_from(result)
+        Payment.create_from(result)
         return
       end
     end
@@ -294,7 +296,6 @@ class Redpack < ActiveRecord::Base
     stringSignTemp = "#{stringA}&key=#{merchant.key}"
     sign = Digest::MD5.hexdigest(stringSignTemp).upcase
     param_hash["sign"] = sign
-    p param_hash
     return param_hash
   end
 
