@@ -294,6 +294,7 @@ class Redpack < ActiveRecord::Base
     stringSignTemp = "#{stringA}&key=#{merchant.key}"
     sign = Digest::MD5.hexdigest(stringSignTemp).upcase
     param_hash["sign"] = sign
+    p param_hash
     return param_hash
   end
 
@@ -332,7 +333,7 @@ class Redpack < ActiveRecord::Base
     t = Time.now
     s = "#{t.day}#{t.hour}#{t.min}#{t.sec}"
     s1 = format("%10s",s)
-    "#{mch_id}#{t.strftime("%YYYY%mm%dd")}#{s1}"
+    "#{mch_id}#{t.strftime("%Y%m%d")}#{s1}"
   end
 
 

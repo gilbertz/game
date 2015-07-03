@@ -15,7 +15,7 @@ module NORMAL
         # r.qy_pay(7, money=nil)
         # r.send_pay(7,23, 1,nil)
 
-        ret = r.send_pay(7,23,180)
+       # ret = r.send_pay(7,23,18)
         ret = r.send_group_redpack(7)
         p "ret = #{ret.to_i}"
 
