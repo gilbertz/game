@@ -6,6 +6,7 @@ class WxAppAuthController < ApplicationController
   def launch
     appid = params["appid"]
     rurl = params["rurl"]
+    @murl = params["murl"]
     if appid
       redirect_to authurl(appid,rurl)
       return
