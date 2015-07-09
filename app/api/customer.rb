@@ -14,11 +14,20 @@ module CUSTOMER
     #--------------------helpes-----------------
     helpers do
       def current_user
+        u = nil
         if resource_owner
-          resource_owner
+          u = resource_owner
         else
           t =  request.headers["Wps"]
-          User.by_openid(t)
+          u = User.by_openid(t)
+        end
+        u || test_user
+      end
+
+      #  方便测试用
+      def test_user
+        if  params[:openid]
+          User.find_by_id(Authentication.find_by(:uid => params[:openid]).user_id)
         end
       end
 

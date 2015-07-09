@@ -25,6 +25,7 @@ Doorkeeper.configure do
       u = User.find_for_database_authentication(:email => params[:email])
       u if u && u.valid_password?(params[:password])
     end
+    return u
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.

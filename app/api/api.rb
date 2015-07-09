@@ -26,7 +26,14 @@ module API
       end
 
       def current_user
-        resource_owner
+        resource_owner || test_user
+      end
+
+      #  方便测试用
+      def test_user
+        if  params[:openid]
+          User.find_by_id(Authentication.find_by(:uid => params[:openid]).user_id)
+        end
       end
 
       def current_party_id
