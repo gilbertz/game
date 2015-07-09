@@ -92,13 +92,11 @@ class WxAppAuthController < ApplicationController
     render :text => ""
   end
 
-
-
   def dispatch_url(appid,openid,rurl)
-    ret = rurl.index('?')
     if rurl.index('web.y1y.me')
       rurl = rurl+'#/weixin_login'
     end
+    ret = rurl.index('?')
     if  ret
       "#{rurl}&webtoken=#{openid}"
     else

@@ -37,9 +37,7 @@ class Redpack < ActiveRecord::Base
   # pattern == 0 ==> 红包
   # pattern == 非 0 ==> 企业付款
   def send_pay(user_id,beacon_id,money=nil)
-   
      pattern = self.pattern || 0
-
     if pattern == 2
       send_group_redpack(user_id,money)
     else
