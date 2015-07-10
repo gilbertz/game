@@ -97,9 +97,9 @@ class WxAppAuthController < ApplicationController
 
   def dispatch_url(appid,openid,rurl)
     if rurl.index('web.y1y.me') 
-      postData = {"grantPath" => "password", "openid" => openid
+      postData = {"grant_type" => "password", "openid" => openid
       }
-      res = RestClient::post('https://y1y.me/oauth/token', postData.to_json)
+      res = RestClient::post('http://y1y.me/oauth/token', postData.to_json)
       retData = JSON.parse(res.body).to_s    
       if  rurl.index('?')
         "#{rurl}&wine=#{retData}"
