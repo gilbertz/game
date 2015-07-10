@@ -20,14 +20,20 @@ module API
     #--------------------helpes-----------------
     helpers do
       def current_party
-        if User.current_user && User.current_user.role == 2
-          User.current_user.party
+        if current_user
+          current_user.party
         end
       end
 
       def current_user
-        current_user = resource_owner
-        p resource_owner
+        resource_owner || test_user
+      end
+
+      #  方便测试用
+      def test_user
+        if  params[:openid]
+          User.find_by_id(Authentication.find_by(:uid => params[:openid]).user_id)
+        end
       end
 
       def current_party_id
@@ -106,8 +112,7 @@ module API
     end
     # ---------------before-------------
     before do
-      # weixin_authorize
-      # unauthorized!
+      unauthorized!
     end
     mount API::PartyInfo::PartyInfoAPI
     mount API::MerchantInfo::MerchantInfoAPI

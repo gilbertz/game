@@ -6,6 +6,7 @@ class WxAppAuthController < ApplicationController
   def launch
     appid = params["appid"]
     rurl = params["rurl"]
+    @murl = params["murl"]
     if appid
       redirect_to authurl(appid,rurl)
       return
@@ -92,8 +93,6 @@ class WxAppAuthController < ApplicationController
 
     render :text => ""
   end
-
-
 
   def dispatch_url(appid,openid,rurl)
     if rurl.index('web.y1y.me') 
