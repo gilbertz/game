@@ -16,9 +16,9 @@ module API
   class Root < Grape::API
     prefix 'api'
     format :json
-    use ::WineBouncer::OAuth2
-    formatter :json, Grape::Formatter::Jbuilder 
-    helpers Doorkeeper::Grape::Helpers
+    #use ::WineBouncer::OAuth2
+     formatter :json, Grape::Formatter::Jbuilder 
+     helpers Doorkeeper::Grape::Helpers
     #--------------------helpes-----------------
     helpers do
       def current_party
@@ -28,8 +28,19 @@ module API
       end
 
       def current_user
-        resource_owner || test_user
+        p "resource_owner"
+       # p resource_owner
+        p "test_user"
+        p test_user
+        p "doorkeeper_user"
+        p doorkeeper_user
+       test_user || doorkeeper_user
       end
+      
+       def doorkeeper_user
+         #User.find(doorkeeper_access_token.resource_owner_id) if doorkeeper_access_token
+         User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+        end
 
       #  方便测试用
       def test_user
@@ -88,7 +99,7 @@ module API
 
       def unauthorized!
         #如果没有登录x
-        unless current_party
+        unless current_user
           render_api_error! '401 Unauthorized', 401
         end
       end
@@ -114,9 +125,14 @@ module API
     end
     # ---------------before-------------
     before do
-     # unauthorized!
+     p "xddd"
+    p doorkeeper_token
+      unauthorized!
      #auth: { scopes: [] }
-     p doorkeeper_authorize!
+ #    p "doorkeeper_access_token "
+  #   p doorkeeper_access_token
+      #p "=====xxx  #{doorkeeper_authorize!}"
+     #oauth2 'public'
     end
     mount API::PartyInfo::PartyInfoAPI
     mount API::MerchantInfo::MerchantInfoAPI

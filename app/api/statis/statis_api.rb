@@ -27,7 +27,7 @@ module API
       end
      
       resource :statis do 
-        desc "统计红包浏览量、种子红包、社交红包、反馈红包",auth: { scopes: [] }
+        desc "统计红包浏览量、种子红包、社交红包、反馈红包"#,auth: { scopes: [] }
         params do
           requires :beacon_url, type: String, desc: "beacon的url" 
           requires :game_url, type: String, desc: "游戏url"
