@@ -95,7 +95,8 @@ class WxAppAuthController < ApplicationController
   end
 
   def dispatch_url(appid,openid,rurl)
-    if rurl.index('web.y1y.me') 
+    if rurl.index('web.y1y.me')
+	rurl = rurl + "#/weixin_login" 
     #  postData = {"grant_type" => "password", "openid" => openid
      # }
      # res = RestClient::post('http://y1y.me/oauth/token', postData.to_json)
