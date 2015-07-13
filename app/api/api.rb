@@ -16,9 +16,9 @@ module API
   class Root < Grape::API
     prefix 'api'
     format :json
-    #use ::WineBouncer::OAuth2
-     formatter :json, Grape::Formatter::Jbuilder 
-     helpers Doorkeeper::Grape::Helpers
+    formatter :json, Grape::Formatter::Jbuilder
+    #里面有doorkeeper_token 方法
+    helpers Doorkeeper::Grape::Helpers
     #--------------------helpes-----------------
     helpers do
       def current_party
@@ -28,19 +28,12 @@ module API
       end
 
       def current_user
-        p "resource_owner"
-       # p resource_owner
-        p "test_user"
-        p test_user
-        p "doorkeeper_user"
-        p doorkeeper_user
-       test_user || doorkeeper_user
+        doorkeeper_user || test_user
       end
-      
-       def doorkeeper_user
-         #User.find(doorkeeper_access_token.resource_owner_id) if doorkeeper_access_token
-         User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
-        end
+
+      def doorkeeper_user
+        User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+      end
 
       #  方便测试用
       def test_user
@@ -50,30 +43,9 @@ module API
       end
 
       def current_party_id
-	      current_party.id
+        current_party.id
       end
 
-      def weixin_authorize
-        check_cookie
-        unless current_user
-          redirect_to authorize_url(request.url)
-        end
-      end
-
-      def check_cookie
-        if true
-          unless current_user
-            if cookies.signed[:remember_me].present?
-              user = User.find_by_rememberme_token cookies.signed[:remember_me]
-              if user && user.rememberme_token == cookies.signed[:remember_me]
-                session[:admin_user_id] = user.id
-                current_user = user
-                User.current_user = current_user
-              end
-            end
-          end
-        end
-      end
 
       def authorize_url(url)
         appid = WX_APPID
@@ -125,14 +97,7 @@ module API
     end
     # ---------------before-------------
     before do
-     p "xddd"
-    p doorkeeper_token
       unauthorized!
-     #auth: { scopes: [] }
- #    p "doorkeeper_access_token "
-  #   p doorkeeper_access_token
-      #p "=====xxx  #{doorkeeper_authorize!}"
-     #oauth2 'public'
     end
     mount API::PartyInfo::PartyInfoAPI
     mount API::MerchantInfo::MerchantInfoAPI

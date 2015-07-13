@@ -1,3 +1,4 @@
+require 'doorkeeper/grape/helpers'
 require 'grape-swagger'
 require 'material/customer_material_api'
 require 'material/customer_teamwork_api'
@@ -9,19 +10,25 @@ module CUSTOMER
 
     prefix 'customer'
     format :json
-    use ::WineBouncer::OAuth2
+    #里面有doorkeeper_token 方法
+    helpers Doorkeeper::Grape::Helpers
     formatter :json, Grape::Formatter::Jbuilder
     #--------------------helpes-----------------
     helpers do
       def current_user
         u = nil
-        if resource_owner
-          u = resource_owner
+        du = doorkeeper_user
+        if du
+          u = du
         else
           t =  request.headers["Wps"]
           u = User.by_openid(t)
         end
         u || test_user
+      end
+
+      def doorkeeper_user
+        User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
       end
 
       #  方便测试用
@@ -34,35 +41,6 @@ module CUSTOMER
       def current_material
         Material.find_by_url(request.headers["Materialid"])
         Material.find_by_id(1381)
-      end
-
-      def weixin_authorize
-        check_cookie
-        unless current_user
-          redirect_to authorize_url(request.url)
-        end
-      end
-
-      def check_cookie
-        unless current_user
-          if cookies.signed[:remember_me].present?
-            user = User.find_by_rememberme_token cookies.signed[:remember_me]
-            if user && user.rememberme_token == cookies.signed[:remember_me]
-              session[:admin_user_id] = user.id
-              current_user = user
-              User.current_user = current_user
-            end
-          end
-        end
-      end
-
-      def authorize_url(url)
-        appid = WX_APPID
-        if params[:y1y_beacon_url]
-          get_beacon
-          appid = @beacon.get_merchant.wxappid
-        end
-        "http://#{WX_DOMAIN}/#{appid}/launch?rurl=" + url
       end
 
       def user_agent!
