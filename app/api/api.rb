@@ -114,9 +114,9 @@ module API
     end
     # ---------------before-------------
     before do
-     unauthorized!
+     # unauthorized!
      #auth: { scopes: [] }
-     #doorkeeper_authorize!
+     p doorkeeper_authorize!
     end
     mount API::PartyInfo::PartyInfoAPI
     mount API::MerchantInfo::MerchantInfoAPI
