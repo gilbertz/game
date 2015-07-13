@@ -1,3 +1,4 @@
+require 'doorkeeper/grape/helpers'
 require 'grape-swagger'
 require 'image/image_api'
 require 'redpack/redpack_api'
@@ -16,7 +17,8 @@ module API
     prefix 'api'
     format :json
     use ::WineBouncer::OAuth2
-    formatter :json, Grape::Formatter::Jbuilder
+    formatter :json, Grape::Formatter::Jbuilder 
+    helpers Doorkeeper::Grape::Helpers
     #--------------------helpes-----------------
     helpers do
       def current_party
@@ -112,7 +114,9 @@ module API
     end
     # ---------------before-------------
     before do
-      unauthorized!
+     unauthorized!
+     #auth: { scopes: [] }
+     #doorkeeper_authorize!
     end
     mount API::PartyInfo::PartyInfoAPI
     mount API::MerchantInfo::MerchantInfoAPI
