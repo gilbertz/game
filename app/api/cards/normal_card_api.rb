@@ -8,7 +8,7 @@ module NORMAL
       version 'v1'
 
       get '/text_api' do
-
+        p request
         p "rurl = "+params["rurl"]
         # Party.qy_pay(7,nil,1,"送钱了")
 
