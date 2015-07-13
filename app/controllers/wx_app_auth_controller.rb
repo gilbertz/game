@@ -85,6 +85,7 @@ class WxAppAuthController < ApplicationController
         end
       end
       sign_in user
+      # 准备数据
       redirect_to dispatch_url(appid,openid,rurl)
       return
 
@@ -95,14 +96,23 @@ class WxAppAuthController < ApplicationController
 
   def dispatch_url(appid,openid,rurl)
     if rurl.index('web.y1y.me')
-      rurl = rurl+'#/weixin_login'
-    end
-    ret = rurl.index('?')
-    if  ret
-      "#{rurl}&webtoken=#{openid}"
+	rurl = rurl + "#/weixin_login" 
+    #  postData = {"grant_type" => "password", "openid" => openid
+     # }
+     # res = RestClient::post('http://y1y.me/oauth/token', postData.to_json)
+     # retData = JSON.parse(res.body).to_s    
+      if  rurl.index('?')
+        #"#{rurl}&wine=#{retData}"
+        "#{rurl}&webtoken=#{openid}"
+      else
+       # "#{rurl}?wine=#{retData}"
+        "#{rurl}?webtoken=#{openid}"
+      end
     else
-      "#{rurl}?webtoken=#{openid}"
+      rurl
     end
+
+    
   end
 
 end
