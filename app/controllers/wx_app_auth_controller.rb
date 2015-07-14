@@ -7,7 +7,7 @@ class WxAppAuthController < ApplicationController
     appid = params["appid"]
     rurl = params["rurl"]
     if appid
-      if rurl.index "http://" == nil
+      if rurl.index("http://") == nil
         @mobile_state = rurl
         rurl = "http://#{WX_DOMAIN}/mobile"
       end
