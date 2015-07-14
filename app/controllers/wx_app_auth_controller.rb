@@ -9,6 +9,7 @@ class WxAppAuthController < ApplicationController
     if appid
       if rurl.index("http://") == nil
         @mobile_state = rurl
+        p "@mobile_state = #{@mobile_state}"
         rurl = "http://#{WX_DOMAIN}/mobile"
       end
       redirect_to authurl(appid,rurl)
