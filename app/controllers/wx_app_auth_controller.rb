@@ -7,6 +7,10 @@ class WxAppAuthController < ApplicationController
     appid = params["appid"]
     rurl = params["rurl"]
     if appid
+      if rurl.index "http://" == nil
+        @mobile_state = rurl
+        rurl = "http://#{WX_DOMAIN}/mobile"
+      end
       redirect_to authurl(appid,rurl)
       return
     end
@@ -94,7 +98,7 @@ class WxAppAuthController < ApplicationController
 
   def dispatch_url(appid,openid,rurl)
     # 如果有http:// 则说明是原来的那一套
-    if rurl.index('http://')
+    if rurl != "http://#{WX_DOMAIN}/mobile"
       rurl
     else
       # rurl = rurl + "#/weixin_login"
@@ -106,8 +110,8 @@ class WxAppAuthController < ApplicationController
         # "#{rurl}&webtoken=#{openid}"
         # "#{rurl}?wine=#{retData}"
         # "#{rurl}?webtoken=#{openid}"
-      p "#http://mobile.y1y.me/#/{rurl}?wine=#{retData}"
-      "#http://mobile.y1y.me/#/{rurl}?wine=#{retData}"
+      p "#http://mobile.y1y.me/#/{@mobile_state}?wine=#{retData}"
+      "#http://mobile.y1y.me/#/{@mobile_state}?wine=#{retData}"
     end
 
   end
