@@ -108,8 +108,8 @@ class WxAppAuthController < ApplicationController
       # p res
       # retData = JSON.parse(res.body).to_s
       # p "retData = #{retData}"
-      p "#http://mobile.y1y.me/#/{@mobile_state}?wine=#{openid}"
-      "#http://mobile.y1y.me/#/{@mobile_state}?wine=#{openid}"
+      p "#http://mobile.y1y.me/#/#{@mobile_state}?wine=#{openid}"
+      "#http://mobile.y1y.me/#/#{@mobile_state}?wine=#{openid}"
     end
 
   end
