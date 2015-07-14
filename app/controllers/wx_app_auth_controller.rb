@@ -9,7 +9,7 @@ class WxAppAuthController < ApplicationController
     if appid
       if rurl.index("http://") == nil
         rurl = "http://mobile.y1y.me/abcxyz/#{rurl}"
-        p "first rurl = #{rurl}"
+        # p "first rurl = #{rurl}"
       end
       redirect_to authurl(appid,rurl)
       return
@@ -108,10 +108,10 @@ class WxAppAuthController < ApplicationController
       # p "retData = #{retData}"
       rurl = rurl.gsub(/abcxyz/,"#")
       if rurl.index '?'
-        p "#{rurl}&wine=#{openid}"
+        # p "#{rurl}&wine=#{openid}"
         "#{rurl}&wine=#{openid}"
       else
-        p "#{rurl}?wine=#{openid}"
+        # p "#{rurl}?wine=#{openid}"
         "#{rurl}?wine=#{openid}"
       end
     else
