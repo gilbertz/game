@@ -6,12 +6,10 @@ class WxAppAuthController < ApplicationController
   def launch
     appid = params["appid"]
     rurl = params["rurl"]
-    @murl = params["murl"]
     if appid
       redirect_to authurl(appid,rurl)
       return
     end
-
     render :text => ""
   end
 
@@ -95,24 +93,23 @@ class WxAppAuthController < ApplicationController
   end
 
   def dispatch_url(appid,openid,rurl)
-    if rurl.index('web.y1y.me')
-	rurl = rurl + "#/weixin_login" 
-    #  postData = {"grant_type" => "password", "openid" => openid
-     # }
-     # res = RestClient::post('http://y1y.me/oauth/token', postData.to_json)
-     # retData = JSON.parse(res.body).to_s    
-      if  rurl.index('?')
-        #"#{rurl}&wine=#{retData}"
-        "#{rurl}&webtoken=#{openid}"
-      else
-       # "#{rurl}?wine=#{retData}"
-        "#{rurl}?webtoken=#{openid}"
-      end
-    else
+    # 如果有http:// 则说明是原来的那一套
+    if rurl.index('http://')
       rurl
+    else
+      # rurl = rurl + "#/weixin_login"
+      postData = {"grant_type" => "password", "openid" => openid}
+      res = RestClient::post("http://#{WX_DOMAIN}/oauth/token", postData.to_json)
+      retData = JSON.parse(res.body).to_s
+      p "retData = #{retData}"
+        #"#{rurl}&wine=#{retData}"
+        # "#{rurl}&webtoken=#{openid}"
+        # "#{rurl}?wine=#{retData}"
+        # "#{rurl}?webtoken=#{openid}"
+      p "#http://mobile.y1y.me/#/{rurl}?wine=#{retData}"
+      "#http://mobile.y1y.me/#/{rurl}?wine=#{retData}"
     end
 
-    
   end
 
 end
