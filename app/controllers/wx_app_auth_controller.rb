@@ -8,9 +8,8 @@ class WxAppAuthController < ApplicationController
     rurl = params["rurl"]
     if appid
       if rurl.index("http://") == nil
-        @mobile_state = rurl
-        p "@mobile_state = #{@mobile_state}"
-        rurl = "http://#{WX_DOMAIN}/mobile"
+        rurl = "http://mobile.y1y.me/abcxyz/#{rurl}"
+        p "first rurl = #{rurl}"
       end
       redirect_to authurl(appid,rurl)
       return
@@ -99,9 +98,7 @@ class WxAppAuthController < ApplicationController
 
   def dispatch_url(appid,openid,rurl)
     # 如果有http:// 则说明是原来的那一套
-    if rurl != "http://#{WX_DOMAIN}/mobile"
-      rurl
-    else
+    if rurl.index "http://mobile.y1y.me/abcxyz"
       # rurl = rurl + "#/weixin_login"
       # postData = {"grant_type" => "password", "openid" => openid}
       # p "http://#{WX_DOMAIN}/oauth/token"
@@ -109,8 +106,16 @@ class WxAppAuthController < ApplicationController
       # p res
       # retData = JSON.parse(res.body).to_s
       # p "retData = #{retData}"
-      p "#http://mobile.y1y.me/#/#{@mobile_state}?wine=#{openid}"
-      "#http://mobile.y1y.me/#/#{@mobile_state}?wine=#{openid}"
+      rurl = rurl.gsub(/abcxyz/,"#")
+      if rurl.index '?'
+        p "#{rurl}&wine=#{openid}"
+        "#{rurl}&wine=#{openid}"
+      else
+        p "#{rurl}?wine=#{openid}"
+        "#{rurl}?wine=#{openid}"
+      end
+    else
+      rurl
     end
 
   end
