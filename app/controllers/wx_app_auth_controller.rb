@@ -102,18 +102,14 @@ class WxAppAuthController < ApplicationController
       rurl
     else
       # rurl = rurl + "#/weixin_login"
-      postData = {"grant_type" => "password", "openid" => openid}
-      p "http://#{WX_DOMAIN}/oauth/token"
-      res = RestClient::post("http://#{WX_DOMAIN}/oauth/token", postData.to_json)
-      p res
-      retData = JSON.parse(res.body).to_s
-      p "retData = #{retData}"
-        #"#{rurl}&wine=#{retData}"
-        # "#{rurl}&webtoken=#{openid}"
-        # "#{rurl}?wine=#{retData}"
-        # "#{rurl}?webtoken=#{openid}"
-      p "#http://mobile.y1y.me/#/{@mobile_state}?wine=#{retData}"
-      "#http://mobile.y1y.me/#/{@mobile_state}?wine=#{retData}"
+      # postData = {"grant_type" => "password", "openid" => openid}
+      # p "http://#{WX_DOMAIN}/oauth/token"
+      # res = RestClient::post("http://#{WX_DOMAIN}/oauth/token", postData.to_json)
+      # p res
+      # retData = JSON.parse(res.body).to_s
+      # p "retData = #{retData}"
+      p "#http://mobile.y1y.me/#/{@mobile_state}?wine=#{openid}"
+      "#http://mobile.y1y.me/#/{@mobile_state}?wine=#{openid}"
     end
 
   end
