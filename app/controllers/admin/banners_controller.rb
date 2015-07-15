@@ -2,7 +2,7 @@ class Admin::BannersController < Admin::BaseController
 
   State = [["下线", 0], ["上线", 1]]
 
-  Btype = [["大banner", 0], ["小banner", 1]]
+  Btype = [["小banner", 0], ["大banner", 1]]
 
   def index
     @banners = Banner.all
