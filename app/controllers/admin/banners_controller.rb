@@ -2,6 +2,8 @@ class Admin::BannersController < Admin::BaseController
 
   State = [["下线", 0], ["上线", 1]]
 
+  Btype = [["大banner", 0], ["小banner", 1]]
+
   def index
     @banners = Banner.all
   end
@@ -35,7 +37,7 @@ class Admin::BannersController < Admin::BaseController
 
   private
   def banner_params
-    params.require(:banner).permit(:image_url, :link, :wait, :state)
+    params.require(:banner).permit(:image_url, :link, :wait, :state,:material_id,:component_id,:btype)
   end
 
 end

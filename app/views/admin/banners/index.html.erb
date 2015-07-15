@@ -4,6 +4,9 @@
 
   <tr>
     <th>ID</th>
+    <th>material_id</th>
+    <th>component_id</th>
+    <th>banner type</th>
     <th>Image</th>
     <th>link</th>
     <th>Wait</th>
@@ -14,6 +17,9 @@
   <% @banners.each do |banner| %>
   <tr>
     <td><%= banner.id %></td>
+    <td><%= banner.material_id %></td>
+    <td><%= banner.component_id %></td>
+    <td><%= banner.btype %></td>
     <td><%= banner.image_url %></td>
     <td><%= banner.link %></td>
     <td><%= banner.wait %></td>
