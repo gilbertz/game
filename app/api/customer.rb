@@ -92,6 +92,7 @@ module CUSTOMER
     mount CUSTOMER::Teamworks::TeamworkAPI
     mount CUSTOMER::HeadlineInfo::HeadlineAPI
     mount CUSTOMER::Banners::BannerAPI
+    mount CUSTOMER::Appearance::AppearanceAPI
     #api 文档
     add_swagger_documentation
 
