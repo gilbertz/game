@@ -4,6 +4,8 @@ require 'material/customer_material_api'
 require 'material/customer_teamwork_api'
 require 'material/customer_headline_api'
 require 'banners/customer_banner_api'
+require 'appearance/customer_appearance_api'
+require 'material/customer_shakebus_api'
 # 为c端用户提供的api
 module CUSTOMER
   class Root < Grape::API
@@ -87,11 +89,11 @@ module CUSTOMER
       unauthorized!
     end
 
-
     mount CUSTOMER::MaterialInfo::MaterialInfoAPI
     mount CUSTOMER::Teamworks::TeamworkAPI
     mount CUSTOMER::HeadlineInfo::HeadlineAPI
     mount CUSTOMER::Banners::BannerAPI
+    mount CUSTOMER::Shakebus::ShakebusAPI
     #api 文档
     add_swagger_documentation
 
