@@ -7,8 +7,8 @@ class Activity < ActiveRecord::Base
 
   before_create :gen_activity_uuid
 
-  def gen_uuid
-    self.uuid = SecureRand.uuid
+  def gen_activity_uuid
+    self.uuid = SecureRandom.uuid
   end
 
 end
