@@ -1,3 +1,4 @@
+
 class Component < ActiveRecord::Base
   belongs_to :party
   belongs_to :component_template
@@ -6,7 +7,7 @@ class Component < ActiveRecord::Base
   before_create :gen_component_uuid
 
   def gen_component_uuid
-    uuid = SecureRand.uuid
+    uuid = SecureRandom.uuid
     self.uuid = uuid
     self.url = ComponentTemplate.find_by_component_template_id(self.component_template_id).route_url
   end
