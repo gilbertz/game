@@ -25,10 +25,10 @@ module CUSTOMER
 
 
 
-      #===================post '/banners/draw'=================
+      # ===================post '/banners/draw'=================
       desc '随机摇到一个'
-      requires :activity_uuid, type: String, allow_blank: false, desc: "组件唯一标识."
       params do
+        requires :activity_uuid, type: String, allow_blank: false, desc: "组件唯一标识."
       end
       post '/banners/draw',jbuilder:'banners/banner_draw' do
         activity = Activity.find_by_uuid(params["activity_uuid"])
@@ -41,7 +41,7 @@ module CUSTOMER
           end
         end
       end
-      #===================post '/banners/draw'=================
+      # ===================post '/banners/draw'=================
 
     end
 
