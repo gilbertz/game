@@ -9,7 +9,7 @@ class Component < ActiveRecord::Base
   def gen_component_uuid
     uuid = SecureRandom.uuid
     self.uuid = uuid
-    self.url = ComponentTemplate.find_by_component_template_id(self.component_template_id).route_url
+    self.url = ComponentTemplate.find_by_id(self.component_template_id).route_url
   end
 
   def get_state_url
