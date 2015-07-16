@@ -44,15 +44,17 @@ module CUSTOMER
       #===================get '/shakebus'=================
       desc '获取shakebus banners'
       params do
-        requires :component_uuid, type: Integer, allow_blank: false, desc: "组件唯一标识."
+        requires :activity_uuid, type: String, allow_blank: false, desc: "组件唯一标识."
+        requires :component_uuid, type: String, allow_blank: false, desc: "组件唯一标识."
         optional :state,type:Integer,values: [0, 1],default:1,desc: '是否上线的状态'
       end
-      get '/shakebus/:component_uuid',jbuilder:'banners/banner_shake_bus' do
+      get '/shakebus/:activity_uuid/:component_uuid',jbuilder:'banners/banner_shake_bus' do
         state = params["state"]
+        activity = Activity.find_by_uuid(params["activity_uuid"])
         component = Component.find_by_uuid(params["component_uuid"])
-        if component
-          @bigBanners = Banner.where(:component_id => component.id,:state => state,:btype => 1)
-          @banners = Banner.where(:component_id => component.id,:state => state,:btype => 0)
+        if activity && component
+          @bigBanners = Banner.where(:activity_id => activity.id,:state => state,:btype => 1)
+          @banners = Banner.where(:activity_id => activity.id,:state => state,:btype => 0)
         end
       end
       #===================get '/shakebus'=================
